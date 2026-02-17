@@ -52,9 +52,13 @@ if (status_code(stations_resp) != 200) {
 }
 
 stations <- content(stations_resp, "parsed")
-message(paste("Found", length(stations), "stations."))
+message(paste("Found", length(stations), "stations total."))
 
-# 2. Process each station
+# 2. Filter stations: exclude those starting with "2407"
+stations <- stations %>% keep(~ !grepl("^2407", .x$Name))
+message(paste("Processing", length(stations), "stations after filtering (excluded '2407*')."))
+
+# 3. Process each station
 for (station in stations) {
     station_id <- station$Id
     station_name <- station$Name
