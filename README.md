@@ -1,6 +1,6 @@
 # SCIU THALESruhr - Sensor Data Management
 
-This repository manages the automated collection and storage of sensor data from the Nivus DataKiosk for the SCIU project.
+This repository manages the automated collection, storage and analysis of sensor data from the Nivus DataKiosk for the SCIU project.
 
 ## Project Structure
 
