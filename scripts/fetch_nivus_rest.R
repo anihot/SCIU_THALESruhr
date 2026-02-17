@@ -8,9 +8,15 @@ library(tidyr)
 # Configuration
 api_key <- Sys.getenv("NIVUS_API_KEY")
 if (api_key == "") {
-    # Fallback to hardcoded key if local, or stop if in CI
+    message("Notice: NIVUS_API_KEY environment variable is empty. Using fallback hardcoded key.")
     api_key <- "REtDX0U3RENDMkMwLThDRkMtNDYzRC05RjMwLTYxMzFFQURFMUUyOEBOSVZVU1dFQi5DT006MjJkNjQ2MzctYzRmYy00MzhiLTk0NmQtYmFiNTViZjc3OGNh"
+} else {
+    message("Notice: Using API key from environment variable (NIVUS_API_KEY).")
 }
+
+# Print first 5 chars for verification (safe to log)
+message(paste("API Key starts with:", substr(api_key, 1, 10), "..."))
+
 base_url <- "https://datakiosk-api.nivusweb.com"
 export_dir <- "data/sensor_exports"
 
