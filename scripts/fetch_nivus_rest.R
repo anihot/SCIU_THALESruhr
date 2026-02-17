@@ -8,11 +8,22 @@ library(tidyr)
 # Configuration
 api_key <- Sys.getenv("NIVUS_API_KEY")
 if (api_key == "") {
-    # Fallback to hardcoded key if local
+    message("Notice: NIVUS_API_KEY environment variable is empty. Using fallback hardcoded key.")
     api_key <- "REtDX0U3RENDMkMwLThDRkMtNDYzRC05RjMwLTYxMzFFQURFMUUyOEBOSVZVU1dFQi5DT006MjJkNjQ2MzctYzRmYy00MzhiLTk0NmQtYmFiNTViZjc3OGNh"
+} else {
+    # Clean up the key (remove quotes/whitespace)
+    api_key <- trimws(gsub("^\"|\"$", "", api_key))
+    message(paste("Notice: Using API key from environment (Length:", nchar(api_key), ")"))
 }
+
 base_url <- "https://datakiosk-api.nivusweb.com"
 export_dir <- "data/sensor_exports"
+
+# Header Configuration
+custom_headers <- add_headers(
+    `X-API-Key` = api_key,
+    `User-Agent` = "R-httr-SCIU-Project"
+)
 
 if (!dir.exists(export_dir)) {
     dir.create(export_dir, recursive = TRUE)
@@ -31,10 +42,12 @@ message(paste("Fetching data from", from_str, "to", to_str))
 message("Fetching stations list...")
 stations_resp <- GET(
     url = paste0(base_url, "/api/v2/stations"),
-    add_headers(`X-API-Key` = api_key)
+    custom_headers
 )
 
 if (status_code(stations_resp) != 200) {
+    message("Error Response Body:")
+    print(content(stations_resp, "text"))
     stop("Failed to fetch stations. Status: ", status_code(stations_resp))
 }
 
@@ -48,7 +61,7 @@ for (station in stations) {
 
     # Get full station info (including channels)
     message(paste("Processing station:", station_name, "(", station_id, ")..."))
-    s_resp <- GET(paste0(base_url, "/api/v2/stations/", station_id), add_headers(`X-API-Key` = api_key))
+    s_resp <- GET(paste0(base_url, "/api/v2/stations/", station_id), custom_headers)
     if (status_code(s_resp) != 200) next
 
     s_data <- content(s_resp, "parsed")
@@ -71,7 +84,7 @@ for (station in stations) {
         d_resp <- GET(
             url = paste0(base_url, "/api/v2/data/history/", c_id),
             query = list(start = from_str, end = to_str),
-            add_headers(`X-API-Key` = api_key)
+            custom_headers
         )
 
         if (status_code(d_resp) == 200) {
