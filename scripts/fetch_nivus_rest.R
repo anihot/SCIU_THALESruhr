@@ -116,15 +116,25 @@ for (station in stations) {
         }
     }
 
-    # 4. Save to CSV
+    # 4. Save to CSV (Merge with existing data)
     if (!is.null(station_df)) {
+        safe_name <- gsub("[^[:alnum:]]", "_", station_name)
+        file_path <- file.path(export_dir, paste0(safe_name, "_merged_export.csv"))
+
+        # Merge with existing file if it exists
+        if (file.exists(file_path)) {
+            existing_df <- read.csv(file_path, stringsAsFactors = FALSE)
+            # Ensure Timestamp formats match for de-duplication
+            station_df <- bind_rows(existing_df, station_df) %>%
+                distinct(Timestamp, .keep_all = TRUE)
+            message(paste("  Merged with existing data. Total records:", nrow(station_df)))
+        }
+
         # Sort by timestamp
         station_df <- station_df %>% arrange(Timestamp)
 
-        safe_name <- gsub("[^[:alnum:]]", "_", station_name)
-        file_path <- file.path(export_dir, paste0(safe_name, "_merged_export.csv"))
         write.csv(station_df, file_path, row.names = FALSE)
-        message(paste("  SUCCESS! Saved", nrow(station_df), "rows to", file_path))
+        message(paste("  SUCCESS! Saved", nrow(station_df), "records to", file_path))
     } else {
         message("  No data found for any channel in this station.")
     }
