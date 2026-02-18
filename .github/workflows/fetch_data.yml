@@ -21,17 +21,25 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr"))'
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs"))'
 
       - name: Fetch data
         env:
           NIVUS_API_KEY: ${{ secrets.NIVUS_API_KEY }}
         run: Rscript scripts/fetch_nivus_rest.R
 
+      - name: Clean and analyze data
+        run: Rscript scripts/test_scripts/sensor_level_analysis.R
+
+      - name: Generate plots
+        run: Rscript scripts/test_scripts/plot_sensor_data.R
+
       - name: Commit and push changes
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add data/sensor_exports/*.csv
-          git commit -m "Auto-update sensor data [skip ci]" || echo "No changes to commit"
+          git add data/cleaned_analysis/*.csv
+          git add data/plots/*.png
+          git commit -m "Auto-update sensor data, analysis and plots [skip ci]" || echo "No changes to commit"
           git push
