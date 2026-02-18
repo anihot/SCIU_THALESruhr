@@ -8,12 +8,21 @@ Set-Location -Path $RepoRoot
 
 Write-Host "Starting Nivus Data Kiosk Fetch... $(Get-Date)"
 
-# Run R script
-# Note: Ensure Rscript.exe is in PATH or provide full path
-Rscript "$ScriptPath"
+$RscriptPath = "C:\Program Files\R\R-4.5.2\bin\Rscript.exe"
+
+# Run R scripts
+Write-Host "1/3: Fetching data..."
+& $RscriptPath "$ScriptPath"
 
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "Success! Data fetched and saved to data/sensor_exports/" -ForegroundColor Green
-} else {
-    Write-Warning "Error occurred while running the R script."
+    Write-Host "2/3: Cleaning and analyzing data..." -ForegroundColor Cyan
+    & $RscriptPath "$RepoRoot\scripts\test_scripts\sensor_level_analysis.R"
+    
+    Write-Host "3/3: Generating plots..." -ForegroundColor Cyan
+    & $RscriptPath "$RepoRoot\scripts\test_scripts\plot_sensor_data.R"
+    
+    Write-Host "Success! Data fetched, cleaned, and plotted." -ForegroundColor Green
+}
+else {
+    Write-Warning "Error occurred while running the R script pipeline."
 }

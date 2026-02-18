@@ -38,7 +38,7 @@ for (file_path in cleaned_files) {
             subtitle = paste("Recorded from", min(df$Zeit_Datum), "to", max(df$Zeit_Datum)),
             x = "Time",
             y = "Water Level (m)",
-            caption = "Source: Nivus Sensor Data (Cleaned)"
+            caption = paste("Source: Nivus Sensor Data (Cleaned) | Plot generated:", format(now(), "%Y-%m-%d %H:%M:%S"))
         ) +
         theme(
             plot.title = element_text(face = "bold"),
