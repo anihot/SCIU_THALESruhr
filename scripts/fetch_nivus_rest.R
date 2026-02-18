@@ -29,9 +29,16 @@ if (!dir.exists(export_dir)) {
     dir.create(export_dir, recursive = TRUE)
 }
 
-# Time range: last 30 days
+# Time range Configuration
+HISTORICAL_FETCH <- FALSE # Set to TRUE for a full backfill from 2025
+
 to_date <- now(tzone = "UTC")
-from_date <- to_date - days(30)
+if (HISTORICAL_FETCH) {
+    from_date <- as.POSIXct("2025-01-01 00:00:00", tz = "UTC")
+    message("!!! HISTORICAL FETCH ENABLED: Fetching from 2025-01-01 !!!")
+} else {
+    from_date <- to_date - days(30)
+}
 
 to_str <- format(to_date, "%Y-%m-%dT%H:%M:%SZ")
 from_str <- format(from_date, "%Y-%m-%dT%H:%M:%SZ")
@@ -76,12 +83,15 @@ for (station in stations) {
         next
     }
 
-    station_df <- NULL
+    all_channels_data <- list()
 
     # 3. Fetch data for each channel
     for (channel in channels) {
         c_id <- channel$Id
-        c_name <- channel$Name
+        c_name <- tolower(channel$Name)
+
+        # Optimization: Only fetch level and distance to save time and space
+        if (!c_name %in% c("level", "distance")) next
 
         message(paste("    Fetching channel:", c_name, "..."))
 
@@ -104,20 +114,17 @@ for (station in stations) {
 
                 # Rename Value column to channel name
                 names(c_df)[2] <- c_name
-
-                # Merge into station_df
-                if (is.null(station_df)) {
-                    station_df <- c_df
-                } else {
-                    station_df <- full_join(station_df, c_df, by = "Timestamp")
-                }
+                all_channels_data[[length(all_channels_data) + 1]] <- c_df
                 message(paste("      Found", nrow(c_df), "records."))
             }
         }
     }
 
-    # 4. Save to CSV (Merge with existing data)
-    if (!is.null(station_df)) {
+    # Process results if we have data
+    if (length(all_channels_data) > 0) {
+        # Use reduce to full_join all channel data frames
+        station_df <- reduce(all_channels_data, full_join, by = "Timestamp")
+
         safe_name <- gsub("[^[:alnum:]]", "_", station_name)
         file_path <- file.path(export_dir, paste0(safe_name, "_merged_export.csv"))
 
@@ -136,7 +143,7 @@ for (station in stations) {
         write.csv(station_df, file_path, row.names = FALSE)
         message(paste("  SUCCESS! Saved", nrow(station_df), "records to", file_path))
     } else {
-        message("  No data found for any channel in this station.")
+        message("  No 'level' or 'distance' data found for this station.")
     }
 }
 

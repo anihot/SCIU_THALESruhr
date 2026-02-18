@@ -1,0 +1,8 @@
+station,start_time,end_time,peak_level_cm,peak_time,duration_min,avg_gradient_cm_min,points_count
+Wasserbaulabor_2_merged_export,2026-02-18T09:18:15Z,2026-02-18T09:48:45Z,3.1,2026-02-18T09:36:00Z,30.5,0.174,103
+Herzogstraße_merged_export,2026-02-18T02:27:00Z,2026-02-18T02:46:00Z,1.9,2026-02-18T02:39:00Z,19,0.157,10
+Herzogstraße_merged_export,2026-02-18T00:52:00Z,2026-02-18T00:52:00Z,5.4,2026-02-18T00:52:00Z,0,54,1
+Herzogstraße_merged_export,2026-02-18T00:18:00Z,2026-02-18T00:18:00Z,5,2026-02-18T00:18:00Z,0,50,1
+Herzogstraße_merged_export,2026-02-17T20:26:00Z,2026-02-17T22:44:00Z,4.2,2026-02-17T20:33:00Z,138,0.592,107
+Herzogstraße_merged_export,2026-02-17T16:20:00Z,2026-02-17T16:37:00Z,3.3,2026-02-17T16:25:00Z,17,0.647,18
+Herzogstraße_merged_export,2026-02-17T15:33:00Z,2026-02-17T15:43:00Z,4.4,2026-02-17T15:37:00Z,10,1.073,11
