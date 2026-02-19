@@ -37,29 +37,6 @@ jobs:
       - name: Detect events
         run: Rscript scripts/test_scripts/event_detection.R
 
-      - name: Send Email Notification
-        if: hashFiles('data/latest_notifications.csv') != ''
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: 465
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "Nivus Sensor Update: Flooding Event(s) Detected!"
-          to: ${{ secrets.DESTINATION_EMAIL }}
-          from: "Nivus Automation <automation@nivus.com>"
-          body: |
-            Hello,
-
-            The automated analysis has detected new flooding events in the last 24 hours.
-            Please check the repository for details, plots and the updated events log.
-
-            Repository Link: https://github.com/${{ github.repository }}
-
-            Latest Event Summary:
-            $(cat data/latest_notifications.csv)
-          attachments: data/plots/*.png
-
       - name: Commit and push changes
         run: |
           git config --local user.email "actions@github.com"

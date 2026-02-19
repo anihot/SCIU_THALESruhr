@@ -99,17 +99,6 @@ if (length(all_events) > 0) {
 
     cat("\nSUCCESS: Detected", nrow(events_df), "total events across all stations.\n")
     cat("Event log saved to:", events_file, "\n")
-
-    # Create a summary for the latest events (last 24h) for notification
-    latest_events <- events_df %>%
-        filter(start_time > (now() - days(1)))
-
-    if (nrow(latest_events) > 0) {
-        cat("\nNEW EVENTS DETECTED IN LAST 24H:\n")
-        print(latest_events)
-        # Save a temporary notification file
-        write_csv(latest_events, "data/latest_notifications.csv")
-    }
 } else {
     cat("\nNo events detected in any station.\n")
 }
