@@ -1,41 +1,54 @@
 # SCIU THALESruhr - Sensor Data Management
 
-This repository manages the automated collection, storage and analysis of sensor data from the Nivus DataKiosk for the SCIU project.
+This repository manages the automated collection, processing, and analysis of sensor data from the Nivus DataKiosk for the SCIU project.
 
-## Project Structure
+## 🛠 Project Structure
 
-- **`.github/workflows/`**: Contains the GitHub Actions workflow for automated data fetching.
-- **`data/sensor_exports/`**: Contains the sensor data exported as CSV files, organized by station.
+- **`.github/workflows/`**: GitHub Actions for daily automated data processing.
+- **`data/`**:
+    - `sensor_exports/`: Raw CSV data fetched directly from the Nivus API.
+    - `cleaned_analysis/`: Processed data where levels are calculated and filtered.
+    - `plots/`: Visualizations of sensor levels over time.
+    - `detected_events.csv`: A log of all detected flooding events.
 - **`scripts/`**:
-    - `fetch_nivus_rest.R`: The core R script that fetches data from the Nivus REST API.
-    - `automate_fetch.ps1`: A PowerShell script for running the fetch process locally on Windows.
+    - `fetch_nivus_rest.R`: Fetches raw data from the Nivus REST API.
+    - `automate_fetch.ps1`: Local Windows script to run the full pipeline.
+    - `sync_git.ps1`: Automated hourly Git pull/push for local synchronization.
+    - **`test_scripts/`**:
+        - `sensor_level_analysis.R`: Cleans raw data and calculates water levels.
+        - `plot_sensor_data.R`: Generates time-series plots for each station.
+        - `event_detection.R`: Identifies and logs significant flooding events.
 
-## Automated Data Fetching
+## 🤖 Automated Pipeline (GitHub Actions)
 
-The data is automatically updated every day at **08:00 UTC** via GitHub Actions. The workflow:
-1. Sets up an R environment.
-2. Installs necessary packages (`httr`, `jsonlite`, `lubridate`, `dplyr`, `purrr`, `tidyr`).
-3. Executes the fetch script using the stored API key.
-4. Commits and pushes any new data back to this repository.
+The data is automatically processed every day at **08:00 UTC**. The workflow:
+1. **Fetch**: Downloads new data points for all monitored stations.
+2. **Clean**: Filters noise and calculates "level" from distance readings.
+3. **Plot**: Updates visual charts with the latest data.
+4. **Detect**: Scans for new events above the defined threshold.
+5. **Sync**: Commits all updates back to the repository.
 
-### Configuration (One-Time Setup)
+### Setup (Secrets)
+To enable the automated fetch, ensure the `NIVUS_API_KEY` is set as a repository secret in GitHub.
 
-To enable the automated fetch in a new environment or repository:
-1. Add the Nivus API Key as a secret in GitHub:
-   - Go to **Settings** > **Secrets and variables** > **Actions**.
-   - Create a new repository secret named `NIVUS_API_KEY`.
-   - Set the value to your Nivus REST API key.
+## 💻 Local Usage & Automation
 
-## Local Usage
+### Running the Full Pipeline
+You can trigger the entire fetch-and-analyze process manually on Windows:
+```powershell
+.\scripts\automate_fetch.ps1
+```
 
-To run the data fetching script locally:
-1. Ensure R is installed and available in your PATH.
-2. Run the script from the root of the repository:
-   ```bash
-   Rscript scripts/fetch_nivus_rest.R
-   ```
-   *Note: The script has a fallback API key for local testing, but it is recommended to set the `NIVUS_API_KEY` environment variable.*
+### Automated Local Sync
+To keep your local computer in sync with GitHub changes automatically (e.g., hourly), use the `sync_git.ps1` script with the **Windows Task Scheduler**.
 
-## Data Details
+1. Create a task in Task Scheduler.
+2. Trigger: Daily, repeating every 1 hour.
+3. Action: Start a program `powershell.exe`.
+4. Arguments: `-ExecutionPolicy Bypass -File "C:\Path\To\Repo\scripts\sync_git.ps1"`
 
-The sensor files in `data/sensor_exports/` are merged CSVs containing timestamps and sensor values for various channels at each station.
+## 📊 Data Details
+
+- **Levels**: Calculated as `Distance_to_Sensor - Reading`.
+- **Filtering**: Automatic removal of spikes and non-water-related noise.
+- **Event Detection**: Logged in `detected_events.csv` when levels exceed the specified threshold.
