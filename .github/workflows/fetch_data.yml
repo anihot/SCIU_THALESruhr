@@ -40,6 +40,9 @@ jobs:
       - name: Update README with latest events
         run: Rscript scripts/test_scripts/update_readme.R
 
+      - name: Generate interactive sensor map
+        run: Rscript scripts/test_scripts/generate_sensor_map.R
+
       - name: Commit and push changes
         run: |
           git config --local user.email "actions@github.com"
@@ -49,6 +52,8 @@ jobs:
           git add data/plots/*.png
           git add data/detected_events.csv
           git add data/detected_events.md
+          git add data/sensor_map.html
+          git add data/sensor_map_files/*
           git add README.md
           git commit -m "Auto-update sensor data, analysis, plots, events and README [skip ci]" || echo "No changes to commit"
           git push

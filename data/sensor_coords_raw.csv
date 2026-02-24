@@ -1,0 +1,6 @@
+"Stadt","Straße","Seriennummer","Installationsdatum","Sensortyp","GPS_Latitude","GPS_Longitude","Gebäude/Raum","Verantwortliche Person","Status","Notizen"
+"Hattingen","An der Kost","2407NLR0108","14.07.2025","NivuLink Radarsensor","51.416761700000002","7.2022586999999998","Eisenbahnbrücke/TER/RVR","Anika Hotzel/Haberhausen","online","-"
+"Bochum","Wasserstraße","2407NLR0107","45918","NivuLink Radarsensor","51.460977999999997","7.2230910000000002","Springorumbrücke/Stadt Bochum","Anika Hotzel/Versen/Ringelkamp","online",NA
+"Bochum","Königsallee","2407NLR0109","45918","NivuLink Radarsensor","51.459837999999998","7.2222670000000004","Springorumbrücke/Stadt Bochum","Anika Hotzel/Versen/Ringelkamp","online",NA
+"Bochum","Herzogstraße","2407NLR0110","45918","NivuLink Radarsensor","51.511366000000002","7.2044540000000001","Bahntrasse/Stadt Bochum (stillgelegt)","Anika Hotzel/Versen/Ringelkamp","online",NA
+"Bochum","Bessemerstraße","tbd","tbd","tbd","tbd","tbd","tbd","tbd",NA,NA

@@ -1,9 +1,14 @@
 # SCIU THALESruhr - Sensor Data Management
 
+### 📍 Interaktive Karte
+Die Standorte aller Sensoren sind auf dieser **[interaktiven Karte](data/sensor_map.html)** (Download & im Browser öffnen) markiert.
+
+---
+
 <!-- LATEST_EVENTS_START -->
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-02-24 10:33:38 UTC*
+*Stand: 2026-02-24 10:51:29 UTC*
 
 Es wurden **8** neue potenzielle Ereignisse erkannt.
 
