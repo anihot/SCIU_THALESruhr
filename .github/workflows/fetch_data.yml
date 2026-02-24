@@ -37,6 +37,9 @@ jobs:
       - name: Detect events
         run: Rscript scripts/test_scripts/event_detection.R
 
+      - name: Update README with latest events
+        run: Rscript scripts/test_scripts/update_readme.R
+
       - name: Commit and push changes
         run: |
           git config --local user.email "actions@github.com"
@@ -45,5 +48,7 @@ jobs:
           git add data/cleaned_analysis/*.csv
           git add data/plots/*.png
           git add data/detected_events.csv
-          git commit -m "Auto-update sensor data, analysis, plots and events [skip ci]" || echo "No changes to commit"
+          git add data/detected_events.md
+          git add README.md
+          git commit -m "Auto-update sensor data, analysis, plots, events and README [skip ci]" || echo "No changes to commit"
           git push
