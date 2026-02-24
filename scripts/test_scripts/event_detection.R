@@ -7,6 +7,7 @@ library(tidyr)
 # Config
 cleaned_dir <- "data/cleaned_analysis"
 events_file <- "data/detected_events.csv"
+events_md_file <- "data/detected_events.md"
 THRESHOLD <- 0.015 # 1.5 cm - Threshold for flooding detection
 MIN_GAP_MINS <- 20 # Minimum gap between separate events
 
@@ -53,7 +54,10 @@ detect_events <- function(df, station_name) {
             avg_gradient_cm_min = round(avg_gradient_cm_min, 3),
             peak_level_cm = round(peak_level_m * 100, 2)
         ) %>%
-        select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, avg_gradient_cm_min, points_count)
+        select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, avg_gradient_cm_min, points_count) %>%
+        mutate(
+            station = gsub("_merged_export", "", station)
+        )
 
     return(events)
 }
@@ -93,12 +97,19 @@ for (file_path in cleaned_files) {
 if (length(all_events) > 0) {
     events_df <- bind_rows(all_events) %>% arrange(desc(start_time))
 
-    # Check for existing events to avoid double entries in the log if we keep historical logs
-    # For now, we overwrite the full log from the historical analysis
-    write_csv(events_df, events_file)
+    # Export as CSV with BOM for Excel/GitHub interactivity
+    # write_excel_csv adds the UTF-8 BOM
+    write_excel_csv(events_df, events_file)
+
+    # Export as Markdown table for quick viewing on GitHub
+    library(knitr)
+    md_table <- kable(events_df, format = "markdown")
+    # Ensure UTF-8 for write_lines
+    write_lines(c("# Detected Events Log", "", md_table), events_md_file)
 
     cat("\nSUCCESS: Detected", nrow(events_df), "total events across all stations.\n")
-    cat("Event log saved to:", events_file, "\n")
+    cat("CSV log saved to:", events_file, "\n")
+    cat("Markdown log saved to:", events_md_file, "\n")
 } else {
     cat("\nNo events detected in any station.\n")
 }
