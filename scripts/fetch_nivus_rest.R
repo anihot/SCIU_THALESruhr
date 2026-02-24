@@ -47,15 +47,21 @@ message(paste("Fetching data from", from_str, "to", to_str))
 
 # 1. Fetch Stations
 message("Fetching stations list...")
+# Print headers for debugging (Masking key)
+# message("Headers used:")
+# message(paste("  X-API-Key:", paste0(substr(api_key, 1, 5), "...", substr(api_key, nchar(api_key)-5, nchar(api_key)))))
+
 stations_resp <- GET(
     url = paste0(base_url, "/api/v2/stations"),
-    custom_headers
+    custom_headers,
+    verbose() # Add verbose output for detailed trace in GitHub Actions
 )
 
 if (status_code(stations_resp) != 200) {
+    message("Error Status Code: ", status_code(stations_resp))
     message("Error Response Body:")
     print(content(stations_resp, "text"))
-    stop("Failed to fetch stations. Status: ", status_code(stations_resp))
+    stop("Failed to fetch stations.")
 }
 
 stations <- content(stations_resp, "parsed")
