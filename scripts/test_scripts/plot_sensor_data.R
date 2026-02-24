@@ -29,19 +29,31 @@ for (file_path in cleaned_files) {
         next
     }
 
+    # Filter for the last 24 hours
+    current_time <- now(tzone = lubridate::tz(df$Zeit_Datum))
+    start_time <- current_time - hours(24)
+
+    df_24h <- df %>%
+        filter(Zeit_Datum >= start_time)
+
+    if (nrow(df_24h) == 0) {
+        cat("Warning: No data in the last 24 hours for", station_name, "\n")
+        next
+    }
+
     # Create plot
-    p <- ggplot(df, aes(x = Zeit_Datum, y = level)) +
-        geom_line(color = "#0072B2") +
+    p <- ggplot(df_24h, aes(x = Zeit_Datum, y = level)) +
+        geom_line(color = "#0072B2", linewidth = 0.8) +
         theme_minimal() +
         labs(
-            title = paste("Water Level Analysis:", station_name),
-            subtitle = paste("Recorded from", min(df$Zeit_Datum), "to", max(df$Zeit_Datum)),
+            title = paste("Water Level (Last 24h):", station_name),
+            subtitle = paste("Window:", format(min(df_24h$Zeit_Datum), "%Y-%m-%d %H:%M"), "to", format(max(df_24h$Zeit_Datum), "%Y-%m-%d %H:%M")),
             x = "Time",
             y = "Water Level (m)",
-            caption = paste("Source: Nivus Sensor Data (Cleaned) | Plot generated:", format(now(), "%Y-%m-%d %H:%M:%S"))
+            caption = paste("Source: Nivus Sensor Data | Generated:", format(now(), "%Y-%m-%d %H:%M:%S"))
         ) +
         theme(
-            plot.title = element_text(face = "bold"),
+            plot.title = element_text(face = "bold", size = 14),
             axis.text.x = element_text(angle = 45, hjust = 1)
         )
 
