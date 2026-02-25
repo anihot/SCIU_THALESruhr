@@ -7,26 +7,8 @@ Die Standorte aller Sensoren sind auf dieser **[interaktiven Karte](data/sensor_
 
 <!-- LATEST_EVENTS_START -->
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-02-24 10:51:29 UTC*
-
-Es wurden **8** neue potenzielle Ereignisse erkannt.
-
-|station      |start_time          | peak_level_cm| duration_min|
-|:------------|:-------------------|-------------:|------------:|
-|Herzogstraße |2026-02-24 05:49:00 |           5.7|          157|
-|Herzogstraße |2026-02-24 05:01:00 |           2.4|            0|
-|Herzogstraße |2026-02-24 02:56:00 |           2.3|           31|
-|Herzogstraße |2026-02-24 01:58:00 |           1.8|           25|
-|Herzogstraße |2026-02-24 00:40:00 |           2.2|           16|
-|Herzogstraße |2026-02-23 21:15:00 |           4.8|          177|
-|Herzogstraße |2026-02-23 15:38:00 |           8.4|          154|
-|Herzogstraße |2026-02-23 14:50:00 |           5.9|           19|
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Herzogstraße
-![Plot Herzogstraße](data/plots/Herzogstraße_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-02-25 14:36:04 UTC*
 
 ---
 
