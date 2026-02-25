@@ -31,8 +31,8 @@ m <- leaflet(sensors) %>%
     addMiniMap(toggleDisplay = TRUE)
 
 # 3. Save as HTML
-# We set selfcontained = FALSE to avoid Pandoc dependency issues in some environments.
-# This will create a 'sensor_map_files' folder alongside the HTML.
-saveWidget(m, file = output_file, selfcontained = FALSE)
+# We set selfcontained = TRUE to ensure all dependencies (JS/CSS) are bundled into the HTML.
+# This avoids issues with external folders in different environments.
+saveWidget(m, file = output_file, selfcontained = TRUE)
 
 cat("SUCCESS: Interactive map saved to", output_file, "\n")

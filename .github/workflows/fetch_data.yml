@@ -18,6 +18,9 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
+      
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Install dependencies
         run: |
@@ -53,7 +56,6 @@ jobs:
           git add data/detected_events.csv
           git add data/detected_events.md
           git add data/sensor_map.html
-          git add data/sensor_map_files/*
           git add README.md
           git commit -m "Auto-update sensor data, analysis, plots, events and README [skip ci]" || echo "No changes to commit"
           git push
