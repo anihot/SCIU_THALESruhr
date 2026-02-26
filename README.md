@@ -1,7 +1,11 @@
 # SCIU THALESruhr - Sensor Data Management
 
-### 📍 Interaktive Karte
-Die Standorte aller Sensoren sind auf dieser **[interaktiven Karte](data/sensor_map.html)** (Download & im Browser öffnen) markiert.
+### 📍 Interaktive Sensor-Karte
+[![Sensor Map Preview](https://raw.githubusercontent.com/anihot/SCIU_THALESruhr/main/data/sensor_map_preview.png)](data/sensor_map.html)
+*Klicke auf das Bild oder [hier](data/sensor_map.html), um die interaktive Karte zu öffnen.*
+
+> [!NOTE]
+> Die Karte zeigt die aktuellen Standorte und Status aller Sensoren im SCIU-Projekt. Die HTML-Version muss heruntergeladen und lokal im Browser geöffnet werden.
 
 ---
 
