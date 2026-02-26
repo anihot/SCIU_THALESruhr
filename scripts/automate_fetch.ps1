@@ -21,10 +21,13 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "3/4: Generating plots..." -ForegroundColor Cyan
     & $RscriptPath "$RepoRoot\scripts\test_scripts\plot_sensor_data.R"
     
-    Write-Host "4/4: Running event detection..." -ForegroundColor Cyan
+    Write-Host "4/5: Running event detection..." -ForegroundColor Cyan
     & $RscriptPath "$RepoRoot\scripts\test_scripts\event_detection.R"
     
-    Write-Host "Success! Data fetched, cleaned, plotted and events detected." -ForegroundColor Green
+    Write-Host "5/5: Generating static map..." -ForegroundColor Cyan
+    & $RscriptPath "$RepoRoot\scripts\test_scripts\generate_static_map.R"
+    
+    Write-Host "Success! Data fetched, cleaned, plotted, events detected and map updated." -ForegroundColor Green
 }
 else {
     Write-Warning "Error occurred while running the R script pipeline."
