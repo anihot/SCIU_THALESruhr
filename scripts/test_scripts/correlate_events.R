@@ -38,20 +38,25 @@ correlation <- events %>%
         window_end = end_time,
 
         # Filter precip for this station and timeframe
+        # Assign to temp vars to avoid scoping issues in nested filter
+        cur_station = station,
+        cur_start = window_start,
+        cur_end = window_end,
         event_precip = list(
             precip %>%
                 filter(
-                    station == .data$station,
-                    timestamp >= .data$window_start,
-                    timestamp <= .data$window_end
+                    station == cur_station,
+                    timestamp >= cur_start,
+                    timestamp <= cur_end
                 )
         ),
-        total_precip_mm = sum(event_precip$precipitation_mm, na.rm = TRUE),
-        max_intensity_mm_h = ifelse(nrow(event_precip) > 0, max(event_precip$precipitation_mm, na.rm = TRUE), 0),
+        total_precip_mm = sum(event_precip[[1]]$precipitation_mm, na.rm = TRUE),
+        max_intensity_mm_h = ifelse(nrow(event_precip[[1]]) > 0, max(event_precip[[1]]$precipitation_mm, na.rm = TRUE), 0),
         rain_detected = ifelse(total_precip_mm > 0, TRUE, FALSE)
     ) %>%
-    select(-event_precip, -window_start, -window_end) %>%
+    select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end) %>%
     ungroup()
+
 
 # 3. Export
 write_excel_csv(correlation, output_file)
