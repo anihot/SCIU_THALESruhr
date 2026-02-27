@@ -31,13 +31,8 @@ precip <- precip %>%
 
 # 2. Correlate
 if (nrow(precip) == 0) {
-    cat("Warning: Precipitation data is empty. Skipping correlation.\n")
-    correlation <- events %>%
-        mutate(
-            total_precip_mm = 0,
-            max_intensity_mm_h = 0,
-            rain_detected = FALSE
-        )
+    cat("Warning: Precipitation data is empty. No events will be verified by rain.\n")
+    correlation <- data.frame()
 } else {
     # For each event, find the total rain in its window + lead-in
     correlation <- events %>%
@@ -63,13 +58,23 @@ if (nrow(precip) == 0) {
             max_intensity_mm_h = ifelse(nrow(event_precip[[1]]) > 0, max(event_precip[[1]]$precipitation_mm, na.rm = TRUE), 0),
             rain_detected = ifelse(total_precip_mm > 0, TRUE, FALSE)
         ) %>%
-        select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end) %>%
+        filter(rain_detected == TRUE) %>% # ONLY keep events with rain
+        select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end, -rain_detected) %>%
         ungroup()
 }
 
+# 3. Export & Overwrite
+# Overwrite the original event log with only rain-verified events
+write_excel_csv(correlation, events_file)
 
-# 3. Export
-write_excel_csv(correlation, output_file)
+# Update Markdown table as well
+library(knitr)
+if (nrow(correlation) > 0) {
+    md_table <- kable(correlation, format = "markdown")
+    write_lines(c("# Detected Events Log (Rain-Verified Only)", "", md_table), "data/detected_events.md")
+} else {
+    write_lines(c("# Detected Events Log", "", "No rain-verified events found."), "data/detected_events.md")
+}
 
-cat("SUCCESS: Correlation summary saved to", output_file, "\n")
-cat("Events with detected rain:", sum(correlation$rain_detected), "/", nrow(correlation), "\n")
+cat("SUCCESS: Overwrote", events_file, "with rain-verified events only.\n")
+cat("Retained", nrow(correlation), "out of", nrow(events), "original detections.\n")
