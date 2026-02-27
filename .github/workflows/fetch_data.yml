@@ -24,12 +24,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "leaflet", "htmlwidgets"))'
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "leaflet", "htmlwidgets", "rdwd", "terra", "stars"))'
 
       - name: Fetch data
         env:
           NIVUS_API_KEY: ${{ secrets.NIVUS_API_KEY }}
         run: Rscript scripts/fetch_nivus_rest.R
+
+      - name: Fetch RADOLAN precipitation
+        run: Rscript scripts/test_scripts/fetch_radolan.R
 
       - name: Clean and analyze data
         run: Rscript scripts/test_scripts/sensor_level_analysis.R
@@ -39,6 +42,9 @@ jobs:
 
       - name: Detect events
         run: Rscript scripts/test_scripts/event_detection.R
+
+      - name: Correlate events with precipitation
+        run: Rscript scripts/test_scripts/correlate_events.R
 
       - name: Update README with latest events
         run: Rscript scripts/test_scripts/update_readme.R
@@ -56,6 +62,9 @@ jobs:
           git add data/detected_events.csv
           git add data/detected_events.md
           git add data/sensor_map.html
+          git add data/precipitation_at_sensors.csv
+          git add data/event_correlation_summary.csv
           git add README.md
-          git commit -m "Auto-update sensor data, analysis, plots, events and README [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto-update sensor data, precipitation, and analysis [skip ci]" || echo "No changes to commit"
+
           git push
