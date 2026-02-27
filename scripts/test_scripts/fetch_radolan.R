@@ -32,8 +32,12 @@ if (file.exists(output_file)) {
         cat("Existing data found. Resuming from:", as.character(start_date), "\n")
     }
 } else {
-    cat("No existing precipitation data. Starting from scratch:", as.character(start_date), "\n")
+    # Initialize empty file with headers
+    cat("No existing precipitation data. Initializing", output_file, "\n")
+    df_init <- data.frame(timestamp = POSIXct(), station = character(), precipitation_mm = numeric())
+    write_csv(df_init, output_file)
 }
+
 
 # 3. Fetch data from DWD using rdwd
 cat("Fetching file list from DWD...\n")
