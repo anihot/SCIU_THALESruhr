@@ -54,16 +54,26 @@ for (file_path in cleaned_files) {
 
     # Prepare precipitation overlay
     p_precip <- NULL
+    scale_factor <- 1
     if (!is.null(precip_data)) {
         p_precip <- precip_data %>%
             filter(station == station_name, timestamp >= start_time)
 
-        # Rescale factor for secondary axis (e.g., max precip in 24h to max level)
-        max_level <- max(df_24h$level, na.rm = TRUE)
-        max_precip <- max(p_precip$precipitation_mm, na.rm = TRUE)
-        if (max_precip == 0) max_precip <- 1
-        scale_factor <- max_level / max_precip
+        if (nrow(p_precip) > 0) {
+            # Rescale factor for secondary axis (e.g., max precip in 24h to max level)
+            max_level <- max(df_24h$level, na.rm = TRUE)
+            max_precip <- max(p_precip$precipitation_mm, na.rm = TRUE)
+
+            # Handle cases where max_precip is 0, -Inf (empty), or NA
+            if (is.na(max_precip) || !is.finite(max_precip) || max_precip == 0) {
+                scale_factor <- 1
+            } else {
+                if (max_level <= 0) max_level <- 1 # Avoid division by zero/negative
+                scale_factor <- max_level / max_precip
+            }
+        }
     }
+
 
     # Create plot
     p <- ggplot() +
