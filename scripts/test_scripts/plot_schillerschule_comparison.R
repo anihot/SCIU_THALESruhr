@@ -12,9 +12,9 @@ plots_dir <- "data/plots"
 
 if (!dir.exists(plots_dir)) dir.create(plots_dir, recursive = TRUE)
 
-cat("🚀 Starting Comparison Plotting...\n")
+cat("🚀 Starting Comparison Plotting (Aggregated)...\n")
 
-# 1. Load Rain Data (Aggregate for Overview)
+# 1. Load and Aggregate Rain Data
 load_rain <- function(file_path, label) {
     cat("Reading", label, "data...\n")
     read_csv(file_path,
@@ -23,34 +23,34 @@ load_rain <- function(file_path, label) {
             TIMESTAMP = col_datetime(format = "%Y-%m-%d %H:%M:%S%z"),
             Rain_mm_Tot = col_double()
         )
-    ) %>%
-        mutate(Sensor = label)
+    )
 }
 
-rain_yard <- load_rain(rain_yard_file, "Schillerschule Yard")
-rain_garden <- load_rain(rain_garden_file, "Schillerschule Garden")
+rain_yard <- load_rain(rain_yard_file, "Yard")
+rain_garden <- load_rain(rain_garden_file, "Garden")
 
-rain_all <- bind_rows(rain_yard, rain_garden)
+# Combine and take Max to represent "Schillerschule Site"
+rain_combined <- full_join(rain_yard, rain_garden, by = "TIMESTAMP", suffix = c("_yard", "_garden")) %>%
+    mutate(Rain_mm = pmax(Rain_mm_Tot_yard, Rain_mm_Tot_garden, na.rm = TRUE)) %>%
+    select(TIMESTAMP, Rain_mm) %>%
+    filter(!is.na(Rain_mm))
 
 # 2. Overview Plot - Daily Totals
 cat("Generating Overview Plot...\n")
-rain_daily <- rain_all %>%
+rain_daily <- rain_combined %>%
     mutate(Date = as.Date(TIMESTAMP)) %>%
-    group_by(Date, Sensor) %>%
-    summarise(Daily_Rain = sum(Rain_mm_Tot, na.rm = TRUE), .groups = "drop")
+    group_by(Date) %>%
+    summarise(Daily_Rain = sum(Rain_mm, na.rm = TRUE), .groups = "drop")
 
-p_overview <- ggplot(rain_daily, aes(x = Date, y = Daily_Rain, fill = Sensor)) +
-    geom_bar(stat = "identity", position = "dodge") +
+p_overview <- ggplot(rain_daily, aes(x = Date, y = Daily_Rain)) +
+    geom_col(fill = "#3498DB") +
     theme_minimal() +
     labs(
-        title = "Niederschlagsübersicht Schillerschule",
-        subtitle = "Tägliche Summen (Garten & Hof)",
-        x = "Datum", y = "Regen (mm)",
-        fill = "Sensor"
+        title = "Niederschlagsganglinie Schillerschule (Aggregiert)",
+        subtitle = "Tägliche Summen (Max aus Garten & Hof)",
+        x = "Datum", y = "Regen (mm)"
     ) +
-    scale_fill_manual(values = c("Schillerschule Yard" = "#2C3E50", "Schillerschule Garden" = "#3498DB")) +
-    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
-    theme(legend.position = "bottom")
+    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")
 
 ggsave(file.path(plots_dir, "schillerschule_rain_overview.png"), p_overview, width = 12, height = 6, dpi = 300)
 
@@ -72,39 +72,38 @@ for (i in seq_len(nrow(top_events))) {
 
     cat("Plotting Event:", station_name, "at", as.character(start_dt), "\n")
 
-    # Load raw sensor data for this window (+/- 2 hours)
+    # Load raw sensor data
     sensor_file <- paste0("data/sensor_exports/", station_name, "_merged_export.csv")
     if (!file.exists(sensor_file)) next
 
     sensor_data <- read_csv(sensor_file, show_col_types = FALSE) %>%
         mutate(Timestamp = ymd_hms(Timestamp)) %>%
-        filter(Timestamp >= (start_dt - hours(2)), Timestamp <= (end_dt + hours(4)))
+        filter(Timestamp >= (start_dt - hours(1)), Timestamp <= (end_dt + hours(3)))
 
     # Load rain data for same window
-    rain_window <- rain_all %>%
-        filter(TIMESTAMP >= (start_dt - hours(2)), TIMESTAMP <= (end_dt + hours(4)))
-
-    # Align Rain to 5min intervals for better plotting if needed, but raw is fine too
+    rain_window <- rain_combined %>%
+        filter(TIMESTAMP >= (start_dt - hours(1)), TIMESTAMP <= (end_dt + hours(3)))
 
     # Dual Axis Plot
     p_comp <- ggplot() +
-        # Rain Bar (inverted on top if we wanted, but let's do standard dual axis)
-        geom_col(data = rain_window, aes(x = TIMESTAMP, y = Rain_mm_Tot * 10, fill = Sensor), alpha = 0.5) +
-        # Sensor Level Line
-        geom_line(data = sensor_data, aes(x = Timestamp, y = level), color = "#E74C3C", size = 1) +
+        # Rain Bar (Blue)
+        geom_col(data = rain_window, aes(x = TIMESTAMP, y = Rain_mm * 10), fill = "#3498DB", alpha = 0.5) +
+        # Sensor Level Line (Red)
+        geom_line(data = sensor_data, aes(x = Timestamp, y = level), color = "#E74C3C", linewidth = 1) +
         scale_y_continuous(
             name = "Wasserstand (cm)",
             sec.axis = sec_axis(~ . / 10, name = "Niederschlag (mm)")
         ) +
         theme_minimal() +
         labs(
-            title = paste("Ereignis-Vergleich:", station_clean),
-            subtitle = paste("Start:", format(start_dt, "%d.%m.%Y %H:%M"), "| Regensumme:", round(event$total_rain_mm, 1), "mm"),
-            x = "Zeit",
-            fill = "Regen-Quelle"
+            title = paste("Ereignis-Analyse:", station_clean),
+            subtitle = paste("Datum:", format(start_dt, "%d.%m.%Y"), "| Peak:", round(event$peak_level_cm, 1), "cm"),
+            x = "Zeit"
         ) +
-        scale_fill_manual(values = c("Schillerschule Yard" = "#2C3E50", "Schillerschule Garden" = "#3498DB")) +
-        theme(legend.position = "bottom")
+        theme(
+            axis.title.y = element_text(color = "#E74C3C", face = "bold"),
+            axis.title.y.right = element_text(color = "#3498DB", face = "bold")
+        )
 
     safe_name <- gsub(" ", "_", tolower(station_clean))
     date_str <- format(start_dt, "%Y%m%d_%H%M")
