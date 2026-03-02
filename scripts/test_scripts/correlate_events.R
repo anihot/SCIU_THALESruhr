@@ -59,7 +59,7 @@ if (nrow(precip) == 0) {
             max_intensity_mm_h = ifelse(nrow(event_precip[[1]]) > 0, max(event_precip[[1]]$precipitation_mm, na.rm = TRUE), 0),
             rain_detected = ifelse(total_precip_mm > 0, TRUE, FALSE)
         ) %>%
-        filter(rain_detected == TRUE) %>% # ONLY keep events with rain
+        filter(rain_detected == TRUE | station == "Wasserbaulabor_2") %>% # Keep rain-verified OR indoor test sensor
         select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end, -rain_detected) %>%
         ungroup()
 }
