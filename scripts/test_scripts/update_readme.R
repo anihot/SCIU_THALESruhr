@@ -16,11 +16,10 @@ if (!file_exists(events_file)) {
 }
 
 # 1. Read events
-events <- read_csv(events_file, show_col_types = FALSE)
-
-if (nrow(events) == 0) {
-    message("No events found in log.")
-    quit(save = "no")
+if (file_exists(events_file)) {
+    events <- read_csv(events_file, show_col_types = FALSE)
+} else {
+    events <- tibble(station = character(), start_time = POSIXct(), end_time = POSIXct(), peak_level_cm = numeric(), duration_min = numeric())
 }
 
 # 2. Filter for events in the last 30 hours (to cover daily gaps)
@@ -82,6 +81,7 @@ replacement <- paste0(start_mark, "\n", new_content, "\n", end_mark)
 
 updated_readme <- gsub(pattern, replacement, readme_txt, perl = TRUE)
 
+# write_file with explicit UTF-8 to avoid mangling emojis or characters on Windows
 write_file(updated_readme, readme_file)
 
 cat("SUCCESS: README.md updated with latest events.\n")

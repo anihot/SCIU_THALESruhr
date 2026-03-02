@@ -111,5 +111,18 @@ if (length(all_events) > 0) {
     cat("CSV log saved to:", events_file, "\n")
     cat("Markdown log saved to:", events_md_file, "\n")
 } else {
-    cat("\nNo events detected in any station.\n")
+    cat("\nNo events detected in any station. Writing empty log file...\n")
+    # Write empty dataframe with headers to ensure subsequent scripts can read it
+    empty_df <- tibble(
+        station = character(),
+        start_time = POSIXct(),
+        end_time = POSIXct(),
+        peak_level_cm = numeric(),
+        peak_time = POSIXct(),
+        duration_min = numeric(),
+        avg_gradient_cm_min = numeric(),
+        points_count = integer()
+    )
+    write_excel_csv(empty_df, events_file)
+    write_lines(c("# Detected Events Log", "", "Keine Ereignisse erkannt."), events_md_file)
 }

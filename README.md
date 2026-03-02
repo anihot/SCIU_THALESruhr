@@ -12,8 +12,23 @@
 
 <!-- LATEST_EVENTS_START -->
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-02-27 10:49:42 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-03-02 09:29:43 UTC*
+
+Es wurden **5** neue potenzielle Ereignisse erkannt.
+
+|station      |start_time          | peak_level_cm| duration_min|
+|:------------|:-------------------|-------------:|------------:|
+|Herzogstraße |2026-03-02 07:59:00 |          28.4|            1|
+|Herzogstraße |2026-03-02 06:15:00 |          26.7|            3|
+|Herzogstraße |2026-03-02 04:25:00 |           4.2|           64|
+|Herzogstraße |2026-03-01 15:51:00 |          20.5|          144|
+|Herzogstraße |2026-03-01 08:43:00 |          12.8|          236|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Herzogstraße
+![Plot Herzogstraße](data/plots/Herzogstraße_merged_export_cleaned.png)
+
 
 ---
 
