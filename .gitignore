@@ -17,6 +17,7 @@ data/sensor_exports/
 !data/detected_events.md
 !data/event_correlation_summary.csv
 !data/rain_extra/schillerschule_correlation_results.csv
+!data/schillerschule_analysiert.csv
 
 # Large images/plots
 !data/plots/
