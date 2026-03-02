@@ -20,7 +20,6 @@ sensors <- read_csv(metadata_file, show_col_types = FALSE)
 # 2. Create Leaflet map
 m <- leaflet(sensors) %>%
     addTiles() %>% # Add default OpenStreetMap map tiles
-    addProviderTiles(providers$CartoDB.Positron) %>% # Add a clean, light base map
     addMarkers(
         lng = ~lon,
         lat = ~lat,
