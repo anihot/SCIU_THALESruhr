@@ -12,11 +12,10 @@ plots_dir <- "data/plots"
 
 if (!dir.exists(plots_dir)) dir.create(plots_dir, recursive = TRUE)
 
-cat("🚀 Starting Comparison Plotting (Aggregated)...\n")
+cat("🚀 Starting Comparison Plotting (Aggregated + Cleaned Data)...\n")
 
 # 1. Load and Aggregate Rain Data
 load_rain <- function(file_path, label) {
-    cat("Reading", label, "data...\n")
     read_csv(file_path,
         col_select = c(TIMESTAMP, Rain_mm_Tot),
         col_types = cols(
@@ -26,10 +25,10 @@ load_rain <- function(file_path, label) {
     )
 }
 
+cat("Aggregating rain data...\n")
 rain_yard <- load_rain(rain_yard_file, "Yard")
 rain_garden <- load_rain(rain_garden_file, "Garden")
 
-# Combine and take Max to represent "Schillerschule Site"
 rain_combined <- full_join(rain_yard, rain_garden, by = "TIMESTAMP", suffix = c("_yard", "_garden")) %>%
     mutate(Rain_mm = pmax(Rain_mm_Tot_yard, Rain_mm_Tot_garden, na.rm = TRUE)) %>%
     select(TIMESTAMP, Rain_mm) %>%
@@ -46,7 +45,7 @@ p_overview <- ggplot(rain_daily, aes(x = Date, y = Daily_Rain)) +
     geom_col(fill = "#3498DB") +
     theme_minimal() +
     labs(
-        title = "Niederschlagsganglinie Schillerschule (Aggregiert)",
+        title = "Niederschlagsganglinie Schillerschule",
         subtitle = "Tägliche Summen (Max aus Garten & Hof)",
         x = "Datum", y = "Regen (mm)"
     ) +
@@ -60,49 +59,59 @@ events <- read_csv(events_file, show_col_types = FALSE) %>%
     filter(rain_verified) %>%
     arrange(desc(total_rain_mm))
 
-# Take top 3 events for comparison
-top_events <- head(events, 3)
+# Plot top 12 instead of 3
+top_events <- head(events, 12)
 
 for (i in seq_len(nrow(top_events))) {
     event <- top_events[i, ]
-    station_name <- event$station
+    station_name <- event$station # e.g. Wasserstraße_Springorum
     station_clean <- gsub("_[S|R].*", "", station_name)
     start_dt <- event$start_time
     end_dt <- event$end_time
 
-    cat("Plotting Event:", station_name, "at", as.character(start_dt), "\n")
+    cat("Plotting Event", i, ":", station_name, "at", as.character(start_dt), "\n")
 
-    # Load raw sensor data
-    sensor_file <- paste0("data/sensor_exports/", station_name, "_merged_export.csv")
-    if (!file.exists(sensor_file)) next
+    # Load CLEANED sensor data
+    sensor_file <- file.path("data/cleaned_analysis", paste0(station_name, "_merged_export_cleaned.csv"))
+    if (!file.exists(sensor_file)) {
+        cat("  Warning: Cleaned file not found:", sensor_file, "\n")
+        next
+    }
 
     sensor_data <- read_csv(sensor_file, show_col_types = FALSE) %>%
-        mutate(Timestamp = ymd_hms(Timestamp)) %>%
-        filter(Timestamp >= (start_dt - hours(1)), Timestamp <= (end_dt + hours(3)))
+        mutate(Timestamp = as_datetime(Zeit_Datum)) %>%
+        filter(Timestamp >= (start_dt - hours(1)), Timestamp <= (end_dt + hours(3))) %>%
+        filter(!is.na(level))
+
+    if (nrow(sensor_data) == 0) {
+        cat("  Warning: No valid level data for this event in cleaned file.\n")
+        next
+    }
 
     # Load rain data for same window
     rain_window <- rain_combined %>%
         filter(TIMESTAMP >= (start_dt - hours(1)), TIMESTAMP <= (end_dt + hours(3)))
 
-    # Dual Axis Plot
+    # Dual Axis Plot (Level in cm)
     p_comp <- ggplot() +
         # Rain Bar (Blue)
         geom_col(data = rain_window, aes(x = TIMESTAMP, y = Rain_mm * 10), fill = "#3498DB", alpha = 0.5) +
-        # Sensor Level Line (Red)
-        geom_line(data = sensor_data, aes(x = Timestamp, y = level), color = "#E74C3C", linewidth = 1) +
+        # Sensor Level Line (Red) - Multiply by 100 as level in cleaned file is in m
+        geom_line(data = sensor_data, aes(x = Timestamp, y = level * 100), color = "#E74C3C", linewidth = 1.2) +
         scale_y_continuous(
-            name = "Wasserstand (cm)",
-            sec.axis = sec_axis(~ . / 10, name = "Niederschlag (mm)")
+            name = "Wasserstand (rot, cm)",
+            sec.axis = sec_axis(~ . / 10, name = "Niederschlag (blau, mm)")
         ) +
         theme_minimal() +
         labs(
             title = paste("Ereignis-Analyse:", station_clean),
-            subtitle = paste("Datum:", format(start_dt, "%d.%m.%Y"), "| Peak:", round(event$peak_level_cm, 1), "cm"),
+            subtitle = paste("Datum:", format(start_dt, "%d.%m.%Y"), "| Regensumme:", round(event$total_rain_mm, 1), "mm"),
             x = "Zeit"
         ) +
         theme(
-            axis.title.y = element_text(color = "#E74C3C", face = "bold"),
-            axis.title.y.right = element_text(color = "#3498DB", face = "bold")
+            axis.title.y = element_text(color = "#E74C3C", face = "bold", size = 11),
+            axis.title.y.right = element_text(color = "#3498DB", face = "bold", size = 11),
+            panel.grid.minor = element_blank()
         )
 
     safe_name <- gsub(" ", "_", tolower(station_clean))
