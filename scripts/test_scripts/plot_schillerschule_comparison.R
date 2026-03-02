@@ -54,13 +54,13 @@ p_overview <- ggplot(rain_daily, aes(x = Date, y = Daily_Rain)) +
 ggsave(file.path(plots_dir, "schillerschule_rain_overview.png"), p_overview, width = 12, height = 6, dpi = 300)
 
 # 3. Detailed Comparison Plot for Top Events
-cat("Loading Events and Sensor Data...\n")
+cat("Loading Events and Sensor Data from Cleaned Analysis...\n")
 events <- read_csv(events_file, show_col_types = FALSE) %>%
     filter(rain_verified) %>%
     arrange(desc(total_rain_mm))
 
-# Plot top 12 instead of 3
-top_events <- head(events, 12)
+# Take up to 10 events for comparison
+top_events <- head(events, 10)
 
 for (i in seq_len(nrow(top_events))) {
     event <- top_events[i, ]
@@ -84,7 +84,7 @@ for (i in seq_len(nrow(top_events))) {
         filter(!is.na(level))
 
     if (nrow(sensor_data) == 0) {
-        cat("  Warning: No valid level data for this event in cleaned file.\n")
+        cat("  Warning: No valid level data for this event.\n")
         next
     }
 
@@ -97,26 +97,27 @@ for (i in seq_len(nrow(top_events))) {
         # Rain Bar (Blue)
         geom_col(data = rain_window, aes(x = TIMESTAMP, y = Rain_mm * 10), fill = "#3498DB", alpha = 0.5) +
         # Sensor Level Line (Red) - Multiply by 100 as level in cleaned file is in m
-        geom_line(data = sensor_data, aes(x = Timestamp, y = level * 100), color = "#E74C3C", linewidth = 1.2) +
+        geom_line(data = sensor_data, aes(x = Timestamp, y = level * 100), color = "#E74C3C", linewidth = 1.5) +
         scale_y_continuous(
             name = "Wasserstand (rot, cm)",
             sec.axis = sec_axis(~ . / 10, name = "Niederschlag (blau, mm)")
         ) +
         theme_minimal() +
         labs(
-            title = paste("Ereignis-Analyse:", station_clean),
-            subtitle = paste("Datum:", format(start_dt, "%d.%m.%Y"), "| Regensumme:", round(event$total_rain_mm, 1), "mm"),
+            title = paste("VERIFIZIERT (>1mm):", station_clean),
+            subtitle = paste("Event am", format(start_dt, "%d.%m.%Y %H:%M"), "| Regensumme:", round(event$total_rain_mm, 2), "mm"),
             x = "Zeit"
         ) +
         theme(
-            axis.title.y = element_text(color = "#E74C3C", face = "bold", size = 11),
-            axis.title.y.right = element_text(color = "#3498DB", face = "bold", size = 11),
-            panel.grid.minor = element_blank()
+            axis.title.y = element_text(color = "#E74C3C", face = "bold", size = 12),
+            axis.title.y.right = element_text(color = "#3498DB", face = "bold", size = 12),
+            plot.title = element_text(face = "bold", size = 14, color = "#2C3E50")
         )
 
     safe_name <- gsub(" ", "_", tolower(station_clean))
     date_str <- format(start_dt, "%Y%m%d_%H%M")
-    ggsave(file.path(plots_dir, paste0("comparison_", safe_name, "_", date_str, ".png")), p_comp, width = 10, height = 6, dpi = 300)
+    # NEW FILENAME to avoid cache
+    ggsave(file.path(plots_dir, paste0("final_plot_", safe_name, "_", date_str, ".png")), p_comp, width = 10, height = 6, dpi = 300)
 }
 
 cat("✅ All plots generated in:", plots_dir, "\n")
