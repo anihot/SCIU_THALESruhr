@@ -13,7 +13,13 @@ if (api_key == "") {
 } else {
     # Clean up the key (remove quotes/whitespace)
     api_key <- trimws(gsub("^\"|\"$", "", api_key))
-    message(paste("Notice: Using API key from environment (Length:", nchar(api_key), ")"))
+    # Log part of the key for debugging (GitHub will still mask if it matches a secret)
+    key_prefix <- substr(api_key, 1, 5)
+    key_suffix <- substr(api_key, nchar(api_key) - 4, nchar(api_key))
+    message(paste0(
+        "Notice: Using API key from environment (Length: ", nchar(api_key),
+        ", Format: ", key_prefix, "...", key_suffix, ")"
+    ))
 }
 
 base_url <- "https://datakiosk-api.nivusweb.com"
