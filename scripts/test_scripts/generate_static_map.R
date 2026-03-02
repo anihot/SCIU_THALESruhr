@@ -20,11 +20,20 @@ sensors <- read_csv(metadata_file, show_col_types = FALSE)
 # Convert to sf object (WGS84)
 sensors_sf <- st_as_sf(sensors, coords = c("lon", "lat"), crs = 4326)
 
+# Check for required packages for tiles
+required_packages <- c("prettymapr", "rosm")
+missing_packages <- required_packages[!(required_packages %in% installed.packages()[, "Package"])]
+if (length(missing_packages)) {
+    stop(
+        "Missing packages for map tiles: ", paste(missing_packages, collapse = ", "),
+        ". Please run: install.packages(c('prettymapr', 'rosm'))"
+    )
+}
+
 # 2. Create Static Map using ggplot2 and ggspatial
 p <- ggplot(sensors_sf) +
     # Add OpenStreetMap tiles as background
-    # zoom = 13 is usually good for city level, but annotation_map_tile can auto-calculate
-    annotation_map_tile(type = "osm", zoomin = 0) +
+    annotation_map_tile(type = "osm", zoomin = -1) + # zoomin = -1 often helps with auto-scaling
     # Add the points (using a bright color to stand out against the map)
     geom_sf(color = "red", size = 4, alpha = 0.9) +
     # Add labels with a white background for readability over the map
