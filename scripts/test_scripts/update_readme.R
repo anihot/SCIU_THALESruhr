@@ -22,15 +22,21 @@ if (file_exists(events_file)) {
     events <- tibble(station = character(), start_time = POSIXct(), end_time = POSIXct(), peak_level_cm = numeric(), duration_min = numeric())
 }
 
-# 2. Filter for events in the last 30 hours (to cover daily gaps)
-current_time <- now(tzone = "UTC")
-recent_events <- events %>%
-    mutate(start_time = as.POSIXct(start_time, tz = "UTC")) %>%
-    filter(start_time > (current_time - hours(30))) %>%
-    arrange(desc(start_time))
+# 2. Filter for recent events (last 30 hours)
+current_time <- with_tz(Sys.time(), tzone = "UTC")
+
+# Handle empty events list gracefully
+if (nrow(events) > 0) {
+    events_recent <- events %>%
+        mutate(start_time = as.POSIXct(start_time, tz = "UTC")) %>%
+        filter(start_time > (current_time - hours(30))) %>%
+        arrange(desc(start_time))
+} else {
+    events_recent <- events # Should be empty anyway
+}
 
 # 3. Prepare Markdown section
-if (nrow(recent_events) > 0) {
+if (nrow(events_recent) > 0) {
     header_text <- paste0(
         "\n## 🔔 Aktuelle Ereignisse (Letzte 24-30h)\n",
         "*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S UTC"), "*\n\n",

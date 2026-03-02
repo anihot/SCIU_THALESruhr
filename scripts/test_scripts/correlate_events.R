@@ -32,7 +32,8 @@ precip <- precip %>%
 # 2. Correlate
 if (nrow(precip) == 0) {
     cat("Warning: Precipitation data is empty. No events will be verified by rain.\n")
-    correlation <- data.frame()
+    # Return an empty dataframe with the original columns to maintain consistency
+    correlation <- events[0, ]
 } else {
     # For each event, find the total rain in its window + lead-in
     correlation <- events %>%
