@@ -6,6 +6,7 @@ library(lubridate)
 events_file <- "data/detected_events.csv"
 rain_garden_file <- "c:/Users/Anika Hotzel/Desktop/04_R/schillerschule/schillerschule_garden.csv"
 rain_yard_file <- "c:/Users/Anika Hotzel/Desktop/04_R/schillerschule/schillerschule_yard.csv"
+RAIN_THRESHOLD <- 1.0 # Only count as verified if > 1mm precipitation
 LEAD_IN_HOURS <- 3
 
 cat("🚀 Starting Schillerschule Rain Correlation Analysis...\n")
@@ -66,7 +67,7 @@ correlation_results <- events %>%
                 rain_garden$TIMESTAMP <= window_end
         ], na.rm = TRUE),
         total_rain_mm = max(rain_yard_mm, rain_garden_mm),
-        rain_verified = total_rain_mm > 0
+        rain_verified = total_rain_mm >= RAIN_THRESHOLD
     ) %>%
     ungroup() %>%
     select(-window_start, -window_end)
