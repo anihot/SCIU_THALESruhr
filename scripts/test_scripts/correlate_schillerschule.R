@@ -4,8 +4,8 @@ library(lubridate)
 
 # Config
 events_file <- "data/detected_events.csv"
-rain_garden_file <- "data/rain_extra/schillerschule/schillerschule_garden.csv"
-rain_yard_file <- "data/rain_extra/schillerschule/schillerschule_yard.csv"
+rain_garden_file <- "c:/Users/Anika Hotzel/Desktop/04_R/schillerschule/schillerschule_garden.csv"
+rain_yard_file <- "c:/Users/Anika Hotzel/Desktop/04_R/schillerschule/schillerschule_yard.csv"
 LEAD_IN_HOURS <- 3
 
 cat("🚀 Starting Schillerschule Rain Correlation Analysis...\n")
