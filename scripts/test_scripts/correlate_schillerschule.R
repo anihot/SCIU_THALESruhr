@@ -79,7 +79,8 @@ cat("Verified by Schillerschule rain:", verified_count, "\n")
 cat("Verification rate:", round(verified_count / nrow(events) * 100, 1), "%\n")
 
 # Save detailed results
-write_csv(correlation_results, "data/rain_extra/schillerschule_correlation_results.csv")
+output_file <- "data/schillerschule_analysiert.csv"
+write_csv(correlation_results, output_file)
 
 # Print top verified events
 cat("\nTop 10 Rain-Verified Events:\n")
@@ -90,4 +91,4 @@ correlation_results %>%
     select(station, start_time, total_rain_mm, peak_level_cm) %>%
     print()
 
-cat("\nAnalysis complete. Results saved to data/rain_extra/schillerschule_correlation_results.csv\n")
+cat("\nAnalysis complete. Results saved to", output_file, "\n")
