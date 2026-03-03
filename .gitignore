@@ -7,10 +7,11 @@
 
 # Project specific data that should not be on GitHub
 data/rain_extra/schillerschule/
-data/sensor_exports/
+data/sensor_exports/*
 !data/sensor_exports/*.csv
-!data/cleaned_analysis/*.csv
 !data/sensor_exports/README.md
+data/cleaned_analysis/*
+!data/cleaned_analysis/*.csv
 # Ignore large raw data files in general
 *.csv
 # But allow specific small summary/metadata files if needed
