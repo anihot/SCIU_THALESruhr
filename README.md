@@ -1,12 +1,11 @@
 # SCIU THALESruhr - Sensor Data Management
 
 ### 📍 Sensor-Netzwerk
-![Static Sensor Map](data/sensor_static_map.png)
+![Static Sensor Map](data/output/sensor_static_map.png)
 *Standorte der automatisierten Messstationen.*
 
 > [!TIP]
-> Die Standorte sind auch auf einer **[interaktiven Karte](data/sensor_map.html)** markiert. (Download & im Browser öffnen)
-
+> Die Standorte sind auch auf einer **[interaktiven Karte](data/output/sensor_map.html)** markiert. (Download & im Browser öffnen)
 
 ---
 
@@ -26,18 +25,15 @@ This repository manages the automated collection, processing, and analysis of se
 
 - **`.github/workflows/`**: GitHub Actions for daily automated data processing.
 - **`data/`**:
-    - `sensor_exports/`: Raw CSV data fetched directly from the Nivus API.
-    - `cleaned_analysis/`: Processed data where levels are calculated and filtered.
-    - `plots/`: Visualizations of sensor levels over time.
-    - `detected_events.csv`: A log of all detected flooding events.
+    - `raw/`: Raw CSV data fetched directly from the Nivus API.
+    - `processed/`: Processed data where levels are calculated and filtered.
+    - `output/`: Final results like plots, maps, and summaries.
+    - `metadata/`: Sensor coordinates and station configurations.
 - **`scripts/`**:
-    - `fetch_nivus_rest.R`: Fetches raw data from the Nivus REST API.
-    - `automate_fetch.ps1`: Local Windows script to run the full pipeline.
-    - `sync_git.ps1`: Automated hourly Git pull/push for local synchronization.
-    - **`test_scripts/`**:
-        - `sensor_level_analysis.R`: Cleans raw data and calculates water levels.
-        - `plot_sensor_data.R`: Generates time-series plots for each station.
-        - `event_detection.R`: Identifies and logs significant flooding events.
+    - `api/`: Scripts for fetching data from Nivus and RADOLAN.
+    - `analysis/`: Data cleaning, level calculation, and event detection.
+    - `visualization/`: Generation of plots and maps.
+    - `automation/`: Tools for README updates and local automation.
 
 ## 🤖 Automated Pipeline (GitHub Actions)
 
@@ -56,7 +52,7 @@ To enable the automated fetch, ensure the `NIVUS_API_KEY` is set as a repository
 ### Running the Full Pipeline
 You can trigger the entire fetch-and-analyze process manually on Windows:
 ```powershell
-.\scripts\automate_fetch.ps1
+.\scripts\automation\automate_fetch.ps1
 ```
 
 ### Automated Local Sync

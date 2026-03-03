@@ -34,41 +34,41 @@ jobs:
       - name: Fetch data
         env:
           NIVUS_API_KEY: ${{ secrets.NIVUS_API_KEY }}
-        run: Rscript scripts/fetch_nivus_rest.R
+        run: Rscript scripts/api/fetch_nivus.R
 
       - name: Fetch RADOLAN precipitation
-        run: Rscript scripts/test_scripts/fetch_radolan.R
+        run: Rscript scripts/api/fetch_radolan.R
 
       - name: Clean and analyze data
-        run: Rscript scripts/test_scripts/sensor_level_analysis.R
+        run: Rscript scripts/analysis/level_analysis.R
 
       - name: Generate plots
-        run: Rscript scripts/test_scripts/plot_sensor_data.R
+        run: Rscript scripts/visualization/plot_sensors.R
 
       - name: Detect events
-        run: Rscript scripts/test_scripts/event_detection.R
+        run: Rscript scripts/analysis/event_detection.R
 
       - name: Correlate events with precipitation
-        run: Rscript scripts/test_scripts/correlate_events.R
+        run: Rscript scripts/analysis/correlate_events.R
 
       - name: Update README with latest events
-        run: Rscript scripts/test_scripts/update_readme.R
+        run: Rscript scripts/automation/update_readme.R
 
       - name: Generate interactive sensor map
-        run: Rscript scripts/test_scripts/generate_sensor_map.R
+        run: Rscript scripts/visualization/generate_interactive_map.R
 
       - name: Commit and push changes
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add data/sensor_exports/*.csv
-          git add data/cleaned_analysis/*.csv
-          git add data/plots/*.png
-          git add data/detected_events.csv
-          git add data/detected_events.md
-          git add data/sensor_map.html
-          git add data/precipitation_at_sensors.csv
-          git add data/event_correlation_summary.csv
+          git add data/raw/sensor_exports/*.csv
+          git add data/processed/cleaned_analysis/*.csv
+          git add data/output/plots/*.png
+          git add data/processed/detected_events.csv
+          git add data/processed/detected_events.md
+          git add data/output/sensor_map.html
+          git add data/processed/precipitation_at_sensors.csv
+          git add data/processed/event_correlation_summary.csv
           git add README.md
           git commit -m "Auto-update sensor data, precipitation, and analysis [skip ci]" || echo "No changes to commit"
 

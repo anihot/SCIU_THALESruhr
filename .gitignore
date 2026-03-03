@@ -7,22 +7,24 @@
 
 # Project specific data that should not be on GitHub
 data/rain_extra/schillerschule/
-data/sensor_exports/*
-!data/sensor_exports/*.csv
-!data/sensor_exports/README.md
-data/cleaned_analysis/*
-!data/cleaned_analysis/*.csv
+data/raw/sensor_exports/*
+!data/raw/sensor_exports/*.csv
+!data/raw/sensor_exports/README.md
+data/processed/cleaned_analysis/*
+!data/processed/cleaned_analysis/*.csv
+data/processed/tmp_radolan/
+
 # Ignore large raw data files in general
 *.csv
 # But allow specific small summary/metadata files if needed
-!data/sensor_metadata.csv
-!data/detected_events.csv
-!data/detected_events.md
-!data/event_correlation_summary.csv
-!data/rain_extra/schillerschule_correlation_results.csv
-!data/schillerschule_analysiert.csv
+!data/metadata/sensor_metadata.csv
+!data/processed/detected_events.csv
+!data/processed/detected_events.md
+!data/processed/event_correlation_summary.csv
+!data/processed/precipitation_at_sensors.csv
+!data/processed/schillerschule_analysiert.csv
 
-# Large images/plots
-!data/plots/
-!data/sensor_static_map.png
-!data/sensor_map.html
+# Output
+!data/output/plots/
+!data/output/sensor_static_map.png
+!data/output/sensor_map.html
