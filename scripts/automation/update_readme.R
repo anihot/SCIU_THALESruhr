@@ -5,9 +5,10 @@ library(fs)
 library(knitr)
 
 # Config
-events_file <- "data/detected_events.csv"
+events_file <- "data/processed/detected_events.csv"
+forecast_file <- "data/processed/weather_forecast.csv"
 readme_file <- "README.md"
-plots_dir <- "data/plots"
+plots_dir <- "data/output/plots"
 
 cat("Updating README with latest events...\n")
 
@@ -76,14 +77,46 @@ if (nrow(events_recent) > 0) {
     new_content <- paste0("\n## ✅ Keine neuen Ereignisse in den letzten 24h\n*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S UTC"), "*\n\n---\n")
 }
 
+# 3b. Weather Outlook
+weather_content <- ""
+if (file_exists(forecast_file)) {
+    forecast <- read_csv(forecast_file, show_col_types = FALSE) %>%
+        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
+
+    # Check for rain in next 48 hours
+    upcoming_rain <- forecast %>%
+        filter(timestamp > now(), timestamp < (now() + hours(48)), precipitation_mm > 0)
+
+    if (nrow(upcoming_rain) > 0) {
+        max_rain <- max(upcoming_rain$precipitation_mm)
+        total_rain_48h <- sum(upcoming_rain$precipitation_mm)
+
+        # Determine intensity icon
+        intensity_icon <- "🔹"
+        if (max_rain > 2) intensity_icon <- "🟡"
+        if (max_rain > 5) intensity_icon <- "🔴"
+
+        weather_content <- paste0(
+            "## 🌦 Wetterausblick (Nächste 48h)\n",
+            intensity_icon, " **Regen erwartet:** Summe ca. **", round(total_rain_48h, 1), " mm**. ",
+            "Maximale Intensität: **", round(max_rain, 1), " mm/h**.\n\n",
+            "*Datenquelle: Open-Meteo*\n\n---\n"
+        )
+    } else {
+        weather_content <- "## ☀️ Wetterausblick (Nächste 48h)\nKein nennenswerter Regen vorhergesagt.\n\n---\n"
+    }
+}
+
 # 4. Inject into README
+# Combine events and weather
+total_new_content <- paste0(weather_content, "\n", new_content)
 readme_txt <- read_file(readme_file)
 
 start_mark <- "<!-- LATEST_EVENTS_START -->"
 end_mark <- "<!-- LATEST_EVENTS_END -->"
 
 pattern <- paste0(start_mark, "(?s:.*?)", end_mark)
-replacement <- paste0(start_mark, "\n", new_content, "\n", end_mark)
+replacement <- paste0(start_mark, "\n", total_new_content, "\n", end_mark)
 
 updated_readme <- gsub(pattern, replacement, readme_txt, perl = TRUE)
 

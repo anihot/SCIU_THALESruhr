@@ -39,6 +39,9 @@ jobs:
       - name: Fetch RADOLAN precipitation
         run: Rscript scripts/api/fetch_radolan.R
 
+      - name: Fetch weather forecast
+        run: Rscript scripts/api/fetch_forecast.R
+
       - name: Clean and analyze data
         run: Rscript scripts/analysis/level_analysis.R
 
@@ -67,6 +70,7 @@ jobs:
           git add data/processed/detected_events.csv
           git add data/processed/detected_events.md
           git add data/output/sensor_map.html
+          git add data/processed/weather_forecast.csv
           git add data/processed/precipitation_at_sensors.csv
           git add data/processed/event_correlation_summary.csv
           git add README.md
