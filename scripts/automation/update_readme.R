@@ -77,33 +77,71 @@ if (nrow(events_recent) > 0) {
     new_content <- paste0("\n## ✅ Keine neuen Ereignisse in den letzten 24h\n*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S UTC"), "*\n\n---\n")
 }
 
-# 3b. Weather Outlook
+# 3b. Weather Outlook (DWD-compliant criteria)
 weather_content <- ""
 if (file_exists(forecast_file)) {
     forecast <- read_csv(forecast_file, show_col_types = FALSE) %>%
         mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
 
-    # Check for rain in next 48 hours
-    upcoming_rain <- forecast %>%
-        filter(timestamp > now(), timestamp < (now() + hours(48)), precipitation_mm > 0)
+    # Calculate rolling 6h sum for DWD criteria
+    # Using a simple row-wise sum for the next 6 hours at each point
+    forecast <- forecast %>%
+        rowwise() %>%
+        mutate(
+            precip_6h = sum(forecast$precipitation_mm[which(forecast$timestamp >= timestamp & forecast$timestamp < (timestamp + hours(6)))], na.rm = TRUE)
+        ) %>%
+        ungroup()
 
-    if (nrow(upcoming_rain) > 0) {
-        max_rain <- max(upcoming_rain$precipitation_mm)
-        total_rain_48h <- sum(upcoming_rain$precipitation_mm)
+    # Look at next 48 hours
+    outlook_window <- forecast %>%
+        filter(timestamp > now(), timestamp < (now() + hours(48)))
 
-        # Determine intensity icon
-        intensity_icon <- "🔹"
-        if (max_rain > 2) intensity_icon <- "🟡"
-        if (max_rain > 5) intensity_icon <- "🔴"
+    if (nrow(outlook_window) > 0) {
+        max_1h <- max(outlook_window$precipitation_mm, na.rm = TRUE)
+        max_6h <- max(outlook_window$precip_6h, na.rm = TRUE)
+        total_48h <- sum(outlook_window$precipitation_mm, na.rm = TRUE)
+
+        # DWD Thresholds
+        # 1. Extremes Unwetter (Stufe 4): > 40mm/1h or > 60mm/6h
+        # 2. Unwetter (Stufe 3): > 25mm/1h or > 35mm/6h
+        # 3. Markantes Wetter (Stufe 2): > 15mm/1h or > 20mm/6h
+
+        warn_level <- 0
+        warn_msg <- "Kein nennenswerter Regen vorhergesagt."
+        warn_icon <- "☀️"
+
+        if (max_1h > 0.5) {
+            warn_level <- 1
+            warn_msg <- "Leichter bis mäßiger Regen vorhergesagt."
+            warn_icon <- "🔹"
+        }
+
+        if (max_1h > 15 || max_6h > 20) {
+            warn_level <- 2
+            warn_msg <- "**Warnung vor markantem Starkregen** (DWD Stufe 2)"
+            warn_icon <- "🟡"
+        }
+
+        if (max_1h > 25 || max_6h > 35) {
+            warn_level <- 3
+            warn_msg <- "**UNWETTERWARNUNG vor Starkregen** (DWD Stufe 3)"
+            warn_icon <- "🔴"
+        }
+
+        if (max_1h > 40 || max_6h > 60) {
+            warn_level <- 4
+            warn_msg <- "**⚠️ EXTREME UNWETTERWARNUNG vor Starkregen** (DWD Stufe 4)"
+            warn_icon <- "🟣"
+        }
 
         weather_content <- paste0(
-            "## 🌦 Wetterausblick (Nächste 48h)\n",
-            intensity_icon, " **Regen erwartet:** Summe ca. **", round(total_rain_48h, 1), " mm**. ",
-            "Maximale Intensität: **", round(max_rain, 1), " mm/h**.\n\n",
-            "*Datenquelle: Open-Meteo*\n\n---\n"
+            "## ", warn_icon, " Wetterausblick (Nächste 48h)\n",
+            "### ", warn_msg, "\n\n",
+            "- Summe 48h: **", round(total_48h, 1), " mm**\n",
+            "- Max. Intensität: **", round(max_1h, 1), " mm/h**\n",
+            "- Max. 6h-Summe: **", round(max_6h, 1), " mm**\n\n",
+            "*Datenquelle: Open-Meteo (DWD-Warnkriterien angewendet)*\n\n---\n"
         )
-    } else {
-        weather_content <- "## ☀️ Wetterausblick (Nächste 48h)\nKein nennenswerter Regen vorhergesagt.\n\n---\n"
     }
 }
 
@@ -123,4 +161,4 @@ updated_readme <- gsub(pattern, replacement, readme_txt, perl = TRUE)
 # write_file with explicit UTF-8 to avoid mangling emojis or characters on Windows
 write_file(updated_readme, readme_file)
 
-cat("SUCCESS: README.md updated with latest events.\n")
+cat("SUCCESS: README.md updated with latest events and detailed weather outlook.\n")

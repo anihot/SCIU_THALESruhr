@@ -11,13 +11,19 @@
 
 <!-- LATEST_EVENTS_START -->
 ## ☀️ Wetterausblick (Nächste 48h)
-Kein nennenswerter Regen vorhergesagt.
+### Kein nennenswerter Regen vorhergesagt.
+
+- Summe 48h: **0 mm**
+- Max. Intensität: **0 mm/h**
+- Max. 6h-Summe: **0 mm**
+
+*Datenquelle: Open-Meteo (DWD-Warnkriterien angewendet)*
 
 ---
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-04 06:56:29 UTC*
+*Stand: 2026-03-04 07:39:16 UTC*
 
 ---
 
