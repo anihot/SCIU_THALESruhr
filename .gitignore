@@ -5,6 +5,18 @@
 .Ruserdata
 *.Rproj
 
+# Ignore large raw data files in general
+*.csv
+
+# Specific data files and directories to ALLOW
+!data/metadata/sensor_metadata.csv
+!data/processed/detected_events.csv
+!data/processed/detected_events.md
+!data/processed/event_correlation_summary.csv
+!data/processed/precipitation_at_sensors.csv
+!data/processed/weather_forecast.csv
+!data/processed/schillerschule_analysiert.csv
+
 # Project specific data that should not be on GitHub
 data/rain_extra/schillerschule/
 data/raw/sensor_exports/*
@@ -13,16 +25,6 @@ data/raw/sensor_exports/*
 data/processed/cleaned_analysis/*
 !data/processed/cleaned_analysis/*.csv
 data/processed/tmp_radolan/
-
-# Ignore large raw data files in general
-*.csv
-# But allow specific small summary/metadata files if needed
-!data/metadata/sensor_metadata.csv
-!data/processed/detected_events.csv
-!data/processed/detected_events.md
-!data/processed/event_correlation_summary.csv
-!data/processed/precipitation_at_sensors.csv
-!data/processed/schillerschule_analysiert.csv
 
 # Output
 !data/output/plots/
