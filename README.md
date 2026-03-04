@@ -1,8 +1,9 @@
 # SCIU THALESruhr - Sensor Data Management
 
 <table>
-  <tr>
-    <td width="60%" valign="top">
+<tr>
+<td width="60%" valign="top">
+
 <!-- LATEST_EVENTS_START -->
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
@@ -15,18 +16,23 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-04 08:39:54 UTC*
+*Stand: 2026-03-04 08:41:53 UTC*
 
 ---
 
 <!-- LATEST_EVENTS_END -->
-    </td>
-    <td width="40%" valign="top">
-      <p align="center"><b>📍 Sensor-Netzwerk</b></p>
-      <img src="data/output/sensor_static_map.png" alt="Static Sensor Map" width="100%">
-      <p align="center">Die Standorte sind auch auf einer <br><b><a href="data/output/sensor_map.html">interaktiven Karte</a></b> markiert.</p>
-    </td>
-  </tr>
+
+</td>
+<td width="40%" valign="top">
+
+<p align="center"><b>📍 Sensor-Netzwerk</b></p>
+
+<img src="data/output/sensor_static_map.png" alt="Static Sensor Map" width="100%">
+
+<p align="center">Die Standorte sind auch auf einer <br><b><a href="data/output/sensor_map.html">interaktiven Karte</a></b> markiert.</p>
+
+</td>
+</tr>
 </table>
 
 ---
