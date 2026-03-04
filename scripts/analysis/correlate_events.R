@@ -7,6 +7,7 @@ library(tidyr)
 events_file <- "data/processed/detected_events.csv"
 precip_file <- "data/processed/precipitation_at_sensors.csv"
 output_file <- "data/processed/event_correlation_summary.csv"
+historical_log <- "data/metadata/historical_verified_events.csv"
 LEAD_IN_HOURS <- 3 # Look at rain 3 hours before event start
 
 cat("🔗 Starting Event Correlation with Precipitation Data...\n")
@@ -78,4 +79,27 @@ if (nrow(correlation) > 0) {
 }
 
 cat("SUCCESS: Overwrote", events_file, "with rain-verified events only.\n")
+
+# 4. Update Historical Log (Persistent Memory)
+if (nrow(correlation) > 0) {
+    if (file_exists(historical_log)) {
+        # Load existing, append only new ones (avoid duplicates by comparing timestamps)
+        hist_orig <- read_csv(historical_log, show_col_types = FALSE) %>%
+            mutate(start_time = as.POSIXct(start_time), end_time = as.POSIXct(end_time))
+
+        # Simple joining/anti_join to ensure we don't duplicate based on exact station + start_time
+        new_entries <- correlation %>% anti_join(hist_orig, by = c("station", "start_time"))
+
+        if (nrow(new_entries) > 0) {
+            hist_updated <- bind_rows(hist_orig, new_entries)
+            write_excel_csv(hist_updated, historical_log)
+            cat("Added", nrow(new_entries), "new entries to historical log.\n")
+        }
+    } else {
+        # Create new log
+        write_excel_csv(correlation, historical_log)
+        cat("Created new historical log with", nrow(correlation), "entries.\n")
+    }
+}
+
 cat("Retained", nrow(correlation), "out of", nrow(events), "original detections.\n")

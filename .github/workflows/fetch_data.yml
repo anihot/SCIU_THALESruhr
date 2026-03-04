@@ -60,6 +60,23 @@ jobs:
       - name: Generate interactive sensor map
         run: Rscript scripts/visualization/generate_interactive_map.R
 
+      - name: Check for upcoming risks
+        run: Rscript scripts/analysis/check_risk.R
+
+      - name: Send Risk Alert Email
+        if: hashFiles('data/processed/risk_report.md') != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "⚠️ SCIU RISK ALERT: Starkregen vorhergesagt!"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: "SCIU Dashboard <${{ secrets.MAIL_USERNAME }}>"
+          body: file://data/processed/risk_report.md
+          convert_markdown: true
+
       - name: Commit and push changes
         run: |
           git config --local user.email "actions@github.com"
@@ -73,7 +90,8 @@ jobs:
           git add data/processed/weather_forecast.csv
           git add data/processed/precipitation_at_sensors.csv
           git add data/processed/event_correlation_summary.csv
+          git add data/metadata/historical_verified_events.csv
           git add README.md
-          git commit -m "Auto-update sensor data, precipitation, and analysis [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto-update sensor data, precipitation, risk analysis, and dashboard [skip ci]" || echo "No changes to commit"
 
           git push
