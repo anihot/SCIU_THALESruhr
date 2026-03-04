@@ -57,6 +57,22 @@ jobs:
       - name: Update README with latest events
         run: Rscript scripts/automation/update_readme.R
 
+      - name: Generate daily summary report
+        run: Rscript scripts/automation/generate_daily_report.R
+
+      - name: Send Daily Summary Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "📅 SCIU Daily Status Report"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: "SCIU Dashboard <${{ secrets.MAIL_USERNAME }}>"
+          body: file://data/processed/daily_summary.md
+          convert_markdown: true
+
       - name: Generate interactive sensor map
         run: Rscript scripts/visualization/generate_interactive_map.R
 
@@ -81,17 +97,23 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add data/raw/sensor_exports/*.csv
-          git add data/processed/cleaned_analysis/*.csv
-          git add data/output/plots/*.png
-          git add data/processed/detected_events.csv
-          git add data/processed/detected_events.md
-          git add data/output/sensor_map.html
-          git add data/processed/weather_forecast.csv
-          git add data/processed/precipitation_at_sensors.csv
-          git add data/processed/event_correlation_summary.csv
-          git add data/metadata/historical_verified_events.csv
-          git add README.md
+          git add data/raw/sensor_exports/*.csv || true
+          git add data/processed/cleaned_analysis/*.csv || true
+          git add data/output/plots/*.png || true
+          git add data/processed/detected_events.csv || true
+          git add data/processed/detected_events.md || true
+          git add data/output/sensor_map.html || true
+          git add data/processed/weather_forecast.csv || true
+          git add data/processed/precipitation_at_sensors.csv || true
+          git add data/processed/event_correlation_summary.csv || true
+          
+          # Only add historical log if it exists
+          if [ -d "data/metadata" ]; then
+            git add data/metadata/*.csv || true
+          fi
+          
+          git add README.md || true
+          
           git commit -m "Auto-update sensor data, precipitation, risk analysis, and dashboard [skip ci]" || echo "No changes to commit"
 
           git push
