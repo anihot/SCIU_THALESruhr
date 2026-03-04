@@ -6,7 +6,7 @@
 
 <!-- LATEST_EVENTS_START -->
 ### ☀️ Wetterausblick (48h)
-**Kein nennenswerter Regen vorhergesagt.**
+**Kein Regen vorhergesagt.**
 
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
