@@ -1,34 +1,35 @@
 # SCIU THALESruhr - Sensor Data Management
 
-### 📍 Sensor-Netzwerk
-![Static Sensor Map](data/output/sensor_static_map.png)
-*Standorte der automatisierten Messstationen.*
-
-> [!TIP]
-> Die Standorte sind auch auf einer **[interaktiven Karte](data/output/sensor_map.html)** markiert. (Download & im Browser öffnen)
-
----
-
+<table>
+  <tr>
+    <td width="60%" valign="top">
 <!-- LATEST_EVENTS_START -->
-## ☀️ Wetterausblick (Nächste 48h)
-### Kein nennenswerter Regen vorhergesagt.
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-- Summe 48h: **0 mm**
-- Max. Intensität: **0 mm/h**
-- Max. 6h-Summe: **0 mm**
+- Summe: **0 mm** | Max: **0 mm/h**
+- Max. 6h: **0 mm**
 
-*Datenquelle: Open-Meteo (DWD-Warnkriterien angewendet)*
+*Quelle: Open-Meteo (DWD)*
 
----
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-04 07:39:16 UTC*
+*Stand: 2026-03-04 08:39:54 UTC*
 
 ---
 
 <!-- LATEST_EVENTS_END -->
+    </td>
+    <td width="40%" valign="top">
+      <p align="center"><b>📍 Sensor-Netzwerk</b></p>
+      <img src="data/output/sensor_static_map.png" alt="Static Sensor Map" width="100%">
+      <p align="center">Die Standorte sind auch auf einer <br><b><a href="data/output/sensor_map.html">interaktiven Karte</a></b> markiert.</p>
+    </td>
+  </tr>
+</table>
 
+---
 
 This repository manages the automated collection, processing, and analysis of sensor data from the Nivus DataKiosk for the SCIU project.
 

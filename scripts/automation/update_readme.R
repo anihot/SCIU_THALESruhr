@@ -135,12 +135,11 @@ if (file_exists(forecast_file)) {
         }
 
         weather_content <- paste0(
-            "## ", warn_icon, " Wetterausblick (Nächste 48h)\n",
-            "### ", warn_msg, "\n\n",
-            "- Summe 48h: **", round(total_48h, 1), " mm**\n",
-            "- Max. Intensität: **", round(max_1h, 1), " mm/h**\n",
-            "- Max. 6h-Summe: **", round(max_6h, 1), " mm**\n\n",
-            "*Datenquelle: Open-Meteo (DWD-Warnkriterien angewendet)*\n\n---\n"
+            "### ", warn_icon, " Wetterausblick (48h)\n",
+            "**", warn_msg, "**\n\n",
+            "- Summe: **", round(total_48h, 1), " mm** | Max: **", round(max_1h, 1), " mm/h**\n",
+            "- Max. 6h: **", round(max_6h, 1), " mm**\n\n",
+            "*Quelle: Open-Meteo (DWD)*\n\n"
         )
     }
 }
