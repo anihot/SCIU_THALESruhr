@@ -1,0 +1,60 @@
+name: Send Sensor Notifications
+
+on:
+  workflow_run:
+    workflows: ["Fetch Nivus Sensor Data"]
+    types:
+      - completed
+
+jobs:
+  notifications:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install dependencies
+        run: |
+          Rscript -e 'install.packages(c("readr", "dplyr", "lubridate", "knitr", "fs"))'
+
+      - name: Generate daily summary report
+        run: Rscript scripts/automation/generate_daily_report.R
+
+      - name: Send Daily Summary Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "📅 SCIU Daily Status Report"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: "SCIU Dashboard <${{ secrets.MAIL_USERNAME }}>"
+          body: file://data/processed/daily_summary.md
+          convert_markdown: true
+
+      - name: Check for upcoming risks
+        run: Rscript scripts/analysis/check_risk.R
+
+      - name: Send Risk Alert Email
+        if: hashFiles('data/processed/risk_report.md') != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "⚠️ SCIU RISK ALERT: Starkregen vorhergesagt!"
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: "SCIU Dashboard <${{ secrets.MAIL_USERNAME }}>"
+          body: file://data/processed/risk_report.md
+          convert_markdown: true
