@@ -56,26 +56,28 @@ p <- ggplot(sensors_sf) +
     ) +
     # Fix the coordinate system and set limits with padding
     coord_sf(
-        xlim = c(bbox["xmin"] - padding_lon - 0.01, bbox["xmax"] + padding_lon + 0.01),
-        ylim = c(bbox["ymin"] - 0.01, bbox["ymax"] + 0.01),
+        xlim = c(bbox["xmin"] - padding_lon - 0.005, bbox["xmax"] + padding_lon + 0.005),
+        ylim = c(bbox["ymin"] - 0.005, bbox["ymax"] + 0.005),
         crs = 4326, expand = FALSE
     ) +
     # Aesthetics
     labs(
         title = "📍 SCIU THALESruhr Sensor-Netzwerk",
         subtitle = "Standorte der automatisierten Messstationen (Hintergrund: OpenStreetMap)",
-        x = "Längengrad",
-        y = "Breitengrad",
+        x = NULL,
+        y = NULL,
         caption = paste0("Stand: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"))
     ) +
     theme_minimal() +
     theme(
         plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
         plot.subtitle = element_text(size = 12, hjust = 0.5, color = "gray30"),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
         panel.background = element_rect(fill = "#f8f9fa", color = NA),
-        plot.background = element_rect(fill = "white", color = NA),
-        panel.grid.major = element_line(color = alpha("gray", 0.3)),
-        panel.grid.minor = element_blank()
+        plot.background = element_rect(fill = "white", color = NA)
     )
 
 # 3. Save as PNG (using a more square format 8x8)
