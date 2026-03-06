@@ -29,8 +29,6 @@
 
 <img src="data/output/sensor_static_map.png" alt="Static Sensor Map" width="100%">
 
-<p align="center">Die Standorte sind auch auf einer <br><b><a href="data/output/sensor_map.html">interaktiven Karte</a></b> markiert.</p>
-
 </td>
 </tr>
 </table>
