@@ -16,7 +16,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-05 10:52:38 UTC*
+*Stand: 2026-03-06 08:34:09 UTC*
 
 ---
 
