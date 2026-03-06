@@ -134,9 +134,19 @@ if (file_exists(forecast_file)) {
             warn_icon <- "🟣"
         }
 
+        # Temperature info
+        temp_current <- outlook_window %>%
+            filter(timestamp >= now()) %>%
+            slice(1) %>%
+            pull(temp_c)
+
+        temp_min <- min(outlook_window$temp_c, na.rm = TRUE)
+        temp_max <- max(outlook_window$temp_c, na.rm = TRUE)
+
         weather_content <- paste0(
             "### ", warn_icon, " Wetterausblick (48h)\n",
             "**", warn_msg, "**\n\n",
+            "- Temperatur: **", round(temp_current, 1), "°C** (Min: ", round(temp_min, 1), "°C | Max: ", round(temp_max, 1), "°C)\n",
             "- Summe: **", round(total_48h, 1), " mm** | Max: **", round(max_1h, 1), " mm/h**\n",
             "- Max. 6h: **", round(max_6h, 1), " mm**\n\n",
             "*Quelle: Open-Meteo (DWD)*\n\n"
