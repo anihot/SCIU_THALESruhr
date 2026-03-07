@@ -8,7 +8,7 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-- Temperatur: **17.7°C** (Min: 9.9°C | Max: 19.3°C)
+- Temperatur: **13°C** (Min: 8.7°C | Max: 18.9°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -17,7 +17,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-06 11:21:30 UTC*
+*Stand: 2026-03-07 08:26:24 UTC*
 
 ---
 
