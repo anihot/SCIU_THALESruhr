@@ -34,32 +34,25 @@ if (file_exists(forecast_file)) {
     }
 }
 
-# 2. Events (Last 24h)
-event_summary <- "Keine neuen Ereignisse in den letzten 24h."
-if (file_exists(events_file)) {
-    events <- read_csv(events_file, show_col_types = FALSE) %>%
-        mutate(start_time = as.POSIXct(start_time)) %>%
-        filter(start_time >= now() - hours(24))
-
-    if (nrow(events) > 0) {
-        event_summary <- paste0("Es wurden **", nrow(events), "** Ereignisse an den Sensoren detektiert:\n\n")
-        event_table <- events %>%
-            select(station, start_time, peak_level_cm, duration_min) %>%
-            arrange(desc(peak_level_cm))
-
-        event_summary <- paste0(event_summary, kable(event_table, format = "markdown"))
-    }
+# 3. Sensor Health Status
+health_file <- "data/processed/sensor_health_report.md"
+health_summary <- "Keine Sensor-Status-Daten verfügbar."
+if (file_exists(health_file)) {
+    health_summary <- paste(read_lines(health_file), collapse = "\n")
 }
 
-# 3. Assemble Report
+# 4. Assemble Report
 report <- c(
     paste0("# 📅 SCIU Daily Status Report - ", format(now(), "%d.%m.%Y")),
     "",
     "## ☀️ Wetter-Check",
     weather_summary,
     "",
-    "## 🌊 Sensor-Aktivität",
+    "## 🌊 Sensor-Aktivität (Letzte 24h)",
     event_summary,
+    "",
+    "## 🛠 System-Status",
+    health_summary,
     "",
     "---",
     paste0("*Bericht automatisch erstellt am ", format(now(), "%Y-%m-%d %H:%M:%S"), " (Berlin)*")

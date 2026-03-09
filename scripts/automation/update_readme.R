@@ -155,9 +155,16 @@ if (file_exists(forecast_file)) {
     }
 }
 
+# 3c. Sensor Health Status
+health_content <- ""
+health_file <- "data/processed/sensor_health_report.md"
+if (file_exists(health_file)) {
+    health_content <- paste0("\n", paste(read_lines(health_file), collapse = "\n"), "\n")
+}
+
 # 4. Inject into README
-# Combine events and weather
-total_new_content <- paste0(weather_content, "\n", new_content)
+# Combine events, weather and health
+total_new_content <- paste0(weather_content, "\n", health_content, "\n", new_content)
 readme_txt <- read_file(readme_file)
 
 start_mark <- "<!-- LATEST_EVENTS_START -->"

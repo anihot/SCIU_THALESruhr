@@ -26,6 +26,9 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("readr", "dplyr", "lubridate", "knitr", "fs"))'
 
+      - name: Check sensor health
+        run: Rscript scripts/analysis/check_sensor_health.R
+
       - name: Generate daily summary report
         run: Rscript scripts/automation/generate_daily_report.R
 

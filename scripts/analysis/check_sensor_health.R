@@ -1,0 +1,96 @@
+library(readr)
+library(dplyr)
+library(fs)
+library(lubridate)
+
+# Config
+input_dir <- "data/raw/sensor_exports"
+output_csv <- "data/processed/sensor_health_status.csv"
+output_md <- "data/processed/sensor_health_report.md"
+HEALTH_THRESHOLD_HOURS <- 24
+
+cat("🔍 Checking sensor health (data freshness)...\n")
+
+if (!dir_exists(input_dir)) {
+    stop("Input directory not found: ", input_dir)
+}
+
+# List all sensor export files
+files <- dir_ls(input_dir, glob = "*.csv")
+
+health_data <- list()
+
+for (f in files) {
+    station_name <- gsub("_merged_export", "", path_ext_remove(path_file(f)))
+
+    # Check if file is nearly empty or actually has data
+    if (file_info(f)$size < 100) {
+        health_data[[length(health_data) + 1]] <- tibble(
+            station = station_name,
+            last_seen = NA,
+            hours_since = Inf,
+            status = "No Data"
+        )
+        next
+    }
+
+    # Read only the last few lines to find the latest timestamp
+    # (efficiency for large files)
+    tryCatch(
+        {
+            # Read the last 5 lines using tail command (system dependent but usually works on GH actions/Linux)
+            # Fallback to reading the whole file if tail fails or on Windows if not configured
+            if (.Platform$OS.type == "windows") {
+                data <- read_csv(f, show_col_types = FALSE)
+            } else {
+                # Unix-like (GitHub Actions)
+                data <- read_csv(pipe(paste0("tail -n 5 '", f, "'")), col_names = FALSE, show_col_types = FALSE)
+                # We need to manually assign column names since it's just tail
+                col_names <- names(read_csv(f, n_max = 0, show_col_types = FALSE))
+                names(data) <- col_names
+            }
+
+            if (nrow(data) > 0) {
+                latest_time <- max(as.POSIXct(data$Timestamp), na.rm = TRUE)
+                diff_hours <- as.numeric(difftime(now(tzone = "UTC"), latest_time, units = "hours"))
+
+                status <- ifelse(diff_hours > HEALTH_THRESHOLD_HOURS, "Inactive", "Healthy")
+
+                health_data[[length(health_data) + 1]] <- tibble(
+                    station = station_name,
+                    last_seen = latest_time,
+                    hours_since = round(diff_hours, 1),
+                    status = status
+                )
+            }
+        },
+        error = function(e) {
+            cat("Error processing", station_name, ":", e$message, "\n")
+        }
+    )
+}
+
+# Combine results
+health_df <- bind_rows(health_data)
+
+# Save CSV
+write_csv(health_df, output_csv)
+
+# Generate Markdown Report
+report_lines <- c("### 🛠 Sensor-Status-Check", "")
+
+if (any(health_df$status != "Healthy")) {
+    inactive <- health_df %>% filter(status != "Healthy")
+    report_lines <- c(report_lines, "⚠️ **Achtung: Inaktive Sensoren erkannt!**", "")
+
+    for (i in seq_len(nrow(inactive))) {
+        report_lines <- c(report_lines, paste0("- 🔴 **", inactive$station[i], "**: Letzte Daten vor ", inactive$hours_since[i], " Stunden (", format(inactive$last_seen[i], "%d.%m. %H:%M"), ")"))
+    }
+} else {
+    report_lines <- c(report_lines, "✅ Alle Sensoren senden planmäßig Daten (letzte 24h).")
+}
+
+write_lines(report_lines, output_md)
+
+cat("SUCCESS: Sensor health report saved to", output_md, "\n")
+print(health_df)

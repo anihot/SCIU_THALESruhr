@@ -8,18 +8,30 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 09.03. 11:00 bis 11.03. 10:00)*
+*(Zeitraum: 09.03. 14:00 bis 11.03. 13:00)*
 
-- Temperatur: **14.4°C** (Min: 10.5°C | Max: 18.2°C)
-- Summe: **2.5 mm** | Max: **0.6 mm/h**
-- Max. 6h: **3.3 mm**
+- Temperatur: **17.5°C** (Min: 10.3°C | Max: 18.2°C)
+- Summe: **3.8 mm** | Max: **0.7 mm/h**
+- Max. 6h: **5.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
 
 
+### 🛠 Sensor-Status-Check
+
+⚠️ **Achtung: Inaktive Sensoren erkannt!**
+
+- 🔴 **An_der_Kost**: Letzte Daten vor 28.5 Stunden (08.03. 08:00)
+- 🔴 **Herzogstraße**: Letzte Daten vor 28.5 Stunden (08.03. 08:00)
+- 🔴 **Königsallee_Springorum**: Letzte Daten vor 28.5 Stunden (08.03. 08:00)
+- 🔴 **Wasserbaulabor_2**: Letzte Daten vor 28.1 Stunden (08.03. 08:25)
+- 🔴 **Wasserbaulabor_**: Letzte Daten vor 459.1 Stunden (18.02. 09:22)
+- 🔴 **Wasserstraße_Springorum**: Letzte Daten vor 28.5 Stunden (08.03. 08:00)
+
+
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-09 09:20:09 UTC*
+*Stand: 2026-03-09 12:30:19 UTC*
 
 ---
 
