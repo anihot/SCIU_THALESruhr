@@ -81,8 +81,12 @@ report_lines <- c("### 🛠 Sensor-Status-Check", "")
 
 if (any(health_df$status != "Healthy")) {
     inactive <- health_df %>% filter(status != "Healthy")
-    report_lines <- c(report_lines, "⚠️ **Achtung: Inaktive Sensoren erkannt!**", "")
-
+    report_lines <- c(
+        report_lines,
+        "⚠️ **Achtung: Inaktive Sensoren erkannt!**",
+        "*(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*",
+        ""
+    )
     for (i in seq_len(nrow(inactive))) {
         report_lines <- c(report_lines, paste0("- 🔴 **", inactive$station[i], "**: Letzte Daten vor ", inactive$hours_since[i], " Stunden (", format(inactive$last_seen[i], "%d.%m. %H:%M"), ")"))
     }

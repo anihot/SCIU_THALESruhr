@@ -37,19 +37,19 @@ jobs:
       - name: Check for Rain Mode or Daily Sync
         id: check_rain
         run: |
-          # 1. Check if it's the daily full sync (06:00 UTC)
-          # Note: cron 0 */6 ends up on 06:00. 
-          # GitHub Actions often have delays, so we check the hour.
+          # 1. Check if it's the daily full sync window (05:00 - 09:00 UTC)
+          # We use a window to be safe against Runner delays.
           HOUR=$(date +%H)
-          if [ "$HOUR" == "06" ] || [ "$HOUR" == "12" ]; then
-            echo "sync_reason=Daily Full Sync (morning/noon)" >> $GITHUB_OUTPUT
+          if [ "$HOUR" -ge "05" ] && [ "$HOUR" -le "09" ]; then
+            echo "sync_reason=Daily Full Sync Window" >> $GITHUB_OUTPUT
             echo "should_continue=true" >> $GITHUB_OUTPUT
           else
             # 2. Check for rain in forecast (next 24h)
             # We look for any precipitation_mm > 0 in the CSV
-            RAIN_FORECAST=$(tail -n +2 data/processed/weather_forecast.csv | cut -d',' -f2 | grep -v "0" | head -n 1)
-            if [ ! -blank "$RAIN_FORECAST" ]; then
-              echo "sync_reason=Rain Forecast Detected" >> $GITHUB_OUTPUT
+            # Using grep -c to count lines with non-zero rain (excluding header)
+            RAIN_COUNT=$(tail -n +2 data/processed/weather_forecast.csv | cut -d',' -f2 | grep -v "^0$" | grep -c "." || true)
+            if [ "$RAIN_COUNT" -gt 0 ]; then
+              echo "sync_reason=Rain Forecast Detected ($RAIN_COUNT hours)" >> $GITHUB_OUTPUT
               echo "should_continue=true" >> $GITHUB_OUTPUT
             else
               echo "sync_reason=No rain and not daily sync" >> $GITHUB_OUTPUT
