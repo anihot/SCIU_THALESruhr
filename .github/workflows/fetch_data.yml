@@ -2,7 +2,7 @@ name: Fetch Nivus Sensor Data
 
 on:
   schedule:
-    - cron: '0 8 * * *' # Run at 08:00 UTC every day
+    - cron: '0 */6 * * *' # Run every 6 hours (00, 06, 12, 18 UTC)
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -31,35 +31,60 @@ jobs:
         run: |
           Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "rdwd", "terra", "stars"))'
 
+      - name: Fetch weather forecast (Prerequisite for Rain Mode)
+        run: Rscript scripts/api/fetch_forecast.R
+
+      - name: Check for Rain Mode or Daily Sync
+        id: check_rain
+        run: |
+          # 1. Check if it's the daily full sync (06:00 UTC)
+          # Note: cron 0 */6 ends up on 06:00. 
+          # GitHub Actions often have delays, so we check the hour.
+          HOUR=$(date +%H)
+          if [ "$HOUR" == "06" ] || [ "$HOUR" == "12" ]; then
+            echo "sync_reason=Daily Full Sync (morning/noon)" >> $GITHUB_OUTPUT
+            echo "should_continue=true" >> $GITHUB_OUTPUT
+          else
+            # 2. Check for rain in forecast (next 24h)
+            # We look for any precipitation_mm > 0 in the CSV
+            RAIN_FORECAST=$(tail -n +2 data/processed/weather_forecast.csv | cut -d',' -f2 | grep -v "0" | head -n 1)
+            if [ ! -blank "$RAIN_FORECAST" ]; then
+              echo "sync_reason=Rain Forecast Detected" >> $GITHUB_OUTPUT
+              echo "should_continue=true" >> $GITHUB_OUTPUT
+            else
+              echo "sync_reason=No rain and not daily sync" >> $GITHUB_OUTPUT
+              echo "should_continue=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
       - name: Fetch data
+        if: steps.check_rain.outputs.should_continue == 'true'
         env:
           NIVUS_API_KEY: ${{ secrets.NIVUS_API_KEY }}
         run: Rscript scripts/api/fetch_nivus.R
 
       - name: Fetch RADOLAN precipitation
+        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/api/fetch_radolan.R
 
-      - name: Fetch weather forecast
-        run: Rscript scripts/api/fetch_forecast.R
-
       - name: Clean and analyze data
+        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/level_analysis.R
 
       - name: Generate plots
+        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/visualization/plot_sensors.R
 
       - name: Detect events
+        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/event_detection.R
 
       - name: Correlate events with precipitation
+        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/correlate_events.R
 
       - name: Update README with latest events
         run: Rscript scripts/automation/update_readme.R
-
-      - name: Update README with latest events
-        run: Rscript scripts/automation/update_readme.R
-
 
       - name: Commit and push changes
         run: |

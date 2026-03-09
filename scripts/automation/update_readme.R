@@ -146,6 +146,7 @@ if (file_exists(forecast_file)) {
         weather_content <- paste0(
             "### ", warn_icon, " Wetterausblick (48h)\n",
             "**", warn_msg, "**\n\n",
+            "*(Zeitraum: ", format(min(outlook_window$timestamp), "%d.%m. %H:%M"), " bis ", format(max(outlook_window$timestamp), "%d.%m. %H:%M"), ")*\n\n",
             "- Temperatur: **", round(temp_current, 1), "°C** (Min: ", round(temp_min, 1), "°C | Max: ", round(temp_max, 1), "°C)\n",
             "- Summe: **", round(total_48h, 1), " mm** | Max: **", round(max_1h, 1), " mm/h**\n",
             "- Max. 6h: **", round(max_6h, 1), " mm**\n\n",
