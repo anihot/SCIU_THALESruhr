@@ -84,8 +84,8 @@ for (i in seq_len(nrow(sensors))) {
 
     if (is.null(sample_p)) sample_p <- p
     
-    # Critical: Convert to HTML but we MUST ensure dependencies are in the final map
-    chart_html <- as.character(tags$div(style="width:100%; height:250px;", p))
+    # Critical: Convert to HTML and ensure the application/json script tag is included!
+    chart_html <- paste(as.character(htmltools::tagList(p)), collapse = "\n")
 
     popup_htmls[i] <- paste0(
         "<div style='width:520px;font-family:sans-serif;'>",
