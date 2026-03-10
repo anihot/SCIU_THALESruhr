@@ -113,9 +113,15 @@ m <- leaflet(sensors) %>%
 # type="html" ensures it understands they are htmlwidgets, not static images.
 m <- addPopupGraphs(m, plots_list, group = "sensors", width = 500, height = 300)
 
+# Use RStudio's bundled pandoc (if available) to allow selfcontained rendering
+pandoc_dir <- "C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools"
+if (dir.exists(pandoc_dir)) {
+    Sys.setenv(RSTUDIO_PANDOC = pandoc_dir)
+}
+
 output_abs <- normalizePath(output_file, mustWork = FALSE)
 if (!dir_exists(path_dir(output_abs))) dir_create(path_dir(output_abs))
 
-saveWidget(m, file = output_abs, selfcontained = FALSE)
+saveWidget(m, file = output_abs, selfcontained = TRUE)
 
 cat("✅ SUCCESS: Interactive map with leafpop-plotly popups saved to", output_file, "\n")
