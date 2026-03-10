@@ -13,7 +13,7 @@ cleaned_dir    <- "data/processed/cleaned_analysis"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
 output_file    <- "data/output/sensor_map.html"
 
-cat("🌐 Generating interactive sensor map with plotly popups...\n")
+cat("🌐 Generating interactive sensor map with plotly popups (forced update)...\n")
 
 if (!file.exists(metadata_file)) stop("Metadata file not found: ", metadata_file)
 
