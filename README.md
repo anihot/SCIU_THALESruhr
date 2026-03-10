@@ -40,6 +40,8 @@
 
 <img src="data/output/sensor_static_map.png" alt="Static Sensor Map" width="100%">
 
+<p align="center">🔗 <b><a href="https://htmlpreview.github.io/?https://github.com/anihot/SCIU_THALESruhr/blob/main/data/output/sensor_map.html" target="_blank">Interaktive Karte anzeigen</a></b><br>(mit 24h Sensor-Daten Plots)</p>
+
 </td>
 </tr>
 </table>
