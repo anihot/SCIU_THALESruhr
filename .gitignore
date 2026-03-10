@@ -30,3 +30,4 @@ data/processed/tmp_radolan/
 !data/output/plots/
 !data/output/sensor_static_map.png
 !data/output/sensor_map.html
+!data/output/sensor_map_files/
