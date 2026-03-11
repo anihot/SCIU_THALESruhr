@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly"))'
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop"))'
 
       - name: Fetch weather forecast (Prerequisite for Rain Mode)
         run: Rscript scripts/api/fetch_forecast.R
