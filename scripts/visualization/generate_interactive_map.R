@@ -3,12 +3,16 @@ library(htmlwidgets)
 library(dplyr)
 library(readr)
 library(fs)
+library(plotly)
+library(leafpop)
+library(lubridate)
 
 # Config
 metadata_file <- "data/metadata/sensor_metadata.csv"
 output_file <- "data/output/sensor_map.html"
+cleaned_dir <- "data/processed/cleaned_analysis"
 
-cat("Generating interactive sensor map...\n")
+cat("Generating interactive sensor map with Plotly popups...\n")
 
 if (!file_exists(metadata_file)) {
     stop("Metadata file not found: ", metadata_file)
@@ -22,47 +26,57 @@ if (!dir_exists(path_dir(output_file))) {
 # 1. Load coordinates
 sensors <- read_csv(metadata_file, show_col_types = FALSE)
 
-# 2. Add latest data to popups
-cat("Fetching latest data for popups...\n")
-cleaned_dir <- "data/processed/cleaned_analysis"
+# 2. Prepare plots for each sensor
+cat("Generating 24h plots for popups...\n")
+plot_list <- list()
 
-sensors <- sensors %>%
-    rowwise() %>%
-    mutate(
-        # Attempt to find the cleaned data file for this station
-        safe_name = gsub("[^[:alnum:]]", "_", station),
-        file_glob = paste0(cleaned_dir, "/", safe_name, "*_cleaned.csv"),
-        files = list(Sys.glob(file_glob)),
-        latest_level = NA_real_,
-        latest_time = NA_character_,
+for (i in seq_len(nrow(sensors))) {
+    station_name <- sensors$station[i]
+    station_label <- sensors$label[i]
+    
+    # Find matching data file
+    safe_name <- gsub("[^[:alnum:]]", "_", station_name)
+    file_glob <- paste0(cleaned_dir, "/", safe_name, "*_cleaned.csv")
+    matching_files <- Sys.glob(file_glob)
+    
+    p <- NULL
+    
+    if (length(matching_files) > 0) {
+        # Load data
+        df <- read_csv(matching_files[1], show_col_types = FALSE)
         
-        # If file exists, read the last line
-        has_data = length(files) > 0,
-        temp_data = if(has_data) {
-            tryCatch({
-                d <- read_csv(files[[1]], show_col_types = FALSE, n_max = 50, skip = max(0, count_fields(files[[1]], tokenizer_csv()) - 50))
-                tail(d, 1)
-            }, error = function(e) NULL)
-        } else { NULL }
-    ) %>%
-    mutate(
-        latest_level = if(!is.null(temp_data)) temp_data$level else NA_real_,
-        latest_time = if(!is.null(temp_data)) format(temp_data$Zeit_Datum, "%Y-%m-%d %H:%M") else "No recent data"
-    ) %>%
-    ungroup()
-
-# Construct Popup Content
-sensors <- sensors %>%
-    mutate(
-        popup_content = paste0(
-            "<div style='font-family: Arial, sans-serif;'>",
-            "<b>Station: </b>", station, "<br>",
-            "<b>Label: </b>", label, "<br><hr>",
-            "<b>Aktueller Stand: </b>", ifelse(is.na(latest_level), "N/A", paste0(latest_level, " m")), "<br>",
-            "<b>Zeitpunkt: </b>", latest_time,
-            "</div>"
-        )
-    )
+        if (nrow(df) > 0) {
+            # Filter for last 24 hours
+            current_time <- now(tzone = tz(df$Zeit_Datum))
+            start_time <- current_time - hours(24)
+            df_24h <- df %>% filter(Zeit_Datum >= start_time)
+            
+            if (nrow(df_24h) > 0) {
+                # Create interactive plotly chart
+                p <- plot_ly(df_24h, x = ~Zeit_Datum, y = ~level, type = 'scatter', mode = 'lines',
+                             line = list(color = '#0072B2', width = 2),
+                             fill = 'tozeroy', fillcolor = 'rgba(0, 114, 178, 0.2)') %>%
+                    layout(
+                        title = list(text = paste("24h Trend:", station_label), font = list(size = 12)),
+                        xaxis = list(title = "", gridcolor = "#f0f0f0"),
+                        yaxis = list(title = "Level (m)", gridcolor = "#f0f0f0"),
+                        margin = list(l = 40, r = 10, t = 30, b = 30),
+                        showlegend = FALSE,
+                        hovermode = "x unified"
+                    ) %>%
+                    config(displayModeBar = FALSE)
+            }
+        }
+    }
+    
+    if (is.null(p)) {
+        # Fallback if no data found
+        p <- plotly_empty() %>%
+            layout(title = list(text = paste("No 24h data for", station_label), font = list(size = 10)))
+    }
+    
+    plot_list[[i]] <- p
+}
 
 # 3. Create Leaflet map
 m <- leaflet(sensors) %>%
@@ -71,14 +85,18 @@ m <- leaflet(sensors) %>%
     addMarkers(
         lng = ~lon,
         lat = ~lat,
-        popup = ~popup_content,
-        label = ~station
-    ) %>%
+        label = ~label,
+        group = "sensors"
+    )
+
+# 4. Add Plotly popups
+# leafpop::addPopupGraphs integrates the plotly objects into the markers
+m <- m %>%
+    addPopupGraphs(plot_list, group = "sensors", width = 350, height = 250) %>%
     addMiniMap(toggleDisplay = TRUE)
 
-# 3. Save as HTML
-# We set selfcontained = TRUE to ensure all dependencies (JS/CSS) are bundled into the HTML.
-# This avoids issues with external folders in different environments.
+# 5. Save as HTML
+# selfcontained = TRUE is critical for the map to work as a standalone file in the browser.
 saveWidget(m, file = output_file, selfcontained = TRUE)
 
-cat("✅ SUCCESS: Interactive map saved to", output_file, "\n")
+cat("✅ SUCCESS: Interactive map with Plotly popups saved to", output_file, "\n")
