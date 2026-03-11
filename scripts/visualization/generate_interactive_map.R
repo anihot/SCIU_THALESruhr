@@ -98,31 +98,27 @@ make_popup <- function(station_name, station_label, idx) {
   )
 }
 
-# Generate popup HTML strings
-popups <- mapply(
-  make_popup,
-  station_name  = sensors$station,
-  station_label = sensors$label,
-  idx           = seq_len(nrow(sensors)),
-  SIMPLIFY      = FALSE
+# Generate popup HTML strings (character vector, not html-object list)
+popup_vec <- vapply(
+  seq_len(nrow(sensors)),
+  function(i) make_popup(sensors$station[i], sensors$label[i], i),
+  character(1)
 )
 
-# ---------------------------------------------------------------------------
-# Extract plotly.js from the installed plotly package and attach it as a
-# proper htmlwidget dependency so saveWidget() bundles it in the final HTML.
-# ---------------------------------------------------------------------------
-dummy_widget  <- as_widget(plot_ly(data.frame(x = 1, y = 1), x = ~x, y = ~y,
-                                   type = "scatter"))
-plotly_deps   <- resolveDependencies(htmlDependencies(dummy_widget))
+# Build a dummy plotly to extract plotly.js dependency
+dummy_widget <- as_widget(plot_ly(data.frame(x = 1, y = 1), x = ~x, y = ~y,
+                                  type = "scatter"))
+plotly_deps <- resolveDependencies(htmlDependencies(dummy_widget))
 
 # Build Leaflet map
 m <- leaflet(sensors) %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
   addMarkers(
-    lng   = ~lon,
-    lat   = ~lat,
-    label = ~label,
-    popup = lapply(popups, HTML)   # raw HTML -> Plotly will render on click
+    lng     = ~lon,
+    lat     = ~lat,
+    label   = ~label,
+    popup   = popup_vec,          # plain character vector → markers are clickable
+    options = markerOptions(interactive = TRUE)
   ) %>%
   addMiniMap(toggleDisplay = TRUE)
 
