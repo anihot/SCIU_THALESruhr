@@ -105,6 +105,7 @@ jobs:
           git add data/processed/precipitation_at_sensors.csv || true
           git add data/processed/event_correlation_summary.csv || true
           git add data/output/sensor_map.html || true
+          git add data/output/graphs/*.html || true
           
           # Only add historical log if it exists
           if [ -d "data/metadata" ]; then
