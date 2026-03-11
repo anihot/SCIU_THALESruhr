@@ -63,22 +63,53 @@ for (i in seq_len(nrow(sensors))) {
       start_time <- now(tzone = tz(df$Zeit_Datum)) - hours(24)
       df_24h <- df %>% filter(Zeit_Datum >= start_time)
       
+      # Prepare precipitation data for this station in the last 24h
+      precip_file <- "data/processed/precipitation_at_sensors.csv"
+      station_precip <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
+      if (file_exists(precip_file)) {
+          precip_df <- read_csv(precip_file, show_col_types = FALSE)
+          if (nrow(precip_df) > 0) {
+              # Parse timestamp properly and filter
+              precip_df$timestamp <- as.POSIXct(precip_df$timestamp, tz = "UTC")
+              station_precip <- precip_df %>% 
+                  filter(station == station_name, timestamp >= start_time)
+          }
+      }
+      
       if (nrow(df_24h) == 0) {
         title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")<br>Keine 24h-Daten.")
         p <- plotly_empty() %>% layout(title = list(text = title_text, font=list(size=11)))
       } else {
         title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")")
         
-        p <- plot_ly(df_24h, x = ~Zeit_Datum, y = ~level,
-                     type = "scatter", mode = "lines",
-                     line = list(color = "#0072B2", width = 2),
-                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
-                     hovertemplate = "%{x|%d.%m. %H:%M}<br>%{y:.3f} m<extra></extra>") %>%
-          layout(
+        # Build base trace (Water Level)
+        p <- plot_ly() %>%
+          add_trace(data = df_24h, x = ~Zeit_Datum, y = ~level,
+                    type = "scatter", mode = "lines", name = "Pegel",
+                    line = list(color = "#0072B2", width = 2),
+                    fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
+                    hovertemplate = "Pegel: %{y:.3f} m<extra></extra>")
+                    
+        # Add conditional trace (Precipitation)
+        has_precip <- nrow(station_precip) > 0
+        if (has_precip) {
+            p <- p %>% add_trace(data = station_precip, x = ~timestamp, y = ~precipitation_mm,
+                                 type = "scatter", mode = "lines", name = "Regen",
+                                 yaxis = "y2",
+                                 line = list(color = "#009E73", width = 2, dash = "dot"),
+                                 hovertemplate = "Regen: %{y:.1f} mm<extra></extra>")
+        }
+        
+        # Determine layout params based on precipitation
+        margin_r <- if(has_precip) 40 else 10
+                    
+        p <- p %>% layout(
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee"),
-            yaxis      = list(title = "Level (m)", gridcolor = "#eeeeee"),
-            margin     = list(l = 40, r = 10, t = 40, b = 30),
+            yaxis      = list(title = "Level (m)", gridcolor = "#eeeeee", side = "left"),
+            yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
+                              showgrid = FALSE, zeroline = FALSE, rangemode = "tozero"),
+            margin     = list(l = 40, r = margin_r, t = 40, b = 30),
             showlegend = FALSE,
             hovermode  = "x unified",
             plot_bgcolor  = "white",
