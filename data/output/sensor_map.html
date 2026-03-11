@@ -5250,232 +5250,59 @@ function asArray(value) {
   this.layerManager.addLayer(L.tileLayer.provider(provider, options), "tile", layerId, group);
 };
 </script>
-<script>LeafletWidget.methods.imagePopup = function(image, group, width, height, src, name, tooltip, dotlist) {
+<style type="text/css">.leaflet-control-minimap{border:rgba(255,255,255,1) solid;box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:3px;background:#f8f8f9;transition:all .6s}.leaflet-control-minimap a{background-color:rgba(255,255,255,1);background-repeat:no-repeat;z-index:99999;transition:all .6s}.leaflet-control-minimap a.minimized-bottomright{-webkit-transform:rotate(180deg);transform:rotate(180deg);border-radius:0}.leaflet-control-minimap a.minimized-topleft{-webkit-transform:rotate(0deg);transform:rotate(0deg);border-radius:0}.leaflet-control-minimap a.minimized-bottomleft{-webkit-transform:rotate(270deg);transform:rotate(270deg);border-radius:0}.leaflet-control-minimap a.minimized-topright{-webkit-transform:rotate(90deg);transform:rotate(90deg);border-radius:0}.leaflet-control-minimap-toggle-display{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTgiIHdpZHRoPSIxOCI+PGRlZnM+PG1hcmtlciBvcmllbnQ9ImF1dG8iIG92ZXJmbG93PSJ2aXNpYmxlIj48cGF0aCBkPSJNLTIuNi0yLjgyOEwtNS40MjggMC0yLjYgMi44MjguMjI4IDAtMi42LTIuODI4eiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjRwdCIvPjwvbWFya2VyPjxtYXJrZXIgb3JpZW50PSJhdXRvIiBvdmVyZmxvdz0idmlzaWJsZSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii44IiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxwYXRoIGQ9Ik00LjU2NiA0Ljc1TC0uNjUyIDAiLz48cGF0aCBkPSJNMS41NDQgNC43NUwtMy42NzQgMCIvPjxwYXRoIGQ9Ik0tMS41NjYgNC43NUwtNi43ODQgMCIvPjxwYXRoIGQ9Ik00LjU2Ni01LjAxM0wtLjY1Mi0uMjYzIi8+PHBhdGggZD0iTTEuNTQ0LTUuMDEzbC01LjIxOCA0Ljc1Ii8+PHBhdGggZD0iTS0xLjU2Ni01LjAxM2wtNS4yMTggNC43NSIvPjwvZz48L21hcmtlcj48bWFya2VyIG9yaWVudD0iYXV0byIgb3ZlcmZsb3c9InZpc2libGUiPjxwYXRoIGQ9Ik0tNS42LTUuNjU3TC0xMS4yNTcgMC01LjYgNS42NTcuMDU3IDAtNS42LTUuNjU3eiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iLjhwdCIvPjwvbWFya2VyPjxtYXJrZXIgb3JpZW50PSJhdXRvIiBvdmVyZmxvdz0idmlzaWJsZSI+PHBhdGggZD0iTTQuNjE2IDBsLTYuOTIgNHYtOGw2LjkyIDR6IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuOHB0Ii8+PC9tYXJrZXI+PG1hcmtlciBvcmllbnQ9ImF1dG8iIG92ZXJmbG93PSJ2aXNpYmxlIj48cGF0aCBkPSJNLTEwLjY5LTQuNDM3TDEuMzI4LS4wMTdsLTEyLjAxOCA0LjQyYzEuOTItMi42MSAxLjkxLTYuMTggMC04Ljg0eiIgZm9udC1zaXplPSIxMiIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2Utd2lkdGg9Ii42ODc1IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9tYXJrZXI+PG1hcmtlciBvcmllbnQ9ImF1dG8iIG92ZXJmbG93PSJ2aXNpYmxlIj48cGF0aCBkPSJNLTQuNjE2IDBsNi45Mi00djhsLTYuOTItNHoiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9Ii44cHQiLz48L21hcmtlcj48bWFya2VyIG9yaWVudD0iYXV0byIgb3ZlcmZsb3c9InZpc2libGUiPjxwYXRoIGQ9Ik0xMCAwbDQtNEwwIDBsMTQgNC00LTR6IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIuOHB0Ii8+PC9tYXJrZXI+PG1hcmtlciBvcmllbnQ9ImF1dG8iIG92ZXJmbG93PSJ2aXNpYmxlIj48cGF0aCBkPSJNMTAuNjkgNC40MzdMLTEuMzI4LjAxN2wxMi4wMTgtNC40MmMtMS45MiAyLjYxLTEuOTEgNi4xOCAwIDguODR6IiBmb250LXNpemU9IjEyIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZS13aWR0aD0iLjY4NzUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L21hcmtlcj48L2RlZnM+PHBhdGggZD0iTTEzLjE4IDEzLjE0NnYtNS44MWwtNS44MSA1LjgxaDUuODF6IiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS42NDMiLz48cGF0aCBkPSJNMTIuNzYyIDEyLjcyN2wtNi41MS02LjUxIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMi40ODIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==);background-size:cover;position:absolute;border-radius:3px 0 0}.leaflet-oldie .leaflet-control-minimap-toggle-display{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAH1JREFUOI3t0DEKAjEQheFP8ERWqfUCeg9rL+adbKxkYRFEY7ERhkUhCZb7wyuGYX5ewkIvK6z/ITpjxOHHPtWKrsh4fJEl3GpF29LoI9sHSS6pZjeTnTD0iOayjFevCI7hOKaJZHpObNIsih/b3WiDSzgaS+5lfrY0Wph4A4kFM89VzdVFAAAAAElFTkSuQmCC)}.leaflet-control-minimap-toggle-display-bottomright{bottom:0;right:0}.leaflet-control-minimap-toggle-display-topleft{top:0;left:0;-webkit-transform:rotate(180deg);transform:rotate(180deg)}.leaflet-control-minimap-toggle-display-bottomleft{bottom:0;left:0;-webkit-transform:rotate(90deg);transform:rotate(90deg)}.leaflet-control-minimap-toggle-display-topright{top:0;right:0;-webkit-transform:rotate(270deg);transform:rotate(270deg)}.leaflet-oldie .leaflet-control-minimap{border:1px solid #999}.leaflet-oldie .leaflet-control-minimap a{background-color:#fff}.leaflet-oldie .leaflet-control-minimap a.minimized{filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2)}</style>
+<script>(function(factory,window){if(typeof define==="function"&&define.amd){define(["leaflet"],factory)}else if(typeof exports==="object"){module.exports=factory(require("leaflet"))}if(typeof window!=="undefined"&&window.L){window.L.Control.MiniMap=factory(L);window.L.control.minimap=function(layer,options){return new window.L.Control.MiniMap(layer,options)}}})(function(L){var MiniMap=L.Control.extend({includes:L.Mixin.Events,options:{position:"bottomright",toggleDisplay:false,zoomLevelOffset:-5,zoomLevelFixed:false,centerFixed:false,zoomAnimation:false,autoToggleDisplay:false,minimized:false,width:150,height:150,collapsedWidth:19,collapsedHeight:19,aimingRectOptions:{color:"#ff7800",weight:1,clickable:false},shadowRectOptions:{color:"#000000",weight:1,clickable:false,opacity:0,fillOpacity:0},strings:{hideText:"Hide MiniMap",showText:"Show MiniMap"},mapOptions:{}},initialize:function(layer,options){L.Util.setOptions(this,options);this.options.aimingRectOptions.clickable=false;this.options.shadowRectOptions.clickable=false;this._layer=layer},onAdd:function(map){this._mainMap=map;this._container=L.DomUtil.create("div","leaflet-control-minimap");this._container.style.width=this.options.width+"px";this._container.style.height=this.options.height+"px";L.DomEvent.disableClickPropagation(this._container);L.DomEvent.on(this._container,"mousewheel",L.DomEvent.stopPropagation);var mapOptions={attributionControl:false,dragging:!this.options.centerFixed,zoomControl:false,zoomAnimation:this.options.zoomAnimation,autoToggleDisplay:this.options.autoToggleDisplay,touchZoom:this.options.centerFixed?"center":!this._isZoomLevelFixed(),scrollWheelZoom:this.options.centerFixed?"center":!this._isZoomLevelFixed(),doubleClickZoom:this.options.centerFixed?"center":!this._isZoomLevelFixed(),boxZoom:!this._isZoomLevelFixed(),crs:map.options.crs};mapOptions=L.Util.extend(this.options.mapOptions,mapOptions);this._miniMap=new L.Map(this._container,mapOptions);this._miniMap.addLayer(this._layer);this._mainMapMoving=false;this._miniMapMoving=false;this._userToggledDisplay=false;this._minimized=false;if(this.options.toggleDisplay){this._addToggleButton()}this._miniMap.whenReady(L.Util.bind(function(){this._aimingRect=L.rectangle(this._mainMap.getBounds(),this.options.aimingRectOptions).addTo(this._miniMap);this._shadowRect=L.rectangle(this._mainMap.getBounds(),this.options.shadowRectOptions).addTo(this._miniMap);this._mainMap.on("moveend",this._onMainMapMoved,this);this._mainMap.on("move",this._onMainMapMoving,this);this._miniMap.on("movestart",this._onMiniMapMoveStarted,this);this._miniMap.on("move",this._onMiniMapMoving,this);this._miniMap.on("moveend",this._onMiniMapMoved,this)},this));return this._container},addTo:function(map){L.Control.prototype.addTo.call(this,map);var center=this.options.centerFixed||this._mainMap.getCenter();this._miniMap.setView(center,this._decideZoom(true));this._setDisplay(this.options.minimized);return this},onRemove:function(map){this._mainMap.off("moveend",this._onMainMapMoved,this);this._mainMap.off("move",this._onMainMapMoving,this);this._miniMap.off("moveend",this._onMiniMapMoved,this);this._miniMap.removeLayer(this._layer)},changeLayer:function(layer){this._miniMap.removeLayer(this._layer);this._layer=layer;this._miniMap.addLayer(this._layer)},_addToggleButton:function(){this._toggleDisplayButton=this.options.toggleDisplay?this._createButton("",this._toggleButtonInitialTitleText(),"leaflet-control-minimap-toggle-display leaflet-control-minimap-toggle-display-"+this.options.position,this._container,this._toggleDisplayButtonClicked,this):undefined;this._toggleDisplayButton.style.width=this.options.collapsedWidth+"px";this._toggleDisplayButton.style.height=this.options.collapsedHeight+"px"},_toggleButtonInitialTitleText:function(){if(this.options.minimized){return this.options.strings.showText}else{return this.options.strings.hideText}},_createButton:function(html,title,className,container,fn,context){var link=L.DomUtil.create("a",className,container);link.innerHTML=html;link.href="#";link.title=title;var stop=L.DomEvent.stopPropagation;L.DomEvent.on(link,"click",stop).on(link,"mousedown",stop).on(link,"dblclick",stop).on(link,"click",L.DomEvent.preventDefault).on(link,"click",fn,context);return link},_toggleDisplayButtonClicked:function(){this._userToggledDisplay=true;if(!this._minimized){this._minimize()}else{this._restore()}},_setDisplay:function(minimize){if(minimize!==this._minimized){if(!this._minimized){this._minimize()}else{this._restore()}}},_minimize:function(){if(this.options.toggleDisplay){this._container.style.width=this.options.collapsedWidth+"px";this._container.style.height=this.options.collapsedHeight+"px";this._toggleDisplayButton.className+=" minimized-"+this.options.position;this._toggleDisplayButton.title=this.options.strings.showText}else{this._container.style.display="none"}this._minimized=true;this._onToggle()},_restore:function(){if(this.options.toggleDisplay){this._container.style.width=this.options.width+"px";this._container.style.height=this.options.height+"px";this._toggleDisplayButton.className=this._toggleDisplayButton.className.replace("minimized-"+this.options.position,"");this._toggleDisplayButton.title=this.options.strings.hideText}else{this._container.style.display="block"}this._minimized=false;this._onToggle()},_onMainMapMoved:function(e){if(!this._miniMapMoving){var center=this.options.centerFixed||this._mainMap.getCenter();this._mainMapMoving=true;this._miniMap.setView(center,this._decideZoom(true));this._setDisplay(this._decideMinimized())}else{this._miniMapMoving=false}this._aimingRect.setBounds(this._mainMap.getBounds())},_onMainMapMoving:function(e){this._aimingRect.setBounds(this._mainMap.getBounds())},_onMiniMapMoveStarted:function(e){if(!this.options.centerFixed){var lastAimingRect=this._aimingRect.getBounds();var sw=this._miniMap.latLngToContainerPoint(lastAimingRect.getSouthWest());var ne=this._miniMap.latLngToContainerPoint(lastAimingRect.getNorthEast());this._lastAimingRectPosition={sw:sw,ne:ne}}},_onMiniMapMoving:function(e){if(!this.options.centerFixed){if(!this._mainMapMoving&&this._lastAimingRectPosition){this._shadowRect.setBounds(new L.LatLngBounds(this._miniMap.containerPointToLatLng(this._lastAimingRectPosition.sw),this._miniMap.containerPointToLatLng(this._lastAimingRectPosition.ne)));this._shadowRect.setStyle({opacity:1,fillOpacity:.3})}}},_onMiniMapMoved:function(e){if(!this._mainMapMoving){this._miniMapMoving=true;this._mainMap.setView(this._miniMap.getCenter(),this._decideZoom(false));this._shadowRect.setStyle({opacity:0,fillOpacity:0})}else{this._mainMapMoving=false}},_isZoomLevelFixed:function(){var zoomLevelFixed=this.options.zoomLevelFixed;return this._isDefined(zoomLevelFixed)&&this._isInteger(zoomLevelFixed)},_decideZoom:function(fromMaintoMini){if(!this._isZoomLevelFixed()){if(fromMaintoMini){return this._mainMap.getZoom()+this.options.zoomLevelOffset}else{var currentDiff=this._miniMap.getZoom()-this._mainMap.getZoom();var proposedZoom=this._miniMap.getZoom()-this.options.zoomLevelOffset;var toRet;if(currentDiff>this.options.zoomLevelOffset&&this._mainMap.getZoom()<this._miniMap.getMinZoom()-this.options.zoomLevelOffset){if(this._miniMap.getZoom()>this._lastMiniMapZoom){toRet=this._mainMap.getZoom()+1;this._miniMap.setZoom(this._miniMap.getZoom()-1)}else{toRet=this._mainMap.getZoom()}}else{toRet=proposedZoom}this._lastMiniMapZoom=this._miniMap.getZoom();return toRet}}else{if(fromMaintoMini){return this.options.zoomLevelFixed}else{return this._mainMap.getZoom()}}},_decideMinimized:function(){if(this._userToggledDisplay){return this._minimized}if(this.options.autoToggleDisplay){if(this._mainMap.getBounds().contains(this._miniMap.getBounds())){return true}return false}return this._minimized},_isInteger:function(value){return typeof value==="number"},_isDefined:function(value){return typeof value!=="undefined"},_onToggle:function(){L.Util.requestAnimFrame(function(){L.DomEvent.on(this._container,"transitionend",this._fireToggleEvents,this);if(!L.Browser.any3d){L.Util.requestAnimFrame(this._fireToggleEvents,this)}},this)},_fireToggleEvents:function(){L.DomEvent.off(this._container,"transitionend",this._fireToggleEvents,this);var data={minimized:this._minimized};this.fire(this._minimized?"minimize":"restore",data);this.fire("toggle",data)}});L.Map.mergeOptions({miniMapControl:false});L.Map.addInitHook(function(){if(this.options.miniMapControl){this.miniMapControl=(new MiniMap).addTo(this)}});return MiniMap},window);</script>
+<script>LeafletWidget.methods.addMiniMap =
+  function(tilesURL, tilesProvider, position,
+  width, height, collapsedWidth, collapsedHeight , zoomLevelOffset,
+  zoomLevelFixed, centerFixed, zoomAnimation , toggleDisplay, autoToggleDisplay,
+  minimized, aimingRectOptions, shadowRectOptions, strings, mapOptions) {
 
-  var lay = this.layerManager._groupContainers[group];
-
-  //debugger;
-
-  var img = [];
-  for (i = 0; i < image.length; i++) {
-    if (src[i] === "l") {
-      if (name.length === 1) {
-        img[i] = document.getElementById("image" + "-" + group + "-" + name + "-attachment").href;
-      } else {
-        img[i] = document.getElementById("image" + "-" + group + "-" + name[i] + "-attachment").href;
+    (function() {
+      if(this.minimap) {
+        this.minimap.removeFrom( this );
       }
-    }
-    if (src[i] === "r") {
-      r_img = new Image();
-      r_img.src = image[i];
-      var wh = [];
-      r_img.onload = function () {
-        wh = [r_img.width, r_img.height];
-      };
-      if (width[i] === null & height[i] === null) {
-        width[i] = wh[0]; //r_img.width;
-        height[i] = wh[1]; //r_img.height;
-      } else if (width[i] === null) {
-        xy_ratio = wh[0] / wh[1]; //r_img.width / r_img.height;
-        width[i] = xy_ratio * wh[1]; //height[i];
-      } else if (height[i] === null) {
-        yx_ratio = wh[1] / wh[0]; //r_img.height / r_img.width;
-        height[i] = yx_ratio * wh[0]; //width[i];
+
+      // determin the tiles for the minimap
+      // default to OSM tiles
+      layer = new L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+      if(tilesProvider) {
+        // use a custom tiles provider if specified.
+        layer = new L.tileLayer.provider(tilesProvider);
+      } else if(tilesURL) {
+        // else use a custom tiles URL if specified.
+        layer = new L.tileLayer(tilesURL);
       }
-      img[i] = image[i];
-    }
-  }
 
-  //debugger;
-
-  var imgid = 0;
-  lay.eachLayer(function (layer) {
-
-    if (layer._singleAddRemoveBuffer === undefined) {
-      wdth = width[imgid];
-      hght = height[imgid];
-      if (dotlist.minWidth === undefined) {
-        dotlist.minWidth = wdth;
-      }
-      if (imgid <= image.length) {
-        popimg = "<image src='" + img[imgid] + "'" + " height=" + hght + " width=" + wdth + ">";
-        poporig = layer.getPopup();
-        if (poporig === undefined) {
-          pop = popimg;
-        } else {
-          pop = poporig._content + popimg;
-        }
-
-        if (tooltip === true) {
-          layer.bindTooltip(pop, dotlist); //{ maxWidth: 2000 });
-        } else {
-          layer.bindPopup(pop, dotlist); //{ maxWidth: 2000 });
-        }
-      }
-    }
-
-    if (layer._singleAddRemoveBuffer !== undefined) {
-      var arr = layer._singleAddRemoveBuffer;
-      arr.forEach(function(value) {
-        wdth = width[imgid];
-        hght = height[imgid];
-        if (dotlist.minWidth === undefined) {
-          dotlist.minWidth = wdth;
-        }
-        if (imgid <= image.length) {
-          popimg = "<image src='" + img[imgid] + "'" + " height=" + hght + " width=" + wdth + ">";
-        }
-        poporig = value.layer.getPopup();
-          if (poporig === undefined) {
-            pop = popimg;
-          } else {
-            pop = poporig._content + popimg;
-          }
-        if (tooltip === true) {
-            value.layer.bindTooltip(pop, dotlist); //{ maxWidth: 2000 });
-        } else {
-          value.layer.bindPopup(pop, dotlist); //{ maxWidth: 2000 });
-        }
-        imgid += 1;
+      this.minimap = new L.Control.MiniMap(layer, {
+        position: position,
+        width: width,
+        height: height,
+        collapsedWidth: collapsedWidth,
+        collapsedHeight: collapsedWidth,
+        zoomLevelOffset: zoomLevelOffset,
+        zoomLevelFixed: zoomLevelFixed,
+        centerFixed: centerFixed,
+        zoomAnimation: zoomAnimation,
+        toggleDisplay: toggleDisplay,
+        autoToggleDisplay: autoToggleDisplay,
+        minimized: minimized,
+        aimingRectOptions: aimingRectOptions,
+        shadowRectOptions: shadowRectOptions,
+        strings: strings,
+        mapOptions: mapOptions
       });
-    }
-
-    //debugger;
-    imgid += 1;
-  });
-
-};
-
-
-LeafletWidget.methods.videoPopup = function(video, group, width, height, name) {
-
-  var lay = this.layerManager._groupContainers[group];
-
-  //debugger;
-
-  var vdo = [];
-  //var vid = [];
-  //var wdth = [];
-  //var hght = [];
-  var vdoid = 0;
-
-  lay.eachLayer(function (layer) {
-
-    if (name.length === 1) {
-      vdo[vdoid] = document.getElementById("video" + "-" + name + "-attachment").href;
-    } else {
-      vdo[vdoid] = document.getElementById("video" + "-" + name[vdoid] + "-attachment").href;
-    }
-
-    //vid[vdoid] = document.createElement('video');
-    var vid = document.createElement('video');
-    var id = 'leafpop-video' + vdoid;
-    vid.setAttribute('id', id);
-    vid.src = vdo[vdoid];
-    vid.controls = true;
-/*
-    if (width[vdoid] === null & height[vdoid] === null) {
-      wdth = vid[vdoid].videoWidth;
-      hght = vid[vdoid].videoHeight;
-    } else if (width[vdoid] === null) {
-      xy_ratio = vid[vdoid].videoWidth / vid[vdoid].videoHeight;
-      wdth = xy_ratio * height[vdoid];
-      hght = height[vdoid];
-    } else if (height[vdoid] === null) {
-      xy_ratio = vid[vdoid].videoHeight / vid[vdoid]  .videoWidth;
-      hght = xy_ratio * width[vdoid];
-      wdth = width[vdoid];
-    }
-*/
-
-    var wdth;
-    var hght;
-    var xy_ratio = vid.videoWidth / vid.videoHeight;
-    var yx_ratio = vid.videoHeight / vid.videoWidth;
-
-    debugger;
-
-    if (width[vdoid] !== null) {
-      wdth = width[vdoid];
-      hght = vid.videoWidth * yx_ratio;
-    } else if (height[vdoid] !== null ) {
-      hght = height[vdoid];
-      wdth = vid.videoHeight * xy_ratio;
-    } else {
-      wdth = vid.videoWidth;
-      hght = vid.videoHeight;
-    }
-
-    vid.setAttribute('width', wdth);
-    vid.setAttribute('height', hght);
-
-    if (vdoid <= video.length - 1) {
-      //pop = "<video controls src='" + vdo[vdoid] + "'" + " height=" + height[vdoid] + " width=" + width[vdoid] + ">";
-      layer.bindPopup(vid, { width: wdth, height: hght, maxWidth: 2000 });
-      vdoid += 1;
-    }
-    //debugger;
-    //if (vdoid < name.length) { vdoid += 1 }
-  });
-
-};
-
-
-
-
-LeafletWidget.methods.iframePopup = function(source, group, width, height, src, name) {
-
-  var lay = this.layerManager._groupContainers[group];
-
-  //debugger;
-
-  var frm = [];
-  for (i = 0; i < source.length; i++) {
-    if (src[i] === "l") {
-      if (name.length === 1) {
-        frm[i] = document.getElementById("iframe" + "-" + name + "-attachment").href;
-      } else {
-        frm[i] = document.getElementById("iframe" + "-" + name[i] + "-attachment").href;
-      }
-    }
-    if (src[i] === "r") {
-      frm[i] = source[i];
-    }
-  }
-
-   //debugger;
-
-  var srcid = 0;
-  lay.eachLayer(function (layer) {
-    wdth = width;
-    hght = height;
-    if (srcid <= source.length) {
-      pop = "<iframe src='" +
-        frm[srcid] +
-        "' frameborder=0 width=" + wdth +
-        " height=" + hght +
-        "></iframe>";
-
-      layer.bindPopup(pop, { maxWidth: 2000 });
-    }
-    //debugger;
-    srcid += 1;
-  });
-
-};
+      this.minimap.addTo(this);
+    }).call(this);
+  };
 </script>
-<p><link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEsCAMAAAACZbH6AAAAA1BMVEX///+nxBvIAAAAqUlEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgywBLOgABZkoLLgAAAABJRU5ErkJggg==" id="image-sensors-file504046db4b02-attachment" rel="attachment" />
-<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEsCAMAAAACZbH6AAAAA1BMVEX///+nxBvIAAAAqUlEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgywBLOgABZkoLLgAAAABJRU5ErkJggg==" id="image-sensors-file50405cf544e7-attachment" rel="attachment" />
-<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEsCAMAAAACZbH6AAAAA1BMVEX///+nxBvIAAAAqUlEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgywBLOgABZkoLLgAAAABJRU5ErkJggg==" id="image-sensors-file5040574a1ee9-attachment" rel="attachment" />
-<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEsCAMAAAACZbH6AAAAA1BMVEX///+nxBvIAAAAqUlEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgywBLOgABZkoLLgAAAABJRU5ErkJggg==" id="image-sensors-file504019be3d69-attachment" rel="attachment" />
-<link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAEsCAMAAAACZbH6AAAAA1BMVEX///+nxBvIAAAAqUlEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgywBLOgABZkoLLgAAAABJRU5ErkJggg==" id="image-sensors-file504078f43791-attachment" rel="attachment" /></p>
 
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-  <div class="leaflet html-widget html-fill-item" id="htmlwidget-d558e67dfb8cbd1723cb" style="width:100%;height:400px;"></div>
+  <div class="leaflet html-widget html-fill-item" id="htmlwidget-0c47684dcc4650364f47" style="width:100%;height:400px;"></div>
 </div>
-<script type="application/json" data-for="htmlwidget-d558e67dfb8cbd1723cb">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[51.511366,51.4167617,51.460978,51.459838,51.447778],[7.204454,7.2022587,7.223091,7.222267,7.270763],10,null,"sensors",{"interactive":true,"className":"","stroke":true,"color":"#1a3a5c","weight":2,"opacity":0.5,"fill":true,"fillColor":"#2196F3","fillOpacity":0.85},null,null,null,null,["Herzogstraße","An der Kost","Wasserstraße","Königsallee","Wasserbaulabor 2"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"imagePopup","args":[["file504046db4b02.png","file50405cf544e7.png","file5040574a1ee9.png","file504019be3d69.png","file504078f43791.png"],"sensors",[500,500,500,500,500],[300,300,300,300,300],["l","l","l","l","l"],["file504046db4b02","file50405cf544e7","file5040574a1ee9","file504019be3d69","file504078f43791"],false,{"maxWidth":2000}]}],"fitBounds":[51.4167617,7.2022587,51.511366,7.270763,[]],"limits":{"lat":[51.4167617,51.511366],"lng":[7.2022587,7.270763]}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-d558e67dfb8cbd1723cb">{"viewer":{"width":"100%","height":400,"padding":0,"fill":true},"browser":{"width":"100%","height":400,"padding":0,"fill":true}}</script>
+<script type="application/json" data-for="htmlwidget-0c47684dcc4650364f47">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[51.511366,51.4167617,51.460978,51.459838,51.447778],[7.204454,7.2022587,7.223091,7.222267,7.270763],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["<div style='font-family: Arial, sans-serif;'><b>Station: <\/b>Herzogstraße<br><b>Label: <\/b>Herzogstraße (Bochum)<br><hr><b>Aktueller Stand: <\/b>N/A<br><b>Zeitpunkt: <\/b>2025-01-18 14:40<\/div>","<div style='font-family: Arial, sans-serif;'><b>Station: <\/b>An der Kost<br><b>Label: <\/b>An der Kost (Hattingen)<br><hr><b>Aktueller Stand: <\/b>N/A<br><b>Zeitpunkt: <\/b>2025-01-18 14:40<\/div>","<div style='font-family: Arial, sans-serif;'><b>Station: <\/b>Wasserstraße<br><b>Label: <\/b>Wasserstraße Springorum (Bochum)<br><hr><b>Aktueller Stand: <\/b>N/A<br><b>Zeitpunkt: <\/b>2025-01-18 14:40<\/div>","<div style='font-family: Arial, sans-serif;'><b>Station: <\/b>Königsallee<br><b>Label: <\/b>Königsallee Springorum (Bochum)<br><hr><b>Aktueller Stand: <\/b>N/A<br><b>Zeitpunkt: <\/b>2025-01-18 14:40<\/div>","<div style='font-family: Arial, sans-serif;'><b>Station: <\/b>Wasserbaulabor 2<br><b>Label: <\/b>Wasserbaulabor 2 (Hochschule Bochum Campus)<br><hr><b>Aktueller Stand: <\/b>0 m<br><b>Zeitpunkt: <\/b>2025-01-01 12:00<\/div>"],null,null,null,["Herzogstraße","An der Kost","Wasserstraße","Königsallee","Wasserbaulabor 2"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addMiniMap","args":[null,null,"bottomright",150,150,19,19,-5,false,false,false,true,false,false,{"color":"#ff7800","weight":1,"clickable":false},{"color":"#000000","weight":1,"clickable":false,"opacity":0,"fillOpacity":0},{"hideText":"Hide MiniMap","showText":"Show MiniMap"},[]]}],"limits":{"lat":[51.4167617,51.511366],"lng":[7.2022587,7.270763]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-0c47684dcc4650364f47">{"viewer":{"width":"100%","height":400,"padding":0,"fill":true},"browser":{"width":"100%","height":400,"padding":0,"fill":true}}</script>
 </body>
 </html>
