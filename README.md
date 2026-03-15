@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 14.03. 20:00 bis 16.03. 19:00)*
+*(Zeitraum: 15.03. 04:00 bis 17.03. 03:00)*
 
-- Temperatur: **3.6°C** (Min: 3°C | Max: 9.8°C)
-- Summe: **6 mm** | Max: **1.4 mm/h**
-- Max. 6h: **3.3 mm**
+- Temperatur: **2.7°C** (Min: 2.7°C | Max: 9.6°C)
+- Summe: **7.9 mm** | Max: **2.2 mm/h**
+- Max. 6h: **4.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -27,7 +27,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-14 18:36:20 UTC*
+*Stand: 2026-03-15 02:06:30 UTC*
 
 ---
 
