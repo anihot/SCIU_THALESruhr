@@ -12,8 +12,7 @@ df$Zeit_Datum <- as.POSIXct(df$Zeit_Datum, tz = "UTC")
 # falling back to 2026 for filtering just in case, but expanding the window
 event_feb18 <- df %>%
   filter(
-    (Zeit_Datum >= as.POSIXct("2026-02-18 08:30:00", tz="UTC") & Zeit_Datum <= as.POSIXct("2026-02-18 10:30:00", tz="UTC")) |
-    (Zeit_Datum >= as.POSIXct("2025-02-18 08:30:00", tz="UTC") & Zeit_Datum <= as.POSIXct("2025-02-18 10:30:00", tz="UTC"))
+    (Zeit_Datum >= as.POSIXct("2026-02-18 09:00:00", tz="UTC") & Zeit_Datum <= as.POSIXct("2026-02-18 10:00:00", tz="UTC"))
   )
 
 if (nrow(event_feb18) > 0) {
@@ -23,6 +22,7 @@ if (nrow(event_feb18) > 0) {
     labs(title = "Wasserbaulabor 2: Experiment am 18.02.",
          x = "Uhrzeit (UTC)",
          y = "Wasserstand (cm)") +
+    coord_cartesian(xlim = c(min(na.omit(event_feb18$Zeit_Datum)), max(na.omit(event_feb18$Zeit_Datum)))) +
     theme_minimal() +
     theme(
       plot.title = element_text(size = 14, face = "bold"),
