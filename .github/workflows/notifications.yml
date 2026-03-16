@@ -35,8 +35,8 @@ jobs:
       - name: Send Daily Summary Email
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.MAIL_SERVER }}
-          server_port: ${{ secrets.MAIL_PORT }}
+          server_address: mail.gmx.net
+          server_port: 587
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: "📅 SCIU Daily Status Report"
@@ -52,8 +52,8 @@ jobs:
         if: hashFiles('data/processed/risk_report.md') != ''
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.MAIL_SERVER }}
-          server_port: ${{ secrets.MAIL_PORT }}
+          server_address: mail.gmx.net
+          server_port: 587
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: "⚠️ SCIU RISK ALERT: Starkregen vorhergesagt!"
