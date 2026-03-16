@@ -58,10 +58,10 @@ detect_events <- function(df, station_name) {
         # Classify events based on signature
         mutate(
             event_type = case_when(
-                # "Experiment / Anomalie" signature (e.g., Feb 18th event)
+                # "Sturzflut" (Flash Flood) signature (e.g., Feb 18th event)
                 # Extremely sharp gradient (> 0.5 cm/min) AND short relative to peak height
                 # Or very short absolute duration (< 45 mins) with high peak (> 2cm)
-                (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Experiment / Künstlich",
+                (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Sturzflut-Ereignis",
                 
                 # Default natural rain profile: slower build-up, longer duration
                 TRUE ~ "Regenereignis / Natürlich"
