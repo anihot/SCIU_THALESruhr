@@ -34,6 +34,27 @@ if (file_exists(forecast_file)) {
     }
 }
 
+# 2. Sensor Events
+event_summary <- "Keine Ereignisse in den letzten 24 Stunden verzeichnet."
+if (file_exists(events_file)) {
+    # Suppress output safely
+    try({
+        events <- read_csv(events_file, show_col_types = FALSE)
+        if (nrow(events) > 0 && "start_time" %in% colnames(events)) {
+            events_recent <- events %>%
+                mutate(start_time = as.POSIXct(start_time, tz = "UTC")) %>%
+                filter(start_time >= now() - hours(24))
+                
+            if (nrow(events_recent) > 0) {
+                event_summary <- paste0(
+                    "In den letzten 24 Stunden wurden **", nrow(events_recent), "** Sensor-Ereignisse registriert.\n",
+                    "Details dazu im Dashboard oder im aktuellen Log auf GitHub."
+                )
+            }
+        }
+    }, silent = TRUE)
+}
+
 # 3. Sensor Health Status
 health_file <- "data/processed/sensor_health_report.md"
 health_summary <- "Keine Sensor-Status-Daten verfügbar."
