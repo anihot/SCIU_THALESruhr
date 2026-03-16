@@ -52,9 +52,22 @@ detect_events <- function(df, station_name) {
         mutate(
             avg_gradient_cm_min = (peak_level_m * 100) / (as.numeric(difftime(peak_time, start_time, units = "mins")) + 0.1),
             avg_gradient_cm_min = round(avg_gradient_cm_min, 3),
-            peak_level_cm = round(peak_level_m * 100, 2)
+            peak_level_cm = round(peak_level_m * 100, 2),
+            event_type = "Unbekannt"
         ) %>%
-        select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, avg_gradient_cm_min, points_count) %>%
+        # Classify events based on signature
+        mutate(
+            event_type = case_when(
+                # "Experiment / Anomalie" signature (e.g., Feb 18th event)
+                # Extremely sharp gradient (> 0.5 cm/min) AND short relative to peak height
+                # Or very short absolute duration (< 45 mins) with high peak (> 2cm)
+                (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Experiment / Künstlich",
+                
+                # Default natural rain profile: slower build-up, longer duration
+                TRUE ~ "Regenereignis / Natürlich"
+            )
+        ) %>%
+        select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, avg_gradient_cm_min, event_type, points_count) %>%
         mutate(
             station = gsub("_merged_export", "", station)
         )
