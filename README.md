@@ -26,8 +26,28 @@
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-17 12:13:38 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-03-17 12:19:01 UTC*
+
+Es wurden **7** neue potenzielle Ereignisse erkannt.
+
+|station                 |start_time          | peak_level_cm| duration_min|
+|:-----------------------|:-------------------|-------------:|------------:|
+|Wasserstraße_Springorum |2026-03-17 10:47:30 |           4.4|            0|
+|Herzogstraße            |2026-03-17 09:49:00 |           3.7|           54|
+|Herzogstraße            |2026-03-16 15:43:00 |          16.4|          235|
+|Herzogstraße            |2026-03-16 12:04:00 |          39.4|          135|
+|Herzogstraße            |2026-03-16 10:07:00 |          38.3|           87|
+|Herzogstraße            |2026-03-16 07:57:00 |          38.0|           98|
+|Herzogstraße            |2026-03-16 06:48:00 |          15.1|           14|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+
+#### Station: Herzogstraße
+![Plot Herzogstraße](data/output/plots/Herzogstraße_merged_export_cleaned.png)
+
 
 ---
 
