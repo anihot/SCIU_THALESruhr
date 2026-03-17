@@ -327,11 +327,11 @@ if (!is.null(lm_result)) {
 report_lines <- c(report_lines,
     "## Nach Ereignistyp",
     "",
-    paste(kable(type_summary, format = "markdown"), collapse = "\n"),
+    paste(knitr::kable(type_summary, format = "markdown"), collapse = "\n"),
     "",
     "## Nach Station",
     "",
-    paste(kable(lag_summary %>% rename(
+    paste(knitr::kable(lag_summary %>% rename(
         `Median-Lag (min)` = median_min,
         `Mittel-Lag (min)` = mean_min,
         `Min (min)` = min_min,
