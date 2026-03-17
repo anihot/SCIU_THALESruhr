@@ -51,23 +51,31 @@ from_str <- format(from_date, "%Y-%m-%dT%H:%M:%SZ")
 
 message(paste("Fetching data from", from_str, "to", to_str))
 
+# Helper: GET with automatic retry on 5xx errors
+get_with_retry <- function(url, ..., max_retries = 3, wait_sec = 10) {
+    for (attempt in seq_len(max_retries)) {
+        resp <- GET(url, ...)
+        if (status_code(resp) < 500) return(resp)
+        message(sprintf("  Server error %d on attempt %d/%d – retrying in %ds...",
+                        status_code(resp), attempt, max_retries, wait_sec))
+        if (attempt < max_retries) Sys.sleep(wait_sec)
+    }
+    resp  # Return last response so caller can handle it
+}
+
 # 1. Fetch Stations
 message("Fetching stations list...")
-# Print headers for debugging (Masking key)
-# message("Headers used:")
-# message(paste("  X-API-Key:", paste0(substr(api_key, 1, 5), "...", substr(api_key, nchar(api_key)-5, nchar(api_key)))))
 
-stations_resp <- GET(
+stations_resp <- get_with_retry(
     url = paste0(base_url, "/api/v2/stations"),
-    custom_headers,
-    verbose() # Add verbose output for detailed trace in GitHub Actions
+    custom_headers
 )
 
 if (status_code(stations_resp) != 200) {
     message("Error Status Code: ", status_code(stations_resp))
     message("Error Response Body:")
     print(content(stations_resp, "text"))
-    stop("Failed to fetch stations.")
+    stop("Failed to fetch stations after retries.")
 }
 
 stations <- content(stations_resp, "parsed")
@@ -84,7 +92,7 @@ for (station in stations) {
 
     # Get full station info (including channels)
     message(paste("Processing station:", station_name, "(", station_id, ")..."))
-    s_resp <- GET(paste0(base_url, "/api/v2/stations/", station_id), custom_headers)
+    s_resp <- get_with_retry(paste0(base_url, "/api/v2/stations/", station_id), custom_headers)
     if (status_code(s_resp) != 200) next
 
     s_data <- content(s_resp, "parsed")
@@ -107,7 +115,7 @@ for (station in stations) {
 
         message(paste("    Fetching channel:", c_name, "..."))
 
-        d_resp <- GET(
+        d_resp <- get_with_retry(
             url = paste0(base_url, "/api/v2/data/history/", c_id),
             query = list(start = from_str, end = to_str),
             custom_headers
