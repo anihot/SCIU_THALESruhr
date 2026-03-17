@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 17.03. 12:00 bis 19.03. 11:00)*
+*(Zeitraum: 17.03. 14:00 bis 19.03. 13:00)*
 
-- Temperatur: **9.3°C** (Min: 4.4°C | Max: 15.8°C)
+- Temperatur: **10°C** (Min: 5.3°C | Max: 16°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -26,23 +26,8 @@
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-03-17 10:57:17 UTC*
-
-Es wurden **5** neue potenzielle Ereignisse erkannt.
-
-|station      |start_time          | peak_level_cm| duration_min|
-|:------------|:-------------------|-------------:|------------:|
-|Herzogstraße |2026-03-16 15:43:00 |          16.4|          235|
-|Herzogstraße |2026-03-16 12:04:00 |          39.4|          135|
-|Herzogstraße |2026-03-16 10:07:00 |          38.3|           87|
-|Herzogstraße |2026-03-16 07:57:00 |          38.0|           98|
-|Herzogstraße |2026-03-16 06:48:00 |          15.1|           14|
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Herzogstraße
-![Plot Herzogstraße](data/output/plots/Herzogstraße_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-03-17 12:13:38 UTC*
 
 ---
 
