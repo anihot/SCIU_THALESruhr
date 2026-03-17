@@ -41,15 +41,15 @@ if (nrow(events_recent) > 0) {
     header_text <- paste0(
         "\n## 🔔 Aktuelle Ereignisse (Letzte 24-30h)\n",
         "*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S UTC"), "*\n\n",
-        "Es wurden **", nrow(recent_events), "** neue potenzielle Ereignisse erkannt.\n\n"
+        "Es wurden **", nrow(events_recent), "** neue potenzielle Ereignisse erkannt.\n\n"
     )
 
     # Table of recent events
-    event_table <- kable(recent_events %>% select(station, start_time, peak_level_cm, duration_min), format = "markdown")
+    event_table <- kable(events_recent %>% select(station, start_time, peak_level_cm, duration_min), format = "markdown")
     event_table <- paste(event_table, collapse = "\n")
 
     # Matching plots
-    unique_stations <- unique(recent_events$station)
+    unique_stations <- unique(events_recent$station)
     plot_links <- "\n### 📈 Aktuelle Plots der betroffenen Stationen\n"
 
     for (st in unique_stations) {
