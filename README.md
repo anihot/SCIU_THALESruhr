@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 17.03. 14:00 bis 19.03. 13:00)*
+*(Zeitraum: 17.03. 16:00 bis 19.03. 15:00)*
 
-- Temperatur: **10°C** (Min: 5.3°C | Max: 16°C)
+- Temperatur: **10.3°C** (Min: 5.3°C | Max: 16°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -25,28 +25,43 @@
 
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
+### Lag-Analyse: Reaktionszeiten der Sensoren
+*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
+
+Über alle Stationen: **Median 139 min** | n = 409 Ereignisse
+
+|station                 | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
+|:-----------------------|--------------:|----------------:|---------:|---------:|
+|An_der_Kost             |              2|               93|        90|        96|
+|Königsallee_Springorum  |              7|              126|        57|       174|
+|Wasserstraße_Springorum |            112|              139|       -37|       179|
+|Herzogstraße            |            288|              140|       -46|       180|
+
+*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
+
+
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-03-17 12:19:01 UTC*
+*Stand: 2026-03-17 14:48:30 UTC*
 
 Es wurden **7** neue potenzielle Ereignisse erkannt.
 
 |station                 |start_time          | peak_level_cm| duration_min|
 |:-----------------------|:-------------------|-------------:|------------:|
+|Herzogstraße            |2026-03-17 13:28:00 |           5.7|           24|
+|Herzogstraße            |2026-03-17 12:21:00 |          12.2|           26|
 |Wasserstraße_Springorum |2026-03-17 10:47:30 |           4.4|            0|
 |Herzogstraße            |2026-03-17 09:49:00 |           3.7|           54|
 |Herzogstraße            |2026-03-16 15:43:00 |          16.4|          235|
 |Herzogstraße            |2026-03-16 12:04:00 |          39.4|          135|
 |Herzogstraße            |2026-03-16 10:07:00 |          38.3|           87|
-|Herzogstraße            |2026-03-16 07:57:00 |          38.0|           98|
-|Herzogstraße            |2026-03-16 06:48:00 |          15.1|           14|
 
 ### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Wasserstraße_Springorum
-![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
-
 #### Station: Herzogstraße
 ![Plot Herzogstraße](data/output/plots/Herzogstraße_merged_export_cleaned.png)
+
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
 
 
 ---
