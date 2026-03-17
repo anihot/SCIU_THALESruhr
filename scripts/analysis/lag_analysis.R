@@ -37,12 +37,22 @@ events <- read_csv(events_file, show_col_types = FALSE) %>%
     )
 
 # Nur Events mit Regen (kein Indoor-Sensor Wasserbaulabor_2 für Lag-Analyse)
+# Spalten openmeteo_verified / total_precip_mm sind optional (nicht immer vorhanden)
 events_rain <- events %>%
     filter(
         !grepl("Wasserbaulabor", station, ignore.case = TRUE),
-        !is.na(start_time),
-        coalesce(openmeteo_verified, total_precip_mm > 0, FALSE) == TRUE |
-            event_type != "Sturzflut-Ereignis"  # Leichter Regen auch einschließen
+        !is.na(start_time)
+    ) %>%
+    filter(
+        # Wenn Verifikationsspalten vorhanden: nur verifizierten Regen oder leichten Regen
+        # Wenn nicht vorhanden: alle Events behalten
+        if ("openmeteo_verified" %in% names(.)) {
+            coalesce(openmeteo_verified, FALSE) == TRUE | event_type != "Sturzflut-Ereignis"
+        } else if ("total_precip_mm" %in% names(.)) {
+            coalesce(total_precip_mm > 0, FALSE) | event_type != "Sturzflut-Ereignis"
+        } else {
+            rep(TRUE, n())
+        }
     )
 
 cat("Ereignisse gesamt:           ", nrow(events), "\n")
