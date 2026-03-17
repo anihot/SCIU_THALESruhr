@@ -132,32 +132,25 @@ if (inherits(response, "try-error") || status_code(response) != 200) {
 # ── 3. Correlate Events with Precipitation ────────────────────────────────────
 
 if (!is.null(precip_df)) {
-    events_df <- events_df %>%
-        rowwise() %>%
-        mutate(
-            window_start     = start_time - hours(LEAD_IN_HOURS),
-            window_end       = end_time,
-            window_precip    = list(precip_df %>% filter(timestamp >= window_start, timestamp <= window_end)),
-            total_precip_mm  = sum(window_precip[[1]]$precipitation_mm, na.rm = TRUE),
-            max_intensity_mm_h = ifelse(
-                nrow(window_precip[[1]]) > 0,
-                max(window_precip[[1]]$precipitation_mm, na.rm = TRUE),
-                0
-            ),
-            openmeteo_verified = total_precip_mm > 0
-        ) %>%
-        select(-window_precip, -window_start, -window_end) %>%
-        ungroup()
+    # Use map2 to avoid rowwise + list-column scoping issues
+    precip_stats <- purrr::map2_dfr(events_df$start_time, events_df$end_time, function(t_start, t_end) {
+        window <- precip_df %>%
+            dplyr::filter(timestamp >= (t_start - hours(LEAD_IN_HOURS)), timestamp <= t_end)
+        data.frame(
+            total_precip_mm    = sum(window$precipitation_mm, na.rm = TRUE),
+            max_intensity_mm_h = if (nrow(window) > 0) max(window$precipitation_mm, na.rm = TRUE) else 0
+        )
+    })
 
-    # DWD risk level based on hourly precipitation intensity
-    events_df <- events_df %>%
+    events_df <- bind_cols(events_df, precip_stats) %>%
         mutate(
+            openmeteo_verified = total_precip_mm > 0,
             dwd_risk_level = case_when(
-                max_intensity_mm_h >= 40 ~ "Level 4 – Extremes Unwetter (>= 40 mm/h)",
-                max_intensity_mm_h >= 25 ~ "Level 3 – Unwetterwarnung (>= 25 mm/h)",
-                max_intensity_mm_h >= 15 ~ "Level 2 – Starkregen (>= 15 mm/h)",
+                max_intensity_mm_h >= 40  ~ "Level 4 – Extremes Unwetter (>= 40 mm/h)",
+                max_intensity_mm_h >= 25  ~ "Level 3 – Unwetterwarnung (>= 25 mm/h)",
+                max_intensity_mm_h >= 15  ~ "Level 2 – Starkregen (>= 15 mm/h)",
                 max_intensity_mm_h >= 0.5 ~ "Level 1 – Leichter Regen (0.5–15 mm/h)",
-                TRUE ~ "Level 0 – Kein nennenswerter Regen"
+                TRUE                      ~ "Level 0 – Kein nennenswerter Regen"
             )
         )
 
