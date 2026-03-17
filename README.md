@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 17.03. 03:00 bis 19.03. 02:00)*
+*(Zeitraum: 17.03. 09:00 bis 19.03. 08:00)*
 
-- Temperatur: **6.5°C** (Min: 5.8°C | Max: 15.8°C)
+- Temperatur: **7.9°C** (Min: 4.4°C | Max: 15.8°C)
 - Summe: **0.2 mm** | Max: **0.1 mm/h**
 - Max. 6h: **0.2 mm**
 
@@ -27,7 +27,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-17 01:55:25 UTC*
+*Stand: 2026-03-17 07:02:53 UTC*
 
 ---
 
