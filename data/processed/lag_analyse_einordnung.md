@@ -39,10 +39,11 @@ Peak-Lag [min] = t_sensor_peak − t_precip_peak
 | Quelle | Auflösung | Einschränkung |
 |--------|-----------|---------------|
 | Sensor-Wasserstand (Nivus) | ~1 Minute | Hohe zeitliche Auflösung, gut geeignet |
-| Niederschlag (Open-Meteo Archive, DWD-basiert) | 1 Stunde | Führt zu einer Messungenauigkeit von ±30 Minuten |
-| Räumliche Abdeckung Niederschlag | 1 Punkt (Bochum-Zentrum) | Lokale Starkregenzellen können räumlich versetzt sein |
+| Niederschlag – historisch (Open-Meteo Archive) | 1 Stunde | Messungenauigkeit ±30 Minuten (Altdaten) |
+| Niederschlag – aktuell (RADOLAN RY, DWD) | **5 Minuten** | Messungenauigkeit ±2,5 Minuten (ab Systemumstellung) |
+| Räumliche Abdeckung Niederschlag | 1 km Raster, sensorspezifisch | Lokale Starkregenzellen < 1 km räumlich nicht auflösbar |
 
-Die stündliche Niederschlagsauflösung ist die **dominierende Fehlerquelle** dieser Analyse. Lags kürzer als ~30 Minuten (typisch für Sturzfluten) können mit diesem Datensatz nicht zuverlässig bestimmt werden. Für zukünftige Analysen wären RADOLAN-Daten mit vollständiger Punktextraktion (5-min-Auflösung) und stationsnahe Regenmesser vorzuziehen.
+Für historische Ereignisse (vor Umstellung auf RADOLAN RY) gilt eine Messungenauigkeit von ±30 Minuten aus der stündlichen Open-Meteo-Quelle. **Zukünftige Ereignisse** werden mit RADOLAN RY (5-Minuten-Produkt des DWD) mit einer Genauigkeit von **±2,5 Minuten** erfasst – ausreichend für die Charakterisierung auch kurzer Sturzflut-Lags.
 
 ---
 

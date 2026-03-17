@@ -106,7 +106,7 @@ for (file_path in cleaned_files) {
             ) + # 3600s = 1h width
             scale_y_continuous(
                 name = "Wasserstand (cm)",
-                sec.axis = sec_axis(~ . / scale_factor, name = "Niederschlag (mm/h)")
+                sec.axis = sec_axis(~ . / scale_factor, name = "Niederschlag (mm/5min)")  # RADOLAN RY
             ) +
             scale_fill_manual(values = c("Niederschlag" = "#56B4E9"), name = "")
     } else {
