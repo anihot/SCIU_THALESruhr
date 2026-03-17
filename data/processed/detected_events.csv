@@ -1,4 +1,6 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","points_count","total_precip_mm","max_intensity_mm_h","openmeteo_verified","dwd_risk_level"
+"Wasserstraße_Springorum","2026/03/17 10:47:30","2026/03/17 10:47:30",4.4,"2026/03/17 10:47:30",0,44,"Sturzflut-Ereignis",1,0,0,FALSE,"Level 0 – Kein nennenswerter Regen"
+"Herzogstraße","2026/03/17 09:49:00","2026/03/17 10:43:00",3.7,"2026/03/17 09:49:00",54,37,"Sturzflut-Ereignis",55,0,0,FALSE,"Level 0 – Kein nennenswerter Regen"
 "Herzogstraße","2026/03/16 15:43:00","2026/03/16 19:38:00",16.4,"2026/03/16 15:43:00",235,164,"Sturzflut-Ereignis",227,0.1,0.1,TRUE,"Level 0 – Kein nennenswerter Regen"
 "Herzogstraße","2026/03/16 12:04:00","2026/03/16 14:19:00",39.4,"2026/03/16 12:37:00",135,1.19,"Sturzflut-Ereignis",110,0.2,0.1,TRUE,"Level 0 – Kein nennenswerter Regen"
 "Herzogstraße","2026/03/16 10:07:00","2026/03/16 11:34:00",38.3,"2026/03/16 11:00:00",87,0.721,"Sturzflut-Ereignis",88,1.1,0.8,TRUE,"Level 1 – Leichter Regen (0.5–15 mm/h)"
