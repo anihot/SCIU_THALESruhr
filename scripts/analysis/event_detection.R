@@ -55,16 +55,19 @@ detect_events <- function(df, station_name) {
             peak_level_cm = round(peak_level_m * 100, 2),
             event_type = "Unbekannt"
         ) %>%
-        # Classify events based on signature
+        # Classify events based on sensor signature
         mutate(
             event_type = case_when(
-                # "Sturzflut" (Flash Flood) signature (e.g., Feb 18th event)
-                # Extremely sharp gradient (> 0.5 cm/min) AND short relative to peak height
-                # Or very short absolute duration (< 45 mins) with high peak (> 2cm)
+                # "Sturzflut" (Flash Flood) signature:
+                # Extremely sharp gradient (> 0.5 cm/min) OR short intense pulse (< 45 mins, peak > 2cm)
                 (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Sturzflut-Ereignis",
-                
-                # Default natural rain profile: slower build-up, longer duration
-                TRUE ~ "Regenereignis / Natürlich"
+
+                # Significant rain event: notable peak level (>= 2cm) with gradual rise
+                # Likely corresponds to DWD Level 2+ (Starkregen >= 15 mm/h) intensity
+                peak_level_cm >= 2.0 ~ "Regenereignis / Natürlich",
+
+                # Light rain: detectable but low peak (< 2cm) – likely below DWD Starkregen thresholds
+                TRUE ~ "Leichter Regen / Unterhalb DWD-Schwelle"
             )
         ) %>%
         select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, avg_gradient_cm_min, event_type, points_count) %>%

@@ -60,24 +60,49 @@ for (url in selected_urls) {
     # It returns a list or a SpatRaster depending on the version/format
     grid <- try(readDWD(file), silent = TRUE)
 
-    if (!inherits(grid, "try-error")) {
-        # Extract timestamp from filename
-        ts_str <- gsub(".*RW_([0-9]{10}).*", "\\1", basename(file))
-        ts <- as.POSIXct(ts_str, format = "%y%m%d%H%M", tz = "UTC")
+    if (!inherits(grid, "try-error") && !is.null(grid)) {
+        # Normalize to SpatRaster (rdwd may return different types depending on version)
+        if (!inherits(grid, "SpatRaster")) {
+            grid <- try(rast(grid), silent = TRUE)
+        }
 
-        # Logic: Extraction for coordinates
-        # Since we are in a GitHub Action environment with terra installed:
-        new_rows <- sensors %>%
-            mutate(
-                timestamp = ts,
-                # For now, we use a small heuristic or placeholder until extraction is 100% verified
-                # In production: extract(grid, projected_sensors)
-                precipitation_mm = 0.0
-            ) %>%
-            select(timestamp, station, precipitation_mm)
+        if (inherits(grid, "SpatRaster")) {
+            # Use first layer only (RW files are single-layer: one hour)
+            if (nlyr(grid) > 1) grid <- grid[[1]]
 
-        # Append to CSV
-        write_csv(new_rows, output_file, append = file.exists(output_file))
+            # Extract timestamp from filename (format: RW_YYMMDDHHMM)
+            ts_str <- gsub(".*RW_([0-9]{10}).*", "\\1", basename(file))
+            ts <- as.POSIXct(ts_str, format = "%y%m%d%H%M", tz = "UTC")
+
+            # Project sensor coordinates (WGS84) into RADOLAN polar stereographic CRS
+            sensor_vect <- vect(
+                data.frame(lon = sensors$lon, lat = sensors$lat),
+                geom = c("lon", "lat"),
+                crs = "EPSG:4326"
+            )
+            sensor_proj <- project(sensor_vect, crs(grid))
+
+            # Extract precipitation values at sensor locations
+            extracted <- extract(grid, sensor_proj)
+            precip_vals <- extracted[, 2]
+
+            # Mask RADOLAN no-data / clutter values:
+            # rdwd scales raw values by /10 → 250 mm/h corresponds to raw 2500 (no-data flag)
+            precip_vals[!is.finite(precip_vals) | precip_vals < 0 | precip_vals >= 250] <- NA_real_
+            precip_vals[is.na(precip_vals)] <- 0.0
+
+            new_rows <- sensors %>%
+                mutate(
+                    timestamp = ts,
+                    precipitation_mm = precip_vals
+                ) %>%
+                select(timestamp, station, precipitation_mm)
+
+            cat("    Precipitation extracted:", paste(round(precip_vals, 2), collapse = ", "), "mm/h\n")
+
+            # Append to CSV
+            write_csv(new_rows, output_file, append = file.exists(output_file))
+        }
     }
 
     # Delete binary file immediately to save space

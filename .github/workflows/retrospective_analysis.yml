@@ -1,0 +1,69 @@
+name: Retrospective Event Analysis
+
+on:
+  workflow_dispatch: # Manual trigger only
+
+jobs:
+  retrospective:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - name: Set up Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev
+
+      - name: Install R dependencies
+        run: |
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop"))'
+
+      - name: Fetch sensor data (full backfill)
+        env:
+          NIVUS_API_KEY: ${{ secrets.NIVUS_API_KEY }}
+        run: Rscript scripts/api/fetch_nivus.R
+
+      - name: Clean and analyze all sensor data
+        run: Rscript scripts/analysis/level_analysis.R
+
+      - name: Run retrospective event analysis (all history + Open-Meteo archive)
+        run: Rscript scripts/analysis/retrospective_event_analysis.R
+
+      - name: Generate updated plots
+        run: Rscript scripts/visualization/plot_sensors.R
+
+      - name: Generate updated interactive map
+        run: Rscript scripts/visualization/generate_interactive_map.R
+
+      - name: Update README
+        run: Rscript scripts/automation/update_readme.R
+
+      - name: Commit and push results
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add data/processed/detected_events.csv || true
+          git add data/processed/detected_events.md || true
+          git add data/processed/cleaned_analysis/*.csv || true
+          git add data/output/plots/*.png || true
+          git add data/output/sensor_map.html || true
+          git add data/output/graphs/*.html || true
+          if [ -d "data/metadata" ]; then
+            git add data/metadata/*.csv || true
+          fi
+          git add README.md || true
+          git commit -m "Retrospective event analysis: full history re-processed [skip ci]" || echo "No changes to commit"
+          git push

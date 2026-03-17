@@ -58,10 +58,12 @@ if (nrow(precip) == 0) {
             ),
             total_precip_mm = sum(event_precip[[1]]$precipitation_mm, na.rm = TRUE),
             max_intensity_mm_h = ifelse(nrow(event_precip[[1]]) > 0, max(event_precip[[1]]$precipitation_mm, na.rm = TRUE), 0),
-            rain_detected = ifelse(total_precip_mm > 0, TRUE, FALSE)
+            radolan_verified = ifelse(total_precip_mm > 0, TRUE, FALSE)
         ) %>%
-        filter(rain_detected == TRUE | station == "Wasserbaulabor_2") %>% # Keep rain-verified OR indoor test sensor
-        select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end, -rain_detected) %>%
+        # All sensor-detected events are retained. radolan_verified is informational only:
+        # RADOLAN may not capture light rain (< ~0.5 mm/h) and the extraction is point-based.
+        # Event classification in event_detection.R serves as the primary quality filter.
+        select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end) %>%
         ungroup()
 }
 
@@ -73,12 +75,12 @@ write_excel_csv(correlation, events_file)
 library(knitr)
 if (nrow(correlation) > 0) {
     md_table <- kable(correlation, format = "markdown")
-    write_lines(c("# Detected Events Log (Rain-Verified Only)", "", md_table), "data/processed/detected_events.md")
+    write_lines(c("# Detected Events Log", "", md_table), "data/processed/detected_events.md")
 } else {
     write_lines(c("# Detected Events Log", "", "No rain-verified events found."), "data/processed/detected_events.md")
 }
 
-cat("SUCCESS: Overwrote", events_file, "with rain-verified events only.\n")
+cat("SUCCESS: Overwrote", events_file, "with precipitation-correlated events.\n")
 
 # 4. Update Historical Log (Persistent Memory)
 if (nrow(correlation) > 0) {
