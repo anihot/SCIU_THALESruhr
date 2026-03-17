@@ -76,7 +76,7 @@ process_sensor_file <- function(file_path) {
     # Apply logical constraints:
     # - Level cannot be negative (sensor precision noise -> 0)
     # - Level > 0.3m is unrealistic for street flooding without rain data -> likely obstacle/error
-    MAX_REALISTIC_LEVEL <- 0.3
+    MAX_REALISTIC_LEVEL <- 0.4
 
     df <- df %>%
         mutate(
