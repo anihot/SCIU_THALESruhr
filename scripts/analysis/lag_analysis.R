@@ -271,4 +271,80 @@ if (nrow(peak_valid) >= 5) {
     cat("Gespeichert: lag_peak_distribution.png\n")
 }
 
+# ── 7. Markdown-Bericht ───────────────────────────────────────────────────────
+
+report_file <- "data/processed/lag_report.md"
+
+overall_median_onset <- round(median(lag_valid$onset_lag_min, na.rm = TRUE), 0)
+overall_mean_onset   <- round(mean(lag_valid$onset_lag_min,   na.rm = TRUE), 0)
+
+# Zusammenfassung nach Ereignistyp
+type_summary <- lag_valid %>%
+    group_by(event_type) %>%
+    summarise(
+        n                 = n(),
+        `Median-Lag (min)` = round(median(onset_lag_min), 0),
+        `Mittel-Lag (min)` = round(mean(onset_lag_min), 0),
+        `Min (min)`        = round(min(onset_lag_min), 0),
+        `Max (min)`        = round(max(onset_lag_min), 0),
+        .groups = "drop"
+    )
+
+# Lineare Regression: Lag ~ Intensität
+reg_data <- lag_valid %>% filter(!is.na(precip_max_mm_h), precip_max_mm_h > 0)
+lm_result <- if (nrow(reg_data) >= 5) lm(onset_lag_min ~ precip_max_mm_h, data = reg_data) else NULL
+
+report_lines <- c(
+    "# Lag-Analyse: Reaktionszeiten der Sensoren",
+    paste0("*Erstellt: ", format(now(), "%Y-%m-%d %H:%M"), "*"),
+    "",
+    "## Methodik",
+    "- **Onset-Lag**: Zeit zwischen erstem Stundenwert ≥ 0,5 mm/h und erstem Schwellenübertritt am Sensor (1,5 cm)",
+    "- **Peak-Lag**: Zeit zwischen Niederschlagsmaximum und Sensor-Peakwert",
+    "- Niederschlagsquelle: Open-Meteo Archive (stündlich) – Messungenauigkeit ±30 min",
+    paste0("- Lags außerhalb [−60 min, ", MAX_LAG_HOURS * 60, " min] werden als nicht korreliert verworfen"),
+    "",
+    "## Gesamtergebnis",
+    paste0("- Ereignisse analysiert: **", nrow(lag_valid), "**"),
+    paste0("- Median Onset-Lag (alle Stationen): **", overall_median_onset, " min**"),
+    paste0("- Mittlerer Onset-Lag: **", overall_mean_onset, " min**"),
+    ""
+)
+
+if (!is.null(lm_result)) {
+    coef_intensity <- round(coef(lm_result)[["precip_max_mm_h"]], 2)
+    r2             <- round(summary(lm_result)$r.squared, 3)
+    report_lines <- c(report_lines,
+        "## Zusammenhang Lag ~ Regenintensität",
+        paste0("Lineare Regression: Onset-Lag ~ max. Intensität (mm/h)"),
+        paste0("- Koeffizient: **", coef_intensity, " min pro mm/h** (negativ = höherer Regen → kürzerer Lag)"),
+        paste0("- R² = ", r2),
+        ""
+    )
+}
+
+report_lines <- c(report_lines,
+    "## Nach Ereignistyp",
+    "",
+    paste(kable(type_summary, format = "markdown"), collapse = "\n"),
+    "",
+    "## Nach Station",
+    "",
+    paste(kable(lag_summary %>% rename(
+        `Median-Lag (min)` = median_min,
+        `Mittel-Lag (min)` = mean_min,
+        `Min (min)` = min_min,
+        `Max (min)` = max_min
+    ), format = "markdown"), collapse = "\n"),
+    "",
+    "## Plots",
+    "- `data/output/plots/lag_onset_by_station.png` – Boxplot Onset-Lag je Station",
+    "- `data/output/plots/lag_onset_by_type.png` – Boxplot nach Ereignistyp",
+    "- `data/output/plots/lag_vs_intensity.png` – Scatter Lag vs. Regenintensität",
+    "- `data/output/plots/lag_peak_distribution.png` – Histogramm Peak-Lag je Station"
+)
+
+write_lines(report_lines, report_file)
+cat("Bericht gespeichert:", report_file, "\n")
+
 cat("\n✅ Lag-Analyse abgeschlossen.\n")

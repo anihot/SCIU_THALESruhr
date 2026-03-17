@@ -162,9 +162,42 @@ if (file_exists(health_file)) {
     health_content <- paste0("\n", paste(read_lines(health_file), collapse = "\n"), "\n")
 }
 
+# 3d. Lag Analysis Summary (optional – nur wenn lag_analysis.csv vorhanden)
+lag_content <- ""
+lag_file <- "data/processed/lag_analysis.csv"
+if (file_exists(lag_file)) {
+    lag_data <- tryCatch(read_csv(lag_file, show_col_types = FALSE), error = function(e) NULL)
+    if (!is.null(lag_data) && nrow(lag_data) > 0 && "onset_lag_min" %in% names(lag_data)) {
+        lag_valid <- lag_data %>% filter(!is.na(onset_lag_min))
+        if (nrow(lag_valid) > 0) {
+            lag_summary <- lag_valid %>%
+                group_by(station) %>%
+                summarise(
+                    `Ereignisse (n)` = n(),
+                    `Median-Lag (min)` = round(median(onset_lag_min), 0),
+                    `Min (min)` = round(min(onset_lag_min), 0),
+                    `Max (min)` = round(max(onset_lag_min), 0),
+                    .groups = "drop"
+                ) %>%
+                arrange(`Median-Lag (min)`)
+
+            overall_median <- round(median(lag_valid$onset_lag_min), 0)
+            n_total        <- nrow(lag_valid)
+
+            lag_content <- paste0(
+                "\n### Lag-Analyse: Reaktionszeiten der Sensoren\n",
+                "*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*\n\n",
+                "Über alle Stationen: **Median ", overall_median, " min** | n = ", n_total, " Ereignisse\n\n",
+                paste(kable(lag_summary, format = "markdown"), collapse = "\n"),
+                "\n\n*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*\n\n"
+            )
+        }
+    }
+}
+
 # 4. Inject into README
-# Combine events, weather and health
-total_new_content <- paste0(weather_content, "\n", health_content, "\n", new_content)
+# Combine events, weather, health and lag summary
+total_new_content <- paste0(weather_content, "\n", health_content, lag_content, "\n", new_content)
 readme_txt <- read_file(readme_file)
 
 start_mark <- "<!-- LATEST_EVENTS_START -->"

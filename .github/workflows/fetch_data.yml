@@ -109,6 +109,7 @@ jobs:
           git add data/processed/precipitation_at_sensors.csv || true
           git add data/processed/event_correlation_summary.csv || true
           git add data/processed/lag_analysis.csv || true
+          git add data/processed/lag_report.md || true
           git add data/output/plots/lag_*.png || true
           git add data/output/sensor_map.html || true
           git add data/output/graphs/*.html || true
