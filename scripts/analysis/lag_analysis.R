@@ -58,6 +58,12 @@ events_rain <- events %>%
 cat("Ereignisse gesamt:           ", nrow(events), "\n")
 cat("Ereignisse für Lag-Analyse:  ", nrow(events_rain), "\n\n")
 
+if (nrow(events_rain) == 0) {
+    cat("Keine analysierbaren Ereignisse vorhanden. Lag-Analyse wird übersprungen.\n")
+    cat("Hinweis: Zuerst den Retrospective-Workflow ausführen um historische Events zu laden.\n")
+    quit(save = "no", status = 0)
+}
+
 # ── 2. Stündliche Niederschlagsdaten holen (Open-Meteo Archive) ───────────────
 
 start_date <- format(min(as.Date(events_rain$start_time)) - days(1), "%Y-%m-%d")
