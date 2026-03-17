@@ -7,6 +7,7 @@ library(httr)
 library(jsonlite)
 library(fs)
 library(tidyr)
+library(knitr)
 
 # Config
 events_file  <- "data/processed/detected_events.csv"
