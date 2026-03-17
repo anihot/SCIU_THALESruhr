@@ -42,6 +42,9 @@ jobs:
       - name: Run retrospective event analysis (all history + Open-Meteo archive)
         run: Rscript scripts/analysis/retrospective_event_analysis.R
 
+      - name: Lag analysis (full history)
+        run: Rscript scripts/analysis/lag_analysis.R
+
       - name: Generate updated plots
         run: Rscript scripts/visualization/plot_sensors.R
 
@@ -57,6 +60,8 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add data/processed/detected_events.csv || true
           git add data/processed/detected_events.md || true
+          git add data/processed/lag_analysis.csv || true
+          git add data/output/plots/lag_*.png || true
           git add data/processed/cleaned_analysis/*.csv || true
           git add data/output/plots/*.png || true
           git add data/output/sensor_map.html || true

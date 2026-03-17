@@ -89,6 +89,10 @@ jobs:
         if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/correlate_events.R
 
+      - name: Lag analysis
+        if: steps.check_rain.outputs.should_continue == 'true'
+        run: Rscript scripts/analysis/lag_analysis.R
+
       - name: Update README with latest events
         run: Rscript scripts/automation/update_readme.R
 
@@ -104,6 +108,8 @@ jobs:
           git add data/processed/weather_forecast.csv || true
           git add data/processed/precipitation_at_sensors.csv || true
           git add data/processed/event_correlation_summary.csv || true
+          git add data/processed/lag_analysis.csv || true
+          git add data/output/plots/lag_*.png || true
           git add data/output/sensor_map.html || true
           git add data/output/graphs/*.html || true
           
