@@ -15,6 +15,15 @@ graphs_dir    <- "data/output/graphs"
 cat("Generating interactive sensor map with external iframes...\n")
 if (!file_exists(metadata_file)) stop("Metadata file not found: ", metadata_file)
 
+# Load Open-Meteo forecast as fallback precipitation source
+forecast_file    <- "data/processed/weather_forecast.csv"
+precip_fallback  <- NULL
+if (file_exists(forecast_file)) {
+    precip_fallback <- read_csv(forecast_file, show_col_types = FALSE) %>%
+        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
+        select(timestamp, precipitation_mm)
+}
+
 # Ensure output directories exist
 if (!dir_exists(path_dir(output_file))) dir_create(path_dir(output_file))
 if (!dir_exists(graphs_dir)) dir_create(graphs_dir)
@@ -63,17 +72,27 @@ for (i in seq_len(nrow(sensors))) {
       start_time <- now(tzone = tz(df$Zeit_Datum)) - hours(24)
       df_24h <- df %>% filter(Zeit_Datum >= start_time)
       
-      # Prepare precipitation data for this station in the last 24h
-      precip_file <- "data/processed/precipitation_at_sensors.csv"
+      # Prepare precipitation: RADOLAN (sensor-specific) first, Open-Meteo as fallback
+      precip_file    <- "data/processed/precipitation_at_sensors.csv"
       station_precip <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
+      precip_source  <- ""
+
       if (file_exists(precip_file)) {
-          precip_df <- read_csv(precip_file, show_col_types = FALSE)
+          precip_df <- read_csv(precip_file, show_col_types = FALSE) %>%
+              mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
           if (nrow(precip_df) > 0) {
-              # Parse timestamp properly and filter
-              precip_df$timestamp <- as.POSIXct(precip_df$timestamp, tz = "UTC")
-              station_precip <- precip_df %>% 
+              radolan_station <- precip_df %>%
                   filter(station == station_name, timestamp >= start_time)
+              if (nrow(radolan_station) > 0 && any(radolan_station$precipitation_mm > 0, na.rm = TRUE)) {
+                  station_precip <- radolan_station
+                  precip_source  <- "RADOLAN (DWD)"
+              }
           }
+      }
+
+      if (nrow(station_precip) == 0 && !is.null(precip_fallback)) {
+          station_precip <- precip_fallback %>% filter(timestamp >= start_time)
+          precip_source  <- "Open-Meteo"
       }
       
       if (nrow(df_24h) == 0) {
@@ -94,10 +113,10 @@ for (i in seq_len(nrow(sensors))) {
         has_precip <- nrow(station_precip) > 0
         if (has_precip) {
             p <- p %>% add_trace(data = station_precip, x = ~timestamp, y = ~precipitation_mm,
-                                 type = "scatter", mode = "lines", name = "Regen",
+                                 type = "bar", name = paste0("Regen (", precip_source, ")"),
                                  yaxis = "y2",
-                                 line = list(color = "#009E73", width = 2, dash = "dot"),
-                                 hovertemplate = "Regen: %{y:.1f} mm<extra></extra>")
+                                 marker = list(color = "rgba(0, 158, 115, 0.5)"),
+                                 hovertemplate = paste0("Regen: %{y:.1f} mm/h (", precip_source, ")<extra></extra>"))
         }
         
         # Determine layout params based on precipitation

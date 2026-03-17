@@ -16,12 +16,21 @@ if (!dir_exists(plots_dir)) {
 cleaned_files <- dir_ls(cleaned_dir, glob = "*.csv")
 precip_file <- "data/processed/precipitation_at_sensors.csv"
 
-# Load precipitation data if available
+# Load RADOLAN precipitation data
 if (file_exists(precip_file)) {
     precip_data <- read_csv(precip_file, show_col_types = FALSE) %>%
         mutate(timestamp = as.POSIXct(timestamp))
 } else {
     precip_data <- NULL
+}
+
+# Load Open-Meteo forecast as fallback (used when RADOLAN has no data for a station/window)
+forecast_file <- "data/processed/weather_forecast.csv"
+precip_fallback <- NULL
+if (file_exists(forecast_file)) {
+    precip_fallback <- read_csv(forecast_file, show_col_types = FALSE) %>%
+        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
+        select(timestamp, precipitation_mm)
 }
 
 for (file_path in cleaned_files) {
@@ -52,25 +61,35 @@ for (file_path in cleaned_files) {
         next
     }
 
-    # Prepare precipitation overlay
-    p_precip <- NULL
-    scale_factor <- 1
+    # Prepare precipitation overlay: RADOLAN first, Open-Meteo as fallback
+    p_precip      <- NULL
+    precip_source <- ""
+    scale_factor  <- 1
+
     if (!is.null(precip_data)) {
-        p_precip <- precip_data %>%
+        radolan_station <- precip_data %>%
             filter(station == station_name, timestamp >= start_time)
+        if (nrow(radolan_station) > 0 && any(radolan_station$precipitation_mm > 0, na.rm = TRUE)) {
+            p_precip      <- radolan_station
+            precip_source <- "RADOLAN (DWD)"
+        }
+    }
 
-        if (nrow(p_precip) > 0) {
-            # Rescale factor for secondary axis (e.g., max precip in 24h to max level)
-            max_level <- max(df_24h$level * 100, na.rm = TRUE)
-            max_precip <- max(p_precip$precipitation_mm, na.rm = TRUE)
+    if (is.null(p_precip) && !is.null(precip_fallback)) {
+        p_precip      <- precip_fallback %>% filter(timestamp >= start_time)
+        precip_source <- "Open-Meteo (Vorhersage)"
+    }
 
-            # Handle cases where max_precip is 0, -Inf (empty), or NA
-            if (is.na(max_precip) || !is.finite(max_precip) || max_precip == 0) {
-                scale_factor <- 1
-            } else {
-                if (max_level <= 0) max_level <- 1 # Avoid division by zero/negative
-                scale_factor <- max_level / max_precip
-            }
+    if (!is.null(p_precip) && nrow(p_precip) > 0) {
+        max_level  <- max(df_24h$level * 100, na.rm = TRUE)
+        max_precip <- max(p_precip$precipitation_mm, na.rm = TRUE)
+
+        # If level is flat near 0, use a fixed 10 cm reference so precip bars are visible
+        if (!is.finite(max_level) || max_level <= 0) max_level <- 10
+        if (!is.finite(max_precip) || max_precip == 0) {
+            scale_factor <- 1
+        } else {
+            scale_factor <- max_level / max_precip
         }
     }
 
@@ -101,7 +120,8 @@ for (file_path in cleaned_files) {
             title = paste("Sensor Data (Last 24h):", station_name),
             subtitle = paste("Window:", format(min(df_24h$Zeit_Datum), "%Y-%m-%d %H:%M"), "to", format(max(df_24h$Zeit_Datum), "%Y-%m-%d %H:%M")),
             x = "Time",
-            caption = paste("Source: Nivus & DWD RADOLAN | Generated:", format(now(), "%Y-%m-%d %H:%M:%S"))
+            caption = paste0("Niederschlagsquelle: ", if (nchar(precip_source) > 0) precip_source else "keine Daten",
+                         " | Generiert: ", format(now(), "%Y-%m-%d %H:%M:%S"))
         ) +
         theme(
             plot.title = element_text(face = "bold", size = 14),
