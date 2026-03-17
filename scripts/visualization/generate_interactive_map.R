@@ -57,7 +57,7 @@ for (i in seq_len(nrow(sensors))) {
     } else {
       # Data extraction
       latest_row <- tail(df, 1)
-      meas_level <- ifelse(is.na(latest_row$level), "N/A", paste0(round(latest_row$level, 3), " m"))
+      meas_level <- ifelse(is.na(latest_row$level), "N/A", paste0(round(latest_row$level * 100, 1), " cm"))
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
       
       start_time <- now(tzone = tz(df$Zeit_Datum)) - hours(24)
@@ -84,11 +84,11 @@ for (i in seq_len(nrow(sensors))) {
         
         # Build base trace (Water Level)
         p <- plot_ly() %>%
-          add_trace(data = df_24h, x = ~Zeit_Datum, y = ~level,
+          add_trace(data = df_24h, x = ~Zeit_Datum, y = ~(level * 100),
                     type = "scatter", mode = "lines", name = "Pegel",
                     line = list(color = "#0072B2", width = 2),
                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
-                    hovertemplate = "Pegel: %{y:.3f} m<extra></extra>")
+                    hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>")
                     
         # Add conditional trace (Precipitation)
         has_precip <- nrow(station_precip) > 0
@@ -106,7 +106,7 @@ for (i in seq_len(nrow(sensors))) {
         p <- p %>% layout(
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee"),
-            yaxis      = list(title = "Level (m)", gridcolor = "#eeeeee", side = "left"),
+            yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left"),
             yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = FALSE, rangemode = "tozero"),
             margin     = list(l = 40, r = margin_r, t = 40, b = 30),

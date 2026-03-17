@@ -61,7 +61,7 @@ for (file_path in cleaned_files) {
 
         if (nrow(p_precip) > 0) {
             # Rescale factor for secondary axis (e.g., max precip in 24h to max level)
-            max_level <- max(df_24h$level, na.rm = TRUE)
+            max_level <- max(df_24h$level * 100, na.rm = TRUE)
             max_precip <- max(p_precip$precipitation_mm, na.rm = TRUE)
 
             # Handle cases where max_precip is 0, -Inf (empty), or NA
@@ -77,25 +77,25 @@ for (file_path in cleaned_files) {
 
     # Create plot
     p <- ggplot() +
-        geom_line(data = df_24h, aes(x = Zeit_Datum, y = level, color = "Water Level"), linewidth = 0.8)
+        geom_line(data = df_24h, aes(x = Zeit_Datum, y = level * 100, color = "Wasserstand"), linewidth = 0.8)
 
     if (!is.null(p_precip) && nrow(p_precip) > 0) {
         p <- p +
             geom_col(
-                data = p_precip, aes(x = timestamp, y = precipitation_mm * scale_factor, fill = "Precipitation"),
+                data = p_precip, aes(x = timestamp, y = precipitation_mm * scale_factor, fill = "Niederschlag"),
                 alpha = 0.3, width = 3600
             ) + # 3600s = 1h width
             scale_y_continuous(
-                name = "Water Level (m)",
-                sec.axis = sec_axis(~ . / scale_factor, name = "Precipitation (mm/h)")
+                name = "Wasserstand (cm)",
+                sec.axis = sec_axis(~ . / scale_factor, name = "Niederschlag (mm/h)")
             ) +
-            scale_fill_manual(values = c("Precipitation" = "#56B4E9"), name = "")
+            scale_fill_manual(values = c("Niederschlag" = "#56B4E9"), name = "")
     } else {
-        p <- p + scale_y_continuous(name = "Water Level (m)")
+        p <- p + scale_y_continuous(name = "Wasserstand (cm)")
     }
 
     p <- p +
-        scale_color_manual(values = c("Water Level" = "#0072B2"), name = "") +
+        scale_color_manual(values = c("Wasserstand" = "#0072B2"), name = "") +
         theme_minimal() +
         labs(
             title = paste("Sensor Data (Last 24h):", station_name),
