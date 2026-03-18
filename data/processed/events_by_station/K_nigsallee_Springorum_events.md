@@ -1,0 +1,6 @@
+# Ereignisse: Königsallee_Springorum
+
+|station                |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | points_count|
+|:----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|------------:|
+|Königsallee_Springorum |2025-11-02 05:12:00 |2025-11-02 05:17:00 |           1.9|2025-11-02 05:16:00 |            5|               0.463|Leichter Regen / Unterhalb DWD-Schwelle |            3|
+|Königsallee_Springorum |2025-10-23 20:06:00 |2025-10-23 20:15:00 |           3.3|2025-10-23 20:06:00 |            9|              33.000|Sturzflut-Ereignis                      |            6|

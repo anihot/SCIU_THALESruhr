@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 18.03. 10:00 bis 20.03. 09:00)*
+*(Zeitraum: 18.03. 15:00 bis 20.03. 14:00)*
 
-- Temperatur: **10.2°C** (Min: 4.7°C | Max: 16°C)
+- Temperatur: **15.4°C** (Min: 5°C | Max: 15.9°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -25,24 +25,9 @@
 
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
-### Lag-Analyse: Reaktionszeiten der Sensoren
-*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
-
-Über alle Stationen: **Median 142 min** | n = 147 Ereignisse
-
-|station                 | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
-|:-----------------------|--------------:|----------------:|---------:|---------:|
-|An_der_Kost             |              1|               90|        90|        90|
-|Königsallee_Springorum  |              1|              126|       126|       126|
-|Wasserstraße_Springorum |             47|              139|       -37|       179|
-|Herzogstraße            |             98|              143|       -46|       180|
-
-*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
-
-
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-18 08:17:49 UTC*
+*Stand: 2026-03-18 13:07:07 UTC*
 
 ---
 
