@@ -188,7 +188,26 @@ write_lines(c("# Detected Events Log (Retrospective)", "", md_table), events_md_
 
 cat("\nSUCCESS: Wrote", nrow(events_out), "events to", events_file, "\n")
 
-# ── 5. Update Historical Log ──────────────────────────────────────────────────
+# ── 5. Export je Station ──────────────────────────────────────────────────────
+
+station_events_dir <- "data/processed/events_by_station"
+if (!dir_exists(station_events_dir)) dir_create(station_events_dir)
+
+for (st in unique(events_out$station)) {
+    st_df     <- events_out %>% filter(station == st) %>% arrange(desc(start_time))
+    safe_name <- gsub("[^a-zA-Z0-9_]", "_", st)
+    st_csv    <- file.path(station_events_dir, paste0(safe_name, "_events.csv"))
+    st_md     <- file.path(station_events_dir, paste0(safe_name, "_events.md"))
+
+    write_excel_csv(st_df, st_csv)
+    write_lines(
+        c(paste0("# Ereignisse: ", st), "", knitr::kable(st_df, format = "markdown")),
+        st_md
+    )
+    cat("  Station", st, "->", nrow(st_df), "Ereignisse gespeichert.\n")
+}
+
+# ── 7. Update Historical Log ──────────────────────────────────────────────────
 
 if (nrow(events_out) > 0) {
     if (file_exists(historical_log)) {
