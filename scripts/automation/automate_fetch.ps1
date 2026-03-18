@@ -33,7 +33,11 @@ Write-Host "6/7: Generating static map..." -ForegroundColor Yellow
 Write-Host "7/7: Generating interactive map..." -ForegroundColor Yellow
 & $RscriptPath "scripts/visualization/generate_interactive_map.R"
 
-# 4. Final Updates
+# 4. Schillerschule comparison (local only)
+Write-Host "8/8: Schillerschule rain gauge comparison..." -ForegroundColor Yellow
+& $RscriptPath "scripts/analysis/schillerschule_comparison.R"
+
+# 5. Final Updates
 Write-Host "Finalizing: Updating README with latest data..." -ForegroundColor Cyan
 & $RscriptPath "scripts/automation/update_readme.R"
 
