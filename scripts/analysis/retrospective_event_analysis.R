@@ -13,8 +13,10 @@ events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 historical_log <- "data/metadata/historical_verified_events.csv"
 
-THRESHOLD      <- 0.015  # 1.5 cm
-MIN_GAP_MINS   <- 20
+THRESHOLD          <- 0.015  # 1.5 cm
+MIN_GAP_MINS       <- 20
+MIN_DURATION_MINS  <- 5   # Events kürzer als 5 min = Rauschen / Einzelspike
+MAX_DURATION_MINS  <- 60  # Events länger als 60 min werden nicht berücksichtigt
 LEAD_IN_HOURS  <- 3      # Look at rain 3h before event start
 
 # Center of sensor area (Bochum/Hattingen)
@@ -63,6 +65,7 @@ detect_events <- function(df, station_name) {
                 TRUE ~ "Leichter Regen / Unterhalb DWD-Schwelle"
             )
         ) %>%
+        filter(duration_min >= MIN_DURATION_MINS, duration_min <= MAX_DURATION_MINS) %>%
         select(station, start_time, end_time, peak_level_cm, peak_time,
                duration_min, avg_gradient_cm_min, event_type, points_count) %>%
         mutate(station = gsub("_merged_export", "", station))
