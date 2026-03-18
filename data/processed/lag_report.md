@@ -1,5 +1,5 @@
 # Lag-Analyse: Reaktionszeiten der Sensoren
-*Erstellt: 2026-03-17 14:48*
+*Erstellt: 2026-03-18 07:08*
 
 ## Methodik
 - **Onset-Lag**: Zeit zwischen erstem Stundenwert ≥ 0,5 mm/h und erstem Schwellenübertritt am Sensor (1,5 cm)
