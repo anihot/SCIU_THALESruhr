@@ -60,9 +60,9 @@ if (nrow(precip) == 0) {
             max_intensity_mm_h = ifelse(nrow(event_precip[[1]]) > 0, max(event_precip[[1]]$precipitation_mm, na.rm = TRUE), 0),
             radolan_verified = ifelse(total_precip_mm > 0, TRUE, FALSE)
         ) %>%
-        # All sensor-detected events are retained. radolan_verified is informational only:
-        # RADOLAN may not capture light rain (< ~0.5 mm/h) and the extraction is point-based.
-        # Event classification in event_detection.R serves as the primary quality filter.
+        # Nur Ereignisse behalten, bei denen RADOLAN Niederschlag bestätigt hat.
+        # Wasserbaulabor_2 ist ein Indoor-Testsensor und wird immer behalten.
+        filter(radolan_verified == TRUE | station == "Wasserbaulabor_2") %>%
         select(-event_precip, -window_start, -window_end, -cur_station, -cur_start, -cur_end) %>%
         ungroup()
 }

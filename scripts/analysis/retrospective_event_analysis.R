@@ -157,11 +157,16 @@ if (!is.null(precip_df)) {
             )
         )
 
-    verified_count   <- sum(events_df$openmeteo_verified, na.rm = TRUE)
-    unverified_count <- nrow(events_df) - verified_count
+    # Nur Ereignisse behalten, bei denen Open-Meteo Niederschlag bestätigt hat.
+    # Wasserbaulabor_2 ist ein Indoor-Testsensor und wird immer behalten.
+    n_before       <- nrow(events_df)
+    events_df      <- events_df %>%
+        filter(openmeteo_verified == TRUE | grepl("Wasserbaulabor", station, ignore.case = TRUE))
+    verified_count   <- nrow(events_df)
+    unverified_count <- n_before - verified_count
     cat("\nPrecipitation correlation complete:\n")
     cat("  Rain-verified (Open-Meteo):", verified_count, "\n")
-    cat("  No rain detected:          ", unverified_count, "(kept – sensor signature is primary evidence)\n")
+    cat("  Herausgefiltert (kein Regen):", unverified_count, "\n")
 } else {
     events_df <- events_df %>%
         mutate(
