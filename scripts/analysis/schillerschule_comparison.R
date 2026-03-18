@@ -19,6 +19,10 @@ THRESHOLD         <- 0.015  # 1.5 cm – event detection threshold
 MIN_GAP_MINS      <- 20
 MIN_DURATION_MINS <- 5
 MAX_DURATION_MINS <- 60
+MIN_RISE_MINS     <- 3
+MIN_FALL_MINS     <- 3
+MAX_LOCAL_PEAKS   <- 2
+MAX_PLATEAU_FRAC  <- 0.5
 LEAD_IN_HOURS     <- 3      # Window before event start for rain context
 TRAIL_HOURS       <- 1      # Window after event end
 
@@ -83,13 +87,36 @@ detect_events <- function(df, station_name) {
             peak_level_m = max(level),
             peak_time    = Zeit_Datum[which.max(level)],
             duration_min = as.numeric(difftime(max(Zeit_Datum), min(Zeit_Datum), units = "mins")),
-            points_count = n(),
+            rise_min         = as.numeric(difftime(Zeit_Datum[which.max(level)], min(Zeit_Datum), units = "mins")),
+            fall_min         = as.numeric(difftime(max(Zeit_Datum), Zeit_Datum[which.max(level)], units = "mins")),
+            points_count     = n(),
+            plateau_fraction = {
+                lvl <- level
+                round(mean(lvl >= 0.85 * max(lvl)), 3)
+            },
+            n_local_peaks    = {
+                lvl <- level[order(Zeit_Datum)]
+                n   <- length(lvl)
+                if (n < 3) 1L else {
+                    interior <- sum(lvl[2:(n-1)] > lvl[1:(n-2)] & lvl[2:(n-1)] > lvl[3:n])
+                    as.integer(interior +
+                        ifelse(lvl[1] > lvl[2], 1L, 0L) +
+                        ifelse(lvl[n] > lvl[n-1], 1L, 0L))
+                }
+            },
             .groups      = "drop"
         ) %>%
         mutate(
             peak_level_cm = round(peak_level_m * 100, 2)
         ) %>%
-        filter(duration_min >= MIN_DURATION_MINS, duration_min <= MAX_DURATION_MINS) %>%
+        filter(
+            duration_min     >= MIN_DURATION_MINS,
+            duration_min     <= MAX_DURATION_MINS,
+            rise_min         >= MIN_RISE_MINS,
+            fall_min         >= MIN_FALL_MINS,
+            n_local_peaks    <= MAX_LOCAL_PEAKS,
+            plateau_fraction <= MAX_PLATEAU_FRAC
+        ) %>%
         select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, points_count)
 
     return(events)
@@ -266,7 +293,23 @@ for (st in unique(comparison_df$station)) {
         if (!is.finite(max_rain)  || max_rain  < 0.01) max_rain <- 0.1
         scale_factor <- max_level / max_rain
 
+        rise_min_val <- as.numeric(difftime(ev$peak_time, ev$start_time, units = "mins"))
+        fall_min_val <- as.numeric(difftime(ev$end_time,  ev$peak_time,  units = "mins"))
+        y_top        <- max_level * 1.1
+
         p <- ggplot() +
+            # Anstiegsphase (grün)
+            annotate("rect",
+                xmin = ev$start_time, xmax = ev$peak_time,
+                ymin = 0, ymax = y_top,
+                fill = "#a8d5a2", alpha = 0.2
+            ) +
+            # Abfallphase (orange)
+            annotate("rect",
+                xmin = ev$peak_time, xmax = ev$end_time,
+                ymin = 0, ymax = y_top,
+                fill = "#f4c07a", alpha = 0.2
+            ) +
             # Rain bars (secondary axis, scaled)
             geom_col(
                 data = rain_win,
@@ -279,12 +322,27 @@ for (st in unique(comparison_df$station)) {
                 aes(x = Zeit_Datum, y = level_cm),
                 color = "darkred", linewidth = 1
             ) +
-            # Event window markers
+            # Ereignisgrenzen
             geom_vline(xintercept = as.numeric(ev$start_time), linetype = "dashed", color = "gray40") +
             geom_vline(xintercept = as.numeric(ev$end_time),   linetype = "dashed", color = "gray40") +
+            # Peak-Linie
+            geom_vline(xintercept = as.numeric(ev$peak_time),  linetype = "solid",  color = "darkred", linewidth = 0.7) +
+            # Anstieg/Abfall Beschriftung
+            annotate("text",
+                x = ev$start_time + (ev$peak_time - ev$start_time) / 2,
+                y = y_top * 0.95,
+                label = paste0("Anstieg\n", round(rise_min_val, 1), " min"),
+                size = 3, color = "#4a8c44", fontface = "bold"
+            ) +
+            annotate("text",
+                x = ev$peak_time + (ev$end_time - ev$peak_time) / 2,
+                y = y_top * 0.95,
+                label = paste0("Abfall\n", round(fall_min_val, 1), " min"),
+                size = 3, color = "#c47a15", fontface = "bold"
+            ) +
             scale_y_continuous(
                 name     = "Wasserstand (cm)",
-                limits   = c(0, max_level * 1.1),
+                limits   = c(0, y_top),
                 sec.axis = sec_axis(~ . / scale_factor, name = "Niederschlag Schillerschule (mm/min)")
             ) +
             scale_x_datetime(date_labels = "%H:%M\n%d.%m", date_breaks = "30 min") +
@@ -293,14 +351,15 @@ for (st in unique(comparison_df$station)) {
                 subtitle = paste0(
                     "Onset-Lag: ", ifelse(is.na(ev$onset_lag_min), "n.v.", paste0(ev$onset_lag_min, " min")),
                     "  |  Peak-Lag: ", ifelse(is.na(ev$peak_lag_min), "n.v.", paste0(ev$peak_lag_min, " min")),
-                    "  |  Schillerschule gesamt: ", ev$sc_total_mm, " mm"
+                    "  |  Schillerschule gesamt: ", ev$sc_total_mm, " mm",
+                    "  |  Peak: ", round(ev$peak_level_cm, 1), " cm"
                 ),
-                x        = NULL,
-                caption  = "Regen: Schillerschule (1-min, max yard/garden)  |  Pegel: NIVUS-Sensor"
+                x       = NULL,
+                caption = "Grün = Anstiegsphase  |  Orange = Abfallphase  |  Rote Linie = Peak  |  Regen: Schillerschule (1-min)"
             ) +
             theme_minimal(base_size = 11) +
             theme(
-                axis.text.x       = element_text(size = 8),
+                axis.text.x        = element_text(size = 8),
                 axis.title.y.right = element_text(color = "steelblue"),
                 axis.title.y.left  = element_text(color = "darkred"),
                 plot.title         = element_text(face = "bold")

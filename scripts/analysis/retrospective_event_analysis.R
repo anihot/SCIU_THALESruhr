@@ -17,6 +17,10 @@ THRESHOLD          <- 0.015  # 1.5 cm
 MIN_GAP_MINS       <- 20
 MIN_DURATION_MINS  <- 5   # Events kürzer als 5 min = Rauschen / Einzelspike
 MAX_DURATION_MINS  <- 60  # Events länger als 60 min werden nicht berücksichtigt
+MIN_RISE_MINS      <- 3   # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
+MIN_FALL_MINS      <- 3   # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
+MAX_LOCAL_PEAKS    <- 2   # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
+MAX_PLATEAU_FRAC   <- 0.5 # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
 LEAD_IN_HOURS  <- 3      # Look at rain 3h before event start
 
 # Center of sensor area (Bochum/Hattingen)
@@ -52,7 +56,23 @@ detect_events <- function(df, station_name) {
             peak_level_m = max(level),
             peak_time    = Zeit_Datum[which.max(level)],
             duration_min = as.numeric(difftime(max(Zeit_Datum), min(Zeit_Datum), units = "mins")),
-            points_count = n(),
+            rise_min         = as.numeric(difftime(Zeit_Datum[which.max(level)], min(Zeit_Datum), units = "mins")),
+            fall_min         = as.numeric(difftime(max(Zeit_Datum), Zeit_Datum[which.max(level)], units = "mins")),
+            points_count     = n(),
+            plateau_fraction = {
+                lvl <- level
+                round(mean(lvl >= 0.85 * max(lvl)), 3)
+            },
+            n_local_peaks    = {
+                lvl <- level[order(Zeit_Datum)]
+                n   <- length(lvl)
+                if (n < 3) 1L else {
+                    interior <- sum(lvl[2:(n-1)] > lvl[1:(n-2)] & lvl[2:(n-1)] > lvl[3:n])
+                    as.integer(interior +
+                        ifelse(lvl[1] > lvl[2], 1L, 0L) +
+                        ifelse(lvl[n] > lvl[n-1], 1L, 0L))
+                }
+            },
             .groups      = "drop"
         ) %>%
         mutate(
@@ -65,7 +85,14 @@ detect_events <- function(df, station_name) {
                 TRUE ~ "Leichter Regen / Unterhalb DWD-Schwelle"
             )
         ) %>%
-        filter(duration_min >= MIN_DURATION_MINS, duration_min <= MAX_DURATION_MINS) %>%
+        filter(
+            duration_min     >= MIN_DURATION_MINS,
+            duration_min     <= MAX_DURATION_MINS,
+            rise_min         >= MIN_RISE_MINS,
+            fall_min         >= MIN_FALL_MINS,
+            n_local_peaks    <= MAX_LOCAL_PEAKS,
+            plateau_fraction <= MAX_PLATEAU_FRAC
+        ) %>%
         select(station, start_time, end_time, peak_level_cm, peak_time,
                duration_min, avg_gradient_cm_min, event_type, points_count) %>%
         mutate(station = gsub("_merged_export", "", station))
