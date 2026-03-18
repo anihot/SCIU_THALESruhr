@@ -116,19 +116,34 @@ for (file_path in cleaned_files) {
 if (length(all_events) > 0) {
     events_df <- bind_rows(all_events) %>% arrange(desc(start_time))
 
-    # Export as CSV with BOM for Excel/GitHub interactivity
-    # write_excel_csv adds the UTF-8 BOM
+    # Export gesamt (alle Stationen)
     write_excel_csv(events_df, events_file)
 
-    # Export as Markdown table for quick viewing on GitHub
     library(knitr)
     md_table <- kable(events_df, format = "markdown")
-    # Ensure UTF-8 for write_lines
     write_lines(c("# Detected Events Log", "", md_table), events_md_file)
 
     cat("\nSUCCESS: Detected", nrow(events_df), "total events across all stations.\n")
     cat("CSV log saved to:", events_file, "\n")
     cat("Markdown log saved to:", events_md_file, "\n")
+
+    # Export je Station
+    station_events_dir <- "data/processed/events_by_station"
+    if (!dir_exists(station_events_dir)) dir_create(station_events_dir)
+
+    for (st in unique(events_df$station)) {
+        st_df      <- events_df %>% filter(station == st) %>% arrange(desc(start_time))
+        safe_name  <- gsub("[^a-zA-Z0-9_]", "_", st)
+        st_csv     <- file.path(station_events_dir, paste0(safe_name, "_events.csv"))
+        st_md      <- file.path(station_events_dir, paste0(safe_name, "_events.md"))
+
+        write_excel_csv(st_df, st_csv)
+        write_lines(
+            c(paste0("# Ereignisse: ", st), "", kable(st_df, format = "markdown")),
+            st_md
+        )
+        cat("  Station", st, "->", nrow(st_df), "Ereignisse gespeichert.\n")
+    }
 } else {
     cat("\nNo events detected in any station. Writing empty log file...\n")
     # Write empty dataframe with headers to ensure subsequent scripts can read it

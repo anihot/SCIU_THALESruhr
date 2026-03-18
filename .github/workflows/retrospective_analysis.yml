@@ -60,6 +60,8 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add data/processed/detected_events.csv || true
           git add data/processed/detected_events.md || true
+          git add data/processed/events_by_station/*.csv || true
+          git add data/processed/events_by_station/*.md || true
           git add data/processed/lag_analysis.csv || true
           git add data/processed/lag_report.md || true
           git add data/output/plots/lag_*.png || true
