@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 19.03. 15:00 bis 21.03. 14:00)*
+*(Zeitraum: 19.03. 20:00 bis 21.03. 19:00)*
 
-- Temperatur: **16.1°C** (Min: 3.8°C | Max: 16.1°C)
+- Temperatur: **13.3°C** (Min: 4.1°C | Max: 13.9°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -25,22 +25,9 @@
 
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
-### Lag-Analyse: Reaktionszeiten der Sensoren
-*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
-
-Über alle Stationen: **Median 148 min** | n = 16 Ereignisse
-
-|station                 | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
-|:-----------------------|--------------:|----------------:|---------:|---------:|
-|Wasserstraße_Springorum |              1|              132|       132|       132|
-|Herzogstraße            |             15|              151|        17|       173|
-
-*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
-
-
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-19 13:46:25 UTC*
+*Stand: 2026-03-19 18:59:14 UTC*
 
 ---
 
