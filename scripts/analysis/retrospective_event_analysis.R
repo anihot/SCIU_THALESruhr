@@ -6,6 +6,7 @@ library(jsonlite)
 library(fs)
 library(knitr)
 library(tidyr)
+if (!requireNamespace("openxlsx", quietly = TRUE)) install.packages("openxlsx")
 library(openxlsx)
 
 # Config
