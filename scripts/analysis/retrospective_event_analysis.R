@@ -6,6 +6,7 @@ library(jsonlite)
 library(fs)
 library(knitr)
 library(tidyr)
+library(openxlsx)
 
 # Config
 cleaned_dir    <- "data/processed/cleaned_analysis"
@@ -249,4 +250,73 @@ if (nrow(events_out) > 0) {
         write_excel_csv(events_out, historical_log)
         cat("Historical log created with", nrow(events_out), "entries.\n")
     }
+}
+
+# ── 8. Export: all_detected_events.xlsx ───────────────────────────────────────
+
+xlsx_file     <- "data/output/all_detected_events.xlsx"
+summary_file  <- "data/output/events_summary_table.md"
+
+if (nrow(events_out) > 0) {
+    wb <- createWorkbook()
+
+    # Sheet 1: alle Events
+    addWorksheet(wb, "Alle Ereignisse")
+    writeDataTable(wb, "Alle Ereignisse", events_out, tableStyle = "TableStyleMedium9")
+
+    # Spaltenbreiten anpassen
+    setColWidths(wb, "Alle Ereignisse", cols = 1:ncol(events_out), widths = "auto")
+
+    # Sheet 2: Stationsübersicht
+    station_summary <- events_out %>%
+        group_by(station) %>%
+        summarise(
+            Ereignisse        = n(),
+            Ø_Peak_cm         = round(mean(peak_level_cm), 1),
+            Max_Peak_cm       = max(peak_level_cm),
+            Sturzflut_Anzahl  = sum(event_type == "Sturzflut-Ereignis", na.rm = TRUE),
+            Regen_Anzahl      = sum(event_type == "Regenereignis / Natürlich", na.rm = TRUE),
+            Verdächtig_Anzahl = sum(event_type == "Verdächtig / Kein Regen", na.rm = TRUE),
+            .groups = "drop"
+        ) %>%
+        arrange(desc(Ereignisse))
+
+    addWorksheet(wb, "Stationsübersicht")
+    writeDataTable(wb, "Stationsübersicht", station_summary, tableStyle = "TableStyleMedium2")
+    setColWidths(wb, "Stationsübersicht", cols = 1:ncol(station_summary), widths = "auto")
+
+    # Sheet 3: Top 20 intensivste Events
+    top20 <- events_out %>%
+        arrange(desc(peak_level_cm)) %>%
+        head(20) %>%
+        select(station, start_time, duration_min, peak_level_cm,
+               avg_gradient_cm_min, event_type,
+               total_precip_mm, max_intensity_mm_h, dwd_risk_level)
+
+    addWorksheet(wb, "Top 20 Events")
+    writeDataTable(wb, "Top 20 Events", top20, tableStyle = "TableStyleMedium3")
+    setColWidths(wb, "Top 20 Events", cols = 1:ncol(top20), widths = "auto")
+
+    saveWorkbook(wb, xlsx_file, overwrite = TRUE)
+    cat("Excel export saved to:", xlsx_file, "\n")
+
+    # ── 9. Export: events_summary_table.md ────────────────────────────────────
+
+    md_lines <- c(
+        "# Sensor Event Analysis Summary",
+        "",
+        "## Station Overview",
+        "",
+        kable(station_summary, format = "markdown"),
+        "",
+        "## Top 20 Most Intense Events",
+        "",
+        kable(top20, format = "markdown"),
+        "",
+        paste0("*Full log available in data/processed/detected_events.csv — ",
+               nrow(events_out), " rain-verified events total.*")
+    )
+
+    write_lines(md_lines, summary_file)
+    cat("Summary table saved to:", summary_file, "\n")
 }
