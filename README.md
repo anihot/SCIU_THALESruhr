@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 18.03. 15:00 bis 20.03. 14:00)*
+*(Zeitraum: 19.03. 11:00 bis 21.03. 10:00)*
 
-- Temperatur: **15.4°C** (Min: 5°C | Max: 15.9°C)
+- Temperatur: **12.3°C** (Min: 4.6°C | Max: 16.2°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -25,9 +25,21 @@
 
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
+### Lag-Analyse: Reaktionszeiten der Sensoren
+*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
+
+Über alle Stationen: **Median 106 min** | n = 3 Ereignisse
+
+|station      | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
+|:------------|--------------:|----------------:|---------:|---------:|
+|Herzogstraße |              3|              106|        37|       156|
+
+*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
+
+
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-18 13:07:07 UTC*
+*Stand: 2026-03-19 09:41:35 UTC*
 
 ---
 
