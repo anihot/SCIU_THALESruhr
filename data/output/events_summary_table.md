@@ -2,38 +2,32 @@
 
 ## Station Overview
 
-|station                               | event_count| avg_peak_cm| max_peak_cm|
-|:-------------------------------------|-----------:|-----------:|-----------:|
-|An_der_Kost_merged_export             |           8|         2.9|         4.8|
-|Herzogstraße_merged_export            |         486|         8.0|        29.9|
-|Königsallee_Springorum_merged_export  |          11|         2.1|         3.3|
-|Wasserbaulabor_2_merged_export        |         191|        21.0|        29.9|
-|Wasserstraße_Springorum_merged_export |         325|         3.8|         8.8|
+|station                 | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl|
+|:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|
+|Herzogstraße            |         15|       6.4|        34.9|               12|            3|                 0|
+|Wasserbaulabor_2        |          1|       3.1|         3.1|                1|            0|                 0|
+|Wasserstraße_Springorum |          1|       4.2|         4.2|                1|            0|                 0|
 
 ## Top 20 Most Intense Events
 
-|station                        |start_time          | duration_min| peak_level_cm|
-|:------------------------------|:-------------------|------------:|-------------:|
-|Herzogstraße_merged_export     |2026-02-04 11:56:00 |         39.0|          29.9|
-|Wasserbaulabor_2_merged_export |2025-11-20 11:10:15 |       2731.5|          29.9|
-|Wasserbaulabor_2_merged_export |2025-02-21 19:30:00 |         15.0|          29.8|
-|Herzogstraße_merged_export     |2026-01-27 05:57:00 |         29.0|          29.7|
-|Wasserbaulabor_2_merged_export |2025-02-26 09:30:00 |         15.0|          29.7|
-|Herzogstraße_merged_export     |2025-12-26 14:35:00 |        160.0|          29.6|
-|Wasserbaulabor_2_merged_export |2025-03-05 22:15:00 |         75.0|          29.6|
-|Herzogstraße_merged_export     |2026-01-28 11:43:00 |         36.0|          29.4|
-|Herzogstraße_merged_export     |2025-12-16 14:26:00 |         24.0|          29.4|
-|Herzogstraße_merged_export     |2025-10-08 12:11:00 |        136.0|          29.2|
-|Wasserbaulabor_2_merged_export |2025-03-03 10:00:00 |         15.0|          29.2|
-|Wasserbaulabor_2_merged_export |2025-02-26 23:45:00 |         15.0|          29.2|
-|Wasserbaulabor_2_merged_export |2025-02-24 06:15:00 |         15.0|          29.2|
-|Wasserbaulabor_2_merged_export |2025-02-21 20:30:00 |        120.0|          29.1|
-|Herzogstraße_merged_export     |2026-02-04 08:06:00 |        101.0|          28.9|
-|Wasserbaulabor_2_merged_export |2025-03-03 16:00:00 |         15.0|          28.9|
-|Herzogstraße_merged_export     |2025-12-25 15:36:00 |       1215.0|          28.5|
-|Herzogstraße_merged_export     |2025-11-14 13:38:00 |         14.0|          28.5|
-|Wasserbaulabor_2_merged_export |2025-02-23 08:15:00 |         90.0|          28.5|
-|Herzogstraße_merged_export     |2025-12-28 11:26:00 |        371.0|          27.5|
+|station                 |start_time          | duration_min| peak_level_cm| avg_gradient_cm_min|event_type                | total_precip_mm| max_intensity_mm_h|dwd_risk_level                         |
+|:-----------------------|:-------------------|------------:|-------------:|-------------------:|:-------------------------|---------------:|------------------:|:--------------------------------------|
+|Herzogstraße            |2025-12-19 14:32:00 |         43.0|          34.9|               1.390|Sturzflut-Ereignis        |             0.3|                0.2|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2026-01-16 17:31:00 |         42.0|          23.7|               0.762|Sturzflut-Ereignis        |             0.4|                0.2|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2025-10-23 05:37:00 |         18.0|           5.2|               0.732|Sturzflut-Ereignis        |             0.8|                0.4|Level 0 – Kein nennenswerter Regen     |
+|Wasserstraße_Springorum |2025-11-24 14:12:00 |         12.0|           4.2|               0.592|Sturzflut-Ereignis        |             1.1|                0.5|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2026-02-17 15:34:00 |          9.0|           3.7|               1.194|Sturzflut-Ereignis        |             0.4|                0.2|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2026-02-12 13:26:00 |         25.0|           3.4|               0.260|Sturzflut-Ereignis        |             1.0|                0.6|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2026-02-16 10:46:00 |         50.0|           3.3|               0.094|Regenereignis / Natürlich |             0.9|                0.6|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2026-02-19 12:14:00 |         37.0|           3.1|               0.154|Sturzflut-Ereignis        |             3.9|                1.5|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Wasserbaulabor_2        |2026-02-18 09:18:15 |         30.5|           3.1|               0.174|Sturzflut-Ereignis        |             0.0|                0.0|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2026-02-16 09:17:00 |         19.0|           3.0|               0.968|Sturzflut-Ereignis        |             0.2|                0.2|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2026-02-16 06:46:00 |         23.0|           2.8|               0.199|Sturzflut-Ereignis        |             1.4|                1.4|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2026-02-28 04:53:00 |         39.0|           2.6|               0.100|Sturzflut-Ereignis        |             1.3|                1.0|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2026-01-12 20:49:00 |         14.0|           2.3|               0.451|Sturzflut-Ereignis        |             4.5|                2.1|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2025-11-18 18:47:00 |         34.0|           2.3|               0.742|Sturzflut-Ereignis        |             0.6|                0.3|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2025-11-01 12:17:00 |         32.0|           2.3|               0.104|Sturzflut-Ereignis        |             3.6|                1.5|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2026-01-09 13:36:00 |         37.0|           2.0|               0.105|Regenereignis / Natürlich |             2.9|                1.2|Level 1 – Leichter Regen (0.5–15 mm/h) |
+|Herzogstraße            |2025-11-19 12:37:00 |         53.0|           2.0|               0.100|Regenereignis / Natürlich |             0.2|                0.1|Level 0 – Kein nennenswerter Regen     |
 
-
-*Full log available in data/detected_events.csv*
+*Full log available in data/processed/detected_events.csv — 17 rain-verified events total.*
