@@ -13,6 +13,11 @@ temp_dir      <- "data/processed/tmp_radolan"
 # RADOLAN RY: 5-Minuten-Komposit, 1 km Rasterauflösung
 # Einheit nach rdwd-Skalierung: mm / 5 min
 # No-data-Flag (raw >= 4095) wird nach Skalierung als >= 40 mm/5min maskiert
+#
+# Datenquellen:
+#   Historical (>3 Tage alt): DWD OpenData tägliche tar.gz-Archive
+#   URL-Muster: .../radolan/reproc/2017_002/bin/{YYYY}/RY{YYYYMMDD}.tar.gz
+#   Recent (letzte ~3 Tage):   rdwd::selectDWD / dataDWD (Einzel-Binärdateien)
 
 cat("Starting RADOLAN RY (5 min) Precipitation Fetcher...\n")
 
@@ -22,6 +27,13 @@ sensors <- read_csv(metadata_file, show_col_types = FALSE) %>%
     select(station, lat, lon)
 
 if (!dir_exists(temp_dir)) dir_create(temp_dir)
+
+# Sensor-Vektor einmalig erstellen
+sensor_vect_wgs84 <- vect(
+    data.frame(lon = sensors$lon, lat = sensors$lat),
+    geom = c("lon", "lat"),
+    crs  = "EPSG:4326"
+)
 
 # 2. Zeitrahmen bestimmen
 start_date <- as.Date("2025-09-01")
@@ -40,72 +52,113 @@ if (file.exists(output_file)) {
     write_csv(df_init, output_file)
 }
 
-# 3. RY-Dateiliste vom DWD holen
-cat("Fetching file list from DWD...\n")
-urls_recent <- selectDWD(res = "recent", var = "radolan/ry", per = "5_minutes")
+if (start_date >= end_date) {
+    cat("Precipitation data is already up to date. Nothing to fetch.\n")
+    quit(save = "no", status = 0)
+}
 
-# 24h × 12 Dateien/h = 288 Dateien für vollständige 24h-Abdeckung
-n_files       <- min(288, length(urls_recent))
-selected_urls <- urls_recent[(length(urls_recent) - n_files + 1):length(urls_recent)]
+# 3. Helper: eine einzelne RADOLAN-Binärdatei einlesen und Werte extrahieren
+process_radolan_file <- function(file_path) {
+    grid <- try(readDWD(file_path), silent = TRUE)
+    if (inherits(grid, "try-error") || is.null(grid)) return(invisible(NULL))
 
-cat("Processing", n_files, "RADOLAN RY files (5 min each)...\n")
+    if (!inherits(grid, "SpatRaster")) {
+        grid <- try(rast(grid), silent = TRUE)
+        if (inherits(grid, "try-error")) return(invisible(NULL))
+    }
+    if (nlyr(grid) > 1) grid <- grid[[1]]
 
-# Sensor-Vektor einmalig erstellen (wird in der Schleife wiederverwendet)
-sensor_vect_wgs84 <- vect(
-    data.frame(lon = sensors$lon, lat = sensors$lat),
-    geom = c("lon", "lat"),
-    crs  = "EPSG:4326"
-)
+    # Zeitstempel aus Dateiname: raa01-ry_10000-YYMMDDHHMM-dwd---bin
+    ts_str <- gsub(".*-([0-9]{10})-.*", "\\1", basename(file_path))
+    ts     <- as.POSIXct(ts_str, format = "%y%m%d%H%M", tz = "UTC")
+    if (is.na(ts)) return(invisible(NULL))
 
-for (url in selected_urls) {
-    cat("  Processing:", basename(url), "\n")
+    sensor_proj <- project(sensor_vect_wgs84, crs(grid))
+    extracted   <- extract(grid, sensor_proj)
+    precip_vals <- extracted[, 2]
 
-    file <- try(dataDWD(url, dir = temp_dir, read = FALSE, quiet = TRUE), silent = TRUE)
-    if (inherits(file, "try-error")) next
+    # No-data / Clutter maskieren
+    precip_vals[!is.finite(precip_vals) | precip_vals < 0 | precip_vals >= 30] <- NA_real_
+    precip_vals[is.na(precip_vals)] <- 0.0
 
-    grid <- try(readDWD(file), silent = TRUE)
+    new_rows <- sensors %>%
+        mutate(timestamp = ts, precipitation_mm = precip_vals) %>%
+        select(timestamp, station, precipitation_mm)
 
-    if (!inherits(grid, "try-error") && !is.null(grid)) {
-        # Normalisieren auf SpatRaster
-        if (!inherits(grid, "SpatRaster")) {
-            grid <- try(rast(grid), silent = TRUE)
-        }
+    write_csv(new_rows, output_file, append = file.exists(output_file))
+    invisible(ts)
+}
 
-        if (inherits(grid, "SpatRaster")) {
-            if (nlyr(grid) > 1) grid <- grid[[1]]
+# 4. HISTORICAL: tägliche tar.gz-Archive (alles älter als ~3 Tage)
+# DWD stellt recent-Feed nur für die letzten ~3 Tage bereit;
+# ältere Daten kommen aus dem reproc/2017_002-Archiv.
+hist_end_date <- end_date - 3
 
-            # Zeitstempel aus Dateiname extrahieren
-            # RY-Format: raa01-ry_10000-YYMMDDHHMM-dwd---bin
-            ts_str <- gsub(".*-([0-9]{10})-.*", "\\1", basename(file))
-            ts     <- as.POSIXct(ts_str, format = "%y%m%d%H%M", tz = "UTC")
+if (start_date <= hist_end_date) {
+    cat("\n--- Fetching HISTORICAL RADOLAN data:",
+        as.character(start_date), "to", as.character(hist_end_date), "---\n")
 
-            # Sensor-Koordinaten in RADOLAN-CRS projizieren
-            sensor_proj <- project(sensor_vect_wgs84, crs(grid))
+    hist_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/5_minutes/radolan/reproc/2017_002/bin"
 
-            # Punktextraktion
-            extracted  <- extract(grid, sensor_proj)
-            precip_vals <- extracted[, 2]
+    for (day in as.character(seq(start_date, hist_end_date, by = "day"))) {
+        day_date <- as.Date(day)
+        year_str <- format(day_date, "%Y")
+        day_str  <- format(day_date, "%Y%m%d")
 
-            # No-data / Clutter maskieren:
-            # RY raw no-data = 4095; nach rdwd-Skalierung (/100) ≈ 40.95 mm/5min
-            # Physikalisch unmögliche Werte (>= 30 mm / 5 min) ebenfalls maskieren
-            precip_vals[!is.finite(precip_vals) | precip_vals < 0 | precip_vals >= 30] <- NA_real_
-            precip_vals[is.na(precip_vals)] <- 0.0
+        tar_url  <- paste0(hist_base, "/", year_str, "/RY", day_str, ".tar.gz")
+        tar_file <- file.path(temp_dir, paste0("RY", day_str, ".tar.gz"))
 
-            new_rows <- sensors %>%
-                mutate(
-                    timestamp        = ts,
-                    precipitation_mm = precip_vals   # Einheit: mm / 5 min
-                ) %>%
-                select(timestamp, station, precipitation_mm)
+        cat("  Downloading:", day_str)
+        dl <- tryCatch(
+            download.file(tar_url, tar_file, mode = "wb", quiet = TRUE),
+            error = function(e) { cat(" [FAILED:", e$message, "]\n"); -1L }
+        )
+        if (dl != 0) next
+        cat("\n")
 
-            cat("    Extracted (mm/5min):", paste(round(precip_vals, 3), collapse = ", "), "\n")
+        extract_dir <- file.path(temp_dir, paste0("day_", day_str))
+        dir.create(extract_dir, showWarnings = FALSE)
+        untar(tar_file, exdir = extract_dir)
 
-            write_csv(new_rows, output_file, append = file.exists(output_file))
-        }
+        bin_files <- sort(list.files(extract_dir, pattern = "^raa01-ry", full.names = TRUE))
+        cat("    Processing", length(bin_files), "5-min files...\n")
+        for (bf in bin_files) process_radolan_file(bf)
+
+        unlink(extract_dir, recursive = TRUE)
+        file_delete(tar_file)
     }
 
-    if (file.exists(file)) file_delete(file)
+    cat("Historical RADOLAN processing complete.\n")
+
+    # start_date für den recent-Schritt aktualisieren
+    start_date <- hist_end_date + 1
+}
+
+# 5. RECENT: Einzel-Binärdateien via rdwd (letzte ~3 Tage)
+cat("\n--- Fetching RECENT RADOLAN data from:", as.character(start_date), "---\n")
+
+urls_recent <- selectDWD(res = "recent", var = "radolan/ry", per = "5_minutes")
+
+url_ts <- as.POSIXct(
+    gsub(".*-([0-9]{10})-.*", "\\1", basename(urls_recent)),
+    format = "%y%m%d%H%M", tz = "UTC"
+)
+
+start_posix   <- as.POSIXct(start_date, tz = "UTC")
+selected_urls <- urls_recent[!is.na(url_ts) & url_ts >= start_posix]
+
+if (length(selected_urls) == 0) {
+    cat("Recent precipitation data is already up to date.\n")
+} else {
+    cat("Processing", length(selected_urls), "RADOLAN RY files (5 min each)...\n")
+
+    for (url in selected_urls) {
+        cat("  Processing:", basename(url), "\n")
+        file <- try(dataDWD(url, dir = temp_dir, read = FALSE, quiet = TRUE), silent = TRUE)
+        if (inherits(file, "try-error")) next
+        process_radolan_file(file)
+        if (file.exists(file)) file_delete(file)
+    }
 }
 
 cat("RADOLAN RY processing complete.\n")

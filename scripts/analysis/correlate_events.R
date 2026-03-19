@@ -29,7 +29,7 @@ cat("Loaded", nrow(events), "events from detection.\n")
 #    - Wasserbaulabor_2          → indoor test sensor, always kept
 correlation <- events %>%
     filter(
-        radolan_verified == TRUE | is.na(radolan_verified) | station == "Wasserbaulabor_2"
+        radolan_verified == TRUE | station == "Wasserbaulabor_2"
     )
 
 cat("Retained", nrow(correlation), "out of", nrow(events), "events after rain filter.\n")
