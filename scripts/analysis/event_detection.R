@@ -5,19 +5,41 @@ library(fs)
 library(tidyr)
 
 # Config
-cleaned_dir <- "data/processed/cleaned_analysis"
-events_file <- "data/processed/detected_events.csv"
+cleaned_dir    <- "data/processed/cleaned_analysis"
+events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
-THRESHOLD <- 0.015 # 1.5 cm - Threshold for flooding detection
-MIN_GAP_MINS <- 20 # Minimum gap between separate events
-MIN_DURATION_MINS <- 5  # Events kürzer als 5 min = Rauschen / Einzelspike
-MAX_DURATION_MINS <- 60 # Events länger als 60 min werden nicht berücksichtigt
-MIN_RISE_MINS     <- 3   # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
-MIN_FALL_MINS     <- 3   # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
-MAX_LOCAL_PEAKS   <- 2   # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
-MAX_PLATEAU_FRAC  <- 0.5 # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
+precip_file    <- "data/processed/precipitation_at_sensors.csv"
 
-detect_events <- function(df, station_name) {
+THRESHOLD          <- 0.015 # 1.5 cm - Threshold for flooding detection
+MIN_GAP_MINS       <- 20    # Minimum gap between separate events
+MIN_DURATION_MINS  <- 5     # Events kürzer als 5 min = Rauschen / Einzelspike
+MAX_DURATION_MINS  <- 60    # Events länger als 60 min werden nicht berücksichtigt
+MIN_RISE_MINS      <- 3     # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
+MIN_FALL_MINS      <- 3     # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
+MAX_LOCAL_PEAKS    <- 2     # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
+MAX_PLATEAU_FRAC   <- 0.5   # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
+LEAD_IN_HOURS      <- 3     # Niederschlag-Vorlauf-Fenster vor Event-Start
+
+# Load precipitation data once (global, reused across all stations)
+precip <- tibble(
+    timestamp          = as.POSIXct(character()),
+    station            = character(),
+    precipitation_mm   = numeric()
+)
+precip_available <- FALSE
+
+if (file.exists(precip_file)) {
+    precip_raw <- read_csv(precip_file, show_col_types = FALSE)
+    if (nrow(precip_raw) > 0) {
+        precip           <- precip_raw %>% mutate(timestamp = as.POSIXct(timestamp))
+        precip_available <- TRUE
+        cat("Precipitation data loaded:", nrow(precip), "records.\n")
+    } else {
+        cat("Warning: Precipitation file is empty. Events classified without rain context.\n")
+    }
+}
+
+detect_events <- function(df, station_name, precip) {
     if (nrow(df) == 0) {
         return(NULL)
     }
@@ -34,24 +56,23 @@ detect_events <- function(df, station_name) {
     }
 
     # Group contiguous points (within MIN_GAP_MINS gap)
-    # Logic: If distance to previous point > MIN_GAP_MINS, it's a new event
     activity <- activity %>%
         mutate(
-            gap = as.numeric(difftime(Zeit_Datum, lag(Zeit_Datum, default = first(Zeit_Datum)), units = "mins")),
+            gap       = as.numeric(difftime(Zeit_Datum, lag(Zeit_Datum, default = first(Zeit_Datum)), units = "mins")),
             new_event = ifelse(gap > MIN_GAP_MINS, 1, 0),
-            event_id = cumsum(new_event)
+            event_id  = cumsum(new_event)
         )
 
     # Summarize events
     events <- activity %>%
         group_by(event_id) %>%
         summarise(
-            station = station_name,
-            start_time = min(Zeit_Datum),
-            end_time = max(Zeit_Datum),
-            peak_level_m = max(level),
-            peak_time = Zeit_Datum[which.max(level)],
-            duration_min = as.numeric(difftime(max(Zeit_Datum), min(Zeit_Datum), units = "mins")),
+            station          = station_name,
+            start_time       = min(Zeit_Datum),
+            end_time         = max(Zeit_Datum),
+            peak_level_m     = max(level),
+            peak_time        = Zeit_Datum[which.max(level)],
+            duration_min     = as.numeric(difftime(max(Zeit_Datum), min(Zeit_Datum), units = "mins")),
             rise_min         = as.numeric(difftime(Zeit_Datum[which.max(level)], min(Zeit_Datum), units = "mins")),
             fall_min         = as.numeric(difftime(max(Zeit_Datum), Zeit_Datum[which.max(level)], units = "mins")),
             points_count     = n(),
@@ -74,21 +95,51 @@ detect_events <- function(df, station_name) {
         mutate(
             avg_gradient_cm_min = (peak_level_m * 100) / (as.numeric(difftime(peak_time, start_time, units = "mins")) + 0.1),
             avg_gradient_cm_min = round(avg_gradient_cm_min, 3),
-            peak_level_cm = round(peak_level_m * 100, 2),
-            event_type = "Unbekannt"
-        ) %>%
-        # Classify events based on sensor signature
+            peak_level_cm       = round(peak_level_m * 100, 2)
+        )
+
+    # --- Precipitation context per event (3h lead-in window) ---
+    station_precip <- precip %>% filter(station == station_name)
+
+    if (nrow(station_precip) > 0) {
+        events <- events %>%
+            rowwise() %>%
+            mutate(
+                .t0                = start_time - hours(LEAD_IN_HOURS),
+                .t1                = end_time,
+                .ep                = list(station_precip %>% filter(timestamp >= .t0, timestamp <= .t1)),
+                total_precip_mm    = round(sum(.ep[[1]]$precipitation_mm, na.rm = TRUE), 2),
+                max_intensity_mm_h = ifelse(nrow(.ep[[1]]) > 0,
+                                           round(max(.ep[[1]]$precipitation_mm, na.rm = TRUE), 2),
+                                           0),
+                radolan_verified   = total_precip_mm > 0
+            ) %>%
+            select(-.t0, -.t1, -.ep) %>%
+            ungroup()
+    } else {
+        # No precipitation data for this station → columns NA, classification uses sensor-only logic
+        events <- events %>%
+            mutate(
+                total_precip_mm    = NA_real_,
+                max_intensity_mm_h = NA_real_,
+                radolan_verified   = NA
+            )
+    }
+
+    # --- Classify ---
+    events <- events %>%
         mutate(
             event_type = case_when(
-                # "Sturzflut" (Flash Flood) signature:
-                # Extremely sharp gradient (> 0.5 cm/min) OR short intense pulse (< 45 mins, peak > 2cm)
+                # Precipitation data available but no rain detected → suspicious (infrastructure, artifact)
+                !is.na(radolan_verified) & radolan_verified == FALSE ~ "Verdächtig / Kein Regen",
+
+                # Flash flood: sharp gradient OR short intense pulse
                 (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Sturzflut-Ereignis",
 
-                # Significant rain event: notable peak level (>= 2cm) with gradual rise
-                # Likely corresponds to DWD Level 2+ (Starkregen >= 15 mm/h) intensity
+                # Significant rain event: notable peak with gradual rise
                 peak_level_cm >= 2.0 ~ "Regenereignis / Natürlich",
 
-                # Light rain: detectable but low peak (< 2cm) – likely below DWD Starkregen thresholds
+                # Light rain: detectable but low peak
                 TRUE ~ "Leichter Regen / Unterhalb DWD-Schwelle"
             )
         ) %>%
@@ -100,7 +151,12 @@ detect_events <- function(df, station_name) {
             n_local_peaks    <= MAX_LOCAL_PEAKS,
             plateau_fraction <= MAX_PLATEAU_FRAC
         ) %>%
-        select(station, start_time, end_time, peak_level_cm, peak_time, duration_min, avg_gradient_cm_min, event_type, points_count) %>%
+        select(
+            station, start_time, end_time, peak_level_cm, peak_time,
+            duration_min, avg_gradient_cm_min, event_type,
+            total_precip_mm, max_intensity_mm_h, radolan_verified,
+            points_count
+        ) %>%
         mutate(
             station = gsub("_merged_export", "", station)
         )
@@ -120,15 +176,14 @@ all_events <- list()
 
 for (file_path in cleaned_files) {
     file_name <- path_file(file_path)
-    station <- gsub("_cleaned\\.csv$", "", file_name)
+    station   <- gsub("_cleaned\\.csv$", "", file_name)
 
     cat("Scanning", station, "...\n")
 
-    # Use tryCatch to handle potentially malformed CSVs
     tryCatch(
         {
             df <- read_csv(file_path, show_col_types = FALSE)
-            ev <- detect_events(df, station)
+            ev <- detect_events(df, station, precip)
             if (!is.null(ev)) {
                 all_events[[station]] <- ev
                 cat("  Found", nrow(ev), "events.\n")
@@ -143,7 +198,6 @@ for (file_path in cleaned_files) {
 if (length(all_events) > 0) {
     events_df <- bind_rows(all_events) %>% arrange(desc(start_time))
 
-    # Export gesamt (alle Stationen)
     write_excel_csv(events_df, events_file)
 
     library(knitr)
@@ -154,15 +208,15 @@ if (length(all_events) > 0) {
     cat("CSV log saved to:", events_file, "\n")
     cat("Markdown log saved to:", events_md_file, "\n")
 
-    # Export je Station
+    # Export per station
     station_events_dir <- "data/processed/events_by_station"
     if (!dir_exists(station_events_dir)) dir_create(station_events_dir)
 
     for (st in unique(events_df$station)) {
-        st_df      <- events_df %>% filter(station == st) %>% arrange(desc(start_time))
-        safe_name  <- gsub("[^a-zA-Z0-9_]", "_", st)
-        st_csv     <- file.path(station_events_dir, paste0(safe_name, "_events.csv"))
-        st_md      <- file.path(station_events_dir, paste0(safe_name, "_events.md"))
+        st_df     <- events_df %>% filter(station == st) %>% arrange(desc(start_time))
+        safe_name <- gsub("[^a-zA-Z0-9_]", "_", st)
+        st_csv    <- file.path(station_events_dir, paste0(safe_name, "_events.csv"))
+        st_md     <- file.path(station_events_dir, paste0(safe_name, "_events.md"))
 
         write_excel_csv(st_df, st_csv)
         write_lines(
@@ -173,16 +227,19 @@ if (length(all_events) > 0) {
     }
 } else {
     cat("\nNo events detected in any station. Writing empty log file...\n")
-    # Write empty dataframe with headers to ensure subsequent scripts can read it
     empty_df <- tibble(
-        station = character(),
-        start_time = POSIXct(),
-        end_time = POSIXct(),
-        peak_level_cm = numeric(),
-        peak_time = POSIXct(),
-        duration_min = numeric(),
+        station            = character(),
+        start_time         = as.POSIXct(character()),
+        end_time           = as.POSIXct(character()),
+        peak_level_cm      = numeric(),
+        peak_time          = as.POSIXct(character()),
+        duration_min       = numeric(),
         avg_gradient_cm_min = numeric(),
-        points_count = integer()
+        event_type         = character(),
+        total_precip_mm    = numeric(),
+        max_intensity_mm_h = numeric(),
+        radolan_verified   = logical(),
+        points_count       = integer()
     )
     write_excel_csv(empty_df, events_file)
     write_lines(c("# Detected Events Log", "", "Keine Ereignisse erkannt."), events_md_file)
