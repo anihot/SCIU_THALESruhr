@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 20.03. 08:00 bis 22.03. 07:00)*
+*(Zeitraum: 20.03. 14:00 bis 22.03. 13:00)*
 
-- Temperatur: **7°C** (Min: 2.6°C | Max: 13.8°C)
+- Temperatur: **14°C** (Min: 2.8°C | Max: 14.2°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -27,7 +27,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-20 06:56:34 UTC*
+*Stand: 2026-03-20 12:58:32 UTC*
 
 ---
 

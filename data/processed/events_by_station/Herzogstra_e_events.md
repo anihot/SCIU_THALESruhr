@@ -2,6 +2,7 @@
 
 |station      |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                | total_precip_mm| max_intensity_mm_h|radolan_verified | points_count|
 |:------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:-------------------------|---------------:|------------------:|:----------------|------------:|
+|Herzogstraße |2026-03-20 10:41:00 |2026-03-20 11:02:00 |          32.9|2026-03-20 10:53:00 |           21|               2.719|Sturzflut-Ereignis        |              NA|                 NA|NA               |           22|
 |Herzogstraße |2026-03-19 10:23:00 |2026-03-19 11:11:00 |          14.9|2026-03-19 11:05:00 |           48|               0.354|Regenereignis / Natürlich |              NA|                 NA|NA               |           49|
 |Herzogstraße |2026-03-12 12:36:00 |2026-03-12 13:34:00 |          18.8|2026-03-12 13:11:00 |           58|               0.536|Sturzflut-Ereignis        |              NA|                 NA|NA               |           54|
 |Herzogstraße |2026-02-28 04:53:00 |2026-02-28 05:32:00 |           2.6|2026-02-28 05:19:00 |           39|               0.100|Sturzflut-Ereignis        |              NA|                 NA|NA               |           20|
