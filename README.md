@@ -10,9 +10,9 @@
 
 *(Zeitraum: 23.03. 11:00 bis 25.03. 10:00)*
 
-- Temperatur: **13.7°C** (Min: 7.6°C | Max: 17.2°C)
-- Summe: **1.4 mm** | Max: **1 mm/h**
-- Max. 6h: **11 mm**
+- Temperatur: **14°C** (Min: 8.1°C | Max: 17.4°C)
+- Summe: **1.5 mm** | Max: **1.4 mm/h**
+- Max. 6h: **4.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,24 +23,11 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
-
-### Lag-Analyse: Reaktionszeiten der Sensoren
-*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
-
-Über alle Stationen: **Median 148 min** | n = 16 Ereignisse
-
-|station                 | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
-|:-----------------------|--------------:|----------------:|---------:|---------:|
-|Wasserstraße_Springorum |              1|              132|       132|       132|
-|Herzogstraße            |             15|              151|        17|       173|
-
-*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
-
+- 🔴 **Wasserbaulabor_**: Letzte Daten vor 792.6 Stunden (18.02. 09:22)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-23 09:51:16 UTC*
+*Stand: 2026-03-23 09:58:36 UTC*
 
 ---
 
