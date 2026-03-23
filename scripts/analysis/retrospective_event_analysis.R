@@ -241,7 +241,11 @@ for (st in unique(events_out$station)) {
 if (nrow(events_out) > 0) {
     if (file_exists(historical_log)) {
         hist_orig    <- read_csv(historical_log, show_col_types = FALSE) %>%
-            mutate(start_time = as.POSIXct(start_time), end_time = as.POSIXct(end_time))
+            mutate(
+                start_time = as.POSIXct(start_time),
+                end_time   = as.POSIXct(end_time),
+                peak_time  = as.POSIXct(peak_time)
+            )
         new_entries  <- events_out %>% anti_join(hist_orig, by = c("station", "start_time"))
         hist_updated <- bind_rows(hist_orig, new_entries) %>% arrange(start_time)
         write_excel_csv(hist_updated, historical_log)

@@ -54,7 +54,11 @@ cat("SUCCESS: Overwrote", events_file, "with", nrow(correlation), "rain-verified
 if (nrow(correlation) > 0) {
     if (file_exists(historical_log)) {
         hist_orig <- read_csv(historical_log, show_col_types = FALSE) %>%
-            mutate(start_time = as.POSIXct(start_time), end_time = as.POSIXct(end_time))
+            mutate(
+                start_time = as.POSIXct(start_time),
+                end_time   = as.POSIXct(end_time),
+                peak_time  = as.POSIXct(peak_time)
+            )
 
         new_entries <- correlation %>% anti_join(hist_orig, by = c("station", "start_time"))
 
