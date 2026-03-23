@@ -23,11 +23,24 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 792.3 Stunden (18.02. 09:22)
+- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
+
+### Lag-Analyse: Reaktionszeiten der Sensoren
+*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
+
+Über alle Stationen: **Median 148 min** | n = 16 Ereignisse
+
+|station                 | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
+|:-----------------------|--------------:|----------------:|---------:|---------:|
+|Wasserstraße_Springorum |              1|              132|       132|       132|
+|Herzogstraße            |             15|              151|        17|       173|
+
+*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
+
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-23 09:39:37 UTC*
+*Stand: 2026-03-23 09:51:16 UTC*
 
 ---
 
