@@ -14,6 +14,8 @@ r_output.txt
 
 # Specific data files and directories to ALLOW
 !data/metadata/sensor_metadata.csv
+!data/metadata/sensor_coords_raw.csv
+!data/metadata/historical_verified_events.csv
 !data/processed/detected_events.csv
 !data/processed/detected_events.md
 !data/processed/precipitation_at_sensors.csv
