@@ -14,6 +14,7 @@ cleaned_dir    <- "data/processed/cleaned_analysis"
 events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 historical_log <- "data/metadata/historical_verified_events.csv"
+historical_md  <- "data/metadata/historical_verified_events.md"
 
 THRESHOLD          <- 0.015  # 1.5 cm
 MIN_GAP_MINS       <- 20
@@ -249,10 +250,14 @@ if (nrow(events_out) > 0) {
         new_entries  <- events_out %>% anti_join(hist_orig, by = c("station", "start_time"))
         hist_updated <- bind_rows(hist_orig, new_entries) %>% arrange(start_time)
         write_excel_csv(hist_updated, historical_log)
+        write_lines(c("# Historische Ereignisse (verifiziert)", "",
+                      kable(hist_updated, format = "markdown")), historical_md)
         cat("Historical log updated:", nrow(new_entries), "new entries added",
             "(", nrow(hist_updated), "total).\n")
     } else {
         write_excel_csv(events_out, historical_log)
+        write_lines(c("# Historische Ereignisse (verifiziert)", "",
+                      kable(events_out, format = "markdown")), historical_md)
         cat("Historical log created with", nrow(events_out), "entries.\n")
     }
 }

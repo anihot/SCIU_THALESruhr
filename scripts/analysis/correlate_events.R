@@ -6,6 +6,7 @@ library(fs)
 # Config
 events_file    <- "data/processed/detected_events.csv"
 historical_log <- "data/metadata/historical_verified_events.csv"
+historical_md  <- "data/metadata/historical_verified_events.md"
 
 cat("Starting Event Correlation Filter...\n")
 
@@ -65,12 +66,16 @@ if (nrow(correlation) > 0) {
         if (nrow(new_entries) > 0) {
             hist_updated <- bind_rows(hist_orig, new_entries)
             write_excel_csv(hist_updated, historical_log)
+            write_lines(c("# Historische Ereignisse (verifiziert)", "",
+                          knitr::kable(hist_updated, format = "markdown")), historical_md)
             cat("Added", nrow(new_entries), "new entries to historical log.\n")
         } else {
             cat("No new entries for historical log.\n")
         }
     } else {
         write_excel_csv(correlation, historical_log)
+        write_lines(c("# Historische Ereignisse (verifiziert)", "",
+                      knitr::kable(correlation, format = "markdown")), historical_md)
         cat("Created new historical log with", nrow(correlation), "entries.\n")
     }
 }
