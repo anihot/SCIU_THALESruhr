@@ -41,8 +41,9 @@ jobs:
         id: check_rain
         run: |
           HOUR=$(date +%H)
-          if [ "$HOUR" -ge "05" ] && [ "$HOUR" -le "09" ]; then
-            echo "sync_reason=Daily Full Sync Window" >> $GITHUB_OUTPUT
+          TRIGGER="${{ github.event_name }}"
+          if [ "$TRIGGER" = "workflow_dispatch" ] || ([ "$HOUR" -ge "05" ] && [ "$HOUR" -le "09" ]); then
+            echo "sync_reason=Daily Full Sync Window or Manual Trigger" >> $GITHUB_OUTPUT
             echo "should_continue=true" >> $GITHUB_OUTPUT
             echo "is_daily_sync=true" >> $GITHUB_OUTPUT
           else
@@ -130,6 +131,7 @@ jobs:
           git add data/output/events_summary_table.md || true
           if [ -d "data/metadata" ]; then
             git add data/metadata/*.csv || true
+            git add data/metadata/*.md || true
           fi
           git add README.md || true
           git commit -m "Auto-update sensor data, events, risk analysis and dashboard [skip ci]" || echo "No changes to commit"

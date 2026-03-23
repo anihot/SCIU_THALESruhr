@@ -72,6 +72,7 @@ jobs:
           git add data/output/graphs/*.html || true
           if [ -d "data/metadata" ]; then
             git add data/metadata/*.csv || true
+            git add data/metadata/*.md || true
           fi
           git add data/output/all_detected_events.xlsx || true
           git add data/output/events_summary_table.md || true
