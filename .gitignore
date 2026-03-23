@@ -5,6 +5,10 @@
 .Ruserdata
 *.Rproj
 
+# Logs / temp output
+debug.log
+r_output.txt
+
 # Ignore large raw data files in general
 *.csv
 
@@ -12,7 +16,6 @@
 !data/metadata/sensor_metadata.csv
 !data/processed/detected_events.csv
 !data/processed/detected_events.md
-!data/processed/event_correlation_summary.csv
 !data/processed/precipitation_at_sensors.csv
 !data/processed/weather_forecast.csv
 !data/processed/schillerschule_analysiert.csv
@@ -31,3 +34,5 @@ data/processed/tmp_radolan/
 !data/output/sensor_static_map.png
 !data/output/sensor_map.html
 !data/output/sensor_map_files/
+!data/output/all_detected_events.xlsx
+!data/output/events_summary_table.md
