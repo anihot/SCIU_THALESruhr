@@ -7,7 +7,7 @@ on:
 
 jobs:
   fetch-data:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     env:
@@ -19,8 +19,9 @@ jobs:
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
+          r-version: '4.4.2'
           use-public-rspm: true
-      
+
       - name: Set up Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
@@ -31,35 +32,33 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop"))'
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop"))'
 
-      - name: Fetch weather forecast (Prerequisite for Rain Mode)
+      - name: Fetch weather forecast
         run: Rscript scripts/api/fetch_forecast.R
 
       - name: Check for Rain Mode or Daily Sync
         id: check_rain
         run: |
-          # 1. Check if it's the daily full sync window (05:00 - 09:00 UTC)
-          # We use a window to be safe against Runner delays.
           HOUR=$(date +%H)
           if [ "$HOUR" -ge "05" ] && [ "$HOUR" -le "09" ]; then
             echo "sync_reason=Daily Full Sync Window" >> $GITHUB_OUTPUT
             echo "should_continue=true" >> $GITHUB_OUTPUT
+            echo "is_daily_sync=true" >> $GITHUB_OUTPUT
           else
-            # 2. Check for rain in forecast (next 24h)
-            # We look for any precipitation_mm > 0 in the CSV
-            # Using grep -c to count lines with non-zero rain (excluding header)
             RAIN_COUNT=$(tail -n +2 data/processed/weather_forecast.csv | cut -d',' -f2 | grep -v "^0$" | grep -c "." || true)
             if [ "$RAIN_COUNT" -gt 0 ]; then
               echo "sync_reason=Rain Forecast Detected ($RAIN_COUNT hours)" >> $GITHUB_OUTPUT
               echo "should_continue=true" >> $GITHUB_OUTPUT
+              echo "is_daily_sync=false" >> $GITHUB_OUTPUT
             else
               echo "sync_reason=No rain and not daily sync" >> $GITHUB_OUTPUT
               echo "should_continue=false" >> $GITHUB_OUTPUT
+              echo "is_daily_sync=false" >> $GITHUB_OUTPUT
             fi
           fi
 
-      - name: Fetch data
+      - name: Fetch sensor data (Nivus)
         if: steps.check_rain.outputs.should_continue == 'true'
         env:
           NIVUS_API_KEY: ${{ secrets.NIVUS_API_KEY }}
@@ -81,19 +80,32 @@ jobs:
         if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/visualization/generate_interactive_map.R
 
+      # Event detection läuft immer (auch ohne Regenvorhersage),
+      # damit unvorhergesehene Ereignisse nicht verloren gehen.
       - name: Detect events
-        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/event_detection.R
 
       - name: Correlate events with precipitation
-        if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/correlate_events.R
 
       - name: Lag analysis
         if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/lag_analysis.R
 
-      - name: Update README with latest events
+      # Retrospektive Analyse nur im täglichen Sync-Fenster (05-09 UTC):
+      # Holt Open-Meteo-Archivdaten für alle historischen Events und aktualisiert
+      # historical_verified_events.csv, all_detected_events.xlsx und events_summary_table.md.
+      - name: Retrospective event analysis (daily sync only)
+        if: steps.check_rain.outputs.is_daily_sync == 'true'
+        run: Rscript scripts/analysis/retrospective_event_analysis.R
+
+      - name: Check sensor health
+        run: Rscript scripts/analysis/check_sensor_health.R
+
+      - name: Check risk level
+        run: Rscript scripts/analysis/check_risk.R
+
+      - name: Update README
         run: Rscript scripts/automation/update_readme.R
 
       - name: Commit and push changes
@@ -109,20 +121,16 @@ jobs:
           git add data/processed/events_by_station/*.md || true
           git add data/processed/weather_forecast.csv || true
           git add data/processed/precipitation_at_sensors.csv || true
-          git add data/processed/event_correlation_summary.csv || true
           git add data/processed/lag_analysis.csv || true
           git add data/processed/lag_report.md || true
           git add data/output/plots/lag_*.png || true
           git add data/output/sensor_map.html || true
           git add data/output/graphs/*.html || true
-          
-          # Only add historical log if it exists
+          git add data/output/all_detected_events.xlsx || true
+          git add data/output/events_summary_table.md || true
           if [ -d "data/metadata" ]; then
             git add data/metadata/*.csv || true
           fi
-          
           git add README.md || true
-          
-          git commit -m "Auto-update sensor data, precipitation, risk analysis, and dashboard [skip ci]" || echo "No changes to commit"
-
+          git commit -m "Auto-update sensor data, events, risk analysis and dashboard [skip ci]" || echo "No changes to commit"
           git push
