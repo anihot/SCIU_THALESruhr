@@ -1,3 +1,6 @@
+# Claude Code worktrees
+.claude/worktrees/
+
 # R specific
 .Rproj.user
 .Rhistory
