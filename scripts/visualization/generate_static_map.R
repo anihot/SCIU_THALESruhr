@@ -17,6 +17,18 @@ if (!file.exists(metadata_file)) {
 # 1. Load coordinates
 sensors <- read_csv(metadata_file, show_col_types = FALSE)
 
+# Manual label offsets to avoid overlapping labels
+# Wasserstraße and Königsallee are very close together
+label_offsets <- tribble(
+    ~station,            ~nudge_x, ~nudge_y,
+    "Herzogstraße",       0.000,    0.005,
+    "An der Kost",        0.000,    0.005,
+    "Wasserstraße",      -0.020,   -0.005,
+    "Königsallee",        0.000,    0.005,
+    "Wasserbaulabor 2",   0.000,    0.005
+)
+sensors <- sensors %>% left_join(label_offsets, by = "station")
+
 # Convert to sf object (WGS84)
 sensors_sf <- st_as_sf(sensors, coords = c("lon", "lat"), crs = 4326)
 
@@ -30,57 +42,47 @@ if (length(missing_packages)) {
     )
 }
 
-# 2. Create Static Map using ggplot2 and ggspatial
-# Add some padding to make it more square and less stretched
+# 2. Create Static Map
 bbox <- st_bbox(sensors_sf)
 lon_range <- bbox["xmax"] - bbox["xmin"]
 lat_range <- bbox["ymax"] - bbox["ymin"]
-# Increase lon range to match lat range (roughly) for 1:1 aspect
-target_lon_range <- lat_range * 1.5 # at 51 deg N, lon degrees are wider
+target_lon_range <- lat_range * 1.5
 padding_lon <- (target_lon_range - lon_range) / 2
 
 p <- ggplot(sensors_sf) +
-    # Add OpenStreetMap tiles as background
-    annotation_map_tile(type = "osm", zoomin = -1) +
-    # Add the points (using a bright color to stand out against the map)
-    geom_sf(color = "red", size = 4, alpha = 0.9) +
-    # Add labels with a white background for readability over the map
-    geom_label(aes(label = station, geometry = geometry),
+    # Light, muted basemap so markers pop
+    annotation_map_tile(type = "cartolight", zoomin = -1) +
+    # White-outlined dots
+    geom_sf(color = "white", size = 5.5, shape = 16) +
+    geom_sf(color = "#0072B2", size = 4, shape = 16) +
+    # Clean labels with per-station offsets
+    geom_label(aes(label = label, geometry = geometry),
         stat = "sf_coordinates",
-        nudge_y = 0.003,
-        size = 3.5,
+        nudge_x = sensors_sf$nudge_x,
+        nudge_y = sensors_sf$nudge_y,
+        size = 3,
+        family = "sans",
         fontface = "bold",
-        color = "black",
-        fill = alpha("white", 0.7),
-        label.padding = unit(0.15, "lines")
+        color = "#333333",
+        fill = alpha("white", 0.85),
+        label.padding = unit(0.2, "lines"),
+        label.r = unit(0.15, "lines"),
+        label.size = 0.2
     ) +
-    # Fix the coordinate system and set limits with padding
     coord_sf(
         xlim = c(bbox["xmin"] - padding_lon - 0.005, bbox["xmax"] + padding_lon + 0.005),
-        ylim = c(bbox["ymin"] - 0.005, bbox["ymax"] + 0.005),
+        ylim = c(bbox["ymin"] - 0.008, bbox["ymax"] + 0.008),
         crs = 4326, expand = FALSE
     ) +
-    # Aesthetics
-    labs(
-        title = "📍 SCIU THALESruhr Sensor-Netzwerk",
-        subtitle = "Standorte der automatisierten Messstationen (Hintergrund: OpenStreetMap)",
-        x = NULL,
-        y = NULL,
-        caption = paste0("Stand: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"))
-    ) +
-    theme_minimal() +
+    labs(x = NULL, y = NULL) +
+    theme_void() +
     theme(
-        plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(size = 12, hjust = 0.5, color = "gray30"),
-        axis.text = element_blank(),
-        axis.title = element_blank(),
-        axis.ticks = element_blank(),
-        panel.grid = element_blank(),
-        panel.background = element_rect(fill = "#f8f9fa", color = NA),
+        plot.margin = margin(0, 0, 0, 0),
+        panel.background = element_blank(),
         plot.background = element_rect(fill = "white", color = NA)
     )
 
-# 3. Save as PNG (using a more square format 8x8)
-ggsave(output_file, plot = p, width = 8, height = 8, dpi = 150)
+# 3. Save as PNG
+ggsave(output_file, plot = p, width = 8, height = 7, dpi = 200)
 
-cat("SUCCESS: Static map with background saved to", output_file, "\n")
+cat("SUCCESS: Static map saved to", output_file, "\n")
