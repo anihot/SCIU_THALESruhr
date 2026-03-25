@@ -14,6 +14,8 @@ if (!dir_exists(plots_dir)) {
 
 # Get list of cleaned files
 cleaned_files <- dir_ls(cleaned_dir, glob = "*.csv")
+# Exclude "Wasserbaulabor_" (without "2") from plotting
+cleaned_files <- cleaned_files[!grepl("Wasserbaulabor__", basename(cleaned_files))]
 precip_file <- "data/processed/precipitation_at_sensors.csv"
 
 # Load RADOLAN precipitation data

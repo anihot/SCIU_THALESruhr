@@ -17,6 +17,8 @@ if (!dir_exists(input_dir)) {
 
 # List all sensor export files
 files <- dir_ls(input_dir, glob = "*.csv")
+# Exclude "Wasserbaulabor_" (without "2") from health checks
+files <- files[!grepl("Wasserbaulabor__", basename(files))]
 
 health_data <- list()
 

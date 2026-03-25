@@ -106,6 +106,8 @@ detect_events <- function(df, station_name) {
 if (!dir_exists(cleaned_dir)) stop("Cleaned data directory not found.")
 
 cleaned_files <- dir_ls(cleaned_dir, glob = "*.csv")
+# Exclude "Wasserbaulabor_" (without "2") from retrospective analysis
+cleaned_files <- cleaned_files[!grepl("Wasserbaulabor__", basename(cleaned_files))]
 all_events    <- list()
 
 for (file_path in cleaned_files) {
