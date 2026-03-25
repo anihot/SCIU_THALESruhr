@@ -116,6 +116,8 @@ process_sensor_file <- function(file_path) {
 
 # Main Loop
 files <- dir_ls(input_dir, glob = "*.csv")
+# Exclude "Wasserbaulabor_" (without "2") from analysis
+files <- files[!grepl("Wasserbaulabor__", basename(files))]
 
 for (f in files) {
     process_sensor_file(f)
