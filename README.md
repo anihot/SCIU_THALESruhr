@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 25.03. 09:00 bis 27.03. 08:00)*
+*(Zeitraum: 25.03. 11:00 bis 27.03. 10:00)*
 
-- Temperatur: **8.5°C** (Min: 1.7°C | Max: 8.7°C)
-- Summe: **15.6 mm** | Max: **5.5 mm/h**
-- Max. 6h: **12.2 mm**
+- Temperatur: **8.7°C** (Min: 1.7°C | Max: 8.7°C)
+- Summe: **15.4 mm** | Max: **5.5 mm/h**
+- Max. 6h: **12 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,24 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 837.7 Stunden (18.02. 09:22)
+- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
+
+### Lag-Analyse: Reaktionszeiten der Sensoren
+*Onset-Lag = Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor*
+
+Über alle Stationen: **Median 148 min** | n = 16 Ereignisse
+
+|station                 | Ereignisse (n)| Median-Lag (min)| Min (min)| Max (min)|
+|:-----------------------|--------------:|----------------:|---------:|---------:|
+|Wasserstraße_Springorum |              1|              132|       132|       132|
+|Herzogstraße            |             15|              151|        17|       173|
+
+*Quelle: Open-Meteo Archive (stündlich, ±30 min Messungenauigkeit)*
+
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-25 07:06:00 UTC*
+*Stand: 2026-03-25 09:32:56 UTC*
 
 ---
 
