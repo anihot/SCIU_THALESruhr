@@ -23,8 +23,22 @@ url <- paste0(
     "&timezone=Europe%2FBerlin"
 )
 
-# Request
-response <- GET(url)
+# Request with retry logic for transient SSL errors
+max_retries <- 3
+response <- NULL
+for (attempt in seq_len(max_retries)) {
+    tryCatch({
+        response <- GET(url, timeout(30))
+        break
+    }, error = function(e) {
+        cat("Attempt", attempt, "failed:", conditionMessage(e), "\n")
+        if (attempt < max_retries) {
+            Sys.sleep(5 * attempt)
+        } else {
+            stop("Failed to fetch forecast after ", max_retries, " attempts: ", conditionMessage(e))
+        }
+    })
+}
 
 if (status_code(response) != 200) {
     stop("Failed to fetch forecast from Open-Meteo. Status: ", status_code(response))
