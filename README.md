@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 27.03. 09:00 bis 29.03. 09:00)*
+*(Zeitraum: 27.03. 10:00 bis 29.03. 10:00)*
 
-- Temperatur: **3.7°C** (Min: 2.3°C | Max: 9.8°C)
-- Summe: **4.5 mm** | Max: **1.1 mm/h**
-- Max. 6h: **2.1 mm**
+- Temperatur: **5.3°C** (Min: 2.7°C | Max: 10°C)
+- Summe: **6.6 mm** | Max: **0.9 mm/h**
+- Max. 6h: **4.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-03-27 07:13:59 UTC*
+*Stand: 2026-03-27 08:17:32 UTC*
 
 ---
 
