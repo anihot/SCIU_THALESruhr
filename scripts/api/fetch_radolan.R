@@ -10,16 +10,16 @@ metadata_file <- "data/metadata/sensor_metadata.csv"
 output_file   <- "data/processed/precipitation_at_sensors.csv"
 temp_dir      <- "data/processed/tmp_radolan"
 
-# RADOLAN RY: 5-Minuten-Komposit, 1 km Rasterauflösung
-# Einheit nach rdwd-Skalierung: mm / 5 min
-# No-data-Flag (raw >= 4095) wird nach Skalierung als >= 40 mm/5min maskiert
+# RADOLAN RW: 10-Minuten-Komposit, 1 km Rasterauflösung, stationsgeeicht
+# Einheit nach rdwd-Skalierung: mm / 10 min
+# No-data-Flag (raw >= 4095) wird nach Skalierung als >= 40 mm/10min maskiert
 #
 # Datenquellen:
 #   Historical (>3 Tage alt): DWD OpenData tägliche tar.gz-Archive
-#   URL-Muster: .../radolan/reproc/2017_002/bin/{YYYY}/RY{YYYYMMDD}.tar.gz
+#   URL-Muster: .../radolan/reproc/2017_002/bin/{YYYY}/RW{YYYYMMDD}.tar.gz
 #   Recent (letzte ~3 Tage):   rdwd::selectDWD / dataDWD (Einzel-Binärdateien)
 
-cat("Starting RADOLAN RY (5 min) Precipitation Fetcher...\n")
+cat("Starting RADOLAN RW (10 min, stationsgeeicht) Precipitation Fetcher...\n")
 
 # 1. Sensor-Koordinaten laden
 if (!file.exists(metadata_file)) stop("Metadata file not found: ", metadata_file)
@@ -68,7 +68,7 @@ process_radolan_file <- function(file_path) {
     }
     if (nlyr(grid) > 1) grid <- grid[[1]]
 
-    # Zeitstempel aus Dateiname: raa01-ry_10000-YYMMDDHHMM-dwd---bin
+    # Zeitstempel aus Dateiname: raa01-rw_10000-YYMMDDHHMM-dwd---bin
     ts_str <- gsub(".*-([0-9]{10})-.*", "\\1", basename(file_path))
     ts     <- as.POSIXct(ts_str, format = "%y%m%d%H%M", tz = "UTC")
     if (is.na(ts)) return(invisible(NULL))
@@ -98,15 +98,15 @@ if (start_date <= hist_end_date) {
     cat("\n--- Fetching HISTORICAL RADOLAN data:",
         as.character(start_date), "to", as.character(hist_end_date), "---\n")
 
-    hist_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/5_minutes/radolan/reproc/2017_002/bin"
+    hist_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/10_minutes/radolan/reproc/2017_002/bin"
 
     for (day in as.character(seq(start_date, hist_end_date, by = "day"))) {
         day_date <- as.Date(day)
         year_str <- format(day_date, "%Y")
         day_str  <- format(day_date, "%Y%m%d")
 
-        tar_url  <- paste0(hist_base, "/", year_str, "/RY", day_str, ".tar.gz")
-        tar_file <- file.path(temp_dir, paste0("RY", day_str, ".tar.gz"))
+        tar_url  <- paste0(hist_base, "/", year_str, "/RW", day_str, ".tar.gz")
+        tar_file <- file.path(temp_dir, paste0("RW", day_str, ".tar.gz"))
 
         cat("  Downloading:", day_str)
         dl <- tryCatch(
@@ -120,8 +120,8 @@ if (start_date <= hist_end_date) {
         dir.create(extract_dir, showWarnings = FALSE)
         untar(tar_file, exdir = extract_dir)
 
-        bin_files <- sort(list.files(extract_dir, pattern = "^raa01-ry", full.names = TRUE))
-        cat("    Processing", length(bin_files), "5-min files...\n")
+        bin_files <- sort(list.files(extract_dir, pattern = "^raa01-rw", full.names = TRUE))
+        cat("    Processing", length(bin_files), "10-min files...\n")
         for (bf in bin_files) process_radolan_file(bf)
 
         unlink(extract_dir, recursive = TRUE)
@@ -137,7 +137,7 @@ if (start_date <= hist_end_date) {
 # 5. RECENT: Einzel-Binärdateien via rdwd (letzte ~3 Tage)
 cat("\n--- Fetching RECENT RADOLAN data from:", as.character(start_date), "---\n")
 
-urls_recent <- selectDWD(res = "recent", var = "radolan/ry", per = "5_minutes")
+urls_recent <- selectDWD(res = "recent", var = "radolan/rw", per = "10_minutes")
 
 url_ts <- as.POSIXct(
     gsub(".*-([0-9]{10})-.*", "\\1", basename(urls_recent)),
@@ -150,7 +150,7 @@ selected_urls <- urls_recent[!is.na(url_ts) & url_ts >= start_posix]
 if (length(selected_urls) == 0) {
     cat("Recent precipitation data is already up to date.\n")
 } else {
-    cat("Processing", length(selected_urls), "RADOLAN RY files (5 min each)...\n")
+    cat("Processing", length(selected_urls), "RADOLAN RW files (10 min each)...\n")
 
     for (url in selected_urls) {
         cat("  Processing:", basename(url), "\n")
@@ -161,4 +161,4 @@ if (length(selected_urls) == 0) {
     }
 }
 
-cat("RADOLAN RY processing complete.\n")
+cat("RADOLAN RW processing complete.\n")
