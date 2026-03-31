@@ -72,27 +72,36 @@ for (i in seq_len(nrow(sensors))) {
       start_time <- now(tzone = tz(df$Zeit_Datum)) - hours(24)
       df_24h <- df %>% filter(Zeit_Datum >= start_time)
       
-      # Prepare precipitation: RADOLAN (sensor-specific) first, Open-Meteo as fallback
-      precip_file    <- "data/processed/precipitation_at_sensors.csv"
-      station_precip <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
-      precip_source  <- ""
+      # Prepare precipitation: RADOLAN (gemessen) + Open-Meteo (Vorhersage) kombiniert
+      # RADOLAN zeigt den tatsächlich gefallenen Regen, Open-Meteo ergänzt ab Ende der Messdaten
+      precip_file     <- "data/processed/precipitation_at_sensors.csv"
+      radolan_precip  <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
+      forecast_precip <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
 
+      # 1) RADOLAN laden (gemessener Niederschlag)
       if (file_exists(precip_file)) {
           precip_df <- read_csv(precip_file, show_col_types = FALSE) %>%
               mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
           if (nrow(precip_df) > 0) {
               radolan_station <- precip_df %>%
                   filter(station == station_name, timestamp >= start_time)
-              if (nrow(radolan_station) > 0 && any(radolan_station$precipitation_mm > 0, na.rm = TRUE)) {
-                  station_precip <- radolan_station
-                  precip_source  <- "RADOLAN (DWD)"
+              if (nrow(radolan_station) > 0) {
+                  radolan_precip <- radolan_station
               }
           }
       }
 
-      if (nrow(station_precip) == 0 && !is.null(precip_fallback)) {
-          station_precip <- precip_fallback %>% filter(timestamp >= start_time)
-          precip_source  <- "Open-Meteo"
+      # 2) Open-Meteo Vorhersage: nur Zeitpunkte NACH dem letzten RADOLAN-Wert
+      if (!is.null(precip_fallback)) {
+          if (nrow(radolan_precip) > 0) {
+              radolan_end     <- max(radolan_precip$timestamp, na.rm = TRUE)
+              forecast_precip <- precip_fallback %>%
+                  filter(timestamp > radolan_end)
+          } else {
+              # Kein RADOLAN vorhanden → gesamte Vorhersage nutzen
+              forecast_precip <- precip_fallback %>%
+                  filter(timestamp >= start_time)
+          }
       }
       
       if (nrow(df_24h) == 0) {
@@ -109,16 +118,27 @@ for (i in seq_len(nrow(sensors))) {
                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
                     hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>")
                     
-        # Add conditional trace (Precipitation)
-        has_precip <- nrow(station_precip) > 0
-        if (has_precip) {
-            p <- p %>% add_trace(data = station_precip, x = ~timestamp, y = ~precipitation_mm,
-                                 type = "bar", name = paste0("Regen (", precip_source, ")"),
+        # Add precipitation traces: RADOLAN (gemessen) + Vorhersage (getrennt)
+        has_radolan  <- nrow(radolan_precip) > 0
+        has_forecast <- nrow(forecast_precip) > 0
+        has_precip   <- has_radolan || has_forecast
+
+        if (has_radolan) {
+            p <- p %>% add_trace(data = radolan_precip, x = ~timestamp, y = ~precipitation_mm,
+                                 type = "bar", name = "Regen (RADOLAN)",
                                  yaxis = "y2",
-                                 marker = list(color = "rgba(0, 158, 115, 0.5)"),
-                                 hovertemplate = paste0("Regen: %{y:.2f} mm/5min (", precip_source, ")<extra></extra>"))
+                                 marker = list(color = "rgba(0, 158, 115, 0.6)"),
+                                 hovertemplate = "Regen: %{y:.2f} mm/5min (RADOLAN)<extra></extra>")
         }
-        
+
+        if (has_forecast) {
+            p <- p %>% add_trace(data = forecast_precip, x = ~timestamp, y = ~precipitation_mm,
+                                 type = "bar", name = "Regen (Vorhersage)",
+                                 yaxis = "y2",
+                                 marker = list(color = "rgba(230, 159, 0, 0.5)"),
+                                 hovertemplate = "Regen: %{y:.2f} mm/h (Vorhersage)<extra></extra>")
+        }
+
         # Determine layout params based on precipitation
         margin_r <- if(has_precip) 40 else 10
                     
@@ -126,10 +146,11 @@ for (i in seq_len(nrow(sensors))) {
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee"),
             yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left"),
-            yaxis2     = list(title = "Regen (mm/5min)", overlaying = "y", side = "right",
+            yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = FALSE, rangemode = "tozero"),
             margin     = list(l = 40, r = margin_r, t = 40, b = 30),
-            showlegend = FALSE,
+            showlegend = has_precip,
+            legend     = list(orientation = "h", x = 0, y = -0.15, font = list(size = 9)),
             hovermode  = "x unified",
             plot_bgcolor  = "white",
             paper_bgcolor = "white"
