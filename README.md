@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### ☀️ Wetterausblick (48h)
-**Kein nennenswerter Regen vorhergesagt.**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 31.03. 10:00 bis 02.04. 09:00)*
+*(Zeitraum: 31.03. 15:00 bis 02.04. 14:00)*
 
-- Temperatur: **6.5°C** (Min: 3.7°C | Max: 13.2°C)
-- Summe: **0.4 mm** | Max: **0.2 mm/h**
-- Max. 6h: **0.4 mm**
+- Temperatur: **9.5°C** (Min: 3.5°C | Max: 13.1°C)
+- Summe: **3.6 mm** | Max: **1.6 mm/h**
+- Max. 6h: **2.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,19 +23,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-03-31 07:30:19 UTC*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station      |start_time          | peak_level_cm| duration_min|
-|:------------|:-------------------|-------------:|------------:|
-|Herzogstraße |2026-03-30 02:20:00 |           2.4|            9|
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Herzogstraße
-![Plot Herzogstraße](data/output/plots/Herzogstraße_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-03-31 12:26:14 UTC*
 
 ---
 
