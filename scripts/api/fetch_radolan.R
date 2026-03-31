@@ -14,11 +14,10 @@ temp_dir       <- "data/processed/tmp_radolan"
 # ═══════════════════════════════════════════════════════════════════════════════
 # RADOLAN Dual-Produkt-Fetcher
 #
-#   Produkt A – RADOLAN RY: 5-Minuten-Komposit, 1 km, NICHT stationsgeeicht
+#   Produkt A – RADOLAN YW: 5-Minuten-Komposit, 1 km, NICHT stationsgeeicht
 #     → Hohe zeitliche Auflösung für Event-Detektion & Visualisierung
 #     → Einheit: mm / 5 min
-#     → Historical (reproc): .../5_minutes/radolan/reproc/2017_002/bin/{YYYY}/YW2017.002_{YYYYMM}.tar
-#     → Recent (~3 Tage):    rdwd::selectDWD (radolan/ry)
+#     → Tägliche Archive: .../5_minutes/radolan/recent/YW-YYMMDD.tar.gz (ab Sep 2024)
 #
 #   Produkt B – RADOLAN RW: stündliches Komposit, 1 km, stationsgeeicht
 #     → Genauere Niederschlagsmenge als Referenz (Lag-Analyse, Gesamtmengen)
@@ -93,105 +92,65 @@ determine_start_date <- function(out_file, default_start = as.Date("2025-09-01")
 end_date <- Sys.Date()
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PRODUKT A: RADOLAN RY (5-Minuten, nicht stationsgeeicht)
+# PRODUKT A: RADOLAN YW/RY (5-Minuten, nicht stationsgeeicht)
+#   DWD stellt 5-min-Daten als tägliche YW-Archive bereit:
+#     .../5_minutes/radolan/recent/YW-YYMMDD.tar.gz  (ab Sep 2024 bis heute)
+#   Jedes tar.gz enthält 288 Binärdateien (raa01-yw_10000-...-dwd---bin)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 cat("\n", strrep("=", 70), "\n")
-cat(" RADOLAN RY (5 min) – für Event-Detektion & Visualisierung\n")
+cat(" RADOLAN YW (5 min) – für Event-Detektion & Visualisierung\n")
 cat(strrep("=", 70), "\n")
 
 start_date_ry <- determine_start_date(output_file_ry)
 cat("Resume from:", as.character(start_date_ry), "\n")
 
 if (start_date_ry >= end_date) {
-    cat("RY data is already up to date.\n")
+    cat("YW data is already up to date.\n")
 } else {
-    hist_end_date <- end_date - 3
+    yw_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/5_minutes/radolan/recent"
 
-    # --- RY HISTORICAL: monatliche YW-Archive aus reproc ---
-    if (start_date_ry <= hist_end_date) {
-        cat("\n--- Fetching HISTORICAL RY data:",
-            as.character(start_date_ry), "to", as.character(hist_end_date), "---\n")
+    cat("\n--- Fetching YW (5-min) data:",
+        as.character(start_date_ry), "to", as.character(end_date), "---\n")
 
-        ry_hist_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/5_minutes/radolan/reproc/2017_002/bin"
+    for (day in as.character(seq(start_date_ry, end_date, by = "day"))) {
+        day_date <- as.Date(day)
+        day_str  <- format(day_date, "%y%m%d")  # YYMMDD
 
-        # Monatliche Archive: YW2017.002_{YYYYMM}.tar
-        months_needed <- unique(format(seq(start_date_ry, hist_end_date, by = "day"), "%Y-%m"))
+        tar_url  <- paste0(yw_base, "/YW-", day_str, ".tar.gz")
+        tar_file <- file.path(temp_dir, paste0("YW-", day_str, ".tar.gz"))
 
-        for (ym in months_needed) {
-            year_str  <- substr(ym, 1, 4)
-            month_str <- gsub("-", "", ym)  # YYYYMM
+        cat("  Downloading YW:", day_str)
+        dl <- tryCatch(
+            download.file(tar_url, tar_file, mode = "wb", quiet = TRUE),
+            error = function(e) { cat(" [FAILED:", e$message, "]\n"); -1L }
+        )
+        if (dl != 0) next
+        cat("\n")
 
-            tar_url  <- paste0(ry_hist_base, "/", year_str, "/YW2017.002_", month_str, ".tar")
-            tar_file <- file.path(temp_dir, paste0("YW2017.002_", month_str, ".tar"))
+        extract_dir <- file.path(temp_dir, paste0("yw_day_", day_str))
+        dir.create(extract_dir, showWarnings = FALSE)
+        untar(tar_file, exdir = extract_dir)
 
-            cat("  Downloading RY month:", month_str)
-            dl <- tryCatch(
-                download.file(tar_url, tar_file, mode = "wb", quiet = TRUE),
-                error = function(e) { cat(" [FAILED:", e$message, "]\n"); -1L }
-            )
-            if (dl != 0) next
-            cat("\n")
+        bin_files <- sort(list.files(extract_dir, pattern = "^raa01-yw", full.names = TRUE, recursive = TRUE))
 
-            extract_dir <- file.path(temp_dir, paste0("ry_month_", month_str))
-            dir.create(extract_dir, showWarnings = FALSE)
-            untar(tar_file, exdir = extract_dir)
-
-            bin_files <- sort(list.files(extract_dir, pattern = "^raa01-yw", full.names = TRUE, recursive = TRUE))
-
-            # Nur Dateien ab start_date_ry verarbeiten
-            file_ts <- as.POSIXct(
-                gsub(".*-([0-9]{10})-.*", "\\1", basename(bin_files)),
-                format = "%y%m%d%H%M", tz = "UTC"
-            )
-            start_posix <- as.POSIXct(start_date_ry, tz = "UTC")
-            bin_files   <- bin_files[!is.na(file_ts) & file_ts >= start_posix]
-
-            cat("    Processing", length(bin_files), "5-min files...\n")
-            for (bf in bin_files) process_radolan_file(bf, output_file_ry, nodata_threshold = 30)
-
-            unlink(extract_dir, recursive = TRUE)
-            file_delete(tar_file)
-        }
-
-        cat("Historical RY processing complete.\n")
-        start_date_ry <- hist_end_date + 1
-    }
-
-    # --- RY RECENT: Einzel-Binärdateien via rdwd ---
-    cat("\n--- Fetching RECENT RY data from:", as.character(start_date_ry), "---\n")
-
-    urls_recent_ry <- tryCatch(
-        selectDWD(res = "recent", var = "radolan/ry", per = "5_minutes"),
-        warning = function(w) character(0),
-        error   = function(e) character(0)
-    )
-
-    if (length(urls_recent_ry) > 0) {
-        url_ts <- as.POSIXct(
-            gsub(".*-([0-9]{10})-.*", "\\1", basename(urls_recent_ry)),
+        # Nur Dateien ab start_date_ry verarbeiten (relevant für ersten Tag)
+        file_ts <- as.POSIXct(
+            gsub(".*-([0-9]{10})-.*", "\\1", basename(bin_files)),
             format = "%y%m%d%H%M", tz = "UTC"
         )
-        start_posix    <- as.POSIXct(start_date_ry, tz = "UTC")
-        selected_urls  <- urls_recent_ry[!is.na(url_ts) & url_ts >= start_posix]
+        start_posix <- as.POSIXct(start_date_ry, tz = "UTC")
+        bin_files   <- bin_files[!is.na(file_ts) & file_ts >= start_posix]
 
-        if (length(selected_urls) > 0) {
-            cat("Processing", length(selected_urls), "RADOLAN RY files (5 min each)...\n")
-            for (url in selected_urls) {
-                file <- try(dataDWD(url, dir = temp_dir, read = FALSE, quiet = TRUE), silent = TRUE)
-                if (inherits(file, "try-error")) next
-                process_radolan_file(file, output_file_ry, nodata_threshold = 30)
-                if (file.exists(file)) file_delete(file)
-            }
-        } else {
-            cat("Recent RY data is already up to date.\n")
-        }
-    } else {
-        cat("Warning: selectDWD returned no RY recent URLs. Skipping recent RY.\n")
+        cat("    Processing", length(bin_files), "5-min files...\n")
+        for (bf in bin_files) process_radolan_file(bf, output_file_ry, nodata_threshold = 30)
+
+        unlink(extract_dir, recursive = TRUE)
+        file_delete(tar_file)
     }
 }
 
-cat("RADOLAN RY processing complete.\n")
+cat("RADOLAN YW processing complete.\n")
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PRODUKT B: RADOLAN RW (stündlich, stationsgeeicht)
