@@ -18,7 +18,7 @@ output_file  <- "data/processed/lag_analysis.csv"
 LAT              <- 51.48
 LON              <- 7.21
 LEAD_IN_HOURS    <- 3     # Stunden vor Ereignisbeginn, die auf Regen geprüft werden
-MIN_PRECIP_MM_H  <- 0.08  # mm/10min ≈ 0.5 mm/h – ab wann Regen als "Beginn" gilt
+MIN_PRECIP_MM_H  <- 0.04  # mm/5min ≈ 0.5 mm/h – ab wann Regen als "Beginn" gilt
 MAX_LAG_HOURS    <- 6     # Lags > 6h werden als nicht korreliert gewertet (NA)
 MIN_LAG_MINUTES  <- -60   # Lags < -60 min (Sensor vor Regen) werden verworfen
 

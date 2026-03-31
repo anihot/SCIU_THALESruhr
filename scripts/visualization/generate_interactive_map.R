@@ -116,7 +116,7 @@ for (i in seq_len(nrow(sensors))) {
                                  type = "bar", name = paste0("Regen (", precip_source, ")"),
                                  yaxis = "y2",
                                  marker = list(color = "rgba(0, 158, 115, 0.5)"),
-                                 hovertemplate = paste0("Regen: %{y:.2f} mm/10min (", precip_source, ")<extra></extra>"))
+                                 hovertemplate = paste0("Regen: %{y:.2f} mm/5min (", precip_source, ")<extra></extra>"))
         }
         
         # Determine layout params based on precipitation
