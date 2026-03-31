@@ -32,7 +32,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop"))'
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop", "remotes"))'
+          Rscript -e 'remotes::install_github("brry/dwdradar", quiet = TRUE)'
 
       - name: Fetch weather forecast
         run: Rscript scripts/api/fetch_forecast.R

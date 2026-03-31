@@ -19,14 +19,20 @@ temp_dir       <- "data/processed/tmp_radolan"
 #     → Einheit: mm / 5 min
 #     → Tägliche Archive: .../5_minutes/radolan/recent/YW-YYMMDD.tar.gz (ab Sep 2024)
 #
-#   Produkt B – RADOLAN RW: stündliches Komposit, 1 km, stationsgeeicht
-#     → Genauere Niederschlagsmenge als Referenz (Lag-Analyse, Gesamtmengen)
-#     → Einheit: mm / h
-#     → Historical (reproc): .../hourly/radolan/reproc/2017_002/bin/{YYYY}/RW2017.002_{YYYYMM}.tar.gz
-#     → Recent (~3 Tage):    Einzel-.gz unter .../hourly/radolan/recent/bin/
+#   Stündliche Aggregation: YW 5-min → Stundensummen
+#     → DWD RW (stündlich, stationsgeeicht) ist ab 2025 nicht mehr verfügbar
+#     → Stattdessen: Aggregation der YW 5-min-Daten zu mm/h pro Sensor
+#     → Wird für Lag-Analyse genutzt (pro-Sensor, besser als Open-Meteo Einzelpunkt)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-cat("Starting RADOLAN Dual Fetcher (RY 5-min + RW hourly)...\n")
+cat("Starting RADOLAN Dual Fetcher (YW 5-min + RW hourly)...\n")
+
+# Prüfe ob dwdradar verfügbar ist (benötigt zum Lesen von RADOLAN-Binärdateien)
+if (requireNamespace("dwdradar", quietly = TRUE)) {
+    cat("dwdradar package: available\n")
+} else {
+    cat("WARNING: dwdradar package not installed. Falling back to terra::rast() for RADOLAN reading.\n")
+}
 
 # 1. Sensor-Koordinaten laden
 if (!file.exists(metadata_file)) stop("Metadata file not found: ", metadata_file)
@@ -45,7 +51,13 @@ sensor_vect_wgs84 <- vect(
 # 2. Gemeinsame Helper-Funktion: RADOLAN-Binärdatei → Sensorwerte extrahieren
 process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
     grid <- try(readDWD(file_path), silent = TRUE)
-    if (inherits(grid, "try-error") || is.null(grid)) return(invisible(NULL))
+
+    # Fallback: wenn readDWD fehlschlägt (z.B. dwdradar nicht installiert),
+    # versuche terra::rast() direkt (GDAL kann einige RADOLAN-Formate lesen)
+    if (inherits(grid, "try-error") || is.null(grid)) {
+        grid <- try(rast(file_path), silent = TRUE)
+        if (inherits(grid, "try-error") || is.null(grid)) return(invisible(NULL))
+    }
 
     if (!inherits(grid, "SpatRaster")) {
         grid <- try(rast(grid), silent = TRUE)
@@ -153,113 +165,35 @@ if (start_date_ry >= end_date) {
 cat("RADOLAN YW processing complete.\n")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# PRODUKT B: RADOLAN RW (stündlich, stationsgeeicht)
+# AGGREGATION: YW 5-min → stündliche Werte
+#   DWD RW (stündlich, stationsgeeicht) ist ab 2025 nicht mehr verfügbar.
+#   Daher aggregieren wir die YW 5-min-Daten zu Stundensummen.
+#   Vorteil: pro Sensor (nicht ein globaler Punkt wie Open-Meteo)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 cat("\n", strrep("=", 70), "\n")
-cat(" RADOLAN RW (hourly, stationsgeeicht) – Referenz für Niederschlagsmengen\n")
+cat(" Aggregation: YW 5-min → stündlich (für Lag-Analyse)\n")
 cat(strrep("=", 70), "\n")
 
-start_date_rw <- determine_start_date(output_file_rw)
-cat("Resume from:", as.character(start_date_rw), "\n")
+if (file.exists(output_file_ry)) {
+    ry_data <- read_csv(output_file_ry, show_col_types = FALSE)
+    if (nrow(ry_data) > 0) {
+        hourly_agg <- ry_data %>%
+            mutate(
+                timestamp = as.POSIXct(timestamp, tz = "UTC"),
+                hour      = floor_date(timestamp, "hour")
+            ) %>%
+            group_by(timestamp = hour, station) %>%
+            summarise(precipitation_mm = sum(precipitation_mm, na.rm = TRUE), .groups = "drop") %>%
+            arrange(timestamp, station)
 
-if (start_date_rw >= end_date) {
-    cat("RW data is already up to date.\n")
+        write_csv(hourly_agg, output_file_rw)
+        cat("Aggregiert:", nrow(hourly_agg), "Stundenwerte aus", nrow(ry_data), "5-min-Werten.\n")
+    } else {
+        cat("Keine YW-Daten vorhanden. Stündliche Aggregation übersprungen.\n")
+    }
 } else {
-    hist_end_date <- end_date - 3
-
-    # --- RW HISTORICAL: monatliche Archive aus reproc ---
-    if (start_date_rw <= hist_end_date) {
-        cat("\n--- Fetching HISTORICAL RW data:",
-            as.character(start_date_rw), "to", as.character(hist_end_date), "---\n")
-
-        rw_hist_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/reproc/2017_002/bin"
-
-        months_needed <- unique(format(seq(start_date_rw, hist_end_date, by = "day"), "%Y-%m"))
-
-        for (ym in months_needed) {
-            year_str  <- substr(ym, 1, 4)
-            month_str <- gsub("-", "", ym)
-
-            tar_url  <- paste0(rw_hist_base, "/", year_str, "/RW2017.002_", month_str, ".tar.gz")
-            tar_file <- file.path(temp_dir, paste0("RW2017.002_", month_str, ".tar.gz"))
-
-            cat("  Downloading RW month:", month_str)
-            dl <- tryCatch(
-                download.file(tar_url, tar_file, mode = "wb", quiet = TRUE),
-                error = function(e) { cat(" [FAILED:", e$message, "]\n"); -1L }
-            )
-            if (dl != 0) next
-            cat("\n")
-
-            extract_dir <- file.path(temp_dir, paste0("rw_month_", month_str))
-            dir.create(extract_dir, showWarnings = FALSE)
-            untar(tar_file, exdir = extract_dir)
-
-            bin_files <- sort(list.files(extract_dir, pattern = "^raa01-rw", full.names = TRUE, recursive = TRUE))
-
-            # Nur Dateien ab start_date_rw
-            file_ts <- as.POSIXct(
-                gsub(".*-([0-9]{10})-.*", "\\1", basename(bin_files)),
-                format = "%y%m%d%H%M", tz = "UTC"
-            )
-            start_posix <- as.POSIXct(start_date_rw, tz = "UTC")
-            bin_files   <- bin_files[!is.na(file_ts) & file_ts >= start_posix]
-
-            cat("    Processing", length(bin_files), "hourly files...\n")
-            # RW ist stationsgeeicht → höherer Clutter-Schwellwert
-            for (bf in bin_files) process_radolan_file(bf, output_file_rw, nodata_threshold = 100)
-
-            unlink(extract_dir, recursive = TRUE)
-            file_delete(tar_file)
-        }
-
-        cat("Historical RW processing complete.\n")
-        start_date_rw <- hist_end_date + 1
-    }
-
-    # --- RW RECENT: Einzel-.gz-Dateien direkt von DWD ---
-    cat("\n--- Fetching RECENT RW data from:", as.character(start_date_rw), "---\n")
-
-    recent_base <- "https://opendata.dwd.de/climate_environment/CDC/grids_germany/hourly/radolan/recent/bin"
-
-    # Stündliche Zeitstempel generieren
-    start_posix <- as.POSIXct(as.character(start_date_rw), tz = "UTC")
-    end_posix   <- as.POSIXct(Sys.time(), tz = "UTC")
-    hourly_seq  <- seq(start_posix, end_posix, by = "hour")
-
-    cat("Processing up to", length(hourly_seq), "RADOLAN RW files (hourly)...\n")
-
-    for (ts in hourly_seq) {
-        ts_posix   <- as.POSIXct(ts, origin = "1970-01-01", tz = "UTC")
-        ts_str     <- format(ts_posix, "%y%m%d%H%M")
-        file_name  <- paste0("raa01-rw_10000-", ts_str, "-dwd---bin.gz")
-        file_url   <- paste0(recent_base, "/", file_name)
-        local_file <- file.path(temp_dir, file_name)
-
-        dl <- tryCatch(
-            download.file(file_url, local_file, mode = "wb", quiet = TRUE),
-            error = function(e) -1L
-        )
-        if (dl != 0) next
-
-        # .gz entpacken
-        bin_file <- sub("\\.gz$", "", local_file)
-        tryCatch({
-            con_in  <- gzfile(local_file, "rb")
-            con_out <- file(bin_file, "wb")
-            while (length(chunk <- readBin(con_in, "raw", n = 65536)) > 0) writeBin(chunk, con_out)
-            close(con_in)
-            close(con_out)
-        }, error = function(e) NULL)
-
-        if (file.exists(bin_file)) {
-            process_radolan_file(bin_file, output_file_rw, nodata_threshold = 100)
-            file_delete(bin_file)
-        }
-        if (file.exists(local_file)) file_delete(local_file)
-    }
+    cat("YW-Datei nicht gefunden. Stündliche Aggregation übersprungen.\n")
 }
 
-cat("RADOLAN RW processing complete.\n")
-cat("\nDual RADOLAN Fetcher finished.\n")
+cat("\nRADOLAN Fetcher finished.\n")

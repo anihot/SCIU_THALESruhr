@@ -16,7 +16,7 @@ output_file  <- "data/processed/lag_analysis.csv"
 LAT              <- 51.48
 LON              <- 7.21
 LEAD_IN_HOURS    <- 3     # Stunden vor Ereignisbeginn, die auf Regen geprüft werden
-MIN_PRECIP_MM_H  <- 0.5   # mm/h – ab wann Regen als "Beginn" gilt (RADOLAN RW stündlich)
+MIN_PRECIP_MM_H  <- 0.5   # mm/h – ab wann Regen als "Beginn" gilt (RADOLAN YW, aggregiert)
 MAX_LAG_HOURS    <- 6     # Lags > 6h werden als nicht korreliert gewertet (NA)
 MIN_LAG_MINUTES  <- -60   # Lags < -60 min (Sensor vor Regen) werden verworfen
 
@@ -62,12 +62,12 @@ if (nrow(events_rain) == 0) {
     quit(save = "no", status = 0)
 }
 
-# ── 2. Stündliche Niederschlagsdaten laden (RADOLAN RW, stationsgeeicht) ──────
+# ── 2. Stündliche Niederschlagsdaten laden (RADOLAN YW, aggregiert) ───────────
 
 rw_file <- "data/processed/precipitation_hourly_at_sensors.csv"
 
 if (!file_exists(rw_file)) {
-    stop("RADOLAN RW Datei nicht gefunden: ", rw_file,
+    stop("Stündliche Niederschlagsdatei nicht gefunden: ", rw_file,
          "\n  Bitte zuerst fetch_radolan.R ausführen.")
 }
 
@@ -75,7 +75,7 @@ precip_arch <- read_csv(rw_file, show_col_types = FALSE) %>%
     mutate(timestamp = as.POSIXct(timestamp, tz = "UTC")) %>%
     rename(precip_mm_h = precipitation_mm)
 
-cat("Geladen:", nrow(precip_arch), "stündliche RADOLAN RW Werte.\n\n")
+cat("Geladen:", nrow(precip_arch), "stündliche RADOLAN-Werte (YW aggregiert).\n\n")
 
 # ── 3. Lag-Berechnung pro Ereignis ────────────────────────────────────────────
 
@@ -201,7 +201,7 @@ p1 <- ggplot(lag_valid, aes(x = reorder(station, onset_lag_min, median), y = ons
         subtitle = "Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor\nGestrichelte Linie = synchron (Lag 0 min)",
         x        = NULL,
         y        = "Onset-Lag (Minuten)",
-        caption  = paste0("n = ", nrow(lag_valid), " Ereignisse | Niederschlag: RADOLAN RW (DWD, stündlich, stationsgeeicht)")
+        caption  = paste0("n = ", nrow(lag_valid), " Ereignisse | Niederschlag: RADOLAN YW (DWD, 5-min aggregiert zu stündlich)")
     )
 
 ggsave(file.path(plots_dir, "lag_onset_by_station.png"), p1, width = 10, height = 6, dpi = 300)
@@ -305,7 +305,7 @@ report_lines <- c(
     "## Methodik",
     "- **Onset-Lag**: Zeit zwischen erstem Stundenwert ≥ 0,5 mm/h und erstem Schwellenübertritt am Sensor (1,5 cm)",
     "- **Peak-Lag**: Zeit zwischen Niederschlagsmaximum und Sensor-Peakwert",
-    "- Niederschlagsquelle: RADOLAN RW (DWD, stündlich, stationsgeeicht)",
+    "- Niederschlagsquelle: RADOLAN YW (DWD, 5-min aggregiert zu stündlich, pro Sensor)",
     paste0("- Lags außerhalb [−60 min, ", MAX_LAG_HOURS * 60, " min] werden als nicht korreliert verworfen"),
     "",
     "## Gesamtergebnis",
