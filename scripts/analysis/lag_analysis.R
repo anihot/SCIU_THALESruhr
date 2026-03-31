@@ -3,8 +3,6 @@ library(dplyr)
 library(lubridate)
 library(ggplot2)
 library(purrr)
-library(httr)
-library(jsonlite)
 library(fs)
 library(tidyr)
 library(knitr)
@@ -18,7 +16,7 @@ output_file  <- "data/processed/lag_analysis.csv"
 LAT              <- 51.48
 LON              <- 7.21
 LEAD_IN_HOURS    <- 3     # Stunden vor Ereignisbeginn, die auf Regen geprüft werden
-MIN_PRECIP_MM_H  <- 0.04  # mm/5min ≈ 0.5 mm/h – ab wann Regen als "Beginn" gilt
+MIN_PRECIP_MM_H  <- 0.5   # mm/h – ab wann Regen als "Beginn" gilt (RADOLAN RW stündlich)
 MAX_LAG_HOURS    <- 6     # Lags > 6h werden als nicht korreliert gewertet (NA)
 MIN_LAG_MINUTES  <- -60   # Lags < -60 min (Sensor vor Regen) werden verworfen
 
@@ -64,31 +62,20 @@ if (nrow(events_rain) == 0) {
     quit(save = "no", status = 0)
 }
 
-# ── 2. Stündliche Niederschlagsdaten holen (Open-Meteo Archive) ───────────────
+# ── 2. Stündliche Niederschlagsdaten laden (RADOLAN RW, stationsgeeicht) ──────
 
-start_date <- format(min(as.Date(events_rain$start_time)) - days(1), "%Y-%m-%d")
-end_date   <- format(Sys.Date(), "%Y-%m-%d")
+rw_file <- "data/processed/precipitation_hourly_at_sensors.csv"
 
-cat("Lade Niederschlagsdaten:", start_date, "bis", end_date, "...\n")
-
-url <- paste0(
-    "https://archive-api.open-meteo.com/v1/archive?",
-    "latitude=", LAT, "&longitude=", LON,
-    "&start_date=", start_date, "&end_date=", end_date,
-    "&hourly=precipitation&timezone=Europe%2FBerlin"
-)
-
-resp <- try(GET(url), silent = TRUE)
-if (inherits(resp, "try-error") || status_code(resp) != 200) {
-    stop("Open-Meteo Archive konnte nicht abgerufen werden.")
+if (!file_exists(rw_file)) {
+    stop("RADOLAN RW Datei nicht gefunden: ", rw_file,
+         "\n  Bitte zuerst fetch_radolan.R ausführen.")
 }
 
-raw         <- fromJSON(content(resp, "text", encoding = "UTF-8"))
-precip_arch <- data.frame(
-    timestamp   = as.POSIXct(raw$hourly$time, format = "%Y-%m-%dT%H:%M", tz = "Europe/Berlin"),
-    precip_mm_h = raw$hourly$precipitation
-)
-cat("Geladen:", nrow(precip_arch), "Stundenwerte.\n\n")
+precip_arch <- read_csv(rw_file, show_col_types = FALSE) %>%
+    mutate(timestamp = as.POSIXct(timestamp, tz = "UTC")) %>%
+    rename(precip_mm_h = precipitation_mm)
+
+cat("Geladen:", nrow(precip_arch), "stündliche RADOLAN RW Werte.\n\n")
 
 # ── 3. Lag-Berechnung pro Ereignis ────────────────────────────────────────────
 
@@ -97,7 +84,7 @@ compute_lag <- function(station, start_time, end_time, peak_time) {
     win_start  <- start_time - hours(LEAD_IN_HOURS)
     win_end    <- end_time   + hours(1)
     precip_win <- precip_arch %>%
-        filter(timestamp >= win_start, timestamp <= win_end)
+        filter(station == !!station, timestamp >= win_start, timestamp <= win_end)
 
     if (nrow(precip_win) == 0 ||
         all(is.na(precip_win$precip_mm_h)) ||
@@ -214,7 +201,7 @@ p1 <- ggplot(lag_valid, aes(x = reorder(station, onset_lag_min, median), y = ons
         subtitle = "Zeit zwischen erstem Regen (≥ 0,5 mm/h) und erstem Schwellenübertritt am Sensor\nGestrichelte Linie = synchron (Lag 0 min)",
         x        = NULL,
         y        = "Onset-Lag (Minuten)",
-        caption  = paste0("n = ", nrow(lag_valid), " Ereignisse | Niederschlag: Open-Meteo Archive (stündlich, ±30 min Unsicherheit)")
+        caption  = paste0("n = ", nrow(lag_valid), " Ereignisse | Niederschlag: RADOLAN RW (DWD, stündlich, stationsgeeicht)")
     )
 
 ggsave(file.path(plots_dir, "lag_onset_by_station.png"), p1, width = 10, height = 6, dpi = 300)
@@ -318,7 +305,7 @@ report_lines <- c(
     "## Methodik",
     "- **Onset-Lag**: Zeit zwischen erstem Stundenwert ≥ 0,5 mm/h und erstem Schwellenübertritt am Sensor (1,5 cm)",
     "- **Peak-Lag**: Zeit zwischen Niederschlagsmaximum und Sensor-Peakwert",
-    "- Niederschlagsquelle: Open-Meteo Archive (stündlich) – Messungenauigkeit ±30 min",
+    "- Niederschlagsquelle: RADOLAN RW (DWD, stündlich, stationsgeeicht)",
     paste0("- Lags außerhalb [−60 min, ", MAX_LAG_HOURS * 60, " min] werden als nicht korreliert verworfen"),
     "",
     "## Gesamtergebnis",

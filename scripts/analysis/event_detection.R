@@ -110,7 +110,7 @@ detect_events <- function(df, station_name, precip) {
                 .ep                = list(station_precip %>% filter(timestamp >= .t0, timestamp <= .t1)),
                 total_precip_mm    = round(sum(.ep[[1]]$precipitation_mm, na.rm = TRUE), 2),
                 max_intensity_mm_h = ifelse(nrow(.ep[[1]]) > 0,
-                                           round(max(.ep[[1]]$precipitation_mm, na.rm = TRUE), 2),
+                                           round(max(.ep[[1]]$precipitation_mm, na.rm = TRUE) * 12, 2),  # mm/5min → mm/h
                                            0),
                 radolan_verified   = total_precip_mm > 0
             ) %>%

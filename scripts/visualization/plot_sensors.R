@@ -104,8 +104,8 @@ for (file_path in cleaned_files) {
         p <- p +
             geom_col(
                 data = p_precip, aes(x = timestamp, y = precipitation_mm * scale_factor, fill = "Niederschlag"),
-                alpha = 0.3, width = 3600
-            ) + # 3600s = 1h width
+                alpha = 0.3, width = 300
+            ) + # 300s = 5min width (RADOLAN RY)
             scale_y_continuous(
                 name = "Wasserstand (cm)",
                 sec.axis = sec_axis(~ . / scale_factor, name = "Niederschlag (mm/5min)")  # RADOLAN RY
