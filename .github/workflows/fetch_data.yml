@@ -118,6 +118,10 @@ jobs:
           if [ -d "data/output/sensor_map_files" ]; then
             cp -r data/output/sensor_map_files docs/sensor_map_files 2>/dev/null || true
           fi
+          if [ -d "data/output/graphs" ]; then
+            mkdir -p docs/graphs
+            cp data/output/graphs/*.html docs/graphs/ 2>/dev/null || true
+          fi
 
       - name: Commit and push changes
         run: |
