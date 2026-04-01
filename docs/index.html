@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCIU THALESruhr - Dashboard</title>
+    <style>
+        :root {
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #1a1a2e;
+            --muted: #6b7280;
+            --accent: #0072B2;
+            --border: #e5e7eb;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #0072B2 0%, #005a8c 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        header h1 { font-size: 1.4rem; font-weight: 600; }
+        header .subtitle { opacity: 0.85; font-size: 0.85rem; }
+        header .links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            font-size: 0.85rem;
+            margin-left: 1rem;
+        }
+        header .links a:hover { opacity: 1; text-decoration: underline; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .card h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.4rem;
+        }
+        .card.full { grid-column: 1 / -1; }
+
+        /* Wetter */
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.6rem;
+        }
+        .weather-item {
+            background: var(--bg);
+            border-radius: 6px;
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+        }
+        .weather-item .label { font-size: 0.75rem; color: var(--muted); }
+        .weather-item .value { font-size: 1.1rem; font-weight: 600; }
+
+        /* Sensor-Status */
+        .sensor-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+        }
+        .status-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--green);
+            flex-shrink: 0;
+        }
+        .status-dot.warn { background: var(--yellow); }
+        .status-dot.error { background: var(--red); }
+
+        /* Events-Tabelle */
+        .events-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .events-table th {
+            text-align: left;
+            padding: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .events-table td {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .no-events {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* Karte */
+        .map-container {
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Station Plots */
+        .plots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.8rem;
+        }
+        .plot-card img {
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .plot-card .plot-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.3rem;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        #loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--muted);
+        }
+        .update-time {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>SCIU THALESruhr</h1>
+        <div class="subtitle">Hochwasser-Monitoring Bochum / Hattingen</div>
+    </div>
+    <div class="links">
+        <a href="https://github.com/anihot/SCIU_THALESruhr" target="_blank">GitHub</a>
+        <a href="map.html" target="_blank">Karte (Vollbild)</a>
+    </div>
+</header>
+
+<div class="grid" id="dashboard">
+    <div id="loading" class="card full">Dashboard wird geladen...</div>
+</div>
+
+<footer>
+    SCIU THALESruhr &mdash; Automatisch aktualisiert alle 6 Stunden via GitHub Actions
+    | <a href="https://github.com/anihot/SCIU_THALESruhr" target="_blank">Quellcode</a>
+</footer>
+
+<script>
+// ── Fetch README.md und parse den dynamischen Bereich ──────────────────────
+const REPO_RAW = 'https://raw.githubusercontent.com/anihot/SCIU_THALESruhr/main';
+
+async function fetchText(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`Fetch failed: ${url}`);
+    return r.text();
+}
+
+// Einfacher Markdown → HTML Konverter (nur das Nötigste)
+function md2html(md) {
+    let html = md
+        // Headers
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        // Bold
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        // Italic
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        // Links
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+        // List items
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        // Horizontal rules
+        .replace(/^---$/gm, '<hr>')
+        // Line breaks
+        .replace(/\n\n/g, '<br><br>')
+        .replace(/\n/g, ' ');
+
+    // Wrap consecutive <li> in <ul>
+    html = html.replace(/((?:<li>.*?<\/li>\s*)+)/g, '<ul>$1</ul>');
+    return html;
+}
+
+// ── Dashboard zusammenbauen ────────────────────────────────────────────────
+async function buildDashboard() {
+    const grid = document.getElementById('dashboard');
+
+    try {
+        const readme = await fetchText(`${REPO_RAW}/README.md`);
+
+        // Dynamischen Bereich extrahieren
+        const startTag = '<!-- LATEST_EVENTS_START -->';
+        const endTag   = '<!-- LATEST_EVENTS_END -->';
+        const startIdx = readme.indexOf(startTag);
+        const endIdx   = readme.indexOf(endTag);
+
+        let weatherHtml = '';
+        let sensorHtml  = '';
+        let eventsHtml  = '';
+        let updateTime  = '';
+
+        if (startIdx !== -1 && endIdx !== -1) {
+            const dynamic = readme.substring(startIdx + startTag.length, endIdx).trim();
+            const sections = dynamic.split(/(?=###?\s)/);
+
+            for (const section of sections) {
+                const trimmed = section.trim();
+                if (!trimmed) continue;
+
+                if (trimmed.includes('Wetterausblick')) {
+                    weatherHtml = md2html(trimmed);
+                } else if (trimmed.includes('Sensor-Status')) {
+                    sensorHtml = md2html(trimmed);
+                } else if (trimmed.includes('Keine neuen Ereignisse') || trimmed.includes('Ereignisse')) {
+                    eventsHtml = md2html(trimmed);
+                    // Zeitstempel extrahieren
+                    const timeMatch = trimmed.match(/Stand:\s*(.+?)(?:\s*UTC)?\s*\*/);
+                    if (timeMatch) updateTime = timeMatch[1] + ' UTC';
+                }
+            }
+        }
+
+        // Events-Tabelle laden (CSV parsen falls Ereignisse existieren)
+        let eventsTableHtml = '';
+        try {
+            const eventsCsv = await fetchText(`${REPO_RAW}/data/processed/detected_events.csv`);
+            const lines = eventsCsv.trim().split('\n');
+            if (lines.length > 1) {
+                const headers = lines[0].split(',');
+                const rows = lines.slice(1).map(l => l.split(','));
+
+                // Nur Events der letzten 48h
+                const now = new Date();
+                const cutoff = new Date(now - 48 * 3600 * 1000);
+                const recentRows = rows.filter(r => {
+                    const ts = new Date(r[1]); // start_time column
+                    return ts > cutoff;
+                });
+
+                if (recentRows.length > 0) {
+                    eventsTableHtml = '<table class="events-table"><thead><tr>';
+                    const showCols = ['station', 'start_time', 'peak_level_cm', 'duration_min', 'event_type'];
+                    const colLabels = { station: 'Station', start_time: 'Beginn', peak_level_cm: 'Peak (cm)', duration_min: 'Dauer (min)', event_type: 'Typ' };
+                    const colIdx = showCols.map(c => headers.indexOf(c)).filter(i => i >= 0);
+
+                    for (const ci of colIdx) {
+                        eventsTableHtml += `<th>${colLabels[headers[ci]] || headers[ci]}</th>`;
+                    }
+                    eventsTableHtml += '</tr></thead><tbody>';
+                    for (const row of recentRows.slice(-10)) {
+                        eventsTableHtml += '<tr>';
+                        for (const ci of colIdx) {
+                            eventsTableHtml += `<td>${row[ci] || ''}</td>`;
+                        }
+                        eventsTableHtml += '</tr>';
+                    }
+                    eventsTableHtml += '</tbody></table>';
+                }
+            }
+        } catch (e) { /* CSV nicht verfuegbar */ }
+
+        // ── Karten rendern ─────────────────────────────────────────────────
+        grid.innerHTML = `
+            <!-- Wetter -->
+            <div class="card">
+                ${weatherHtml || '<h2>Wetterausblick</h2><p>Keine Daten verfuegbar.</p>'}
+            </div>
+
+            <!-- Sensor-Status -->
+            <div class="card">
+                ${sensorHtml || '<h2>Sensor-Status</h2><p>Keine Daten verfuegbar.</p>'}
+            </div>
+
+            <!-- Interaktive Karte -->
+            <div class="card full">
+                <h2>Interaktive Sensorkarte</h2>
+                <div class="map-container">
+                    <iframe src="map.html" loading="lazy"
+                            title="Interaktive Sensorkarte"></iframe>
+                </div>
+            </div>
+
+            <!-- Events -->
+            <div class="card full">
+                <h2>Ereignisse (letzte 48h)</h2>
+                ${eventsTableHtml || eventsHtml || '<div class="no-events">Keine neuen Ereignisse</div>'}
+                ${updateTime ? '<div class="update-time">Stand: ' + updateTime + '</div>' : ''}
+            </div>
+
+            <!-- Station-Plots -->
+            <div class="card full">
+                <h2>Aktuelle Sensorplots</h2>
+                <div class="plots-grid">
+                    <div class="plot-card">
+                        <img src="${REPO_RAW}/data/output/plots/An_der_Kost_merged_export_cleaned.png"
+                             alt="An der Kost" loading="lazy">
+                        <div class="plot-label">An der Kost</div>
+                    </div>
+                    <div class="plot-card">
+                        <img src="${REPO_RAW}/data/output/plots/Herzogstra%C3%9Fe_merged_export_cleaned.png"
+                             alt="Herzogstrasse" loading="lazy">
+                        <div class="plot-label">Herzogstrasse</div>
+                    </div>
+                    <div class="plot-card">
+                        <img src="${REPO_RAW}/data/output/plots/K%C3%B6nigsallee_Springorum_merged_export_cleaned.png"
+                             alt="Koenigsallee" loading="lazy">
+                        <div class="plot-label">Koenigsallee Springorum</div>
+                    </div>
+                    <div class="plot-card">
+                        <img src="${REPO_RAW}/data/output/plots/Wasserbaulabor_2_merged_export_cleaned.png"
+                             alt="Wasserbaulabor" loading="lazy">
+                        <div class="plot-label">Wasserbaulabor 2</div>
+                    </div>
+                    <div class="plot-card">
+                        <img src="${REPO_RAW}/data/output/plots/Wasserstra%C3%9Fe_Springorum_merged_export_cleaned.png"
+                             alt="Wasserstrasse" loading="lazy">
+                        <div class="plot-label">Wasserstrasse Springorum</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+    } catch (err) {
+        grid.innerHTML = `<div class="card full">
+            <h2>Fehler</h2>
+            <p>Dashboard konnte nicht geladen werden: ${err.message}</p>
+            <p>Bitte direkt auf <a href="https://github.com/anihot/SCIU_THALESruhr">GitHub</a> zugreifen.</p>
+        </div>`;
+    }
+}
+
+buildDashboard();
+</script>
+</body>
+</html>
