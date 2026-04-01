@@ -166,7 +166,7 @@ for (i in seq_len(nrow(sensors))) {
   
   # Create the iframe tag to link relatively (data/output/graphs/... is just graphs/... from data/output/)
   # We use width and height ensuring it fits well in the popup
-  popup_vec[i] <- paste0('<iframe src="graphs/', graph_html_name, '" width="360" height="260" frameborder="0" scrolling="no"></iframe>')
+  popup_vec[i] <- paste0('<iframe src="graphs/', graph_html_name, '" width="450" height="320" frameborder="0" style="border:none;overflow:hidden;"></iframe>')
 }
 
 # ---------------------------------------------------------------------------
@@ -179,6 +179,7 @@ m <- leaflet(sensors) %>%
     lat     = ~lat,
     label   = ~label,
     popup   = popup_vec,
+    popupOptions = popupOptions(maxWidth = 480, minWidth = 460),
     options = markerOptions(interactive = TRUE)
   ) %>%
   addMiniMap(toggleDisplay = TRUE)
