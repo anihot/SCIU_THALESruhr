@@ -49,8 +49,16 @@ sensor_vect_wgs84 <- vect(
 )
 
 # 2. Gemeinsame Helper-Funktion: RADOLAN-Binärdatei → Sensorwerte extrahieren
+.radolan_debug_printed <- FALSE  # Einmal pro Lauf Debug-Info ausgeben
+
 process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
     grid <- try(readDWD(file_path), silent = TRUE)
+
+    # Debug-Info für die erste erfolgreich gelesene Datei
+    if (!inherits(grid, "try-error") && !is.null(grid) && !.radolan_debug_printed) {
+        cat("    [DEBUG] readDWD returned class:", paste(class(grid), collapse = ", "), "\n")
+        .radolan_debug_printed <<- TRUE
+    }
 
     # Fallback: wenn readDWD fehlschlägt (z.B. dwdradar nicht installiert),
     # versuche terra::rast() direkt (GDAL kann einige RADOLAN-Formate lesen)
@@ -59,9 +67,22 @@ process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
         if (inherits(grid, "try-error") || is.null(grid)) return(invisible(NULL))
     }
 
+    # readDWD kann je nach Version eine Liste, Matrix, RasterLayer oder SpatRaster zurückgeben
     if (!inherits(grid, "SpatRaster")) {
-        grid <- try(rast(grid), silent = TRUE)
-        if (inherits(grid, "try-error")) return(invisible(NULL))
+        # Wenn readDWD eine Liste mit $dat zurückgibt (dwdradar-Format)
+        if (is.list(grid) && "dat" %in% names(grid)) {
+            m <- grid$dat
+            r <- rast(nrows = nrow(m), ncols = ncol(m), vals = as.vector(t(m[nrow(m):1, ])))
+            # RADOLAN-Projektion: Stereographische Projektion Deutschland
+            crs(r) <- "+proj=stere +lat_0=90 +lat_ts=60 +lon_0=10 +a=6370040 +b=6370040 +no_defs"
+            ext(r)  <- ext(-523.4622, 376.5378, -4658.645, -3758.645)
+            grid <- r
+        } else {
+            grid <- try(rast(grid), silent = TRUE)
+            if (inherits(grid, "try-error")) {
+                return(invisible(NULL))
+            }
+        }
     }
     if (nlyr(grid) > 1) grid <- grid[[1]]
 
@@ -155,7 +176,12 @@ if (start_date_ry >= end_date) {
         bin_files   <- bin_files[!is.na(file_ts) & file_ts >= start_posix]
 
         cat("    Processing", length(bin_files), "5-min files...\n")
-        for (bf in bin_files) process_radolan_file(bf, output_file_ry, nodata_threshold = 30)
+        ok <- 0L
+        for (bf in bin_files) {
+            res <- process_radolan_file(bf, output_file_ry, nodata_threshold = 30)
+            if (!is.null(res)) ok <- ok + 1L
+        }
+        cat("    Successfully extracted:", ok, "/", length(bin_files), "\n")
 
         unlink(extract_dir, recursive = TRUE)
         file_delete(tar_file)
