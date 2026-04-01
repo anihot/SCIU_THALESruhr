@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensorkarte - SCIU THALESruhr</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; }
+        #loading {
+            display: flex; align-items: center; justify-content: center;
+            height: 100vh; color: #6b7280; font-size: 1.1rem;
+        }
+        #loading a { color: #0072B2; }
+    </style>
+</head>
+<body>
+    <div id="loading">Karte wird geladen...</div>
+    <script>
+        // Die sensor_map.html wird bei jedem CI-Lauf hierher kopiert.
+        // Falls die Datei noch nicht existiert, Redirect zur GitHub-Version.
+        fetch('sensor_map.html', { method: 'HEAD' })
+            .then(r => {
+                if (r.ok) {
+                    document.location.replace('sensor_map.html');
+                } else {
+                    throw new Error('not found');
+                }
+            })
+            .catch(() => {
+                document.getElementById('loading').innerHTML =
+                    'Karte noch nicht bereitgestellt. ' +
+                    '<a href="https://htmlpreview.github.io/?https://github.com/anihot/SCIU_THALESruhr/blob/main/data/output/sensor_map.html" target="_blank">' +
+                    'Hier klicken fuer die interaktive Karte</a>';
+            });
+    </script>
+</body>
+</html>
