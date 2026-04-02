@@ -46,7 +46,8 @@
 
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: start;
             gap: 1rem;
             padding: 1rem 2rem;
             max-width: 1400px;
@@ -62,7 +63,9 @@
             border-radius: 8px;
             padding: 1.2rem 1.5rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            align-self: start;
         }
+        .card br + br { display: none; }
         .card h2 {
             font-size: 1rem;
             font-weight: 600;
@@ -74,6 +77,11 @@
         .card.full { grid-column: 1 / -1; }
 
         /* Wetter */
+        .weather-compact { font-size: 0.88rem; line-height: 1.4; }
+        .weather-compact br + br { display: none; }
+        .weather-compact h2, .weather-compact h3 { margin-bottom: 0.3rem; }
+        .weather-compact ul { margin: 0.3rem 0; padding-left: 1.2rem; }
+        .weather-compact li { margin: 0.1rem 0; }
         .weather-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -321,30 +329,28 @@ async function buildDashboard() {
 
         // ── Karten rendern ─────────────────────────────────────────────────
         grid.innerHTML = `
-            <!-- Ereignisse (links oben) -->
+            <!-- Erste Zeile: Ereignisse | Wetter | Sensor-Status -->
             <div class="card">
                 <h2>Ereignisse (letzte 48h)</h2>
                 ${eventsTableHtml || eventsHtml || '<div class="no-events">Keine neuen Ereignisse</div>'}
-                ${updateTime ? '<div class="update-time">Stand: ' + updateTime + '</div>' : ''}
+                ${eventsTableHtml && updateTime ? '<div class="update-time">Stand: ' + updateTime + '</div>' : ''}
             </div>
 
-            <!-- Sensor-Status (rechts oben, klein) -->
+            <div class="card weather-compact">
+                ${weatherHtml || '<h2>Wetterausblick</h2><p>Keine Daten verfuegbar.</p>'}
+            </div>
+
             <div class="card">
                 ${sensorHtml || '<h2>Sensor-Status</h2><p>Keine Daten verfuegbar.</p>'}
             </div>
 
-            <!-- Interaktive Karte (links) -->
-            <div class="card">
+            <!-- Karte (volle Breite darunter) -->
+            <div class="card full">
                 <h2>Interaktive Sensorkarte</h2>
                 <div class="map-container">
                     <iframe src="map.html" loading="lazy"
                             title="Interaktive Sensorkarte"></iframe>
                 </div>
-            </div>
-
-            <!-- Wetter (rechts neben Karte) -->
-            <div class="card">
-                ${weatherHtml || '<h2>Wetterausblick</h2><p>Keine Daten verfuegbar.</p>'}
             </div>
 
             <!-- Station-Plots (ganz unten) -->
