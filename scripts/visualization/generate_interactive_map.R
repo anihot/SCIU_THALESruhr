@@ -155,7 +155,7 @@ for (i in seq_len(nrow(sensors))) {
             plot_bgcolor  = "white",
             paper_bgcolor = "white"
           ) %>%
-          config(displayModeBar = FALSE, scrollZoom = TRUE)
+          config(displayModeBar = TRUE, scrollZoom = TRUE)
       }
     }
   }
