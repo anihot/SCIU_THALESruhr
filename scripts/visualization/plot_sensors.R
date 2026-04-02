@@ -31,8 +31,11 @@ forecast_file <- "data/processed/weather_forecast.csv"
 precip_fallback <- NULL
 if (file_exists(forecast_file)) {
     precip_fallback <- read_csv(forecast_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
-        select(timestamp, precipitation_mm)
+        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
+    # Abwärtskompatibel: falls keine station-Spalte, für alle Sensoren nutzen
+    if (!"station" %in% names(precip_fallback)) {
+        precip_fallback <- precip_fallback %>% select(timestamp, precipitation_mm)
+    }
 }
 
 for (file_path in cleaned_files) {
@@ -78,7 +81,14 @@ for (file_path in cleaned_files) {
     }
 
     if (is.null(p_precip) && !is.null(precip_fallback)) {
-        p_precip      <- precip_fallback %>% filter(timestamp >= start_time)
+        # Per-Sensor filtern falls station-Spalte vorhanden
+        if ("station" %in% names(precip_fallback)) {
+            p_precip <- precip_fallback %>%
+                filter(station == station_name, timestamp >= start_time) %>%
+                select(timestamp, precipitation_mm)
+        } else {
+            p_precip <- precip_fallback %>% filter(timestamp >= start_time)
+        }
         precip_source <- "Open-Meteo (Vorhersage)"
     }
 

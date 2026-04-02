@@ -14,9 +14,22 @@ cat("📊 Generating daily summary report...\n")
 # 1. Weather Outlook (Next 24h)
 weather_summary <- "Keine Wetterdaten verfügbar."
 if (file_exists(forecast_file)) {
-    forecast <- read_csv(forecast_file, show_col_types = FALSE) %>%
+    forecast_raw <- read_csv(forecast_file, show_col_types = FALSE) %>%
         mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
         filter(timestamp >= now(), timestamp <= now() + hours(24))
+
+    # Per-Sensor Vorhersage → Worst-Case pro Zeitpunkt
+    if ("station" %in% names(forecast_raw)) {
+        forecast <- forecast_raw %>%
+            group_by(timestamp) %>%
+            summarise(
+                precipitation_mm    = max(precipitation_mm, na.rm = TRUE),
+                probability_percent = max(probability_percent, na.rm = TRUE),
+                .groups = "drop"
+            )
+    } else {
+        forecast <- forecast_raw
+    }
 
     if (nrow(forecast) > 0) {
         max_precip <- max(forecast$precipitation_mm, na.rm = TRUE)

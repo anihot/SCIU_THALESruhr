@@ -15,13 +15,16 @@ graphs_dir    <- "data/output/graphs"
 cat("Generating interactive sensor map with external iframes...\n")
 if (!file_exists(metadata_file)) stop("Metadata file not found: ", metadata_file)
 
-# Load Open-Meteo forecast as fallback precipitation source
+# Load Open-Meteo forecast as fallback precipitation source (per-sensor)
 forecast_file    <- "data/processed/weather_forecast.csv"
 precip_fallback  <- NULL
 if (file_exists(forecast_file)) {
     precip_fallback <- read_csv(forecast_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
-        select(timestamp, precipitation_mm)
+        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
+    # Abwärtskompatibel: falls keine station-Spalte, für alle Sensoren nutzen
+    if (!"station" %in% names(precip_fallback)) {
+        precip_fallback <- precip_fallback %>% select(timestamp, precipitation_mm)
+    }
 }
 
 # Ensure output directories exist
@@ -93,13 +96,22 @@ for (i in seq_len(nrow(sensors))) {
 
       # 2) Open-Meteo Vorhersage: nur Zeitpunkte NACH dem letzten RADOLAN-Wert
       if (!is.null(precip_fallback)) {
+          # Per-Sensor filtern falls station-Spalte vorhanden
+          if ("station" %in% names(precip_fallback)) {
+              station_forecast <- precip_fallback %>%
+                  filter(station == station_name) %>%
+                  select(timestamp, precipitation_mm)
+          } else {
+              station_forecast <- precip_fallback
+          }
+
           if (nrow(radolan_precip) > 0) {
               radolan_end     <- max(radolan_precip$timestamp, na.rm = TRUE)
-              forecast_precip <- precip_fallback %>%
+              forecast_precip <- station_forecast %>%
                   filter(timestamp > radolan_end)
           } else {
               # Kein RADOLAN vorhanden → gesamte Vorhersage nutzen
-              forecast_precip <- precip_fallback %>%
+              forecast_precip <- station_forecast %>%
                   filter(timestamp >= start_time)
           }
       }

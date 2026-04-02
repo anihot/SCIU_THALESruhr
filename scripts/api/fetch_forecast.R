@@ -6,74 +6,96 @@ library(lubridate)
 library(readr)
 
 # Config
-# Center of Bochum (covering most sensors)
-LAT <- 51.48
-LON <- 7.21
-OUTPUT_FILE <- "data/processed/weather_forecast.csv"
+metadata_file <- "data/metadata/sensor_metadata.csv"
+OUTPUT_FILE   <- "data/processed/weather_forecast.csv"
 
-cat("🌤 Fetching weather forecast from Open-Meteo...\n")
+cat("🌤 Fetching per-sensor weather forecasts from Open-Meteo...\n")
 
-# Build URL
-# We want hourly precipitation for the next 7 days (default)
-url <- paste0(
-    "https://api.open-meteo.com/v1/forecast?",
-    "latitude=", LAT,
-    "&longitude=", LON,
-    "&hourly=precipitation,precipitation_probability,temperature_2m",
-    "&timezone=Europe%2FBerlin"
-)
+# 1. Sensor-Koordinaten laden
+if (!file.exists(metadata_file)) stop("Metadata file not found: ", metadata_file)
+sensors <- read_csv(metadata_file, show_col_types = FALSE)
 
-# Request with retry logic for transient SSL errors
-max_retries <- 3
-response <- NULL
-for (attempt in seq_len(max_retries)) {
-    tryCatch({
-        response <- GET(url, timeout(30))
-        break
-    }, error = function(e) {
-        cat("Attempt", attempt, "failed:", conditionMessage(e), "\n")
-        if (attempt < max_retries) {
-            Sys.sleep(5 * attempt)
-        } else {
-            stop("Failed to fetch forecast after ", max_retries, " attempts: ", conditionMessage(e))
-        }
-    })
+cat("  Sensors:", nrow(sensors), "\n")
+
+# 2. Pro Sensor abfragen
+all_forecasts <- list()
+
+for (i in seq_len(nrow(sensors))) {
+    station_name <- sensors$station[i]
+    lat <- sensors$lat[i]
+    lon <- sensors$lon[i]
+
+    cat("  Fetching forecast for", station_name, "(", lat, ",", lon, ")...\n")
+
+    url <- paste0(
+        "https://api.open-meteo.com/v1/forecast?",
+        "latitude=", lat,
+        "&longitude=", lon,
+        "&hourly=precipitation,precipitation_probability,temperature_2m",
+        "&timezone=Europe%2FBerlin"
+    )
+
+    # Request with retry logic for transient SSL errors
+    max_retries <- 3
+    response <- NULL
+    for (attempt in seq_len(max_retries)) {
+        tryCatch({
+            response <- GET(url, timeout(30))
+            break
+        }, error = function(e) {
+            cat("    Attempt", attempt, "failed:", conditionMessage(e), "\n")
+            if (attempt < max_retries) {
+                Sys.sleep(5 * attempt)
+            } else {
+                stop("Failed to fetch forecast after ", max_retries, " attempts: ", conditionMessage(e))
+            }
+        })
+    }
+
+    if (status_code(response) != 200) {
+        cat("    WARNING: Failed for", station_name, "- Status:", status_code(response), "\n")
+        next
+    }
+
+    data <- fromJSON(content(response, "text", encoding = "UTF-8"))
+    hourly <- data$hourly
+
+    forecast_df <- data.frame(
+        station = station_name,
+        timestamp = as.POSIXct(hourly$time, format = "%Y-%m-%dT%H:%M", tz = "Europe/Berlin"),
+        precipitation_mm = hourly$precipitation,
+        probability_percent = hourly$precipitation_probability,
+        temp_c = hourly$temperature_2m
+    )
+
+    all_forecasts[[i]] <- forecast_df
+    cat("    OK:", nrow(forecast_df), "hourly values\n")
+
+    # Kurze Pause zwischen Requests (API fair use)
+    if (i < nrow(sensors)) Sys.sleep(0.5)
 }
 
-if (status_code(response) != 200) {
-    stop("Failed to fetch forecast from Open-Meteo. Status: ", status_code(response))
-}
+# 3. Zusammenführen und speichern
+combined <- bind_rows(all_forecasts)
 
-# Parse
-data <- fromJSON(content(response, "text", encoding = "UTF-8"))
-
-# Extract hourly data
-hourly <- data$hourly
-forecast_df <- data.frame(
-    timestamp = as.POSIXct(hourly$time, format = "%Y-%m-%dT%H:%M", tz = "Europe/Berlin"),
-    precipitation_mm = hourly$precipitation,
-    probability_percent = hourly$precipitation_probability,
-    temp_c = hourly$temperature_2m
-)
-
-# Filter for next 72 hours for cleaner overview in README/Map if needed,
-# but keep full 7 days in CSV for analysis
-# forecast_df <- forecast_df %>% filter(timestamp >= now())
-
-# Save
 if (!dir.exists(dirname(OUTPUT_FILE))) {
     dir.create(dirname(OUTPUT_FILE), recursive = TRUE)
 }
 
-write_csv(forecast_df, OUTPUT_FILE)
+write_csv(combined, OUTPUT_FILE)
 
-cat("SUCCESS: Forecast saved to", OUTPUT_FILE, "\n")
-cat(
-    "Next major rain expected at:",
-    forecast_df %>%
-        filter(precipitation_mm > 0) %>%
-        slice(1) %>%
-        pull(timestamp) %>%
-        as.character() %||% "No rain forecast",
-    "\n"
-)
+cat("\nSUCCESS: Per-sensor forecast saved to", OUTPUT_FILE, "\n")
+cat("  Total rows:", nrow(combined), "(", nrow(sensors), "stations x",
+    nrow(combined) / nrow(sensors), "hours)\n")
+
+# Summary: nächster Regen pro Station
+for (s in unique(combined$station)) {
+    next_rain <- combined %>%
+        filter(station == s, precipitation_mm > 0) %>%
+        slice(1)
+    if (nrow(next_rain) > 0) {
+        cat("  ", s, "- nächster Regen:", as.character(next_rain$timestamp), "\n")
+    } else {
+        cat("  ", s, "- kein Regen in der Vorhersage\n")
+    }
+}

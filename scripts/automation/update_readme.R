@@ -80,8 +80,22 @@ if (nrow(events_recent) > 0) {
 # 3b. Weather Outlook (DWD-compliant criteria)
 weather_content <- ""
 if (file_exists(forecast_file)) {
-    forecast <- read_csv(forecast_file, show_col_types = FALSE) %>%
+    forecast_raw <- read_csv(forecast_file, show_col_types = FALSE) %>%
         mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
+
+    # Per-Sensor Vorhersage → Worst-Case pro Zeitpunkt (max über alle Stationen)
+    if ("station" %in% names(forecast_raw)) {
+        forecast <- forecast_raw %>%
+            group_by(timestamp) %>%
+            summarise(
+                precipitation_mm    = max(precipitation_mm, na.rm = TRUE),
+                probability_percent = max(probability_percent, na.rm = TRUE),
+                temp_c              = mean(temp_c, na.rm = TRUE),
+                .groups = "drop"
+            )
+    } else {
+        forecast <- forecast_raw
+    }
 
     # Calculate rolling 6h sum for DWD criteria
     # Using a simple row-wise sum for the next 6 hours at each point
