@@ -50,7 +50,7 @@ jobs:
             echo "should_continue=true" >> $GITHUB_OUTPUT
             echo "is_daily_sync=true" >> $GITHUB_OUTPUT
           else
-            RAIN_COUNT=$(tail -n +2 data/processed/weather_forecast.csv | cut -d',' -f2 | grep -v "^0$" | grep -c "." || true)
+            RAIN_COUNT=$(tail -n +2 data/processed/weather_forecast.csv | cut -d',' -f3 | grep -v "^0$" | grep -c "." || true)
             if [ "$RAIN_COUNT" -gt 0 ]; then
               echo "sync_reason=Rain Forecast Detected ($RAIN_COUNT hours)" >> $GITHUB_OUTPUT
               echo "should_continue=true" >> $GITHUB_OUTPUT
