@@ -4,7 +4,7 @@
 
 |station                 | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl|
 |:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|
-|Herzogstraße            |         15|       6.4|        34.9|               12|            3|                 0|
+|Herzogstraße            |         16|       7.1|        34.9|               13|            3|                 0|
 |Wasserbaulabor_2        |          1|       3.1|         3.1|                1|            0|                 0|
 |Wasserstraße_Springorum |          1|       4.2|         4.2|                1|            0|                 0|
 
@@ -14,6 +14,7 @@
 |:-----------------------|:-------------------|------------:|-------------:|-------------------:|:-------------------------|---------------:|------------------:|:--------------------------------------|
 |Herzogstraße            |2025-12-19 14:32:00 |         43.0|          34.9|               1.390|Sturzflut-Ereignis        |             0.6|                0.3|Level 0 – Kein nennenswerter Regen     |
 |Herzogstraße            |2026-01-16 17:31:00 |         42.0|          23.7|               0.762|Sturzflut-Ereignis        |             0.6|                0.2|Level 0 – Kein nennenswerter Regen     |
+|Herzogstraße            |2026-04-02 13:20:00 |         42.0|          17.3|               0.479|Sturzflut-Ereignis        |             0.1|                0.1|Level 0 – Kein nennenswerter Regen     |
 |Herzogstraße            |2025-10-23 05:37:00 |         18.0|           5.2|               0.732|Sturzflut-Ereignis        |             0.9|                0.4|Level 0 – Kein nennenswerter Regen     |
 |Wasserstraße_Springorum |2025-11-24 14:12:00 |         12.0|           4.2|               0.592|Sturzflut-Ereignis        |             0.8|                0.3|Level 0 – Kein nennenswerter Regen     |
 |Herzogstraße            |2026-02-17 15:34:00 |          9.0|           3.7|               1.194|Sturzflut-Ereignis        |             0.2|                0.1|Level 0 – Kein nennenswerter Regen     |
@@ -30,4 +31,4 @@
 |Herzogstraße            |2026-01-09 13:36:00 |         37.0|           2.0|               0.105|Regenereignis / Natürlich |             1.7|                0.8|Level 1 – Leichter Regen (0.5–15 mm/h) |
 |Herzogstraße            |2025-11-19 12:37:00 |         53.0|           2.0|               0.100|Regenereignis / Natürlich |             0.1|                0.1|Level 0 – Kein nennenswerter Regen     |
 
-*Full log available in data/processed/detected_events.csv — 17 rain-verified events total.*
+*Full log available in data/processed/detected_events.csv — 18 rain-verified events total.*
