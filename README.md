@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 03.04. 16:00 bis 05.04. 15:00)*
+*(Zeitraum: 03.04. 22:00 bis 05.04. 21:00)*
 
-- Temperatur: **12.3°C** (Min: 9.8°C | Max: 14°C)
-- Summe: **5.4 mm** | Max: **1.1 mm/h**
-- Max. 6h: **6.2 mm**
+- Temperatur: **10.8°C** (Min: 8.4°C | Max: 13.4°C)
+- Summe: **9.5 mm** | Max: **1.7 mm/h**
+- Max. 6h: **4.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-03 13:18:54 UTC*
+*Stand: 2026-04-03 19:03:19 UTC*
 
 ---
 
