@@ -81,7 +81,7 @@ if (nrow(events_recent) > 0) {
 weather_content <- ""
 if (file_exists(forecast_file)) {
     forecast_raw <- read_csv(forecast_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
+        mutate(timestamp = with_tz(timestamp, tzone = "Europe/Berlin"))
 
     # Per-Sensor Vorhersage → Worst-Case pro Zeitpunkt (max über alle Stationen)
     if ("station" %in% names(forecast_raw)) {
