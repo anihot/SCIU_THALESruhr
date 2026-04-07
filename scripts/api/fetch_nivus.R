@@ -84,7 +84,8 @@ message(paste("Found", length(stations), "stations total."))
 # 2. Filter stations: exclude those starting with "2407" and "Wasserbaulabor" without "2"
 stations <- stations %>%
     keep(~ !grepl("^2407", .x$Name)) %>%
-    keep(~ !(grepl("Wasserbaulabor", .x$Name) & !grepl("Wasserbaulabor 2", .x$Name)))
+    keep(~ !(grepl("Wasserbaulabor", .x$Name) & !grepl("Wasserbaulabor 2", .x$Name))) %>%
+    keep(~ !grepl("Herzogstra", .x$Name))  # Sensor wackelig – temporär deaktiviert
 message(paste("Processing", length(stations), "stations after filtering (excluded '2407*' and 'Wasserbaulabor' without '2')."))
 
 # 3. Process each station

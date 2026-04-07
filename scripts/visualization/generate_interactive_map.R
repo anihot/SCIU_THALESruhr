@@ -157,7 +157,7 @@ for (i in seq_len(nrow(sensors))) {
         p <- p %>% layout(
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee"),
-            yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left"),
+            yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left", range = c(0, 50)),
             yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = FALSE, rangemode = "tozero"),
             margin     = list(l = 40, r = margin_r, t = 40, b = 30),

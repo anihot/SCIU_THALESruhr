@@ -163,12 +163,34 @@
             width: 100%;
             border-radius: 4px;
             border: 1px solid var(--border);
+            cursor: pointer;
+            transition: opacity 0.2s;
         }
+        .plot-card img:hover { opacity: 0.8; }
         .plot-card .plot-label {
             font-size: 0.8rem;
             color: var(--muted);
             margin-top: 0.3rem;
             text-align: center;
+        }
+
+        /* Lightbox overlay */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 92vw;
+            max-height: 92vh;
+            border-radius: 8px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
         }
 
         footer {
@@ -397,6 +419,24 @@ async function buildDashboard() {
 }
 
 buildDashboard();
+
+// Lightbox for sensor plots
+const lightbox = document.createElement('div');
+lightbox.className = 'lightbox';
+lightbox.innerHTML = '<img>';
+document.body.appendChild(lightbox);
+
+lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lightbox.classList.remove('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.plot-card img')) {
+        lightbox.querySelector('img').src = e.target.src;
+        lightbox.classList.add('active');
+    }
+});
 </script>
 </body>
 </html>
