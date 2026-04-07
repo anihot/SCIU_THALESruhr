@@ -32,7 +32,7 @@ if (!file_exists(forecast_file)) {
 
 # 1. Vorhersage laden (per-Sensor falls verfügbar)
 forecast_raw <- read_csv(forecast_file, show_col_types = FALSE) %>%
-    mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
+    mutate(timestamp = with_tz(timestamp, tzone = "Europe/Berlin")) %>%
     filter(timestamp > now())
 
 has_station_forecast <- "station" %in% names(forecast_raw)

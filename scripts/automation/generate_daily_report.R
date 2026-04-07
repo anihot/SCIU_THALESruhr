@@ -15,7 +15,7 @@ cat("📊 Generating daily summary report...\n")
 weather_summary <- "Keine Wetterdaten verfügbar."
 if (file_exists(forecast_file)) {
     forecast_raw <- read_csv(forecast_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin")) %>%
+        mutate(timestamp = with_tz(timestamp, tzone = "Europe/Berlin")) %>%
         filter(timestamp >= now(), timestamp <= now() + hours(24))
 
     # Per-Sensor Vorhersage → Worst-Case pro Zeitpunkt

@@ -20,7 +20,7 @@ forecast_file    <- "data/processed/weather_forecast.csv"
 precip_fallback  <- NULL
 if (file_exists(forecast_file)) {
     precip_fallback <- read_csv(forecast_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp, tz = "Europe/Berlin"))
+        mutate(timestamp = with_tz(timestamp, tzone = "Europe/Berlin"))
     # Abwärtskompatibel: falls keine station-Spalte, für alle Sensoren nutzen
     if (!"station" %in% names(precip_fallback)) {
         precip_fallback <- precip_fallback %>% select(timestamp, precipitation_mm)
