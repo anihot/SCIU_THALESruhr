@@ -35,25 +35,27 @@ for (i in seq_len(nrow(sensors))) {
         "&timezone=Europe%2FBerlin"
     )
 
-    # Request with retry logic for transient SSL errors
+    # Request with retry logic for transient errors
     max_retries <- 3
     response <- NULL
     for (attempt in seq_len(max_retries)) {
         tryCatch({
             response <- GET(url, timeout(30))
-            break
+            if (status_code(response) >= 500) {
+                cat("    Attempt", attempt, "failed: HTTP", status_code(response), "\n")
+                response <- NULL
+                if (attempt < max_retries) Sys.sleep(5 * attempt)
+            } else {
+                break
+            }
         }, error = function(e) {
             cat("    Attempt", attempt, "failed:", conditionMessage(e), "\n")
-            if (attempt < max_retries) {
-                Sys.sleep(5 * attempt)
-            } else {
-                stop("Failed to fetch forecast after ", max_retries, " attempts: ", conditionMessage(e))
-            }
+            if (attempt < max_retries) Sys.sleep(5 * attempt)
         })
     }
 
-    if (status_code(response) != 200) {
-        cat("    WARNING: Failed for", station_name, "- Status:", status_code(response), "\n")
+    if (is.null(response) || status_code(response) != 200) {
+        cat("    WARNING: Skipping", station_name, "after", max_retries, "attempts\n")
         next
     }
 
@@ -82,11 +84,21 @@ if (!dir.exists(dirname(OUTPUT_FILE))) {
     dir.create(dirname(OUTPUT_FILE), recursive = TRUE)
 }
 
+if (nrow(combined) == 0) {
+    if (file.exists(OUTPUT_FILE)) {
+        cat("\nWARNING: All sensors failed. Keeping existing forecast file.\n")
+    } else {
+        cat("\nWARNING: All sensors failed and no existing forecast file available.\n")
+    }
+    quit(status = 0)
+}
+
 write_csv(combined, OUTPUT_FILE)
 
+n_ok <- length(unique(combined$station))
 cat("\nSUCCESS: Per-sensor forecast saved to", OUTPUT_FILE, "\n")
-cat("  Total rows:", nrow(combined), "(", nrow(sensors), "stations x",
-    nrow(combined) / nrow(sensors), "hours)\n")
+cat("  Stations OK:", n_ok, "/", nrow(sensors), "\n")
+cat("  Total rows:", nrow(combined), "\n")
 
 # Summary: nächster Regen pro Station
 for (s in unique(combined$station)) {
