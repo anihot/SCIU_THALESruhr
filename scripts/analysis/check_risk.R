@@ -49,11 +49,13 @@ has_history   <- FALSE
 if (file_exists(historical_log)) {
     hist_data <- read_csv(historical_log, show_col_types = FALSE)
 
-    # Nur RADOLAN-verifizierte Events mit Niederschlag verwenden
+    # Nur RADOLAN-verifizierte Events mit relevantem Niederschlag verwenden
+    # (Events mit "Level 0" hatten kaum Regen und verfälschen die Schwellenwerte)
     hist_verified <- hist_data %>%
         filter(
             !is.na(total_precip_mm), total_precip_mm > 0,
-            !is.na(max_intensity_mm_h), max_intensity_mm_h > 0
+            !is.na(max_intensity_mm_h), max_intensity_mm_h > 0,
+            !grepl("Level 0", dwd_risk_level)
         )
 
     if (nrow(hist_verified) >= 1) {
@@ -75,10 +77,10 @@ if (file_exists(historical_log)) {
                 .groups = "drop"
             ) %>%
             mutate(
-                # Schwelle = niedrigste historische Intensität, mind. 0.5 mm/h
-                threshold_mm_h   = pmax(0.5, min_intensity_mm_h),
-                # Summen-Schwelle = niedrigste historische Summe, mind. 0.3 mm
-                threshold_sum_mm = pmax(0.3, min_total_precip_mm)
+                # Schwelle = Median der historischen Intensität, mind. 2 mm/h
+                threshold_mm_h   = pmax(2, median_intensity_mm_h),
+                # Summen-Schwelle = Median der historischen Summe, mind. 1.5 mm
+                threshold_sum_mm = pmax(1.5, median_total_precip_mm)
             )
 
         cat("Historical profiles loaded for", nrow(hist_profiles), "station(s):\n")
@@ -150,9 +152,11 @@ for (st in stations) {
                     })
                 )
 
-            # Match: Intensität ODER Summe überschreiten historischen Minimalwert
+            # Match: Intensität ODER Summe überschreiten historischen Median
+            # Zusätzlich: nur bei relevanter Regenwahrscheinlichkeit (>= 30%)
             matched <- fc %>%
                 filter(
+                    probability_percent >= 30,
                     precipitation_mm >= profile$threshold_mm_h |
                     precip_window    >= profile$threshold_sum_mm
                 )
