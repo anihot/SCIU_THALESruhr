@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 07.04. 16:00 bis 09.04. 15:00)*
+*(Zeitraum: 07.04. 17:00 bis 09.04. 16:00)*
 
-- Temperatur: **15.8°C** (Min: 4.9°C | Max: 18.6°C)
+- Temperatur: **15.6°C** (Min: 4.9°C | Max: 18.7°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-07 13:16:08 UTC*
+*Stand: 2026-04-07 14:22:56 UTC*
 
 ---
 
