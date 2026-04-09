@@ -50,40 +50,61 @@ sensor_vect_wgs84 <- vect(
 
 # 2. Gemeinsame Helper-Funktion: RADOLAN-Binärdatei → Sensorwerte extrahieren
 .radolan_debug_printed <- FALSE  # Einmal pro Lauf Debug-Info ausgeben
+.radolan_error_printed <- FALSE  # Ersten Fehler ausgeben zum Debugging
 
 process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
-    grid <- try(readDWD(file_path), silent = TRUE)
+    # Primär: dwdradar::readRadarFile() direkt aufrufen — funktioniert zuverlässig
+    # für RADOLAN-Binärdateien (raa01-yw_...-bin), egal ob komprimiert oder nicht.
+    grid <- NULL
 
-    # Debug-Info für die erste erfolgreich gelesene Datei
-    if (!inherits(grid, "try-error") && !is.null(grid) && !.radolan_debug_printed) {
-        cat("    [DEBUG] readDWD returned class:", paste(class(grid), collapse = ", "), "\n")
-        .radolan_debug_printed <<- TRUE
-    }
+    if (requireNamespace("dwdradar", quietly = TRUE)) {
+        res <- tryCatch(
+            dwdradar::readRadarFile(file_path),
+            error = function(e) {
+                if (!.radolan_error_printed) {
+                    cat("    [ERROR] dwdradar::readRadarFile failed:", conditionMessage(e), "\n")
+                    cat("    [ERROR] File:", file_path, "\n")
+                    .radolan_error_printed <<- TRUE
+                }
+                NULL
+            }
+        )
 
-    # Fallback: wenn readDWD fehlschlägt (z.B. dwdradar nicht installiert),
-    # versuche terra::rast() direkt (GDAL kann einige RADOLAN-Formate lesen)
-    if (inherits(grid, "try-error") || is.null(grid)) {
-        grid <- try(rast(file_path), silent = TRUE)
-        if (inherits(grid, "try-error") || is.null(grid)) return(invisible(NULL))
-    }
-
-    # readDWD kann je nach Version eine Liste, Matrix, RasterLayer oder SpatRaster zurückgeben
-    if (!inherits(grid, "SpatRaster")) {
-        # Wenn readDWD eine Liste mit $dat zurückgibt (dwdradar-Format)
-        if (is.list(grid) && "dat" %in% names(grid)) {
-            m <- grid$dat
+        if (!is.null(res) && is.list(res) && "dat" %in% names(res)) {
+            if (!.radolan_debug_printed) {
+                cat("    [DEBUG] readRadarFile OK, dim:",
+                    paste(dim(res$dat), collapse = "x"), "\n")
+                .radolan_debug_printed <<- TRUE
+            }
+            m <- res$dat
             r <- rast(nrows = nrow(m), ncols = ncol(m), vals = as.vector(t(m[nrow(m):1, ])))
             # RADOLAN-Projektion: Stereographische Projektion Deutschland
             crs(r) <- "+proj=stere +lat_0=90 +lat_ts=60 +lon_0=10 +a=6370040 +b=6370040 +no_defs"
             ext(r)  <- ext(-523.4622, 376.5378, -4658.645, -3758.645)
-            grid <- r
-        } else {
-            grid <- try(rast(grid), silent = TRUE)
-            if (inherits(grid, "try-error")) {
-                return(invisible(NULL))
+            grid    <- r
+        }
+    }
+
+    # Fallback: rdwd::readDWD() probieren (falls direkter dwdradar-Aufruf scheiterte)
+    if (is.null(grid)) {
+        grid_try <- tryCatch(
+            readDWD(file_path),
+            error = function(e) NULL
+        )
+        if (!is.null(grid_try)) {
+            if (is.list(grid_try) && "dat" %in% names(grid_try)) {
+                m <- grid_try$dat
+                r <- rast(nrows = nrow(m), ncols = ncol(m), vals = as.vector(t(m[nrow(m):1, ])))
+                crs(r) <- "+proj=stere +lat_0=90 +lat_ts=60 +lon_0=10 +a=6370040 +b=6370040 +no_defs"
+                ext(r)  <- ext(-523.4622, 376.5378, -4658.645, -3758.645)
+                grid    <- r
+            } else if (inherits(grid_try, "SpatRaster")) {
+                grid <- grid_try
             }
         }
     }
+
+    if (is.null(grid)) return(invisible(NULL))
     if (nlyr(grid) > 1) grid <- grid[[1]]
 
     # Zeitstempel aus Dateiname: raa01-{ry|rw}_10000-YYMMDDHHMM-dwd---bin
