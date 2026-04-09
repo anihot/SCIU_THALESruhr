@@ -72,11 +72,12 @@ for (i in seq_len(nrow(sensors))) {
       meas_level <- ifelse(is.na(latest_row$level), "N/A", paste0(round(latest_row$level * 100, 1), " cm"))
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
       
-      start_time <- now(tzone = tz(df$Zeit_Datum)) - hours(24)
+      now_time   <- now(tzone = tz(df$Zeit_Datum))
+      start_time <- now_time - hours(24)
       df_24h <- df %>% filter(Zeit_Datum >= start_time)
-      
+
       # Prepare precipitation: RADOLAN (gemessen) + Open-Meteo (Vorhersage) kombiniert
-      # RADOLAN zeigt den tatsächlich gefallenen Regen, Open-Meteo ergänzt ab Ende der Messdaten
+      # Wichtig: Der gesamte 24h-Zeitraum wird abgedeckt, fehlende Werte = 0 mm
       precip_file     <- "data/processed/precipitation_at_sensors.csv"
       radolan_precip  <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
       forecast_precip <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
@@ -87,7 +88,8 @@ for (i in seq_len(nrow(sensors))) {
               mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
           if (nrow(precip_df) > 0) {
               radolan_station <- precip_df %>%
-                  filter(station == station_name, timestamp >= start_time)
+                  filter(station == station_name, timestamp >= start_time) %>%
+                  select(timestamp, precipitation_mm)
               if (nrow(radolan_station) > 0) {
                   radolan_precip <- radolan_station
               }
@@ -108,12 +110,40 @@ for (i in seq_len(nrow(sensors))) {
           if (nrow(radolan_precip) > 0) {
               radolan_end     <- max(radolan_precip$timestamp, na.rm = TRUE)
               forecast_precip <- station_forecast %>%
-                  filter(timestamp > radolan_end)
+                  filter(timestamp > radolan_end, timestamp <= now_time)
           } else {
-              # Kein RADOLAN vorhanden → gesamte Vorhersage nutzen
+              # Kein RADOLAN vorhanden → gesamte Vorhersage im 24h-Fenster nutzen
               forecast_precip <- station_forecast %>%
-                  filter(timestamp >= start_time)
+                  filter(timestamp >= start_time, timestamp <= now_time)
           }
+      }
+
+      # 3) Vollständiges 5-min-Raster für RADOLAN: fehlende Intervalle = 0 mm
+      #    So werden die Regenbalken über den gesamten 24h-Zeitraum angezeigt,
+      #    auch wenn es nicht geregnet hat.
+      if (nrow(radolan_precip) > 0) {
+          radolan_end <- max(radolan_precip$timestamp, na.rm = TRUE)
+          full_grid <- data.frame(
+              timestamp = seq(
+                  from = as.POSIXct(start_time, tz = "UTC"),
+                  to   = as.POSIXct(radolan_end, tz = "UTC"),
+                  by   = "5 min"
+              )
+          )
+          radolan_precip <- full_grid %>%
+              left_join(radolan_precip, by = "timestamp") %>%
+              mutate(precipitation_mm = ifelse(is.na(precipitation_mm), 0, precipitation_mm))
+      } else if (nrow(forecast_precip) == 0) {
+          # Weder RADOLAN noch Forecast → Dummy-Nullwerte erzeugen, damit die
+          # Regenachse trotzdem im Plot erscheint
+          radolan_precip <- data.frame(
+              timestamp = seq(
+                  from = as.POSIXct(start_time, tz = "UTC"),
+                  to   = as.POSIXct(now_time, tz = "UTC"),
+                  by   = "1 hour"
+              ),
+              precipitation_mm = 0
+          )
       }
       
       if (nrow(df_24h) == 0) {
@@ -134,6 +164,12 @@ for (i in seq_len(nrow(sensors))) {
         has_radolan  <- nrow(radolan_precip) > 0
         has_forecast <- nrow(forecast_precip) > 0
         has_precip   <- has_radolan || has_forecast
+
+        # Max. Regen-Wert für feste y2-Range (damit Achse auch bei 0 mm sichtbar bleibt)
+        max_precip <- max(
+            c(radolan_precip$precipitation_mm, forecast_precip$precipitation_mm, 1),
+            na.rm = TRUE
+        )
 
         if (has_radolan) {
             p <- p %>% add_trace(data = radolan_precip, x = ~timestamp, y = ~precipitation_mm,
@@ -156,10 +192,12 @@ for (i in seq_len(nrow(sensors))) {
                     
         p <- p %>% layout(
             title      = list(text = title_text, font = list(size = 11), x = 0),
-            xaxis      = list(title = "", gridcolor = "#eeeeee"),
+            xaxis      = list(title = "", gridcolor = "#eeeeee",
+                              range = c(as.character(start_time), as.character(now_time))),
             yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left", range = c(0, 50)),
             yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
-                              showgrid = FALSE, zeroline = FALSE, rangemode = "tozero"),
+                              showgrid = FALSE, zeroline = TRUE,
+                              range = c(0, max_precip * 1.2)),
             margin     = list(l = 40, r = margin_r, t = 40, b = 30),
             showlegend = has_precip,
             legend     = list(orientation = "h", x = 0, y = -0.15, font = list(size = 9)),
