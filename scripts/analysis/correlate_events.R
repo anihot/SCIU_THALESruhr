@@ -61,6 +61,14 @@ if (nrow(correlation) > 0) {
                 peak_time  = as.POSIXct(peak_time)
             )
 
+        # Zeitstempel-Typen angleichen (event_detection liefert ggf. character)
+        correlation <- correlation %>%
+            mutate(
+                start_time = as.POSIXct(start_time),
+                end_time   = as.POSIXct(end_time),
+                peak_time  = as.POSIXct(peak_time)
+            )
+
         new_entries <- correlation %>% anti_join(hist_orig, by = c("station", "start_time"))
 
         if (nrow(new_entries) > 0) {
