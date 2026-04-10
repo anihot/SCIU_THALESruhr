@@ -96,7 +96,9 @@ for (i in seq_len(nrow(sensors))) {
           }
       }
 
-      # 2) Open-Meteo Vorhersage: nur Zeitpunkte NACH dem letzten RADOLAN-Wert
+      # 2) Open-Meteo Vorhersage: nur ZUKÜNFTIGE Zeitpunkte (ab jetzt)
+      #    RADOLAN = gemessener Regen (Vergangenheit)
+      #    Forecast = vorhergesagter Regen (Zukunft, nächste 24h)
       if (!is.null(precip_fallback)) {
           # Per-Sensor filtern falls station-Spalte vorhanden
           if ("station" %in% names(precip_fallback)) {
@@ -107,18 +109,12 @@ for (i in seq_len(nrow(sensors))) {
               station_forecast <- precip_fallback
           }
 
-          if (nrow(radolan_precip) > 0) {
-              radolan_end     <- max(radolan_precip$timestamp, na.rm = TRUE)
-              forecast_precip <- station_forecast %>%
-                  filter(timestamp > radolan_end, timestamp <= now_time)
-          } else {
-              # Kein RADOLAN vorhanden → gesamte Vorhersage im 24h-Fenster nutzen
-              forecast_precip <- station_forecast %>%
-                  filter(timestamp >= start_time, timestamp <= now_time)
-          }
+          # Forecast immer ab jetzt in die Zukunft (nächste 24h)
+          forecast_precip <- station_forecast %>%
+              filter(timestamp > now_time, timestamp <= (now_time + hours(24)))
       }
 
-      # 3) Vollständiges 5-min-Raster für RADOLAN: fehlende Intervalle = 0 mm
+      # 3) Vollständiges Raster für RADOLAN: fehlende Intervalle = 0 mm
       #    So werden die Regenbalken über den gesamten 24h-Zeitraum angezeigt,
       #    auch wenn es nicht geregnet hat.
       if (nrow(radolan_precip) > 0) {
@@ -133,9 +129,9 @@ for (i in seq_len(nrow(sensors))) {
           radolan_precip <- full_grid %>%
               left_join(radolan_precip, by = "timestamp") %>%
               mutate(precipitation_mm = ifelse(is.na(precipitation_mm), 0, precipitation_mm))
-      } else if (nrow(forecast_precip) == 0) {
-          # Weder RADOLAN noch Forecast → Dummy-Nullwerte erzeugen, damit die
-          # Regenachse trotzdem im Plot erscheint
+      } else {
+          # Kein RADOLAN vorhanden → stündliche Nullwerte für die Vergangenheit,
+          # damit die Regenachse trotzdem sichtbar bleibt
           radolan_precip <- data.frame(
               timestamp = seq(
                   from = as.POSIXct(start_time, tz = "UTC"),
@@ -187,19 +183,28 @@ for (i in seq_len(nrow(sensors))) {
                                  hovertemplate = "Regen: %{y:.2f} mm/h (Vorhersage)<extra></extra>")
         }
 
+        # "Jetzt"-Linie um Vergangenheit (RADOLAN) und Zukunft (Vorhersage) zu trennen
+        now_shapes <- list(
+            list(type = "line",
+                 x0 = as.character(now_time), x1 = as.character(now_time),
+                 y0 = 0, y1 = 1, yref = "paper",
+                 line = list(color = "rgba(100,100,100,0.5)", width = 1, dash = "dash"))
+        )
+
         # Determine layout params based on precipitation
         margin_r <- if(has_precip) 40 else 10
                     
         p <- p %>% layout(
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee",
-                              range = c(as.character(start_time), as.character(now_time))),
+                              range = c(as.character(start_time), as.character(now_time + hours(24)))),
             yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left", range = c(0, 50)),
             yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = TRUE,
                               range = c(0, max_precip * 1.2)),
+            shapes     = now_shapes,
             margin     = list(l = 40, r = margin_r, t = 40, b = 30),
-            showlegend = has_precip,
+            showlegend = TRUE,
             legend     = list(orientation = "h", x = 0, y = -0.15, font = list(size = 9)),
             hovermode  = "x unified",
             plot_bgcolor  = "white",
