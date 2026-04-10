@@ -15,7 +15,7 @@ plots_dir           <- "data/output/plots/schillerschule"
 # Stations to compare with Schillerschule rain gauge
 TARGET_STATIONS <- c("Königsallee_Springorum", "Wasserstraße_Springorum")
 
-THRESHOLD         <- 0.015  # 1.5 cm – event detection threshold
+THRESHOLD         <- 0.004  # 0.4 cm – event detection threshold
 MIN_GAP_MINS      <- 20
 MIN_DURATION_MINS <- 5
 MAX_DURATION_MINS <- 60
