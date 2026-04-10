@@ -10,7 +10,7 @@ events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
 
-THRESHOLD          <- 0.015 # 1.5 cm - Threshold for flooding detection
+THRESHOLD          <- 0.004 # 0.4 cm - Threshold for flooding detection
 MIN_GAP_MINS       <- 20    # Minimum gap between separate events
 MIN_DURATION_MINS  <- 5     # Events kürzer als 5 min = Rauschen / Einzelspike
 MAX_DURATION_MINS  <- 60    # Events länger als 60 min werden nicht berücksichtigt
