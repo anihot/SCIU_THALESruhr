@@ -23,6 +23,7 @@ r_output.txt
 !data/processed/detected_events.csv
 !data/processed/detected_events.md
 !data/processed/precipitation_at_sensors.csv
+!data/processed/precipitation_hourly_at_sensors.csv
 !data/processed/weather_forecast.csv
 !data/processed/schillerschule_analysiert.csv
 
