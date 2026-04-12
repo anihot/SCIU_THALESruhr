@@ -2,6 +2,7 @@
 
 |station     |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|radolan_verified | points_count|
 |:-----------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|---------------:|------------------:|:----------------|------------:|
+|An_der_Kost |2026-04-11 21:41:00 |2026-04-11 22:05:00 |           0.6|2026-04-11 21:56:30 |           24|               0.038|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |           11|
 |An_der_Kost |2026-03-13 13:16:30 |2026-03-13 13:39:30 |           0.7|2026-03-13 13:20:30 |           23|               0.171|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |           15|
 |An_der_Kost |2026-02-23 23:01:00 |2026-02-23 23:23:00 |           0.6|2026-02-23 23:12:00 |           22|               0.054|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            3|
 |An_der_Kost |2026-02-19 10:57:00 |2026-02-19 11:22:00 |           0.6|2026-02-19 11:07:00 |           25|               0.059|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            9|
