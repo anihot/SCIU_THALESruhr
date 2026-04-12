@@ -4,10 +4,10 @@
 
 |station                 | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl|
 |:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|
-|Königsallee_Springorum  |         27|       0.7|         1.2|                0|            0|                 0|
+|Königsallee_Springorum  |         28|       0.7|         1.2|                0|            0|                 0|
 |Herzogstraße            |         25|       4.9|        34.9|               10|            3|                 0|
 |Wasserstraße_Springorum |         14|       1.8|         5.0|                3|            1|                 0|
-|An_der_Kost             |         11|       0.6|         0.7|                0|            0|                 0|
+|An_der_Kost             |         12|       0.6|         0.7|                0|            0|                 0|
 |Wasserbaulabor_2        |          1|      19.6|        19.6|                1|            0|                 0|
 
 ## Top 20 Most Intense Events
@@ -35,4 +35,4 @@
 |Herzogstraße            |2025-10-26 13:50:00 |           21|           1.9|               0.118|Leichter Regen / Unterhalb DWD-Schwelle |             0.2|                0.1|Level 0 – Kein nennenswerter Regen     |
 |Herzogstraße            |2025-10-23 17:07:00 |           21|           1.6|               0.122|Leichter Regen / Unterhalb DWD-Schwelle |             2.5|                1.3|Level 1 – Leichter Regen (0.5–15 mm/h) |
 
-*Full log available in data/processed/detected_events.csv — 78 rain-verified events total.*
+*Full log available in data/processed/detected_events.csv — 80 rain-verified events total.*

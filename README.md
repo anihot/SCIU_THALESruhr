@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 12.04. 05:00 bis 14.04. 04:00)*
+*(Zeitraum: 12.04. 10:00 bis 14.04. 09:00)*
 
-- Temperatur: **7.5°C** (Min: 6.2°C | Max: 14.9°C)
-- Summe: **2.8 mm** | Max: **0.7 mm/h**
-- Max. 6h: **2.2 mm**
+- Temperatur: **9.7°C** (Min: 7.1°C | Max: 14.4°C)
+- Summe: **4.9 mm** | Max: **0.8 mm/h**
+- Max. 6h: **3.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,26 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Herzogstraße**: Letzte Daten vor 109.5 Stunden (07.04. 12:47)
+- 🔴 **Herzogstraße**: Letzte Daten vor 114.5 Stunden (07.04. 12:47)
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-12 02:16:49 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-04-12 07:14:55 UTC*
+
+Es wurden **2** neue potenzielle Ereignisse erkannt.
+
+|station                |start_time          | peak_level_cm| duration_min|
+|:----------------------|:-------------------|-------------:|------------:|
+|An_der_Kost            |2026-04-11 21:41:00 |           0.6|         24.0|
+|Königsallee_Springorum |2026-04-11 19:31:00 |           0.7|         19.5|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
+#### Station: Königsallee_Springorum
+![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
+
 
 ---
 
