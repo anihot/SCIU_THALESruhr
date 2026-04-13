@@ -132,6 +132,8 @@ jobs:
           git add data/output/plots/*.png || true
           git add data/processed/detected_events.csv || true
           git add data/processed/detected_events.md || true
+          git add data/processed/retrospective_events.csv || true
+          git add data/processed/retrospective_events.md || true
           git add data/processed/events_by_station/*.csv || true
           git add data/processed/events_by_station/*.md || true
           git add data/processed/weather_forecast.csv || true
