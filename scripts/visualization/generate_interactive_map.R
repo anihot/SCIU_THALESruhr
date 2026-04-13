@@ -114,28 +114,32 @@ for (i in seq_len(nrow(sensors))) {
               filter(timestamp > now_time, timestamp <= (now_time + hours(24)))
       }
 
-      # 3) Vollständiges Raster für RADOLAN: fehlende Intervalle = 0 mm
-      #    So werden die Regenbalken über den gesamten 24h-Zeitraum angezeigt,
-      #    auch wenn es nicht geregnet hat.
+      # 3) RADOLAN auf Stundensummen aggregieren (mm/h)
+      #    5-min-Balken über 7 Tage sind zu dünn/niedrig → stündliche Summen besser sichtbar
       if (nrow(radolan_precip) > 0) {
+          radolan_precip <- radolan_precip %>%
+              mutate(hour = floor_date(timestamp, "hour")) %>%
+              group_by(timestamp = hour) %>%
+              summarise(precipitation_mm = sum(precipitation_mm, na.rm = TRUE), .groups = "drop")
+
+          # Vollständiges Stundenraster auffüllen (Lücken = 0 mm)
           radolan_end <- max(radolan_precip$timestamp, na.rm = TRUE)
           full_grid <- data.frame(
               timestamp = seq(
-                  from = as.POSIXct(start_time, tz = "UTC"),
+                  from = floor_date(as.POSIXct(start_time, tz = "UTC"), "hour"),
                   to   = as.POSIXct(radolan_end, tz = "UTC"),
-                  by   = "5 min"
+                  by   = "1 hour"
               )
           )
           radolan_precip <- full_grid %>%
               left_join(radolan_precip, by = "timestamp") %>%
               mutate(precipitation_mm = ifelse(is.na(precipitation_mm), 0, precipitation_mm))
       } else {
-          # Kein RADOLAN vorhanden → stündliche Nullwerte für die Vergangenheit,
-          # damit die Regenachse trotzdem sichtbar bleibt
+          # Kein RADOLAN vorhanden → stündliche Nullwerte für die Vergangenheit
           radolan_precip <- data.frame(
               timestamp = seq(
-                  from = as.POSIXct(start_time, tz = "UTC"),
-                  to   = as.POSIXct(now_time, tz = "UTC"),
+                  from = floor_date(as.POSIXct(start_time, tz = "UTC"), "hour"),
+                  to   = floor_date(as.POSIXct(now_time, tz = "UTC"), "hour"),
                   by   = "1 hour"
               ),
               precipitation_mm = 0
@@ -172,7 +176,7 @@ for (i in seq_len(nrow(sensors))) {
                                  type = "bar", name = "Regen (RADOLAN)",
                                  yaxis = "y2",
                                  marker = list(color = "rgba(0, 158, 115, 0.6)"),
-                                 hovertemplate = "Regen: %{y:.2f} mm/5min (RADOLAN)<extra></extra>")
+                                 hovertemplate = "Regen: %{y:.2f} mm/h (RADOLAN)<extra></extra>")
         }
 
         if (has_forecast) {
@@ -199,7 +203,7 @@ for (i in seq_len(nrow(sensors))) {
             xaxis      = list(title = "", gridcolor = "#eeeeee",
                               range = c(as.character(start_time), as.character(now_time + hours(24)))),
             yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left", range = c(0, 50)),
-            yaxis2     = list(title = "Regen (mm)", overlaying = "y", side = "right",
+            yaxis2     = list(title = "Regen (mm/h)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = TRUE,
                               range = c(0, max_precip * 1.2)),
             shapes     = now_shapes,
