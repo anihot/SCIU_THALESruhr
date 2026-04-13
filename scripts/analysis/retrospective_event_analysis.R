@@ -9,8 +9,9 @@ library(openxlsx)
 
 # Config
 cleaned_dir    <- "data/processed/cleaned_analysis"
-events_file    <- "data/processed/detected_events.csv"
-events_md_file <- "data/processed/detected_events.md"
+# Retrospektive Analyse schreibt in EIGENE Dateien (nicht detected_events.csv überschreiben!)
+events_file    <- "data/processed/retrospective_events.csv"
+events_md_file <- "data/processed/retrospective_events.md"
 historical_log <- "data/metadata/historical_verified_events.csv"
 historical_md  <- "data/metadata/historical_verified_events.md"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
@@ -180,11 +181,14 @@ if (precip_available) {
             )
         )
 
-    # Nur Ereignisse behalten, bei denen RADOLAN Niederschlag bestätigt hat.
+    # Nur Ereignisse behalten, bei denen RADOLAN Niederschlag bestätigt hat
+    # ODER kein RADOLAN-Daten für den Zeitraum vorliegen (um False Negatives zu vermeiden).
     # Wasserbaulabor_2 ist ein Indoor-Testsensor und wird immer behalten.
     n_before         <- nrow(events_df)
     events_df        <- events_df %>%
-        filter(radolan_verified == TRUE | grepl("Wasserbaulabor", station, ignore.case = TRUE))
+        filter(radolan_verified == TRUE |
+               is.na(radolan_verified) |
+               grepl("Wasserbaulabor", station, ignore.case = TRUE))
     verified_count   <- nrow(events_df)
     unverified_count <- n_before - verified_count
     cat("\nPrecipitation correlation complete (RADOLAN):\n")
@@ -256,22 +260,33 @@ if (nrow(events_out) > 0) {
 }
 
 # ── 8. Export: all_detected_events.xlsx ───────────────────────────────────────
+#    Nutzt detected_events.csv (von event_detection.R + correlate_events.R),
+#    NICHT die retrospektive Analyse — damit alle Events in Summary & Excel erscheinen.
 
 xlsx_file     <- "data/output/all_detected_events.xlsx"
 summary_file  <- "data/output/events_summary_table.md"
 
-if (nrow(events_out) > 0) {
+# Events aus der regulären Pipeline laden (nicht aus retrospektiver Analyse)
+main_events_file <- "data/processed/detected_events.csv"
+if (file_exists(main_events_file)) {
+    events_for_export <- read_csv(main_events_file, show_col_types = FALSE)
+    cat("Loaded", nrow(events_for_export), "events from detected_events.csv for export.\n")
+} else {
+    events_for_export <- events_out
+}
+
+if (nrow(events_for_export) > 0) {
     wb <- createWorkbook()
 
     # Sheet 1: alle Events
     addWorksheet(wb, "Alle Ereignisse")
-    writeDataTable(wb, "Alle Ereignisse", events_out, tableStyle = "TableStyleMedium9")
+    writeDataTable(wb, "Alle Ereignisse", events_for_export, tableStyle = "TableStyleMedium9")
 
     # Spaltenbreiten anpassen
-    setColWidths(wb, "Alle Ereignisse", cols = 1:ncol(events_out), widths = "auto")
+    setColWidths(wb, "Alle Ereignisse", cols = 1:ncol(events_for_export), widths = "auto")
 
     # Sheet 2: Stationsübersicht
-    station_summary <- events_out %>%
+    station_summary <- events_for_export %>%
         group_by(station) %>%
         summarise(
             Ereignisse        = n(),
@@ -289,7 +304,7 @@ if (nrow(events_out) > 0) {
     setColWidths(wb, "Stationsübersicht", cols = 1:ncol(station_summary), widths = "auto")
 
     # Sheet 3: Top 20 intensivste Events
-    top20 <- events_out %>%
+    top20 <- events_for_export %>%
         arrange(desc(peak_level_cm)) %>%
         head(20) %>%
         select(station, start_time, duration_min, peak_level_cm,
@@ -317,7 +332,7 @@ if (nrow(events_out) > 0) {
         kable(top20, format = "markdown"),
         "",
         paste0("*Full log available in data/processed/detected_events.csv — ",
-               nrow(events_out), " rain-verified events total.*")
+               nrow(events_for_export), " events total.*")
     )
 
     write_lines(md_lines, summary_file)
