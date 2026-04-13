@@ -307,9 +307,9 @@ if (nrow(events_for_export) > 0) {
     top20 <- events_for_export %>%
         arrange(desc(peak_level_cm)) %>%
         head(20) %>%
-        select(station, start_time, duration_min, peak_level_cm,
-               avg_gradient_cm_min, event_type,
-               total_precip_mm, max_intensity_mm_h, dwd_risk_level)
+        select(any_of(c("station", "start_time", "duration_min", "peak_level_cm",
+               "avg_gradient_cm_min", "event_type",
+               "total_precip_mm", "max_intensity_mm_h", "dwd_risk_level")))
 
     addWorksheet(wb, "Top 20 Events")
     writeDataTable(wb, "Top 20 Events", top20, tableStyle = "TableStyleMedium3")
