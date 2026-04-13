@@ -2,6 +2,7 @@
 
 |station                 |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|radolan_verified | points_count|
 |:-----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|---------------:|------------------:|:----------------|------------:|
+|Wasserstraße_Springorum |2026-04-13 11:02:30 |2026-04-13 11:36:00 |           1.5|2026-04-13 11:19:30 |         33.5|               0.088|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            3|
 |Wasserstraße_Springorum |2026-04-11 09:41:00 |2026-04-11 10:04:30 |           1.4|2026-04-11 09:58:30 |         23.5|               0.080|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            3|
 |Wasserstraße_Springorum |2026-04-10 11:21:00 |2026-04-10 11:54:30 |           1.2|2026-04-10 11:39:00 |         33.5|               0.066|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            3|
 |Wasserstraße_Springorum |2026-04-09 20:50:00 |2026-04-09 21:22:30 |           0.8|2026-04-09 21:13:30 |         32.5|               0.034|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            4|
