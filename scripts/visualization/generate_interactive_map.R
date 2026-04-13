@@ -73,11 +73,11 @@ for (i in seq_len(nrow(sensors))) {
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
       
       now_time   <- now(tzone = tz(df$Zeit_Datum))
-      start_time <- now_time - hours(24)
-      df_24h <- df %>% filter(Zeit_Datum >= start_time)
+      start_time <- now_time - hours(48)
+      df_48h <- df %>% filter(Zeit_Datum >= start_time)
 
       # Prepare precipitation: RADOLAN (gemessen) + Open-Meteo (Vorhersage) kombiniert
-      # Wichtig: Der gesamte 24h-Zeitraum wird abgedeckt, fehlende Werte = 0 mm
+      # Wichtig: Der gesamte 48h-Zeitraum wird abgedeckt, fehlende Werte = 0 mm
       precip_file     <- "data/processed/precipitation_at_sensors.csv"
       radolan_precip  <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
       forecast_precip <- data.frame(timestamp = as.POSIXct(character()), precipitation_mm = numeric())
@@ -142,15 +142,15 @@ for (i in seq_len(nrow(sensors))) {
           )
       }
       
-      if (nrow(df_24h) == 0) {
-        title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")<br>Keine 24h-Daten.")
+      if (nrow(df_48h) == 0) {
+        title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")<br>Keine 48h-Daten.")
         p <- plotly_empty() %>% layout(title = list(text = title_text, font=list(size=11)))
       } else {
         title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")")
         
         # Build base trace (Water Level)
         p <- plot_ly() %>%
-          add_trace(data = df_24h, x = ~Zeit_Datum, y = ~(level * 100),
+          add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level * 100),
                     type = "scatter", mode = "lines", name = "Pegel",
                     line = list(color = "#0072B2", width = 2),
                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
