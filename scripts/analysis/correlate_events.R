@@ -24,13 +24,15 @@ events <- read_csv(events_file, show_col_types = FALSE) %>%
 
 cat("Loaded", nrow(events), "events from detection.\n")
 
-# 2. Filter: keep only rain-verified events
+# 2. Filter: keep rain-verified events + events without precipitation data
 #    - radolan_verified == TRUE  → RADOLAN confirmed rain
 #    - is.na(radolan_verified)   → no precipitation data available, retain to avoid false negatives
 #    - Wasserbaulabor_2          → indoor test sensor, always kept
 correlation <- events %>%
     filter(
-        radolan_verified == TRUE | station == "Wasserbaulabor_2"
+        radolan_verified == TRUE |
+        is.na(radolan_verified) |
+        station == "Wasserbaulabor_2"
     )
 
 cat("Retained", nrow(correlation), "out of", nrow(events), "events after rain filter.\n")

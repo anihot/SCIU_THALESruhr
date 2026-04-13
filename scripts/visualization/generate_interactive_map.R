@@ -202,7 +202,7 @@ for (i in seq_len(nrow(sensors))) {
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee",
                               range = c(as.character(start_time), as.character(now_time + hours(24)))),
-            yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left", range = c(0, 50)),
+            yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left", range = c(0, 20)),
             yaxis2     = list(title = "Regen (mm/h)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = TRUE,
                               range = c(0, max_precip * 1.2)),
