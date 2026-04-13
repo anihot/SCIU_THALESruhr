@@ -23,11 +23,11 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Herzogstraße**: Letzte Daten vor 143.3 Stunden (07.04. 12:47)
+- 🔴 **Herzogstraße**: Letzte Daten vor 143.6 Stunden (07.04. 12:47)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-13 12:04:39 UTC*
+*Stand: 2026-04-13 12:22:42 UTC*
 
 ---
 
