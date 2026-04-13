@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 13.04. 10:00 bis 15.04. 09:00)*
+*(Zeitraum: 13.04. 12:00 bis 15.04. 11:00)*
 
-- Temperatur: **10.9°C** (Min: 5.5°C | Max: 16.1°C)
+- Temperatur: **12.4°C** (Min: 5.5°C | Max: 16.1°C)
 - Summe: **2 mm** | Max: **0.4 mm/h**
 - Max. 6h: **1.8 mm**
 
@@ -23,11 +23,11 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
+- 🔴 **Herzogstraße**: Letzte Daten vor 140.7 Stunden (07.04. 12:47)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-13 07:17:39 UTC*
+*Stand: 2026-04-13 09:29:37 UTC*
 
 ---
 
