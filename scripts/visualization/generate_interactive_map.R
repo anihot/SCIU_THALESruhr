@@ -73,7 +73,7 @@ for (i in seq_len(nrow(sensors))) {
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
       
       now_time   <- now(tzone = tz(df$Zeit_Datum))
-      start_time <- now_time - hours(48)
+      start_time <- now_time - days(7)
       df_48h <- df %>% filter(Zeit_Datum >= start_time)
 
       # Prepare precipitation: RADOLAN (gemessen) + Open-Meteo (Vorhersage) kombiniert
@@ -143,7 +143,7 @@ for (i in seq_len(nrow(sensors))) {
       }
       
       if (nrow(df_48h) == 0) {
-        title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")<br>Keine 48h-Daten.")
+        title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")<br>Keine 7-Tage-Daten.")
         p <- plotly_empty() %>% layout(title = list(text = title_text, font=list(size=11)))
       } else {
         title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")")
