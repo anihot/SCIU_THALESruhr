@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 12.04. 21:00 bis 14.04. 20:00)*
+*(Zeitraum: 13.04. 05:00 bis 15.04. 04:00)*
 
-- Temperatur: **11.4°C** (Min: 5°C | Max: 15.9°C)
-- Summe: **3.2 mm** | Max: **0.6 mm/h**
-- Max. 6h: **2.8 mm**
+- Temperatur: **7.4°C** (Min: 4.6°C | Max: 15.7°C)
+- Summe: **2.3 mm** | Max: **0.5 mm/h**
+- Max. 6h: **1.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,11 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Herzogstraße**: Letzte Daten vor 126 Stunden (07.04. 12:47)
+- 🔴 **Herzogstraße**: Letzte Daten vor 133.7 Stunden (07.04. 12:47)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-12 18:47:13 UTC*
+*Stand: 2026-04-13 02:29:22 UTC*
 
 ---
 
