@@ -1,8 +1,6 @@
 library(readr)
 library(dplyr)
 library(lubridate)
-library(httr)
-library(jsonlite)
 library(fs)
 library(knitr)
 library(tidyr)
@@ -15,6 +13,7 @@ events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 historical_log <- "data/metadata/historical_verified_events.csv"
 historical_md  <- "data/metadata/historical_verified_events.md"
+precip_file    <- "data/processed/precipitation_at_sensors.csv"
 
 THRESHOLD          <- 0.004  # 0.4 cm
 MIN_GAP_MINS       <- 20
@@ -24,11 +23,7 @@ MIN_RISE_MINS      <- 3   # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahr
 MIN_FALL_MINS      <- 3   # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
 MAX_LOCAL_PEAKS    <- 2   # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
 MAX_PLATEAU_FRAC   <- 0.5 # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
-LEAD_IN_HOURS  <- 3      # Look at rain 3h before event start
-
-# Center of sensor area (Bochum/Hattingen)
-LAT <- 51.48
-LON <- 7.21
+LEAD_IN_HOURS      <- 3   # Niederschlag-Vorlauf-Fenster vor Event-Start
 
 cat("=== Retrospective Event Analysis ===\n")
 cat("Detects ALL historical events and correlates with Open-Meteo archive precipitation.\n\n")
@@ -134,52 +129,48 @@ if (length(all_events) == 0) {
 events_df <- bind_rows(all_events) %>% arrange(start_time)
 cat("\nTotal events detected:", nrow(events_df), "\n")
 
-# ── 2. Fetch Historical Precipitation (Open-Meteo Archive) ───────────────────
+# ── 2. RADOLAN-Niederschlagsdaten laden (gemessen, pro Sensor) ────────────────
 
-start_date <- format(min(as.Date(events_df$start_time)) - days(1), "%Y-%m-%d")
-end_date   <- format(Sys.Date(), "%Y-%m-%d")
+precip <- tibble(timestamp = as.POSIXct(character()), station = character(), precipitation_mm = numeric())
+precip_available <- FALSE
 
-cat("\nFetching Open-Meteo archive precipitation from", start_date, "to", end_date, "...\n")
-
-url <- paste0(
-    "https://archive-api.open-meteo.com/v1/archive?",
-    "latitude=", LAT, "&longitude=", LON,
-    "&start_date=", start_date,
-    "&end_date=", end_date,
-    "&hourly=precipitation",
-    "&timezone=Europe%2FBerlin"
-)
-
-response <- try(GET(url), silent = TRUE)
-
-if (inherits(response, "try-error") || status_code(response) != 200) {
-    cat("WARNING: Could not fetch Open-Meteo archive data. Events will be kept without precipitation context.\n")
-    precip_df <- NULL
+if (file.exists(precip_file)) {
+    precip_raw <- read_csv(precip_file, show_col_types = FALSE)
+    if (nrow(precip_raw) > 0) {
+        precip           <- precip_raw %>% mutate(timestamp = as.POSIXct(timestamp))
+        precip_available <- TRUE
+        cat("RADOLAN precipitation data loaded:", nrow(precip), "records.\n")
+    } else {
+        cat("WARNING: RADOLAN precipitation file is empty.\n")
+    }
 } else {
-    data      <- fromJSON(content(response, "text", encoding = "UTF-8"))
-    precip_df <- data.frame(
-        timestamp      = as.POSIXct(data$hourly$time, format = "%Y-%m-%dT%H:%M", tz = "Europe/Berlin"),
-        precipitation_mm = data$hourly$precipitation
-    )
-    cat("Loaded", nrow(precip_df), "hourly precipitation records.\n")
+    cat("WARNING: RADOLAN precipitation file not found:", precip_file, "\n")
+    cat("  Events will be kept without precipitation context.\n")
 }
 
-# ── 3. Correlate Events with Precipitation ────────────────────────────────────
+# ── 3. Correlate Events with RADOLAN Precipitation (pro Sensor) ──────────────
 
-if (!is.null(precip_df)) {
-    # Use map2 to avoid rowwise + list-column scoping issues
-    precip_stats <- purrr::map2_dfr(events_df$start_time, events_df$end_time, function(t_start, t_end) {
-        window <- precip_df %>%
-            dplyr::filter(timestamp >= (t_start - hours(LEAD_IN_HOURS)), timestamp <= t_end)
-        data.frame(
-            total_precip_mm    = sum(window$precipitation_mm, na.rm = TRUE),
-            max_intensity_mm_h = if (nrow(window) > 0) max(window$precipitation_mm, na.rm = TRUE) else 0
-        )
-    })
+if (precip_available) {
+    precip_stats <- purrr::pmap_dfr(
+        list(events_df$station, events_df$start_time, events_df$end_time),
+        function(st, t_start, t_end) {
+            # RADOLAN-Daten für diese Station im Zeitfenster (3h Vorlauf + Event)
+            station_precip <- precip %>%
+                dplyr::filter(station == st,
+                              timestamp >= (t_start - hours(LEAD_IN_HOURS)),
+                              timestamp <= t_end)
+            data.frame(
+                total_precip_mm    = round(sum(station_precip$precipitation_mm, na.rm = TRUE), 2),
+                max_intensity_mm_h = if (nrow(station_precip) > 0)
+                    round(max(station_precip$precipitation_mm, na.rm = TRUE) * 12, 2)  # mm/5min → mm/h
+                else 0
+            )
+        }
+    )
 
     events_df <- bind_cols(events_df, precip_stats) %>%
         mutate(
-            openmeteo_verified = total_precip_mm > 0,
+            radolan_verified = total_precip_mm > 0,
             dwd_risk_level = case_when(
                 max_intensity_mm_h >= 40  ~ "Level 4 – Extremes Unwetter (>= 40 mm/h)",
                 max_intensity_mm_h >= 25  ~ "Level 3 – Unwetterwarnung (>= 25 mm/h)",
@@ -189,22 +180,22 @@ if (!is.null(precip_df)) {
             )
         )
 
-    # Nur Ereignisse behalten, bei denen Open-Meteo Niederschlag bestätigt hat.
+    # Nur Ereignisse behalten, bei denen RADOLAN Niederschlag bestätigt hat.
     # Wasserbaulabor_2 ist ein Indoor-Testsensor und wird immer behalten.
-    n_before       <- nrow(events_df)
-    events_df      <- events_df %>%
-        filter(openmeteo_verified == TRUE | grepl("Wasserbaulabor", station, ignore.case = TRUE))
+    n_before         <- nrow(events_df)
+    events_df        <- events_df %>%
+        filter(radolan_verified == TRUE | grepl("Wasserbaulabor", station, ignore.case = TRUE))
     verified_count   <- nrow(events_df)
     unverified_count <- n_before - verified_count
-    cat("\nPrecipitation correlation complete:\n")
-    cat("  Rain-verified (Open-Meteo):", verified_count, "\n")
+    cat("\nPrecipitation correlation complete (RADOLAN):\n")
+    cat("  Rain-verified:", verified_count, "\n")
     cat("  Herausgefiltert (kein Regen):", unverified_count, "\n")
 } else {
     events_df <- events_df %>%
         mutate(
             total_precip_mm    = NA_real_,
             max_intensity_mm_h = NA_real_,
-            openmeteo_verified = NA,
+            radolan_verified   = NA,
             dwd_risk_level     = NA_character_
         )
 }
