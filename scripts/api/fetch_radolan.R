@@ -79,8 +79,9 @@ process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
             m <- res$dat
             r <- rast(nrows = nrow(m), ncols = ncol(m), vals = as.vector(t(m[nrow(m):1, ])))
             # RADOLAN-Projektion: Stereographische Projektion Deutschland
+            # Extent in METERN (nicht km!) – passend zur Kugel mit a=6370040 m
             crs(r) <- "+proj=stere +lat_0=90 +lat_ts=60 +lon_0=10 +a=6370040 +b=6370040 +no_defs"
-            ext(r)  <- ext(-523.4622, 376.5378, -4658.645, -3758.645)
+            ext(r)  <- ext(-523462.2, 376537.8, -4658645, -3758645)
             grid    <- r
         }
     }
@@ -96,7 +97,7 @@ process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
                 m <- grid_try$dat
                 r <- rast(nrows = nrow(m), ncols = ncol(m), vals = as.vector(t(m[nrow(m):1, ])))
                 crs(r) <- "+proj=stere +lat_0=90 +lat_ts=60 +lon_0=10 +a=6370040 +b=6370040 +no_defs"
-                ext(r)  <- ext(-523.4622, 376.5378, -4658.645, -3758.645)
+                ext(r)  <- ext(-523462.2, 376537.8, -4658645, -3758645)
                 grid    <- r
             } else if (inherits(grid_try, "SpatRaster")) {
                 grid <- grid_try
@@ -116,6 +117,14 @@ process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
     extracted   <- extract(grid, sensor_proj)
     precip_vals <- extracted[, 2]
 
+    # Debug: einmalig extrahierte Rohwerte ausgeben
+    if (!.radolan_debug_printed) {
+        cat("    [DEBUG] Raw extracted values:", paste(round(precip_vals, 4), collapse = ", "), "\n")
+        cat("    [DEBUG] Sensor proj coords (first):",
+            paste(round(crds(sensor_proj)[1, ], 1), collapse = ", "), "\n")
+        .radolan_debug_printed <<- TRUE
+    }
+
     # No-data / Clutter maskieren
     precip_vals[!is.finite(precip_vals) | precip_vals < 0 | precip_vals >= nodata_threshold] <- NA_real_
     precip_vals[is.na(precip_vals)] <- 0.0
@@ -133,11 +142,19 @@ determine_start_date <- function(out_file, default_start = as.Date("2025-09-01")
     if (file.exists(out_file)) {
         existing <- read_csv(out_file, show_col_types = FALSE)
         if (nrow(existing) > 0) {
+            # Prüfe ob alle Werte 0 sind (= kaputte Daten durch alten Extent-Bug)
+            all_zero <- all(existing$precipitation_mm == 0, na.rm = TRUE)
+            if (all_zero) {
+                cat("WARNING: All existing precipitation values are 0 — resetting file (likely projection bug).\n")
+                df_init <- data.frame(timestamp = as.POSIXct(character()), station = character(), precipitation_mm = numeric())
+                write_csv(df_init, out_file)
+                return(default_start)
+            }
             last_date <- max(as.Date(existing$timestamp))
             return(max(default_start, last_date))
         }
     } else {
-        df_init <- data.frame(timestamp = POSIXct(), station = character(), precipitation_mm = numeric())
+        df_init <- data.frame(timestamp = as.POSIXct(character()), station = character(), precipitation_mm = numeric())
         write_csv(df_init, out_file)
     }
     default_start
@@ -199,7 +216,7 @@ if (start_date_ry >= end_date) {
         cat("    Processing", length(bin_files), "5-min files...\n")
         ok <- 0L
         for (bf in bin_files) {
-            res <- process_radolan_file(bf, output_file_ry, nodata_threshold = 30)
+            res <- process_radolan_file(bf, output_file_ry, nodata_threshold = 100)
             if (!is.null(res)) ok <- ok + 1L
         }
         cat("    Successfully extracted:", ok, "/", length(bin_files), "\n")
