@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### ☀️ Wetterausblick (48h)
-**Kein nennenswerter Regen vorhergesagt.**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 13.04. 15:00 bis 15.04. 14:00)*
+*(Zeitraum: 13.04. 16:00 bis 15.04. 15:00)*
 
-- Temperatur: **10.7°C** (Min: 4.8°C | Max: 17°C)
-- Summe: **1.7 mm** | Max: **0.3 mm/h**
-- Max. 6h: **1.2 mm**
+- Temperatur: **11°C** (Min: 4.6°C | Max: 18°C)
+- Summe: **2.1 mm** | Max: **0.6 mm/h**
+- Max. 6h: **1.8 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,22 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Herzogstraße**: Letzte Daten vor 143.6 Stunden (07.04. 12:47)
+- 🔴 **Herzogstraße**: Letzte Daten vor 144.6 Stunden (07.04. 12:47)
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-13 12:22:42 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-04-13 13:20:55 UTC*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                 |start_time          | peak_level_cm| duration_min|
+|:-----------------------|:-------------------|-------------:|------------:|
+|Wasserstraße_Springorum |2026-04-13 11:02:30 |           1.5|         33.5|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+
 
 ---
 
