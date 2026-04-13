@@ -10,9 +10,9 @@
 
 *(Zeitraum: 13.04. 12:00 bis 15.04. 11:00)*
 
-- Temperatur: **12.4°C** (Min: 5.5°C | Max: 16.1°C)
-- Summe: **2 mm** | Max: **0.4 mm/h**
-- Max. 6h: **1.8 mm**
+- Temperatur: **12.1°C** (Min: 6°C | Max: 16.4°C)
+- Summe: **1.5 mm** | Max: **0.3 mm/h**
+- Max. 6h: **1.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,11 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
+- 🔴 **Herzogstraße**: Letzte Daten vor 141.1 Stunden (07.04. 12:47)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-13 09:39:26 UTC*
+*Stand: 2026-04-13 09:55:47 UTC*
 
 ---
 
