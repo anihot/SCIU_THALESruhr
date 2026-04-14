@@ -10,15 +10,16 @@ events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
 
-THRESHOLD          <- 0.004 # 0.4 cm - Peak-Schwelle (Gruppe muss diese überschreiten)
-LOW_THRESHOLD      <- 0.002 # 0.2 cm - Hysterese-Schwelle für Grenzen (Anstieg/Abfall einschließen)
-MIN_GAP_MINS       <- 90    # Gaps < 90 min → zusammenhängendes Ereignis (vorher 20 min)
+THRESHOLD          <- 0.004 # 0.4 cm - Peak-Schwelle (Seed-Punkte)
+LOW_THRESHOLD      <- 0.002 # 0.2 cm - Schwelle für "erhöht" (active_fraction)
+MIN_GAP_MINS       <- 60    # Gaps < 60 min → zusammenhängendes Ereignis
 MIN_DURATION_MINS  <- 5     # Events kürzer als 5 min = Rauschen / Einzelspike
-MAX_DURATION_MINS  <- 240   # Events länger als 4h werden nicht berücksichtigt
+MAX_DURATION_MINS  <- 180   # Events länger als 3h werden nicht berücksichtigt
 MIN_RISE_MINS      <- 3     # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
 MIN_FALL_MINS      <- 3     # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
 MAX_LOCAL_PEAKS    <- 2     # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
 MAX_PLATEAU_FRAC   <- 0.5   # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
+MIN_ACTIVE_FRAC    <- 0.5   # Min. Anteil Messpunkte im Fenster mit Pegel > LOW_THRESHOLD (filtert Spike-Chains)
 LEAD_IN_HOURS      <- 3     # Niederschlag-Vorlauf-Fenster vor Event-Start
 
 # Load precipitation data once (global, reused across all stations)
@@ -48,10 +49,10 @@ detect_events <- function(df, station_name, precip) {
     # Ensure chronological order
     df <- df %>% arrange(Zeit_Datum)
 
-    # Hysteresis: Grenzen über LOW_THRESHOLD (0.2 cm) ziehen, damit Anstiegs-
-    # und Abfallflanken (die unter 0.4 cm liegen) zum Event gehören.
+    # Seeds: nur Punkte über THRESHOLD bilden Events (keine LOW_THRESHOLD-Aktivität,
+    # um Spike-Chains nicht künstlich zusammenzufassen)
     activity <- df %>%
-        filter(level > LOW_THRESHOLD)
+        filter(level > THRESHOLD)
 
     if (nrow(activity) == 0) {
         return(NULL)
@@ -63,14 +64,7 @@ detect_events <- function(df, station_name, precip) {
             gap       = as.numeric(difftime(Zeit_Datum, lag(Zeit_Datum, default = first(Zeit_Datum)), units = "mins")),
             new_event = ifelse(gap > MIN_GAP_MINS, 1, 0),
             event_id  = cumsum(new_event)
-        ) %>%
-        group_by(event_id) %>%
-        filter(max(level, na.rm = TRUE) > THRESHOLD) %>%  # Gruppe muss Peak-Schwelle überschreiten
-        ungroup()
-
-    if (nrow(activity) == 0) {
-        return(NULL)
-    }
+        )
 
     # Summarize events
     events <- activity %>%
@@ -106,6 +100,19 @@ detect_events <- function(df, station_name, precip) {
             avg_gradient_cm_min = round(avg_gradient_cm_min, 3),
             peak_level_cm       = round(peak_level_m * 100, 2)
         )
+
+    # --- Anti-spike: active_fraction aus dem vollen Zeitfenster (nicht nur Activity) ---
+    # Anteil der Originalmesspunkte im [start_time, end_time]-Fenster, deren Pegel > LOW_THRESHOLD.
+    # Eine Spike-Chain hat zwischen den Peaks meist 0 → niedriger active_fraction.
+    events <- events %>%
+        rowwise() %>%
+        mutate(
+            active_fraction = {
+                slice_lvls <- df$level[df$Zeit_Datum >= start_time & df$Zeit_Datum <= end_time]
+                if (length(slice_lvls) == 0) 0 else round(mean(slice_lvls > LOW_THRESHOLD, na.rm = TRUE), 3)
+            }
+        ) %>%
+        ungroup()
 
     # --- Precipitation context per event (3h lead-in window) ---
     station_precip <- precip %>% filter(station == station_name)
@@ -158,7 +165,8 @@ detect_events <- function(df, station_name, precip) {
             rise_min         >= MIN_RISE_MINS,
             fall_min         >= MIN_FALL_MINS,
             n_local_peaks    <= MAX_LOCAL_PEAKS,
-            plateau_fraction <= MAX_PLATEAU_FRAC
+            plateau_fraction <= MAX_PLATEAU_FRAC,
+            active_fraction  >= MIN_ACTIVE_FRAC
         ) %>%
         select(
             station, start_time, end_time, peak_level_cm, peak_time,
