@@ -20,6 +20,7 @@ MIN_FALL_MINS      <- 3     # Mindestabfallzeit nach dem Peak (filtert Blips/Fah
 MAX_LOCAL_PEAKS    <- 2     # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
 MAX_PLATEAU_FRAC   <- 0.5   # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
 MIN_ACTIVE_FRAC    <- 0.5   # Min. Anteil Messpunkte im Fenster mit Pegel > LOW_THRESHOLD (filtert Spike-Chains)
+MIN_ROLLING_MEDIAN <- 0.002 # Min. Maximum einer rollierenden 3-Punkt-Median (filtert isolierte Spikes)
 LEAD_IN_HOURS      <- 3     # Niederschlag-Vorlauf-Fenster vor Event-Start
 
 # Load precipitation data once (global, reused across all stations)
@@ -110,6 +111,16 @@ detect_events <- function(df, station_name, precip) {
             active_fraction = {
                 slice_lvls <- df$level[df$Zeit_Datum >= start_time & df$Zeit_Datum <= end_time]
                 if (length(slice_lvls) == 0) 0 else round(mean(slice_lvls > LOW_THRESHOLD, na.rm = TRUE), 3)
+            },
+            max_rolling_median = {
+                # Rollierende 3-Punkt-Median: echte Events haben >= 3 aufeinanderfolgende
+                # erhöhte Werte, Spike-Chains brechen dazwischen auf 0 zusammen → Median ≈ 0
+                slice_lvls <- df$level[df$Zeit_Datum >= start_time & df$Zeit_Datum <= end_time]
+                n <- length(slice_lvls)
+                if (n < 3) 0 else {
+                    rm <- sapply(2:(n-1), function(i) median(slice_lvls[(i-1):(i+1)]))
+                    round(max(rm, na.rm = TRUE), 5)
+                }
             }
         ) %>%
         ungroup()
@@ -172,9 +183,10 @@ detect_events <- function(df, station_name, precip) {
             duration_min     <= MAX_DURATION_MINS,
             rise_min         >= MIN_RISE_MINS,
             fall_min         >= MIN_FALL_MINS,
-            n_local_peaks    <= MAX_LOCAL_PEAKS,
-            plateau_fraction <= MAX_PLATEAU_FRAC,
-            active_fraction  >= MIN_ACTIVE_FRAC
+            n_local_peaks      <= MAX_LOCAL_PEAKS,
+            plateau_fraction   <= MAX_PLATEAU_FRAC,
+            active_fraction    >= MIN_ACTIVE_FRAC,
+            max_rolling_median >= MIN_ROLLING_MEDIAN
         ) %>%
         select(
             station, start_time, end_time, peak_level_cm, peak_time,
