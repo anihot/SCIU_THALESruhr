@@ -162,4 +162,7 @@ jobs:
           git add README.md || true
           git add docs/ || true
           git commit -m "Auto-update sensor data, events, risk analysis and dashboard [skip ci]" || echo "No changes to commit"
+          # Rebase auf Remote falls in der Zwischenzeit ein PR gemerged wurde,
+          # sonst scheitert der Push mit "fetch first".
+          git pull --rebase origin main || true
           git push
