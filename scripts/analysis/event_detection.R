@@ -10,10 +10,11 @@ events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
 
-THRESHOLD          <- 0.004 # 0.4 cm - Threshold for flooding detection
-MIN_GAP_MINS       <- 20    # Minimum gap between separate events
+THRESHOLD          <- 0.004 # 0.4 cm - Peak-Schwelle (Gruppe muss diese überschreiten)
+LOW_THRESHOLD      <- 0.002 # 0.2 cm - Hysterese-Schwelle für Grenzen (Anstieg/Abfall einschließen)
+MIN_GAP_MINS       <- 90    # Gaps < 90 min → zusammenhängendes Ereignis (vorher 20 min)
 MIN_DURATION_MINS  <- 5     # Events kürzer als 5 min = Rauschen / Einzelspike
-MAX_DURATION_MINS  <- 60    # Events länger als 60 min werden nicht berücksichtigt
+MAX_DURATION_MINS  <- 240   # Events länger als 4h werden nicht berücksichtigt
 MIN_RISE_MINS      <- 3     # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
 MIN_FALL_MINS      <- 3     # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
 MAX_LOCAL_PEAKS    <- 2     # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
@@ -47,9 +48,10 @@ detect_events <- function(df, station_name, precip) {
     # Ensure chronological order
     df <- df %>% arrange(Zeit_Datum)
 
-    # Filter for potential event points
+    # Hysteresis: Grenzen über LOW_THRESHOLD (0.2 cm) ziehen, damit Anstiegs-
+    # und Abfallflanken (die unter 0.4 cm liegen) zum Event gehören.
     activity <- df %>%
-        filter(level > THRESHOLD)
+        filter(level > LOW_THRESHOLD)
 
     if (nrow(activity) == 0) {
         return(NULL)
@@ -61,7 +63,14 @@ detect_events <- function(df, station_name, precip) {
             gap       = as.numeric(difftime(Zeit_Datum, lag(Zeit_Datum, default = first(Zeit_Datum)), units = "mins")),
             new_event = ifelse(gap > MIN_GAP_MINS, 1, 0),
             event_id  = cumsum(new_event)
-        )
+        ) %>%
+        group_by(event_id) %>%
+        filter(max(level, na.rm = TRUE) > THRESHOLD) %>%  # Gruppe muss Peak-Schwelle überschreiten
+        ungroup()
+
+    if (nrow(activity) == 0) {
+        return(NULL)
+    }
 
     # Summarize events
     events <- activity %>%
