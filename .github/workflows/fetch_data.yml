@@ -92,6 +92,9 @@ jobs:
       - name: Correlate events with precipitation
         run: Rscript scripts/analysis/correlate_events.R
 
+      - name: Generate event plots
+        run: Rscript scripts/visualization/plot_events.R
+
       - name: Lag analysis
         if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/analysis/lag_analysis.R
@@ -144,6 +147,7 @@ jobs:
           git add data/output/plots/lag_*.png || true
           git add data/output/sensor_map.html || true
           git add data/output/graphs/*.html || true
+          git add data/output/event_plots/*.html || true
           git add data/output/all_detected_events.xlsx || true
           git add data/output/events_summary_table.md || true
           if [ -d "data/metadata" ]; then
