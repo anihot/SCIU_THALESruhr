@@ -16,15 +16,16 @@ historical_log <- "data/metadata/historical_verified_events.csv"
 historical_md  <- "data/metadata/historical_verified_events.md"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
 
-THRESHOLD          <- 0.004  # 0.4 cm - Peak-Schwelle
-LOW_THRESHOLD      <- 0.002  # 0.2 cm - Hysterese für Event-Grenzen
-MIN_GAP_MINS       <- 90     # Gaps < 90 min → zusammenhängendes Ereignis
+THRESHOLD          <- 0.004  # 0.4 cm - Seed-Schwelle
+LOW_THRESHOLD      <- 0.002  # 0.2 cm - Schwelle für "erhöht" (active_fraction)
+MIN_GAP_MINS       <- 60     # Gaps < 60 min → zusammenhängendes Ereignis
 MIN_DURATION_MINS  <- 5   # Events kürzer als 5 min = Rauschen / Einzelspike
-MAX_DURATION_MINS  <- 240 # Events länger als 4h werden nicht berücksichtigt
+MAX_DURATION_MINS  <- 180 # Events länger als 3h werden nicht berücksichtigt
 MIN_RISE_MINS      <- 3   # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
 MIN_FALL_MINS      <- 3   # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
 MAX_LOCAL_PEAKS    <- 2   # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
 MAX_PLATEAU_FRAC   <- 0.5 # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
+MIN_ACTIVE_FRAC    <- 0.5 # Min. Anteil Messpunkte mit Pegel > LOW_THRESHOLD (filtert Spike-Chains)
 LEAD_IN_HOURS      <- 3   # Niederschlag-Vorlauf-Fenster vor Event-Start
 
 cat("=== Retrospective Event Analysis ===\n")
@@ -37,8 +38,8 @@ detect_events <- function(df, station_name) {
 
     df <- df %>% arrange(Zeit_Datum)
 
-    # Hysterese: Grenzen über LOW_THRESHOLD ziehen, Peak muss THRESHOLD überschreiten
-    activity <- df %>% filter(level > LOW_THRESHOLD)
+    # Seeds: Punkte über THRESHOLD (keine LOW_THRESHOLD-Gruppierung → vermeidet Spike-Chain-Merges)
+    activity <- df %>% filter(level > THRESHOLD)
     if (nrow(activity) == 0) return(NULL)
 
     activity <- activity %>%
@@ -46,12 +47,7 @@ detect_events <- function(df, station_name) {
             gap       = as.numeric(difftime(Zeit_Datum, lag(Zeit_Datum, default = first(Zeit_Datum)), units = "mins")),
             new_event = ifelse(gap > MIN_GAP_MINS, 1, 0),
             event_id  = cumsum(new_event)
-        ) %>%
-        group_by(event_id) %>%
-        filter(max(level, na.rm = TRUE) > THRESHOLD) %>%
-        ungroup()
-
-    if (nrow(activity) == 0) return(NULL)
+        )
 
     events <- activity %>%
         group_by(event_id) %>%
@@ -91,13 +87,22 @@ detect_events <- function(df, station_name) {
                 TRUE ~ "Leichter Regen / Unterhalb DWD-Schwelle"
             )
         ) %>%
+        rowwise() %>%
+        mutate(
+            active_fraction = {
+                slice_lvls <- df$level[df$Zeit_Datum >= start_time & df$Zeit_Datum <= end_time]
+                if (length(slice_lvls) == 0) 0 else round(mean(slice_lvls > LOW_THRESHOLD, na.rm = TRUE), 3)
+            }
+        ) %>%
+        ungroup() %>%
         filter(
             duration_min     >= MIN_DURATION_MINS,
             duration_min     <= MAX_DURATION_MINS,
             rise_min         >= MIN_RISE_MINS,
             fall_min         >= MIN_FALL_MINS,
             n_local_peaks    <= MAX_LOCAL_PEAKS,
-            plateau_fraction <= MAX_PLATEAU_FRAC
+            plateau_fraction <= MAX_PLATEAU_FRAC,
+            active_fraction  >= MIN_ACTIVE_FRAC
         ) %>%
         select(station, start_time, end_time, peak_level_cm, peak_time,
                duration_min, avg_gradient_cm_min, event_type, points_count) %>%
