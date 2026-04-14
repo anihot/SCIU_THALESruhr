@@ -91,16 +91,33 @@ process_sensor_file <- function(file_path) {
         cat("Note: Removed", num_unrealistic, "unrealistic data points (> 1m) for", station_name, "\n")
     }
 
-    # 4. Filter Noise (Cars)
-    # Sudden spikes (back and forth) are likely cars.
-    # Threshold for "spike": e.g., > 10cm jump compared to previous AND next value
-    # Or simply a jump larger than expected for rain events.
+    # 4. Filter Noise (Cars / isolated single-point spikes)
+    # (a) Rollierende 3-Punkt-Median: ersetzt jeden Punkt durch den Median aus
+    #     sich selbst und seinen beiden Nachbarn. Einzelne Spike-Werte (Auto,
+    #     Vibration) verschwinden, weil die Nachbarn meist 0 sind. Mehrere
+    #     aufeinanderfolgende erhöhte Werte (echter Wasserstand) bleiben erhalten.
+    # (b) Großer Spike-Filter (>5 cm/min zwischen Nachbarpunkten) als Fallback.
+
+    n_lvl <- nrow(df)
+    level_smoothed <- df$level_final
+    if (n_lvl >= 3) {
+        lvl_prev <- dplyr::lag(df$level_final)
+        lvl_next <- dplyr::lead(df$level_final)
+        # Elementweiser Median über (prev, curr, next); NA an Rändern → Originalwert
+        mid_idx <- 2:(n_lvl - 1)
+        level_smoothed[mid_idx] <- mapply(function(a, b, c) median(c(a, b, c)),
+                                          lvl_prev[mid_idx],
+                                          df$level_final[mid_idx],
+                                          lvl_next[mid_idx])
+    }
+    df$level_final <- level_smoothed
+
     threshold <- 0.05 # 5cm per minute is quite a lot for normal flooding
 
     df_cleaned <- df %>%
         mutate(
-            diff_prev = abs(calculated_level - lag(calculated_level)),
-            diff_next = abs(calculated_level - lead(calculated_level)),
+            diff_prev = abs(level_final - lag(level_final)),
+            diff_next = abs(level_final - lead(level_final)),
             is_car = ifelse(!is.na(diff_prev) & diff_prev > threshold & !is.na(diff_next) & diff_next > threshold, TRUE, FALSE)
         ) %>%
         filter(!is_car) %>%

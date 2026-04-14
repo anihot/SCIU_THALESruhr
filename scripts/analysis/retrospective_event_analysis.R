@@ -218,8 +218,7 @@ if (precip_available) {
     # Wasserbaulabor_2 ist ein Indoor-Testsensor und wird immer behalten.
     n_before         <- nrow(events_df)
     events_df        <- events_df %>%
-        filter(radolan_verified == TRUE |
-               is.na(radolan_verified) |
+        filter((!is.na(radolan_verified) & radolan_verified == TRUE) |
                grepl("Wasserbaulabor", station, ignore.case = TRUE))
     verified_count   <- nrow(events_df)
     unverified_count <- n_before - verified_count
