@@ -1,81 +1,30 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","points_count"
-"Königsallee_Springorum","2026/04/10 03:40:00","2026/04/10 05:36:30",2.7,"2026/04/10 04:44:30",116.5,0.042,"Regenereignis / Natürlich",NA,NA,NA,5
 "Herzogstraße","2026/04/02 05:20:00","2026/04/02 07:35:00",17.6,"2026/04/02 07:28:00",135,0.137,"Regenereignis / Natürlich",NA,NA,NA,114
 "Herzogstraße","2026/04/01 07:56:00","2026/04/01 08:51:00",19,"2026/04/01 08:30:00",55,0.557,"Sturzflut-Ereignis",NA,NA,NA,50
-"An_der_Kost","2026/03/14 05:30:00","2026/03/14 06:07:30",1,"2026/03/14 05:58:30",37.5,0.035,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,4
-"Königsallee_Springorum","2026/03/10 05:06:30","2026/03/10 07:46:00",0.6,"2026/03/10 06:47:00",159.5,0.006,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,7
-"Königsallee_Springorum","2026/03/08 04:01:00","2026/03/08 07:17:00",0.5,"2026/03/08 04:37:00",196,0.014,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,25
-"Herzogstraße","2026/03/04 06:55:00","2026/03/04 08:45:00",26.6,"2026/03/04 08:36:00",110,0.263,"Regenereignis / Natürlich",NA,NA,NA,36
 "Herzogstraße","2026/03/03 13:24:00","2026/03/03 15:46:00",38.9,"2026/03/03 14:20:00",142,0.693,"Sturzflut-Ereignis",NA,NA,NA,142
-"Königsallee_Springorum","2026/03/03 01:12:00","2026/03/03 02:28:00",0.5,"2026/03/03 02:12:00",76,0.008,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,3
-"Herzogstraße","2026/03/02 10:46:00","2026/03/02 12:33:00",23,"2026/03/02 12:17:00",107,0.252,"Regenereignis / Natürlich",NA,NA,NA,49
 "Herzogstraße","2026/03/02 04:25:00","2026/03/02 06:18:00",26.7,"2026/03/02 06:15:00",113,0.243,"Regenereignis / Natürlich",NA,NA,NA,69
-"Königsallee_Springorum","2026/02/27 04:41:00","2026/02/27 07:38:00",1,"2026/02/27 07:09:00",177,0.007,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,9
-"An_der_Kost","2026/02/17 09:59:00","2026/02/17 10:44:00",0.6,"2026/02/17 10:05:00",45,0.098,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,30
-"Königsallee_Springorum","2026/02/17 04:38:00","2026/02/17 07:02:00",0.5,"2026/02/17 05:04:00",144,0.019,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,38
-"Königsallee_Springorum","2026/02/16 09:21:00","2026/02/16 10:46:00",0.9,"2026/02/16 09:52:00",85,0.029,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,14
-"Herzogstraße","2026/02/16 03:51:00","2026/02/16 07:26:00",2.8,"2026/02/16 07:00:00",215,0.015,"Regenereignis / Natürlich",NA,NA,NA,226
-"Königsallee_Springorum","2026/02/10 04:57:00","2026/02/10 07:57:00",0.6,"2026/02/10 07:02:00",180,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,20
-"Herzogstraße","2026/02/07 14:04:00","2026/02/07 17:07:00",37,"2026/02/07 16:32:00",183,0.25,"Regenereignis / Natürlich",NA,NA,NA,368
-"Herzogstraße","2026/02/06 10:52:00","2026/02/06 14:52:00",7.6,"2026/02/06 11:18:00",240,0.291,"Regenereignis / Natürlich",NA,NA,NA,466
-"An_der_Kost","2026/01/28 22:04:00","2026/01/29 01:11:00",0.5,"2026/01/29 01:08:00",187,0.003,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,102
-"Herzogstraße","2026/01/28 07:14:00","2026/01/28 09:52:00",36.6,"2026/01/28 08:18:00",158,0.571,"Sturzflut-Ereignis",NA,NA,NA,176
-"Königsallee_Springorum","2026/01/28 06:57:00","2026/01/28 07:31:00",0.6,"2026/01/28 07:06:00",34,0.066,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
+"Herzogstraße","2026/02/17 20:26:00","2026/02/17 23:11:00",3.5,"2026/02/17 20:33:00",165,0.493,"Regenereignis / Natürlich",NA,NA,NA,278
+"Herzogstraße","2026/02/16 09:10:00","2026/02/16 09:36:00",3,"2026/02/16 09:20:00",26,0.297,"Sturzflut-Ereignis",NA,NA,NA,44
+"Herzogstraße","2026/02/16 05:00:00","2026/02/16 07:26:00",2.8,"2026/02/16 07:00:00",146,0.023,"Regenereignis / Natürlich",NA,NA,NA,218
+"Herzogstraße","2026/01/28 07:14:00","2026/01/28 08:24:00",36.6,"2026/01/28 08:18:00",70,0.571,"Sturzflut-Ereignis",NA,NA,NA,120
 "Herzogstraße","2026/01/27 05:57:00","2026/01/27 06:26:00",29.7,"2026/01/27 06:08:00",29,2.676,"Sturzflut-Ereignis",NA,NA,NA,60
-"Herzogstraße","2026/01/23 11:06:00","2026/01/23 13:45:00",34.5,"2026/01/23 11:57:00",159,0.675,"Sturzflut-Ereignis",NA,NA,NA,110
-"Herzogstraße","2026/01/23 06:03:00","2026/01/23 09:12:00",35.2,"2026/01/23 09:07:00",189,0.191,"Regenereignis / Natürlich",NA,NA,NA,174
-"Wasserstraße_Springorum","2026/01/21 17:36:00","2026/01/21 20:46:00",5.1,"2026/01/21 19:13:00",190,0.053,"Regenereignis / Natürlich",NA,NA,NA,10
-"Wasserstraße_Springorum","2026/01/21 08:14:00","2026/01/21 09:59:00",5.2,"2026/01/21 08:33:00",105,0.272,"Regenereignis / Natürlich",NA,NA,NA,10
-"Wasserstraße_Springorum","2026/01/20 15:50:00","2026/01/20 18:50:00",5.4,"2026/01/20 17:45:00",180,0.047,"Regenereignis / Natürlich",NA,NA,NA,16
+"Herzogstraße","2026/01/23 11:06:00","2026/01/23 12:02:00",34.5,"2026/01/23 11:57:00",56,0.675,"Sturzflut-Ereignis",NA,NA,NA,80
+"Herzogstraße","2026/01/22 13:49:00","2026/01/22 15:16:00",16.9,"2026/01/22 14:27:00",87,0.444,"Regenereignis / Natürlich",NA,NA,NA,130
 "Herzogstraße","2026/01/20 06:13:00","2026/01/20 08:13:00",20.2,"2026/01/20 07:14:00",120,0.331,"Regenereignis / Natürlich",NA,NA,NA,162
-"Königsallee_Springorum","2026/01/14 03:55:00","2026/01/14 04:47:00",0.5,"2026/01/14 04:05:00",52,0.05,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
 "Herzogstraße","2026/01/12 13:47:00","2026/01/12 14:01:00",3.9,"2026/01/12 13:50:00",14,1.258,"Sturzflut-Ereignis",NA,NA,NA,15
-"Königsallee_Springorum","2026/01/09 06:15:00","2026/01/09 07:48:00",0.5,"2026/01/09 07:33:00",93,0.006,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
-"Königsallee_Springorum","2026/01/09 02:56:00","2026/01/09 04:16:00",0.5,"2026/01/09 03:28:00",80,0.016,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,4
-"Herzogstraße","2026/01/06 06:39:00","2026/01/06 09:41:00",1.1,"2026/01/06 09:28:00",182,0.007,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,46
-"Herzogstraße","2026/01/04 04:23:00","2026/01/04 04:30:00",1,"2026/01/04 04:26:00",7,0.323,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
-"Herzogstraße","2026/01/03 02:33:00","2026/01/03 04:37:00",0.6,"2026/01/03 02:55:00",124,0.027,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,94
-"Herzogstraße","2026/01/02 20:14:00","2026/01/02 21:13:00",0.9,"2026/01/02 20:22:00",59,0.111,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
-"Herzogstraße","2026/01/02 01:57:00","2026/01/02 02:16:00",0.8,"2026/01/02 02:01:00",19,0.195,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
-"Herzogstraße","2026/01/01 19:04:00","2026/01/01 19:32:00",0.7,"2026/01/01 19:29:00",28,0.028,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,5
-"Wasserstraße_Springorum","2025/12/29 00:16:00","2025/12/29 03:23:00",0.5,"2025/12/29 00:37:00",187,0.024,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
+"Herzogstraße","2026/01/04 06:19:00","2026/01/04 06:39:00",2,"2026/01/04 06:23:00",20,0.488,"Regenereignis / Natürlich",NA,NA,NA,21
+"Herzogstraße","2025/12/31 12:13:00","2025/12/31 14:03:00",1.5,"2025/12/31 13:15:00",110,0.024,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,81
+"Herzogstraße","2025/12/31 05:30:00","2025/12/31 06:44:00",1.2,"2025/12/31 06:25:00",74,0.022,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,48
 "Herzogstraße","2025/12/23 07:02:00","2025/12/23 08:29:00",17.9,"2025/12/23 08:03:00",87,0.293,"Regenereignis / Natürlich",NA,NA,NA,65
-"Herzogstraße","2025/12/19 14:32:00","2025/12/19 16:52:00",34.9,"2025/12/19 14:57:00",140,1.39,"Sturzflut-Ereignis",NA,NA,NA,71
+"Herzogstraße","2025/12/19 14:32:00","2025/12/19 15:15:00",34.9,"2025/12/19 14:57:00",43,1.39,"Sturzflut-Ereignis",NA,NA,NA,44
 "Herzogstraße","2025/12/17 10:42:00","2025/12/17 12:59:00",31.5,"2025/12/17 12:51:00",137,0.244,"Regenereignis / Natürlich",NA,NA,NA,82
 "Herzogstraße","2025/12/17 07:35:00","2025/12/17 08:50:00",10.7,"2025/12/17 08:32:00",75,0.187,"Regenereignis / Natürlich",NA,NA,NA,66
 "Herzogstraße","2025/12/16 14:26:00","2025/12/16 14:50:00",29.4,"2025/12/16 14:39:00",24,2.244,"Sturzflut-Ereignis",NA,NA,NA,25
-"Herzogstraße","2025/12/16 10:52:00","2025/12/16 11:56:00",35.2,"2025/12/16 11:46:00",64,0.651,"Sturzflut-Ereignis",NA,NA,NA,28
 "Herzogstraße","2025/12/15 10:51:00","2025/12/15 11:09:00",8.2,"2025/12/15 11:06:00",18,0.543,"Sturzflut-Ereignis",NA,NA,NA,19
 "Herzogstraße","2025/12/15 07:30:00","2025/12/15 09:08:00",14.3,"2025/12/15 09:01:00",98,0.157,"Regenereignis / Natürlich",NA,NA,NA,71
-"Wasserstraße_Springorum","2025/12/14 11:33:00","2025/12/14 13:17:00",0.6,"2025/12/14 12:51:00",104,0.008,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,3
-"Herzogstraße","2025/12/08 23:28:00","2025/12/08 23:41:00",1.2,"2025/12/08 23:31:00",13,0.387,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
-"Königsallee_Springorum","2025/12/05 00:33:00","2025/12/05 03:27:00",0.5,"2025/12/05 02:17:00",174,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,21
-"Königsallee_Springorum","2025/12/04 20:15:00","2025/12/04 23:00:00",0.5,"2025/12/04 20:26:00",165,0.045,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
-"Wasserstraße_Springorum","2025/12/02 15:27:00","2025/12/02 16:55:00",2.1,"2025/12/02 16:19:00",88,0.04,"Regenereignis / Natürlich",NA,NA,NA,5
-"Königsallee_Springorum","2025/11/29 15:23:00","2025/11/29 18:30:00",0.5,"2025/11/29 16:50:00",187,0.006,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,4
-"Königsallee_Springorum","2025/11/21 23:53:00","2025/11/22 02:36:00",0.5,"2025/11/22 00:36:00",163,0.012,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,10
-"Königsallee_Springorum","2025/11/21 16:22:00","2025/11/21 17:23:00",0.6,"2025/11/21 16:57:00",61,0.017,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
-"Herzogstraße","2025/11/14 13:38:00","2025/11/14 17:21:00",37.2,"2025/11/14 16:11:00",223,0.243,"Regenereignis / Natürlich",NA,NA,NA,102
-"Königsallee_Springorum","2025/11/13 09:03:00","2025/11/13 09:47:00",0.5,"2025/11/13 09:43:00",44,0.012,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,12
+"Herzogstraße","2025/11/25 01:04:00","2025/11/25 01:12:00",0.8,"2025/11/25 01:09:00",8,0.157,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,7
+"Herzogstraße","2025/11/15 08:22:00","2025/11/15 10:41:00",2.2,"2025/11/15 09:23:00",139,0.036,"Regenereignis / Natürlich",NA,NA,NA,140
 "Herzogstraße","2025/11/12 11:07:00","2025/11/12 11:58:00",16.7,"2025/11/12 11:46:00",51,0.427,"Regenereignis / Natürlich",NA,NA,NA,29
-"Wasserstraße_Springorum","2025/11/10 17:24:00","2025/11/10 21:10:00",0.8,"2025/11/10 18:20:00",226,0.014,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,13
-"Herzogstraße","2025/11/08 15:37:00","2025/11/08 19:28:00",38.5,"2025/11/08 16:20:00",231,0.893,"Sturzflut-Ereignis",NA,NA,NA,232
-"Königsallee_Springorum","2025/11/03 12:05:00","2025/11/03 12:29:00",0.8,"2025/11/03 12:11:00",24,0.131,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,3
-"Wasserstraße_Springorum","2025/11/01 07:01:00","2025/11/01 08:18:00",0.5,"2025/11/01 07:28:00",77,0.018,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,5
-"Herzogstraße","2025/10/31 06:32:00","2025/10/31 07:50:00",0.8,"2025/10/31 06:45:00",78,0.061,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,10
-"Herzogstraße","2025/10/26 06:04:00","2025/10/26 06:19:00",1.4,"2025/10/26 06:15:00",15,0.126,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,15
-"Königsallee_Springorum","2025/10/22 21:55:00","2025/10/22 23:13:00",0.5,"2025/10/22 22:56:00",78,0.008,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,7
-"Wasserstraße_Springorum","2025/10/15 10:40:00","2025/10/15 12:12:00",0.6,"2025/10/15 11:50:00",92,0.009,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,7
 "Herzogstraße","2025/10/13 05:15:00","2025/10/13 07:26:00",38,"2025/10/13 06:02:00",131,0.807,"Sturzflut-Ereignis",NA,NA,NA,81
-"Königsallee_Springorum","2025/10/12 17:41:00","2025/10/12 20:03:00",0.5,"2025/10/12 18:14:00",142,0.015,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,22
-"Wasserstraße_Springorum","2025/10/09 11:39:00","2025/10/09 11:49:00",1.1,"2025/10/09 11:44:00",10,0.216,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
-"Herzogstraße","2025/10/08 12:11:00","2025/10/08 15:36:00",29.2,"2025/10/08 12:47:00",205,0.809,"Sturzflut-Ereignis",NA,NA,NA,144
-"Wasserbaulabor_2","2025/09/06 23:00:00","2025/09/07 03:00:00",0.5,"2025/09/06 23:45:00",240,0.011,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,7
-"Wasserbaulabor_2","2025/09/06 09:30:00","2025/09/06 13:15:00",0.5,"2025/09/06 11:00:00",225,0.006,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
-"Wasserbaulabor_2","2025/09/04 17:45:00","2025/09/04 20:15:00",0.5,"2025/09/04 18:15:00",150,0.017,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
-"Wasserbaulabor_2","2025/09/04 00:15:00","2025/09/04 04:00:00",0.5,"2025/09/04 02:30:00",225,0.004,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,8
-"Wasserbaulabor_2","2025/09/02 18:00:00","2025/09/02 21:30:00",0.8,"2025/09/02 20:45:00",210,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,6
-"An_der_Kost","2025/08/30 09:18:30","2025/08/30 12:12:30",0.6,"2025/08/30 11:47:00",174,0.004,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,12
-"An_der_Kost","2025/07/31 12:44:30","2025/07/31 15:25:00",0.5,"2025/07/31 13:10:00",160.5,0.02,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,7
-"Wasserbaulabor_2","2025/02/26 21:45:00","2025/02/27 01:15:00",29.2,"2025/02/26 23:45:00",210,0.243,"Regenereignis / Natürlich",NA,NA,NA,7
-"Wasserbaulabor_2","2025/02/22 19:15:00","2025/02/22 21:00:00",20.4,"2025/02/22 20:30:00",105,0.272,"Regenereignis / Natürlich",NA,NA,NA,6
+"Herzogstraße","2025/10/10 05:39:00","2025/10/10 07:56:00",35.1,"2025/10/10 06:32:00",137,0.661,"Sturzflut-Ereignis",NA,NA,NA,82
+"Herzogstraße","2025/10/03 23:26:00","2025/10/03 23:46:00",1.5,"2025/10/03 23:33:00",20,0.211,"Leichter Regen / Unterhalb DWD-Schwelle",NA,NA,NA,13
