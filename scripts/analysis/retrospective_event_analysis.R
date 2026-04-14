@@ -164,12 +164,22 @@ if (file.exists(precip_file)) {
 # ── 3. Correlate Events with RADOLAN Precipitation (pro Sensor) ──────────────
 
 if (precip_available) {
+    precip_stations_unique <- unique(precip$station)
+    match_precip_station <- function(st) {
+        st_norm <- gsub("_", " ", st)
+        m <- precip_stations_unique[
+            sapply(precip_stations_unique, function(ps) grepl(ps, st_norm, fixed = TRUE))
+        ]
+        if (length(m) > 0) m[1] else st
+    }
+
     precip_stats <- purrr::pmap_dfr(
         list(events_df$station, events_df$start_time, events_df$end_time),
         function(st, t_start, t_end) {
+            precip_key <- match_precip_station(st)
             # RADOLAN-Daten für diese Station im Zeitfenster (3h Vorlauf + Event)
             station_precip <- precip %>%
-                dplyr::filter(station == st,
+                dplyr::filter(station == precip_key,
                               timestamp >= (t_start - hours(LEAD_IN_HOURS)),
                               timestamp <= t_end)
             data.frame(
