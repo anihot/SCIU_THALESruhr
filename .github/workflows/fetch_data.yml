@@ -125,6 +125,11 @@ jobs:
             mkdir -p docs/graphs
             cp data/output/graphs/*.html docs/graphs/ 2>/dev/null || true
           fi
+          if [ -d "data/output/event_plots" ]; then
+            rm -rf docs/event_plots
+            mkdir -p docs/event_plots
+            cp data/output/event_plots/*.html docs/event_plots/ 2>/dev/null || true
+          fi
 
       - name: Commit and push changes
         run: |
