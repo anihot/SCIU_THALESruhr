@@ -22,10 +22,17 @@ r_output.txt
 !data/metadata/historical_verified_events.md
 !data/processed/detected_events.csv
 !data/processed/detected_events.md
+!data/processed/retrospective_events.csv
+!data/processed/retrospective_events.md
 !data/processed/precipitation_at_sensors.csv
 !data/processed/precipitation_hourly_at_sensors.csv
 !data/processed/weather_forecast.csv
 !data/processed/schillerschule_analysiert.csv
+!data/processed/lag_analysis.csv
+!data/processed/lag_report.md
+!data/processed/events_by_station/
+!data/processed/events_by_station/*.csv
+!data/processed/events_by_station/*.md
 
 # Project specific data that should not be on GitHub
 data/rain_extra/schillerschule/
@@ -43,3 +50,7 @@ data/processed/tmp_radolan/
 !data/output/sensor_map_files/
 !data/output/all_detected_events.xlsx
 !data/output/events_summary_table.md
+!data/output/graphs/
+!data/output/graphs/*.html
+!data/output/event_plots/
+!data/output/event_plots/*.html
