@@ -24,15 +24,15 @@ events <- read_csv(events_file, show_col_types = FALSE) %>%
 
 cat("Loaded", nrow(events), "events from detection.\n")
 
-# 2. Filter: keep rain-verified events + events without precipitation data
-#    - radolan_verified == TRUE  → RADOLAN confirmed rain
-#    - is.na(radolan_verified)   → no precipitation data available, retain to avoid false negatives
-#    - Wasserbaulabor_2          → indoor test sensor, always kept
+# 2. Filter: strikte RADOLAN-Pflicht
+#    - radolan_verified == TRUE  → RADOLAN hat Regen bestätigt → behalten
+#    - Wasserbaulabor (indoor)   → Whitelist
+#    - alles andere (FALSE/NA)   → verworfen. Ohne Regen gibt es hydrologisch
+#      keine Flut; solche "Events" sind Sensorrauschen.
 correlation <- events %>%
     filter(
-        radolan_verified == TRUE |
-        is.na(radolan_verified) |
-        station == "Wasserbaulabor_2"
+        (!is.na(radolan_verified) & radolan_verified == TRUE) |
+        grepl("Wasserbaulabor", station, ignore.case = TRUE)
     )
 
 cat("Retained", nrow(correlation), "out of", nrow(events), "events after rain filter.\n")
