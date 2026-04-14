@@ -2,6 +2,7 @@
 
 |station                |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|radolan_verified | points_count|
 |:----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|---------------:|------------------:|:----------------|------------:|
+|Königsallee_Springorum |2026-04-13 23:38:00 |2026-04-14 00:23:30 |           0.6|2026-04-14 00:16:00 |         45.5|               0.016|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            9|
 |Königsallee_Springorum |2026-04-12 02:34:30 |2026-04-12 03:20:30 |           0.8|2026-04-12 03:07:00 |         46.0|               0.025|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            8|
 |Königsallee_Springorum |2026-04-11 19:17:00 |2026-04-11 19:54:30 |           0.8|2026-04-11 19:47:00 |         37.5|               0.027|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |           11|
 |Königsallee_Springorum |2026-04-02 01:44:00 |2026-04-02 01:51:00 |           0.6|2026-04-02 01:48:00 |          7.0|               0.146|Leichter Regen / Unterhalb DWD-Schwelle |              NA|                 NA|NA               |            4|
