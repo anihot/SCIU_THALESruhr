@@ -110,15 +110,8 @@ for (i in seq_len(nrow(events))) {
         precip_station_name <- if (length(matched_precip_station) > 0) matched_precip_station[1] else ev$station
 
         radolan <- precip %>%
-            filter(station == precip_station_name, timestamp >= t_start, timestamp <= t_end)
-
-        # Auf Stundensummen aggregieren (konsistent mit Kartenplots)
-        if (nrow(radolan) > 0) {
-            radolan <- radolan %>%
-                mutate(hour = floor_date(timestamp, "hour")) %>%
-                group_by(timestamp = hour) %>%
-                summarise(precipitation_mm = sum(precipitation_mm, na.rm = TRUE), .groups = "drop")
-        }
+            filter(station == precip_station_name, timestamp >= t_start, timestamp <= t_end) %>%
+            arrange(timestamp)
     }
 
     has_rain <- !is.null(radolan) && nrow(radolan) > 0
@@ -145,16 +138,17 @@ for (i in seq_len(nrow(events))) {
             hovertemplate = "Pegel: %{y:.2f} cm<extra></extra>"
         )
 
-    # RADOLAN-Balken
+    # RADOLAN-Ganglinie (5-min-Werte)
     max_precip <- 1
     if (has_rain) {
         max_precip <- max(c(radolan$precipitation_mm, 1), na.rm = TRUE)
         p <- p %>% add_trace(
             data = radolan, x = ~timestamp, y = ~precipitation_mm,
-            type = "bar", name = "Regen (RADOLAN)",
+            type = "scatter", mode = "lines", name = "Regen (RADOLAN, 5 min)",
             yaxis = "y2",
-            marker = list(color = "rgba(0, 158, 115, 0.6)"),
-            hovertemplate = "Regen: %{y:.2f} mm/h<extra></extra>"
+            line = list(color = "rgba(0, 158, 115, 0.9)", width = 1.5, shape = "hv"),
+            fill = "tozeroy", fillcolor = "rgba(0, 158, 115, 0.2)",
+            hovertemplate = "Regen: %{y:.2f} mm/5min<extra></extra>"
         )
     }
 
@@ -176,7 +170,7 @@ for (i in seq_len(nrow(events))) {
         xaxis  = list(title = "", gridcolor = "#eeeeee"),
         yaxis  = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left",
                       range = c(0, y_max)),
-        yaxis2 = list(title = "Regen (mm/h)", overlaying = "y", side = "right",
+        yaxis2 = list(title = "Regen (mm/5min)", overlaying = "y", side = "right",
                       showgrid = FALSE, zeroline = TRUE,
                       range = c(0, max_precip * 1.3)),
         shapes     = event_shapes,
