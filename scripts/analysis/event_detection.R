@@ -115,7 +115,15 @@ detect_events <- function(df, station_name, precip) {
         ungroup()
 
     # --- Precipitation context per event (3h lead-in window) ---
-    station_precip <- precip %>% filter(station == station_name)
+    # Fuzzy-Matching: precip-Station (z.B. "Königsallee") gegen station_name
+    # (z.B. "Königsallee_Springorum_merged_export"). Suche nach Substring.
+    precip_stations <- unique(precip$station)
+    station_name_norm <- gsub("_", " ", gsub("_merged_export$", "", station_name))
+    matched_precip <- precip_stations[
+        sapply(precip_stations, function(ps) grepl(ps, station_name_norm, fixed = TRUE))
+    ]
+    precip_station_key <- if (length(matched_precip) > 0) matched_precip[1] else station_name
+    station_precip <- precip %>% filter(station == precip_station_key)
 
     if (nrow(station_precip) > 0) {
         events <- events %>%
