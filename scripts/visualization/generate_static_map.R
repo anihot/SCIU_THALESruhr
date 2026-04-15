@@ -14,8 +14,9 @@ if (!file.exists(metadata_file)) {
     stop("Metadata file not found: ", metadata_file)
 }
 
-# 1. Load coordinates
-sensors <- read_csv(metadata_file, show_col_types = FALSE)
+# 1. Load coordinates (Herzogstraße in Metadaten für fetch_radolan, aber auf Karten ausgeblendet)
+sensors <- read_csv(metadata_file, show_col_types = FALSE) %>%
+    filter(station != "Herzogstraße")
 
 # Manual label offsets to avoid overlapping labels
 # Wasserstraße and Königsallee are very close together

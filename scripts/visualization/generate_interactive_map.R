@@ -31,7 +31,10 @@ if (file_exists(forecast_file)) {
 if (!dir_exists(path_dir(output_file))) dir_create(path_dir(output_file))
 if (!dir_exists(graphs_dir)) dir_create(graphs_dir)
 
-sensors <- read_csv(metadata_file, show_col_types = FALSE)
+sensors <- read_csv(metadata_file, show_col_types = FALSE) %>%
+    # Herzogstraße ist in der Metadaten-Datei für fetch_radolan.R gelistet,
+    # wird aber auf der Karte ausgeblendet, weil der Sensor derzeit inaktiv ist.
+    filter(station != "Herzogstraße")
 
 # We will store the popup iframe strings here
 popup_vec <- character(nrow(sensors))
