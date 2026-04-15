@@ -301,7 +301,12 @@ async function buildDashboard() {
                 if (trimmed.includes('Wetterausblick')) {
                     weatherHtml = md2html(trimmed);
                 } else if (trimmed.includes('Sensor-Status')) {
-                    sensorHtml = md2html(trimmed);
+                    // Herzogstraße aus der Sensor-Status-Anzeige ausblenden
+                    const filtered = trimmed
+                        .split('\n')
+                        .filter(line => !/Herzogstra[ßs]e/i.test(line))
+                        .join('\n');
+                    sensorHtml = md2html(filtered);
                 } else if (trimmed.includes('Keine neuen Ereignisse') || trimmed.includes('Ereignisse')) {
                     eventsHtml = md2html(trimmed);
                     // Zeitstempel extrahieren
