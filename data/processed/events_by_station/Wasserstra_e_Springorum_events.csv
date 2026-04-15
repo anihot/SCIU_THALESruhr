@@ -1,0 +1,21 @@
+﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","points_count"
+"Wasserstraße_Springorum","2026/03/11 11:09:00","2026/03/11 12:06:00",6.1,"2026/03/11 11:31:00",57,0.276,"Regenereignis / Natürlich",82
+"Wasserstraße_Springorum","2025/12/09 05:36:00","2025/12/09 05:56:00",3.6,"2025/12/09 05:41:00",20,0.706,"Sturzflut-Ereignis",8
+"Wasserstraße_Springorum","2025/11/30 16:16:00","2025/11/30 16:28:00",1.8,"2025/11/30 16:21:00",12,0.353,"Leichter Regen / Unterhalb DWD-Schwelle",3
+"Wasserstraße_Springorum","2025/11/24 14:12:00","2025/11/24 14:24:00",4.2,"2025/11/24 14:19:00",12,0.592,"Sturzflut-Ereignis",12
+"Wasserstraße_Springorum","2025/11/11 01:47:00","2025/11/11 02:08:00",5.2,"2025/11/11 02:05:00",21,0.287,"Sturzflut-Ereignis",12
+"Wasserstraße_Springorum","2025/11/02 10:23:00","2025/11/02 11:20:00",3.3,"2025/11/02 10:50:00",57,0.122,"Regenereignis / Natürlich",35
+"Wasserstraße_Springorum","2025/11/02 01:50:00","2025/11/02 02:38:00",2.6,"2025/11/02 02:16:00",48,0.1,"Regenereignis / Natürlich",20
+"Wasserstraße_Springorum","2025/11/01 23:44:00","2025/11/02 00:18:00",4,"2025/11/02 00:00:00",34,0.248,"Sturzflut-Ereignis",18
+"Wasserstraße_Springorum","2025/11/01 21:02:00","2025/11/01 21:28:00",3.1,"2025/11/01 21:07:00",26,0.608,"Sturzflut-Ereignis",12
+"Wasserstraße_Springorum","2025/11/01 10:39:00","2025/11/01 11:23:00",4.1,"2025/11/01 10:58:00",44,0.215,"Sturzflut-Ereignis",22
+"Wasserstraße_Springorum","2025/10/21 10:10:00","2025/10/21 10:42:00",7.6,"2025/10/21 10:37:00",32,0.28,"Sturzflut-Ereignis",21
+"Wasserstraße_Springorum","2025/10/17 02:09:00","2025/10/17 02:43:00",6.8,"2025/10/17 02:33:00",34,0.282,"Sturzflut-Ereignis",21
+"Wasserstraße_Springorum","2025/10/09 08:58:00","2025/10/09 09:13:00",4.5,"2025/10/09 09:01:00",15,1.452,"Sturzflut-Ereignis",9
+"Wasserstraße_Springorum","2025/10/08 11:19:00","2025/10/08 11:37:00",3.3,"2025/10/08 11:33:00",18,0.234,"Sturzflut-Ereignis",9
+"Wasserstraße_Springorum","2025/10/06 11:24:00","2025/10/06 11:50:00",7.6,"2025/10/06 11:46:00",26,0.344,"Sturzflut-Ereignis",11
+"Wasserstraße_Springorum","2025/10/05 19:28:00","2025/10/05 20:10:00",6,"2025/10/05 19:42:00",42,0.426,"Sturzflut-Ereignis",31
+"Wasserstraße_Springorum","2025/10/05 15:11:00","2025/10/05 15:43:00",5.2,"2025/10/05 15:16:00",32,1.02,"Sturzflut-Ereignis",18
+"Wasserstraße_Springorum","2025/09/28 09:42:00","2025/09/28 10:15:00",4.3,"2025/09/28 09:57:00",33,0.285,"Sturzflut-Ereignis",3
+"Wasserstraße_Springorum","2025/09/27 00:13:00","2025/09/27 01:05:00",6.3,"2025/09/27 00:16:00",52,2.032,"Sturzflut-Ereignis",40
+"Wasserstraße_Springorum","2025/09/26 22:35:00","2025/09/26 23:12:00",5.6,"2025/09/26 23:08:00",37,0.169,"Sturzflut-Ereignis",17
