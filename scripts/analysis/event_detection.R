@@ -50,79 +50,43 @@ detect_events <- function(df, station_name, precip) {
     # Ensure chronological order
     df <- df %>% arrange(Zeit_Datum)
 
-    # Seeds: nur Punkte über THRESHOLD zählen als echter Event-Kern. Die
-    # Flanken (Anstieg + Abfall) werden per Hysterese bis LOW_THRESHOLD
-    # ausgedehnt, damit das ganze Ereignis markiert wird und nicht nur die
-    # Peak-Spitze oberhalb THRESHOLD.
-    activity <- df %>%
-        filter(level > THRESHOLD)
+    # Seed-Ansatz: Runs von erhöhten Pegeln (> LOW_THRESHOLD) mit kurzer
+    # Dip-Toleranz (MIN_GAP_MINS) gruppieren. Nur Runs behalten, deren
+    # Maximum über THRESHOLD liegt → gibt die volle erhöhte Periode, nicht
+    # nur die Peak-Spitze. Zwischenzeitliche kurze Dips unter LOW_THRESHOLD
+    # (z.B. einzelne 0.1-cm-Ausreißer) werden durch das Zeit-Gap-Merging
+    # überbrückt.
+    activity <- df %>% filter(!is.na(level) & level > LOW_THRESHOLD)
+    if (nrow(activity) == 0) return(NULL)
 
-    if (nrow(activity) == 0) {
-        return(NULL)
-    }
-
-    # Seed-Events (contiguous points mit gap < MIN_GAP_MINS)
     activity <- activity %>%
         mutate(
             gap       = as.numeric(difftime(Zeit_Datum, lag(Zeit_Datum, default = first(Zeit_Datum)), units = "mins")),
             new_event = ifelse(gap > MIN_GAP_MINS, 1, 0),
-            seed_id   = cumsum(new_event)
+            run_id    = cumsum(new_event)
         )
 
-    seed_bounds <- activity %>%
-        group_by(seed_id) %>%
+    run_bounds <- activity %>%
+        group_by(run_id) %>%
         summarise(
-            seed_start = min(Zeit_Datum),
-            seed_end   = max(Zeit_Datum),
-            .groups    = "drop"
-        )
+            run_start = min(Zeit_Datum),
+            run_end   = max(Zeit_Datum),
+            run_peak  = max(level, na.rm = TRUE),
+            .groups   = "drop"
+        ) %>%
+        filter(run_peak > THRESHOLD)
 
-    # --- Hysterese-Extension: jedes Seed-Fenster bis LOW_THRESHOLD ausdehnen ---
-    # Vom Seed-Start rückwärts suchen, bis der Pegel zum ersten Mal unter
-    # LOW_THRESHOLD fällt (das ist dann die neue start_time). Analog vorwärts
-    # für das Ende. Falls der Pegel nie unter LOW_THRESHOLD fällt, nehmen wir
-    # den Rand des Datensatzes.
+    if (nrow(run_bounds) == 0) return(NULL)
+
     zeit <- df$Zeit_Datum
     lvl  <- df$level
     n    <- length(lvl)
 
-    extend_bounds <- function(s, e) {
-        lo <- which(zeit >= s)[1]
-        hi <- tail(which(zeit <= e), 1)
-        if (is.na(lo) || length(hi) == 0) return(c(NA_integer_, NA_integer_))
-        # rückwärts (NA im Pegel = Datenlücke → hier aufhören)
-        i <- lo
-        while (i > 1 && !is.na(lvl[i - 1]) && lvl[i - 1] > LOW_THRESHOLD) i <- i - 1
-        # vorwärts
-        j <- hi
-        while (j < n && !is.na(lvl[j + 1]) && lvl[j + 1] > LOW_THRESHOLD) j <- j + 1
-        c(as.integer(i), as.integer(j))
-    }
-
-    idx <- lapply(seq_len(nrow(seed_bounds)), function(k) {
-        extend_bounds(seed_bounds$seed_start[k], seed_bounds$seed_end[k])
+    merged <- lapply(seq_len(nrow(run_bounds)), function(k) {
+        lo <- which(zeit >= run_bounds$run_start[k])[1]
+        hi <- tail(which(zeit <= run_bounds$run_end[k]), 1)
+        c(as.integer(lo), as.integer(hi))
     })
-    seed_bounds$lo <- vapply(idx, `[`, integer(1), 1)
-    seed_bounds$hi <- vapply(idx, `[`, integer(1), 2)
-    seed_bounds <- seed_bounds %>% filter(!is.na(lo) & !is.na(hi))
-
-    if (nrow(seed_bounds) == 0) return(NULL)
-
-    # Nach dem Ausdehnen können sich Fenster überlappen → zusammenfassen
-    seed_bounds <- seed_bounds %>% arrange(lo)
-    merged <- list()
-    cur_lo <- seed_bounds$lo[1]
-    cur_hi <- seed_bounds$hi[1]
-    for (k in seq_len(nrow(seed_bounds))[-1]) {
-        if (seed_bounds$lo[k] <= cur_hi + 1) {
-            cur_hi <- max(cur_hi, seed_bounds$hi[k])
-        } else {
-            merged[[length(merged) + 1L]] <- c(cur_lo, cur_hi)
-            cur_lo <- seed_bounds$lo[k]
-            cur_hi <- seed_bounds$hi[k]
-        }
-    }
-    merged[[length(merged) + 1L]] <- c(cur_lo, cur_hi)
 
     # --- Metriken pro (extended) Event aus df-Slice berechnen ---
     events <- lapply(seq_along(merged), function(k) {
