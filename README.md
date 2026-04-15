@@ -10,9 +10,9 @@
 
 *(Zeitraum: 15.04. 11:00 bis 17.04. 10:00)*
 
-- Temperatur: **14.9°C** (Min: 10.9°C | Max: 18.4°C)
-- Summe: **2.1 mm** | Max: **1.4 mm/h**
-- Max. 6h: **1.8 mm**
+- Temperatur: **14.8°C** (Min: 11.4°C | Max: 18.2°C)
+- Summe: **2.6 mm** | Max: **1.3 mm/h**
+- Max. 6h: **2.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,11 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Herzogstraße**: Letzte Daten vor 187.8 Stunden (07.04. 12:47)
+- 🔴 **Herzogstraße**: Letzte Daten vor 188.2 Stunden (07.04. 12:47)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-15 08:35:42 UTC*
+*Stand: 2026-04-15 08:59:28 UTC*
 
 ---
 
