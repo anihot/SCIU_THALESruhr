@@ -1,14 +1,6 @@
-﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","points_count"
-"An_der_Kost","2026/04/11 21:48:30","2026/04/11 22:08:00",0.5,"2026/04/11 21:54:00",19.5,0.089,"Leichter Regen / Unterhalb DWD-Schwelle",2.29,7.8,TRUE,40
-"An_der_Kost","2026/04/11 19:14:00","2026/04/11 20:25:00",0.6,"2026/04/11 19:21:00",71,0.085,"Leichter Regen / Unterhalb DWD-Schwelle",2.91,7.8,TRUE,143
-"An_der_Kost","2026/03/13 13:16:30","2026/03/13 13:36:30",0.6,"2026/03/13 13:20:00",20,0.167,"Leichter Regen / Unterhalb DWD-Schwelle",0.51,3.12,TRUE,41
-"An_der_Kost","2026/02/24 03:18:00","2026/02/24 03:29:00",0.5,"2026/02/24 03:24:00",11,0.082,"Leichter Regen / Unterhalb DWD-Schwelle",1.14,1.08,TRUE,12
-"An_der_Kost","2026/02/17 10:02:00","2026/02/17 10:08:00",0.6,"2026/02/17 10:05:00",6,0.194,"Leichter Regen / Unterhalb DWD-Schwelle",0.44,2.52,TRUE,14
-"An_der_Kost","2026/02/16 14:43:00","2026/02/16 16:01:00",0.7,"2026/02/16 14:46:00",78,0.226,"Leichter Regen / Unterhalb DWD-Schwelle",0.46,0.72,TRUE,158
-"An_der_Kost","2026/02/16 07:50:00","2026/02/16 08:23:00",0.5,"2026/02/16 07:54:00",33,0.122,"Leichter Regen / Unterhalb DWD-Schwelle",0.05,0.6,TRUE,68
-"An_der_Kost","2026/02/11 17:49:00","2026/02/11 18:28:00",0.5,"2026/02/11 17:55:00",39,0.082,"Leichter Regen / Unterhalb DWD-Schwelle",0.13,1.56,TRUE,80
-"An_der_Kost","2026/01/14 04:27:00","2026/01/14 06:45:00",0.8,"2026/01/14 06:29:00",138,0.007,"Leichter Regen / Unterhalb DWD-Schwelle",0.38,0.96,TRUE,139
-"An_der_Kost","2025/12/08 23:18:00","2025/12/09 00:14:00",0.6,"2025/12/08 23:42:00",56,0.025,"Leichter Regen / Unterhalb DWD-Schwelle",0.12,0.36,TRUE,57
-"An_der_Kost","2025/11/24 13:49:00","2025/11/24 15:17:00",0.5,"2025/11/24 13:54:00",88,0.098,"Leichter Regen / Unterhalb DWD-Schwelle",0.47,2.16,TRUE,89
-"An_der_Kost","2025/10/23 16:58:00","2025/10/23 17:46:00",0.7,"2025/10/23 17:20:00",48,0.032,"Leichter Regen / Unterhalb DWD-Schwelle",0.52,2.4,TRUE,49
-"An_der_Kost","2025/10/23 03:37:00","2025/10/23 03:47:00",0.5,"2025/10/23 03:40:00",10,0.161,"Leichter Regen / Unterhalb DWD-Schwelle",3.47,6.6,TRUE,11
+﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","points_count","total_precip_mm","max_intensity_mm_h","radolan_verified","dwd_risk_level"
+"An_der_Kost","2026/04/11 19:15:30","2026/04/11 20:16:00",0.6,"2026/04/11 19:21:00",60.5,0.107,"Leichter Regen / Unterhalb DWD-Schwelle",67,2.91,7.8,TRUE,"Level 1 – Leichter Regen (0.5–15 mm/h)"
+"An_der_Kost","2026/03/29 22:31:00","2026/03/29 23:48:30",0.7,"2026/03/29 22:44:00",77.5,0.053,"Leichter Regen / Unterhalb DWD-Schwelle",121,2.2,2.04,TRUE,"Level 1 – Leichter Regen (0.5–15 mm/h)"
+"An_der_Kost","2026/01/14 05:12:00","2026/01/14 06:35:00",0.8,"2026/01/14 06:29:00",83,0.01,"Leichter Regen / Unterhalb DWD-Schwelle",65,0.36,0.96,TRUE,"Level 1 – Leichter Regen (0.5–15 mm/h)"
+"An_der_Kost","2025/12/08 23:35:00","2025/12/09 00:08:00",0.6,"2025/12/08 23:42:00",33,0.085,"Leichter Regen / Unterhalb DWD-Schwelle",25,0.12,0.36,TRUE,"Level 0 – Kein nennenswerter Regen"
+"An_der_Kost","2025/10/23 17:14:00","2025/10/23 17:36:00",0.7,"2025/10/23 17:20:00",22,0.115,"Leichter Regen / Unterhalb DWD-Schwelle",18,0.52,2.4,TRUE,"Level 1 – Leichter Regen (0.5–15 mm/h)"
