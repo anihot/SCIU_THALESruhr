@@ -2,33 +2,32 @@
 
 ## Station Overview
 
-|station      | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl|
-|:------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|
-|Herzogstraße |         29|      17.2|        38.9|               12|           13|                 0|
+|station                 | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl|
+|:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|
+|Königsallee_Springorum  |          7|       0.7|         0.9|                0|            0|                 0|
+|An_der_Kost             |          5|       0.7|         0.8|                0|            0|                 0|
+|Wasserbaulabor_2        |          3|      20.4|        29.2|                0|            0|                 3|
+|Wasserstraße_Springorum |          1|       1.1|         1.1|                0|            0|                 0|
 
 ## Top 20 Most Intense Events
 
-|station      |start_time          | duration_min| peak_level_cm| avg_gradient_cm_min|event_type                |total_precip_mm |max_intensity_mm_h |
-|:------------|:-------------------|------------:|-------------:|-------------------:|:-------------------------|:---------------|:------------------|
-|Herzogstraße |2026/03/03 13:24:00 |          142|          38.9|               0.693|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2025/10/13 05:15:00 |          131|          38.0|               0.807|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2026/01/28 07:14:00 |           70|          36.6|               0.571|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2025/10/10 05:39:00 |          137|          35.1|               0.661|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2025/12/19 14:32:00 |           43|          34.9|               1.390|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2026/01/23 11:06:00 |           56|          34.5|               0.675|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2025/12/17 10:42:00 |          137|          31.5|               0.244|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2026/01/27 05:57:00 |           29|          29.7|               2.676|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2025/12/16 14:26:00 |           24|          29.4|               2.244|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2026/03/02 04:25:00 |          113|          26.7|               0.243|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2026/01/20 06:13:00 |          120|          20.2|               0.331|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2026/04/01 07:56:00 |           55|          19.0|               0.557|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2025/12/23 07:02:00 |           87|          17.9|               0.293|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2026/04/02 05:20:00 |          135|          17.6|               0.137|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2026/01/22 13:49:00 |           87|          16.9|               0.444|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2025/11/12 11:07:00 |           51|          16.7|               0.427|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2025/12/15 07:30:00 |           98|          14.3|               0.157|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2025/12/17 07:35:00 |           75|          10.7|               0.187|Regenereignis / Natürlich |NA              |NA                 |
-|Herzogstraße |2025/12/15 10:51:00 |           18|           8.2|               0.543|Sturzflut-Ereignis        |NA              |NA                 |
-|Herzogstraße |2026/01/12 13:47:00 |           14|           3.9|               1.258|Sturzflut-Ereignis        |NA              |NA                 |
+|station                 |start_time          | duration_min| peak_level_cm| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|
+|:-----------------------|:-------------------|------------:|-------------:|-------------------:|:---------------------------------------|---------------:|------------------:|
+|Wasserbaulabor_2        |2025/02/26 21:30:00 |        150.0|          29.2|               0.216|Verdächtig / Kein Regen                 |            0.00|               0.00|
+|Wasserbaulabor_2        |2025/03/05 22:15:00 |        165.0|          28.9|               0.481|Verdächtig / Kein Regen                 |            0.00|               0.00|
+|Wasserbaulabor_2        |2026/02/18 09:06:30 |        169.5|           3.1|               0.105|Verdächtig / Kein Regen                 |            0.00|               0.00|
+|Wasserstraße_Springorum |2025/10/04 13:06:00 |        128.0|           1.1|               0.039|Leichter Regen / Unterhalb DWD-Schwelle |            0.62|               1.68|
+|Königsallee_Springorum  |2026/01/24 03:30:00 |         39.0|           0.9|               0.064|Leichter Regen / Unterhalb DWD-Schwelle |            0.46|               0.84|
+|Königsallee_Springorum  |2025/10/04 00:14:00 |        132.0|           0.9|               0.074|Leichter Regen / Unterhalb DWD-Schwelle |            1.82|               3.36|
+|An_der_Kost             |2026/01/14 05:12:00 |         83.0|           0.8|               0.010|Leichter Regen / Unterhalb DWD-Schwelle |            0.36|               0.96|
+|An_der_Kost             |2026/03/29 22:31:00 |         77.5|           0.7|               0.053|Leichter Regen / Unterhalb DWD-Schwelle |            2.20|               2.04|
+|An_der_Kost             |2025/10/23 17:14:00 |         22.0|           0.7|               0.115|Leichter Regen / Unterhalb DWD-Schwelle |            0.52|               2.40|
+|An_der_Kost             |2026/04/11 19:15:30 |         60.5|           0.6|               0.107|Leichter Regen / Unterhalb DWD-Schwelle |            2.91|               7.80|
+|Königsallee_Springorum  |2026/03/25 20:24:00 |        129.5|           0.6|               0.040|Leichter Regen / Unterhalb DWD-Schwelle |            1.92|               3.36|
+|Königsallee_Springorum  |2026/03/25 11:14:30 |         36.0|           0.6|               0.050|Leichter Regen / Unterhalb DWD-Schwelle |            0.16|               0.84|
+|Königsallee_Springorum  |2026/03/25 08:25:30 |         24.5|           0.6|               0.091|Leichter Regen / Unterhalb DWD-Schwelle |            0.34|               1.44|
+|Königsallee_Springorum  |2026/02/12 01:18:00 |        139.0|           0.6|               0.017|Leichter Regen / Unterhalb DWD-Schwelle |            0.50|               1.56|
+|An_der_Kost             |2025/12/08 23:35:00 |         33.0|           0.6|               0.085|Leichter Regen / Unterhalb DWD-Schwelle |            0.12|               0.36|
+|Königsallee_Springorum  |2025/12/02 06:15:00 |         21.0|           0.6|               0.194|Leichter Regen / Unterhalb DWD-Schwelle |            1.39|               2.40|
 
-*Full log available in data/processed/detected_events.csv — 29 events total.*
+*Full log available in data/processed/detected_events.csv — 16 events total.*
