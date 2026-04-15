@@ -18,11 +18,19 @@ cat("Generating event plots...\n")
 
 # 1. Events laden
 if (!file_exists(events_file)) stop("Events file not found: ", events_file)
+parse_event_time <- function(x) {
+    # CSV stores timestamps as "YYYY/MM/DD HH:MM:SS"; fall back to default parser if needed
+    out <- as.POSIXct(x, format = "%Y/%m/%d %H:%M:%S", tz = "")
+    bad <- is.na(out) & !is.na(x) & nzchar(x)
+    if (any(bad)) out[bad] <- as.POSIXct(x[bad])
+    out
+}
+
 events <- read_csv(events_file, show_col_types = FALSE) %>%
     mutate(
-        start_time = as.POSIXct(start_time),
-        end_time   = as.POSIXct(end_time),
-        peak_time  = as.POSIXct(peak_time)
+        start_time = parse_event_time(start_time),
+        end_time   = parse_event_time(end_time),
+        peak_time  = parse_event_time(peak_time)
     )
 
 cat("Loaded", nrow(events), "events.\n")

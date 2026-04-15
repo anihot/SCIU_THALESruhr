@@ -137,20 +137,23 @@ detect_events <- function(df, station_name, precip) {
     station_precip <- precip %>% filter(station == precip_station_key)
 
     if (nrow(station_precip) > 0) {
+        lead_window <- hours(LEAD_IN_HOURS)
+        precip_stats <- lapply(seq_len(nrow(events)), function(i) {
+            ep <- station_precip %>%
+                filter(timestamp >= events$start_time[i] - lead_window,
+                       timestamp <= events$end_time[i])
+            list(
+                total_precip_mm    = round(sum(ep$precipitation_mm, na.rm = TRUE), 2),
+                max_intensity_mm_h = if (nrow(ep) > 0)
+                    round(max(ep$precipitation_mm, na.rm = TRUE) * 12, 2) else 0  # mm/5min → mm/h
+            )
+        })
         events <- events %>%
-            rowwise() %>%
             mutate(
-                .t0                = start_time - hours(LEAD_IN_HOURS),
-                .t1                = end_time,
-                .ep                = list(station_precip %>% filter(timestamp >= .t0, timestamp <= .t1)),
-                total_precip_mm    = round(sum(.ep[[1]]$precipitation_mm, na.rm = TRUE), 2),
-                max_intensity_mm_h = ifelse(nrow(.ep[[1]]) > 0,
-                                           round(max(.ep[[1]]$precipitation_mm, na.rm = TRUE) * 12, 2),  # mm/5min → mm/h
-                                           0),
+                total_precip_mm    = vapply(precip_stats, `[[`, numeric(1), "total_precip_mm"),
+                max_intensity_mm_h = vapply(precip_stats, `[[`, numeric(1), "max_intensity_mm_h"),
                 radolan_verified   = total_precip_mm > 0
-            ) %>%
-            select(-.t0, -.t1, -.ep) %>%
-            ungroup()
+            )
     } else {
         # No precipitation data for this station → columns NA, classification uses sensor-only logic
         events <- events %>%
