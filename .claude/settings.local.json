@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create --title 'Hide Herzogstraße from dashboard sensor status' --body ':*)",
+      "Bash(wc -l data/processed/events_by_station/*.csv)",
+      "Bash(ls -la data/processed/detected_events.csv data/processed/events_by_station/*.csv)",
+      "Bash(Rscript scripts/analysis/event_detection.R)",
+      "Read(//c/Program Files/R//**)",
+      "Read(//c/Program Files/**)",
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" scripts/analysis/event_detection.R)"
+    ]
+  }
+}
