@@ -11,7 +11,23 @@
       "Bash(Rscript scripts/analysis/event_detection.R)",
       "Read(//c/Program Files/R//**)",
       "Read(//c/Program Files/**)",
-      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" scripts/analysis/event_detection.R)"
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" scripts/analysis/event_detection.R)",
+      "Bash('/c/Program Files/R/R-4.5.2/bin/Rscript.exe' -e ':*)",
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" -e 'cat\\(\"hello\\\\n\"\\); print\\(1+1\\)')",
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" scripts/analysis/_debug_event.R)",
+      "Read(//tmp/**)",
+      "Bash('/c/Program Files/R/R-4.5.2/bin/Rscript.exe' -e 'x <- read.csv\\(\"data/processed/precipitation_at_sensors.csv\"\\); print\\(unique\\(x$station\\)\\)')",
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" scripts/visualization/plot_events.R)",
+      "Bash(ls \"/c/Program Files/RStudio/resources/app/bin/quarto/bin/tools/\"*.exe)",
+      "Bash(export RSTUDIO_PANDOC=\"/c/Program Files/RStudio/resources/app/bin/quarto/bin/tools\")",
+      "Bash('/c/Program Files/R/R-4.5.2/bin/Rscript.exe' scripts/visualization/plot_events.R)",
+      "Bash(ls data/output/event_plots/*.html)",
+      "Bash(ls -la docs/event_plots/*.html)",
+      "Bash(ls -la data/output/event_plots/*.html)",
+      "Bash(du -sh data/output/event_plots/*_files)",
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" -e 'suppressPackageStartupMessages\\(library\\(lubridate\\)\\); print\\(as.POSIXct\\(\"2026/04/11 19:15:30\"\\)\\); print\\(ymd_hms\\(\"2026/04/11 19:15:30\"\\)\\)')",
+      "Bash(\"/c/Program Files/R/R-4.5.2/bin/Rscript.exe\" scripts/analysis/_debug_time.R)",
+      "Bash(gh pr create --title 'Fix event detection precip join + plot timestamp parsing' --body ':*)"
     ]
   }
 }
