@@ -58,8 +58,14 @@ for (f in cleaned_files) {
 }
 cat("Loaded sensor data for", length(sensor_data), "stations.\n")
 
-# 4. Output-Verzeichnis
-if (!dir_exists(output_dir)) dir_create(output_dir)
+# 4. Output-Verzeichnis — vor jedem Lauf leeren, damit Plots für nicht mehr
+# erkannte Events (geänderte Filter, neue Baseline) nicht als Leichen überleben.
+if (dir_exists(output_dir)) {
+    old_plots <- dir_ls(output_dir, glob = "*.html")
+    if (length(old_plots) > 0) file_delete(old_plots)
+} else {
+    dir_create(output_dir)
+}
 
 # 5. Helper: Stationsname → Sensor-Daten-Key matchen
 match_station <- function(event_station) {
