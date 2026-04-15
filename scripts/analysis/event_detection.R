@@ -164,13 +164,19 @@ detect_events <- function(df, station_name, precip) {
             )
     }
 
+    # --- Require positive RADOLAN verification ---
+    # Drop events where (a) precip data exists but no rain was measured
+    # (infrastructure artifacts, passing vehicles, sensor noise) and
+    # (b) precip coverage is missing entirely (we can't plot a meaningful
+    # rain context, so these become confusing no-rain plots). Stations
+    # without coverage should be added to data/metadata/sensor_metadata.csv.
+    events <- events %>%
+        filter(!is.na(radolan_verified) & radolan_verified)
+
     # --- Classify ---
     events <- events %>%
         mutate(
             event_type = case_when(
-                # Precipitation data available but no rain detected → suspicious (infrastructure, artifact)
-                !is.na(radolan_verified) & radolan_verified == FALSE ~ "Verdächtig / Kein Regen",
-
                 # Flash flood: sharp gradient OR short intense pulse
                 (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Sturzflut-Ereignis",
 
