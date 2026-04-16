@@ -11,8 +11,8 @@ cleaned_dir <- "data/processed/cleaned_analysis"
 precip_file <- "data/processed/precipitation_at_sensors.csv"
 output_dir  <- "data/output/event_plots"
 
-BUFFER_BEFORE <- 3   # Stunden vor Event-Start
-BUFFER_AFTER  <- 1   # Stunden nach Event-Ende
+BUFFER_BEFORE <- 6   # Stunden vor Event-Start (zeigt Niederschlags-Vorlauf)
+BUFFER_AFTER  <- 2   # Stunden nach Event-Ende
 
 cat("Generating event plots...\n")
 
