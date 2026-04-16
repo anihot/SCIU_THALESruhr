@@ -14,10 +14,10 @@ THRESHOLD          <- 0.004 # 0.4 cm - Peak-Schwelle (Seed-Punkte)
 LOW_THRESHOLD      <- 0.002 # 0.2 cm - Schwelle für "erhöht" (active_fraction)
 MIN_GAP_MINS       <- 60    # Gaps < 60 min → zusammenhängendes Ereignis
 MIN_DURATION_MINS  <- 5     # Events kürzer als 5 min = Rauschen / Einzelspike
-MAX_DURATION_MINS  <- 180   # Events länger als 3h werden nicht berücksichtigt
+MAX_DURATION_MINS  <- 720   # Events länger als 12h werden nicht berücksichtigt
 MIN_RISE_MINS      <- 3     # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
 MIN_FALL_MINS      <- 3     # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
-MAX_LOCAL_PEAKS    <- 2     # Max. lokale Peaks im Ereignis (filtert Pulse Chains)
+MAX_LOCAL_PEAKS    <- 10    # Max. lokale Peaks im Ereignis (lang anhaltende Events haben natürlich mehr Peaks)
 MAX_PLATEAU_FRAC   <- 0.5   # Max. Anteil Messwerte >= 85% des Peaks (filtert Box-Signale)
 MIN_ACTIVE_FRAC    <- 0.5   # Min. Anteil Messpunkte im Fenster mit Pegel > LOW_THRESHOLD (filtert Spike-Chains)
 MIN_ROLLING_MEDIAN <- 0.002 # Min. Maximum einer rollierenden 3-Punkt-Median (filtert isolierte Spikes)
@@ -215,7 +215,7 @@ detect_events <- function(df, station_name, precip) {
             duration_min     <= MAX_DURATION_MINS,
             rise_min         >= MIN_RISE_MINS,
             fall_min         >= MIN_FALL_MINS,
-            n_local_peaks      <= MAX_LOCAL_PEAKS,
+            n_local_peaks      <= MAX_LOCAL_PEAKS * pmax(1, ceiling(duration_min / 60)),
             plateau_fraction   <= MAX_PLATEAU_FRAC,
             active_fraction    >= MIN_ACTIVE_FRAC,
             max_rolling_median >= MIN_ROLLING_MEDIAN
