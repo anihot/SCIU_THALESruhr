@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 18.04. 16:00 bis 20.04. 15:00)*
+*(Zeitraum: 19.04. 10:00 bis 21.04. 09:00)*
 
-- Temperatur: **17.1°C** (Min: 6°C | Max: 17.8°C)
-- Summe: **17.2 mm** | Max: **4.5 mm/h**
-- Max. 6h: **11.1 mm**
+- Temperatur: **10.3°C** (Min: 5.9°C | Max: 14.4°C)
+- Summe: **6.1 mm** | Max: **2.9 mm/h**
+- Max. 6h: **4.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,11 +23,22 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **Herzogstraße**: Letzte Daten vor 264.2 Stunden (07.04. 12:47)
+- 🔴 **Herzogstraße**: Letzte Daten vor 282.6 Stunden (07.04. 12:47)
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-18 13:01:42 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-04-19 07:21:38 UTC*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station     |start_time          | peak_level_cm| duration_min|
+|:-----------|:-------------------|-------------:|------------:|
+|An_der_Kost |2026-04-19 00:23:30 |           0.7|          125|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
 
 ---
 

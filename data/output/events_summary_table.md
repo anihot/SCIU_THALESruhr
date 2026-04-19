@@ -5,7 +5,7 @@
 |station                 | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl|
 |:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|
 |Königsallee_Springorum  |         18|       0.9|         3.1|                0|            1|                 0|
-|An_der_Kost             |         13|       0.6|         0.8|                0|            0|                 0|
+|An_der_Kost             |         14|       0.6|         0.8|                0|            0|                 0|
 |Wasserstraße_Springorum |          6|       4.7|         7.5|                2|            3|                 0|
 
 ## Top 20 Most Intense Events
@@ -27,10 +27,10 @@
 |An_der_Kost             |2026/03/30 01:34:30 |        248.5|           0.8|               0.019|Leichter Regen / Unterhalb DWD-Schwelle |            2.63|               4.80|
 |An_der_Kost             |2026/01/14 04:18:00 |        216.0|           0.8|               0.006|Leichter Regen / Unterhalb DWD-Schwelle |            0.44|               0.96|
 |Königsallee_Springorum  |2025/10/29 21:40:00 |        647.0|           0.8|               0.195|Leichter Regen / Unterhalb DWD-Schwelle |            5.20|               8.16|
+|An_der_Kost             |2026/04/19 00:23:30 |        125.0|           0.7|               0.032|Leichter Regen / Unterhalb DWD-Schwelle |            0.25|               2.52|
 |An_der_Kost             |2026/03/29 22:09:00 |        117.5|           0.7|               0.020|Leichter Regen / Unterhalb DWD-Schwelle |            2.29|               2.04|
 |An_der_Kost             |2025/10/23 16:51:00 |        114.0|           0.7|               0.024|Leichter Regen / Unterhalb DWD-Schwelle |            0.52|               2.40|
 |Königsallee_Springorum  |2025/10/05 02:21:00 |        323.0|           0.7|               0.003|Leichter Regen / Unterhalb DWD-Schwelle |            0.19|               2.16|
 |Königsallee_Springorum  |2025/09/21 18:32:00 |        319.0|           0.7|               0.006|Leichter Regen / Unterhalb DWD-Schwelle |            0.56|               2.28|
-|An_der_Kost             |2026/04/11 19:10:30 |         79.5|           0.6|               0.057|Leichter Regen / Unterhalb DWD-Schwelle |            2.91|               7.80|
 
-*Full log available in data/processed/detected_events.csv — 37 events total.*
+*Full log available in data/processed/detected_events.csv — 38 events total.*
