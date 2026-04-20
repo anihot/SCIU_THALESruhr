@@ -41,54 +41,30 @@ process_sensor_file <- function(file_path) {
         mutate(Timestamp = as_datetime(Timestamp)) %>%
         arrange(Timestamp)
 
-    # 2. Determine Baseline(s) (Total Height)
-    # Sensors can move or be recalibrated. Use a sliding window (7 days) to find the local baseline.
-    # This prevents massive fake levels when a sensor setup changes mid-month.
-
-    df <- df %>%
-        mutate(date_window = as.Date(floor_date(Timestamp, "7 days")))
-
-    # Function to get mode for a group
-    calculate_window_baseline <- function(dist_vec) {
-        if (all(is.na(dist_vec))) {
-            return(NA)
-        }
-        # Coarse/Fine two-step mode
-        d_coarse <- round(dist_vec, 1)
-        c_mode <- get_mode(d_coarse)
-        f_mode <- get_mode(round(dist_vec[round(dist_vec, 1) == c_mode], 3))
-        return(f_mode)
-    }
-
-    baselines <- df %>%
-        filter(!is.na(distance)) %>%
-        group_by(date_window) %>%
-        summarise(window_baseline = calculate_window_baseline(distance), .groups = "drop")
-
-    df <- df %>%
-        left_join(baselines, by = "date_window") %>%
-        mutate(
-            window_baseline = tidyr::fill(data.frame(window_baseline), .direction = "downup")$window_baseline
-        )
-
-    # 3. Calculate Level and Filter Logic
-    # Level = Baseline - current distance
-    # Apply logical constraints:
-    # - Level cannot be negative (sensor precision noise -> 0)
-    # - Level > 0.3m is unrealistic for street flooding without rain data -> likely obstacle/error
-    MAX_REALISTIC_LEVEL <- 0.4
+    # 2. Use API-provided level directly (well-calibrated sensor reference).
+    #    The previous approach recomputed level from distance using a sliding-
+    #    window mode baseline, but the mode sits at the CENTER of the dry-state
+    #    distance distribution (~5.818) instead of the TOP (~5.824). This
+    #    systematically dampened real water levels by ~0.5 cm and created
+    #    artificial spiky signals when the computed level bounced between 0
+    #    and small positive values.
+    # Use API-provided level directly. No baseline subtraction — the API
+    # firmware has a well-calibrated fixed reference. Subtracting a mode
+    # baseline (a) dampened signals by ~0.5 cm, (b) created artificial
+    # spike patterns from zero-clamping.
+    # Only filter clearly unrealistic values (sensor errors, obstructions).
+    MAX_REALISTIC_LEVEL <- 0.4  # 40 cm
 
     df <- df %>%
         mutate(
-            calculated_level = window_baseline - distance,
-            calculated_level = ifelse(calculated_level < 0, 0, calculated_level),
-            is_unrealistic = calculated_level > MAX_REALISTIC_LEVEL,
-            level_final = ifelse(is_unrealistic, 0, calculated_level)
+            level_final = ifelse(!is.na(level), level, NA_real_),
+            is_unrealistic = !is.na(level_final) & level_final > MAX_REALISTIC_LEVEL,
+            level_final = ifelse(is_unrealistic, 0, level_final)
         )
 
     if (any(df$is_unrealistic, na.rm = TRUE)) {
         num_unrealistic <- sum(df$is_unrealistic, na.rm = TRUE)
-        cat("Note: Removed", num_unrealistic, "unrealistic data points (> 1m) for", station_name, "\n")
+        cat("Note: Removed", num_unrealistic, "unrealistic data points (>40cm) for", station_name, "\n")
     }
 
     # 4. Filter Noise (Cars / isolated single-point spikes)
