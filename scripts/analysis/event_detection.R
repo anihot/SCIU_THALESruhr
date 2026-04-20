@@ -14,7 +14,7 @@ THRESHOLD          <- 0.004 # 0.4 cm - Peak-Schwelle (Seed-Punkte)
 LOW_THRESHOLD      <- 0.002 # 0.2 cm - Schwelle für "erhöht" (active_fraction)
 MIN_GAP_MINS       <- 60    # Gaps < 60 min → zusammenhängendes Ereignis
 MIN_DURATION_MINS  <- 5     # Events kürzer als 5 min = Rauschen / Einzelspike
-MAX_DURATION_MINS  <- 720   # Events länger als 12h werden nicht berücksichtigt
+MAX_DURATION_MINS  <- 1440  # Events länger als 24h werden nicht berücksichtigt
 MIN_RISE_MINS      <- 3     # Mindestanstiegszeit bis zum Peak (filtert Blips/Fahrzeuge)
 MIN_FALL_MINS      <- 3     # Mindestabfallzeit nach dem Peak (filtert Blips/Fahrzeuge)
 MAX_LOCAL_PEAKS    <- 10    # Max. lokale Peaks im Ereignis (lang anhaltende Events haben natürlich mehr Peaks)
@@ -50,13 +50,22 @@ detect_events <- function(df, station_name, precip) {
     # Ensure chronological order
     df <- df %>% arrange(Zeit_Datum)
 
-    # Seed-Ansatz: Runs von erhöhten Pegeln (> LOW_THRESHOLD) mit kurzer
-    # Dip-Toleranz (MIN_GAP_MINS) gruppieren. Nur Runs behalten, deren
-    # Maximum über THRESHOLD liegt → gibt die volle erhöhte Periode, nicht
-    # nur die Peak-Spitze. Zwischenzeitliche kurze Dips unter LOW_THRESHOLD
-    # (z.B. einzelne 0.1-cm-Ausreißer) werden durch das Zeit-Gap-Merging
-    # überbrückt.
-    activity <- df %>% filter(!is.na(level) & level > LOW_THRESHOLD)
+    # Per-Station Trockenpegel: 10. Percentile aller Level-Werte.
+    # Dient als dynamische Nulllinie — Sensoren mit unterschiedlichen
+    # Firmware-Referenzen (Königsallee ~0.5 cm, An der Kost ~0 cm)
+    # werden so vergleichbar. Schwellwerte werden relativ zur Nulllinie
+    # angewandt.
+    valid_levels <- df$level[!is.na(df$level)]
+    station_baseline <- if (length(valid_levels) > 0) {
+        lv_round <- round(valid_levels, 3)
+        as.numeric(names(sort(table(lv_round), decreasing = TRUE))[1])
+    } else 0
+    cat("    Station baseline:", round(station_baseline * 100, 2), "cm\n")
+
+    low_abs  <- station_baseline + LOW_THRESHOLD
+    high_abs <- station_baseline + THRESHOLD
+
+    activity <- df %>% filter(!is.na(level) & level > low_abs)
     if (nrow(activity) == 0) return(NULL)
 
     activity <- activity %>%
@@ -74,7 +83,7 @@ detect_events <- function(df, station_name, precip) {
             run_peak  = max(level, na.rm = TRUE),
             .groups   = "drop"
         ) %>%
-        filter(run_peak > THRESHOLD)
+        filter(run_peak > high_abs)
 
     if (nrow(run_bounds) == 0) return(NULL)
 
@@ -93,9 +102,14 @@ detect_events <- function(df, station_name, precip) {
         lo <- merged[[k]][1]; hi <- merged[[k]][2]
         slice_z <- zeit[lo:hi]
         slice_l <- lvl[lo:hi]
-        peak_i  <- which.max(slice_l)
-        peak_l  <- slice_l[peak_i]
-        peak_t  <- slice_z[peak_i]
+        # NAs aus dem Slice entfernen (rohe API-Level können NA haben)
+        valid   <- !is.na(slice_l)
+        slice_z_v <- slice_z[valid]
+        slice_l_v <- slice_l[valid]
+        if (length(slice_l_v) == 0) return(NULL)
+        peak_i  <- which.max(slice_l_v)
+        peak_l  <- slice_l_v[peak_i]
+        peak_t  <- slice_z_v[peak_i]
         tibble(
             event_id         = k,
             station          = station_name,
@@ -106,23 +120,24 @@ detect_events <- function(df, station_name, precip) {
             duration_min     = as.numeric(difftime(slice_z[length(slice_z)], slice_z[1], units = "mins")),
             rise_min         = as.numeric(difftime(peak_t, slice_z[1], units = "mins")),
             fall_min         = as.numeric(difftime(slice_z[length(slice_z)], peak_t, units = "mins")),
-            points_count     = length(slice_l),
-            plateau_fraction = round(mean(slice_l >= 0.85 * peak_l), 3),
+            points_count     = length(slice_l_v),
+            plateau_fraction = round(mean(slice_l_v >= 0.85 * peak_l, na.rm = TRUE), 3),
             n_local_peaks    = {
-                m <- length(slice_l)
+                m <- length(slice_l_v)
                 if (m < 3) 1L else {
-                    interior <- sum(slice_l[2:(m-1)] > slice_l[1:(m-2)] & slice_l[2:(m-1)] > slice_l[3:m])
+                    interior <- sum(slice_l_v[2:(m-1)] > slice_l_v[1:(m-2)] &
+                                    slice_l_v[2:(m-1)] > slice_l_v[3:m], na.rm = TRUE)
                     as.integer(interior +
-                        ifelse(slice_l[1] > slice_l[2], 1L, 0L) +
-                        ifelse(slice_l[m] > slice_l[m-1], 1L, 0L))
+                        ifelse(!is.na(slice_l_v[1]) & !is.na(slice_l_v[2]) & slice_l_v[1] > slice_l_v[2], 1L, 0L) +
+                        ifelse(!is.na(slice_l_v[m]) & !is.na(slice_l_v[m-1]) & slice_l_v[m] > slice_l_v[m-1], 1L, 0L))
                 }
             }
         )
     }) %>% bind_rows() %>%
         mutate(
-            avg_gradient_cm_min = (peak_level_m * 100) / (as.numeric(difftime(peak_time, start_time, units = "mins")) + 0.1),
+            avg_gradient_cm_min = ((peak_level_m - station_baseline) * 100) / (as.numeric(difftime(peak_time, start_time, units = "mins")) + 0.1),
             avg_gradient_cm_min = round(avg_gradient_cm_min, 3),
-            peak_level_cm       = round(peak_level_m * 100, 2)
+            peak_level_cm       = round((peak_level_m - station_baseline) * 100, 2)
         )
 
     # --- Anti-spike: active_fraction aus dem vollen Zeitfenster (nicht nur Activity) ---
@@ -133,7 +148,7 @@ detect_events <- function(df, station_name, precip) {
         mutate(
             active_fraction = {
                 slice_lvls <- df$level[df$Zeit_Datum >= start_time & df$Zeit_Datum <= end_time]
-                if (length(slice_lvls) == 0) 0 else round(mean(slice_lvls > LOW_THRESHOLD, na.rm = TRUE), 3)
+                if (length(slice_lvls) == 0) 0 else round(mean(slice_lvls > low_abs, na.rm = TRUE), 3)
             },
             max_rolling_median = {
                 # Rollierende 3-Punkt-Median: echte Events haben >= 3 aufeinanderfolgende
