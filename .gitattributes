@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Generated output files: bei Merge-Konflikten immer Remote-Version (GitHub Actions) nehmen
+# Verwendet den custom "theirs"-Driver (in .git/config registriert via setup-mergedrivers.ps1)
+data/output/**        merge=theirs
+data/processed/**     merge=theirs
+data/raw/**           merge=theirs
+docs/**               merge=theirs
+README.md             merge=theirs
