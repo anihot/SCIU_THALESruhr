@@ -203,7 +203,9 @@ for (i in seq_len(nrow(events))) {
     filename     <- paste0(safe_station, "_", time_str, ".html")
     filepath     <- file.path(output_dir, filename)
 
-    saveWidget(p, file = filepath, selfcontained = TRUE)
+    # selfcontained requires pandoc; use FALSE for local runs (GitHub Actions has pandoc)
+    use_self <- nzchar(Sys.which("pandoc"))
+    saveWidget(p, file = filepath, selfcontained = use_self)
     ok <- ok + 1L
 }
 
