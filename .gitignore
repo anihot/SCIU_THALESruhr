@@ -55,3 +55,4 @@ data/processed/tmp_radolan/
 !data/output/graphs/*.html
 !data/output/event_plots/
 !data/output/event_plots/*.html
+data/output/event_plots/*_files/
