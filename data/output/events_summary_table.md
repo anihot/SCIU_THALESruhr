@@ -15,7 +15,7 @@
 |Wasserstraße_Springorum |2026/03/11 05:51:30 |        374.5|           6.5|               0.019|Regenereignis / Natürlich               |            1.01|               4.80|
 |Wasserstraße_Springorum |2026/02/19 04:48:00 |        412.0|           4.3|               0.020|Regenereignis / Natürlich               |            1.91|               3.00|
 |Königsallee_Springorum  |2025/10/23 15:30:00 |        839.0|           3.2|               0.012|Regenereignis / Natürlich               |            1.26|               1.92|
-|Königsallee_Springorum  |2026/04/18 15:25:30 |        837.0|           1.4|               0.003|Leichter Regen / Unterhalb DWD-Schwelle |           25.88|              19.44|
+|Königsallee_Springorum  |2026/04/18 15:25:30 |        837.0|           1.4|               0.003|Leichter Regen / Unterhalb DWD-Schwelle |           38.52|              19.44|
 |Wasserstraße_Springorum |2026/03/29 11:16:00 |        630.0|           1.3|               0.014|Leichter Regen / Unterhalb DWD-Schwelle |            0.77|               0.96|
 |Königsallee_Springorum  |2026/03/16 00:29:00 |        485.0|           1.3|               0.068|Leichter Regen / Unterhalb DWD-Schwelle |            0.85|               3.60|
 |Königsallee_Springorum  |2026/02/19 00:55:00 |        800.0|           1.1|               0.007|Leichter Regen / Unterhalb DWD-Schwelle |            3.81|               3.00|
