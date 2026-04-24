@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 24.04. 16:00 bis 26.04. 15:00)*
+*(Zeitraum: 24.04. 21:00 bis 26.04. 20:00)*
 
-- Temperatur: **17.7°C** (Min: 5.7°C | Max: 18.3°C)
+- Temperatur: **15.1°C** (Min: 5.9°C | Max: 18.2°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-24 13:20:08 UTC*
+*Stand: 2026-04-24 18:47:59 UTC*
 
 ---
 
