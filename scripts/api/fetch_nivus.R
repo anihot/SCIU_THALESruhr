@@ -9,7 +9,7 @@ library(tidyr)
 api_key <- Sys.getenv("NIVUS_API_KEY")
 if (api_key == "") {
     message("Notice: NIVUS_API_KEY environment variable is empty. Using fallback hardcoded key.")
-    api_key <- "REtDX0U3RENDMkMwLThDRkMtNDYzRC05RjMwLTYxMzFFQURFMUUyOEBOSVZVU1dFQi5DT006MjJkNjQ2MzctYzRmYy00MzhiLTk0NmQtYmFiNTViZjc3OGNh"
+    api_key <- "QU5JS0EuSE9UWkVMQEhTLUJPQ0hVTS5ERTozNmNmMWFkNC1kMzZiLTRlODUtYWI2Ny00MWM4M2I2YTExMGM"
 } else {
     # Clean up the key (remove quotes/whitespace)
     api_key <- trimws(gsub("^\"|\"$", "", api_key))
