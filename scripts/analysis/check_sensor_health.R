@@ -19,6 +19,8 @@ if (!dir_exists(input_dir)) {
 files <- dir_ls(input_dir, glob = "*.csv")
 # Exclude "Wasserbaulabor_" (without "2") from health checks
 files <- files[!grepl("Wasserbaulabor__", basename(files))]
+# Exclude Herzogstraße (sensor currently inactive/decommissioned)
+files <- files[!grepl("Herzogstra", basename(files))]
 
 health_data <- list()
 
