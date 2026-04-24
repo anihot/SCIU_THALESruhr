@@ -51,16 +51,17 @@ from_str <- format(from_date, "%Y-%m-%dT%H:%M:%SZ")
 
 message(paste("Fetching data from", from_str, "to", to_str))
 
-# Helper: GET with automatic retry on 5xx errors
-get_with_retry <- function(url, ..., max_retries = 3, wait_sec = 10) {
+# Helper: GET with automatic retry on 5xx and transient 401 errors
+get_with_retry <- function(url, ..., max_retries = 3, wait_sec = 15) {
     for (attempt in seq_len(max_retries)) {
         resp <- GET(url, ...)
-        if (status_code(resp) < 500) return(resp)
-        message(sprintf("  Server error %d on attempt %d/%d – retrying in %ds...",
-                        status_code(resp), attempt, max_retries, wait_sec))
+        sc   <- status_code(resp)
+        if (sc < 500 && sc != 401) return(resp)
+        message(sprintf("  HTTP %d on attempt %d/%d – retrying in %ds...",
+                        sc, attempt, max_retries, wait_sec))
         if (attempt < max_retries) Sys.sleep(wait_sec)
     }
-    resp  # Return last response so caller can handle it
+    resp
 }
 
 # 1. Fetch Stations
