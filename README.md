@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 25.04. 05:00 bis 27.04. 04:00)*
+*(Zeitraum: 25.04. 16:00 bis 27.04. 15:00)*
 
-- Temperatur: **6.7°C** (Min: 5.7°C | Max: 18.1°C)
+- Temperatur: **17.6°C** (Min: 6.2°C | Max: 19.1°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -20,11 +20,17 @@
 
 ### 🛠 Sensor-Status-Check
 
-✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
+⚠️ **Achtung: Inaktive Sensoren erkannt!**
+*(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
+
+- 🔴 **An_der_Kost**: Letzte Daten vor 29 Stunden (24.04. 08:00)
+- 🔴 **Königsallee_Springorum**: Letzte Daten vor 29 Stunden (24.04. 08:00)
+- 🔴 **Wasserbaulabor_2**: Letzte Daten vor 29 Stunden (24.04. 08:00)
+- 🔴 **Wasserstraße_Springorum**: Letzte Daten vor 29 Stunden (24.04. 08:00)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-25 02:08:22 UTC*
+*Stand: 2026-04-25 13:00:59 UTC*
 
 ---
 
