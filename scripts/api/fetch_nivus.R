@@ -25,10 +25,12 @@ if (api_key == "") {
 base_url <- "https://datakiosk-api.nivusweb.com"
 export_dir <- "data/raw/sensor_exports"
 
-# Header Configuration
+# Header Configuration — send both X-API-Key and Authorization: Basic
+# (Nivus portal keys are Base64(user:pass), compatible with Basic Auth)
 custom_headers <- add_headers(
-    `X-API-Key` = api_key,
-    `User-Agent` = "R-httr-SCIU-Project"
+    `X-API-Key`     = api_key,
+    `Authorization` = paste("Basic", api_key),
+    `User-Agent`    = "R-httr-SCIU-Project"
 )
 
 if (!dir.exists(export_dir)) {
