@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 29.04. 16:00 bis 01.05. 15:00)*
+*(Zeitraum: 29.04. 22:00 bis 01.05. 21:00)*
 
-- Temperatur: **18.6°C** (Min: 6.7°C | Max: 23.5°C)
+- Temperatur: **13.7°C** (Min: 6.5°C | Max: 24.3°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-29 13:54:24 UTC*
+*Stand: 2026-04-29 19:26:26 UTC*
 
 ---
 
