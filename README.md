@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### ☀️ Wetterausblick (48h)
-**Kein nennenswerter Regen vorhergesagt.**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 30.04. 16:00 bis 02.05. 15:00)*
+*(Zeitraum: 30.04. 22:00 bis 02.05. 21:00)*
 
-- Temperatur: **20.7°C** (Min: 9.5°C | Max: 25.8°C)
-- Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **4.6 mm**
+- Temperatur: **15.8°C** (Min: 9.7°C | Max: 25.3°C)
+- Summe: **9.3 mm** | Max: **5.8 mm/h**
+- Max. 6h: **9.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-04-30 13:53:49 UTC*
+*Stand: 2026-04-30 19:22:42 UTC*
 
 ---
 
