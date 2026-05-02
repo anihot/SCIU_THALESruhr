@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🟡 Wetterausblick (48h)
-****Warnung vor markantem Starkregen** (DWD Stufe 2)**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 02.05. 16:00 bis 04.05. 15:00)*
+*(Zeitraum: 02.05. 22:00 bis 04.05. 21:00)*
 
-- Temperatur: **24.3°C** (Min: 14.1°C | Max: 24.3°C)
-- Summe: **45.3 mm** | Max: **16.5 mm/h**
-- Max. 6h: **34.4 mm**
+- Temperatur: **16.9°C** (Min: 14.9°C | Max: 22.6°C)
+- Summe: **0.4 mm** | Max: **0.1 mm/h**
+- Max. 6h: **0.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-02 13:09:21 UTC*
+*Stand: 2026-05-02 19:01:05 UTC*
 
 ---
 
