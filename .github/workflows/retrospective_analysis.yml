@@ -30,7 +30,7 @@ jobs:
 
       - name: Install R dependencies
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop"))'
+          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop", "zoo"))'
 
       - name: Fetch sensor data (full backfill)
         env:
