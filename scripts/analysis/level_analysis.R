@@ -223,7 +223,7 @@ recompute_distance_baseline <- function(cleaned_csv_path) {
             ),
             level_new  = pmax(0, level_raw - shift_corr, na.rm = FALSE),
             level_new  = replace(level_new, is.na(level_new), 0),
-            level_new  = pmin(level_new, MAX_REALISTIC_LEVEL),
+            level_new  = pmin(level_new, 0.4),  # 40 cm cap (same as process_sensor_file)
             level_new  = round(level_new, 3),
             level      = level_new
         ) %>%
