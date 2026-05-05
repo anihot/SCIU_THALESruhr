@@ -10,9 +10,9 @@
 
 *(Zeitraum: 05.05. 16:00 bis 07.05. 15:00)*
 
-- Temperatur: **16.5°C** (Min: 7.4°C | Max: 16.5°C)
-- Summe: **29.4 mm** | Max: **3.4 mm/h**
-- Max. 6h: **15.1 mm**
+- Temperatur: **12.7°C** (Min: 7.5°C | Max: 14.1°C)
+- Summe: **28.7 mm** | Max: **6.1 mm/h**
+- Max. 6h: **16.8 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-05 13:02:45 UTC*
+*Stand: 2026-05-05 13:54:31 UTC*
 
 ---
 
