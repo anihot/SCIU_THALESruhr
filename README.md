@@ -8,10 +8,10 @@
 ### 🟡 Wetterausblick (48h)
 ****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 05.05. 11:00 bis 07.05. 10:00)*
+*(Zeitraum: 05.05. 12:00 bis 07.05. 11:00)*
 
-- Temperatur: **13.5°C** (Min: 6.8°C | Max: 14.2°C)
-- Summe: **44.5 mm** | Max: **6.7 mm/h**
+- Temperatur: **13.6°C** (Min: 6.8°C | Max: 14.2°C)
+- Summe: **44.3 mm** | Max: **6.7 mm/h**
 - Max. 6h: **29 mm**
 
 *Quelle: Open-Meteo (DWD)*
@@ -20,11 +20,14 @@
 
 ### 🛠 Sensor-Status-Check
 
-✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
+⚠️ **Achtung: Inaktive Sensoren erkannt!**
+*(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
+
+- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-05-05 08:11:51 UTC*
+*Stand: 2026-05-05 09:56:04 UTC*
 
 Es wurden **1** neue potenzielle Ereignisse erkannt.
 
