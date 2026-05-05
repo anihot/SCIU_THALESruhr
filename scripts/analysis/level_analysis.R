@@ -203,7 +203,18 @@ recompute_distance_baseline <- function(cleaned_csv_path) {
     df_h <- df_h %>%
         group_by(run_id) %>%
         mutate(confirmed_shift = shift_candidate & (n() >= 3)) %>%
-        ungroup()
+        ungroup() %>%
+        mutate(
+            # Onset-Extension: die ersten 1–2 Stunden eines Shifts haben noch
+            # kein bestätigtes run_n ≥ 3. Rückwärts verlängern: eine Stunde gilt
+            # auch als bestätigt, wenn sie Shift-Kandidat ist UND eine der nächsten
+            # 2 Stunden bereits bestätigt ist.
+            confirmed_shift = confirmed_shift |
+                (shift_candidate & (
+                    dplyr::lead(confirmed_shift, 1, default = FALSE) |
+                    dplyr::lead(confirmed_shift, 2, default = FALSE)
+                ))
+        )
 
     # ---- Schritt 4: Level neu berechnen ----
     df <- df %>%
@@ -225,9 +236,11 @@ recompute_distance_baseline <- function(cleaned_csv_path) {
             level_new  = replace(level_new, is.na(level_new), 0),
             level_new  = pmin(level_new, 0.4),  # 40 cm cap (same as process_sensor_file)
             level_new  = round(level_new, 3),
-            level      = level_new
+            level      = level_new,
+            # Rohpegel (vor Shift-Korrektur) und Baseline für Visualisierung speichern
+            level_raw  = round(pmin(replace(level_raw, is.na(level_raw), 0), 0.4), 3)
         ) %>%
-        select(Zeit_Datum, level, distance)
+        select(Zeit_Datum, level, distance, level_raw)
 
     write_csv(df, cleaned_csv_path)
     cat("  Done –", nrow(df), "rows recomputed.\n")

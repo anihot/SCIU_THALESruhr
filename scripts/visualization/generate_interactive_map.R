@@ -156,9 +156,26 @@ for (i in seq_len(nrow(sensors))) {
         title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")")
         
         # Build base trace (Water Level)
-        p <- plot_ly() %>%
+        has_raw_level <- "level_raw" %in% names(df_48h)
+
+        p <- plot_ly()
+
+        # Für Stationen mit Shift-Korrektur (Königsallee): erst Rohpegel als
+        # graue gestrichelte Linie, dann korrigierten Pegel darüber.
+        # So sind Baseline-Drift und Sensor-Shifts direkt erkennbar.
+        if (has_raw_level) {
+          p <- p %>%
+            add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level_raw * 100),
+                      type = "scatter", mode = "lines",
+                      name = "Rohpegel (inkl. Sensordrift)",
+                      line = list(color = "rgba(160,160,160,0.7)", width = 1, dash = "dot"),
+                      hovertemplate = "Rohpegel: %{y:.1f} cm<extra></extra>")
+        }
+
+        p <- p %>%
           add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level * 100),
-                    type = "scatter", mode = "lines", name = "Pegel",
+                    type = "scatter", mode = "lines",
+                    name = if (has_raw_level) "Pegel (korrigiert)" else "Pegel",
                     line = list(color = "#0072B2", width = 2),
                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
                     hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>")
