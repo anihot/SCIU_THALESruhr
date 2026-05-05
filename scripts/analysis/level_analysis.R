@@ -2,6 +2,7 @@ library(dplyr)
 library(readr)
 library(fs)
 library(lubridate)
+library(zoo)
 
 # Input and Output Directories
 input_dir <- "data/raw/sensor_exports"
@@ -117,3 +118,128 @@ for (f in files) {
 }
 
 cat("Analysis complete.\n")
+
+# ============================================================
+# Distance-Baseline-Recomputation für Königsallee
+# ============================================================
+# Die API liefert level = firmware_reference - distance mit einem festen
+# Referenzwert. Bei Sensorverschiebungen (Temperatur, Rekalibration) driftet
+# dieser Referenzwert, was Schein-Ereignisse produziert. Gleichzeitig liegt
+# der Trockenzustand mancher Tage ÜBER der Firmware-Referenz, sodass echte
+# Ereignisse durch Zero-Clamping teilweise verschwinden.
+#
+# Lösung: level aus einer rollierenden 7-Tage-90th-Perzentile der Distance
+# berechnen. Der Unterschied zum alten Ansatz (Mode-Baseline):
+#   - Wir verwenden p90 statt Mode → erfasst den trockenen Oberrand,
+#     nicht die Mitte der Verteilung → kein systematisches Dämpfen.
+#   - Shift-Erkennung: wenn in einer Stunde SOWOHL p90 als auch p10 der
+#     Distance signifikant fallen, liegt ein Sensorshift vor (nicht Regen).
+#     Bei echtem Regen bleibt der p90 nahe am Trockenwert, nur p10 fällt.
+
+DISTANCE_BASELINE_STATIONS <- c("Königsallee_Springorum_merged_export_cleaned.csv")
+
+recompute_distance_baseline <- function(cleaned_csv_path) {
+    station_label <- basename(cleaned_csv_path)
+    cat("Distance-baseline recomputation:", station_label, "\n")
+
+    df <- read_csv(cleaned_csv_path, show_col_types = FALSE) %>%
+        mutate(Zeit_Datum = as_datetime(Zeit_Datum)) %>%
+        arrange(Zeit_Datum)
+
+    if (!"distance" %in% names(df) || nrow(df) < 10) {
+        cat("  Skipped: missing distance column or too few rows.\n")
+        return(invisible(NULL))
+    }
+
+    # ---- Schritt 1: Stündliche p90/p10 der Distance ----
+    df_h <- df %>%
+        filter(!is.na(distance)) %>%
+        mutate(hour = floor_date(Zeit_Datum, "hour")) %>%
+        group_by(hour) %>%
+        summarise(
+            dist_p90 = quantile(distance, 0.90, na.rm = TRUE),
+            dist_p10 = quantile(distance, 0.10, na.rm = TRUE),
+            .groups = "drop"
+        ) %>%
+        arrange(hour)
+
+    n_h <- nrow(df_h)
+    if (n_h < 2) {
+        cat("  Skipped: insufficient hourly data.\n")
+        return(invisible(NULL))
+    }
+
+    # ---- Schritt 2: 7-Tage-rollierende 90th-Perzentile der stündlichen p90 ----
+    # = langfristiger Trockenzustand (Referenz für Shift-Erkennung & Level)
+    window_h <- min(7L * 24L, n_h)
+    raw_baseline <- zoo::rollapply(
+        df_h$dist_p90,
+        width    = window_h,
+        FUN      = function(x) quantile(x, 0.90, na.rm = TRUE),
+        fill     = NA,
+        align    = "right"
+    )
+    # Expanding window für die ersten < 7 Tage
+    early <- which(is.na(raw_baseline))
+    for (i in early) {
+        raw_baseline[i] <- quantile(df_h$dist_p90[seq_len(i)], 0.90, na.rm = TRUE)
+    }
+    df_h$dry_baseline <- raw_baseline
+
+    # ---- Schritt 3: Shift-Erkennung ----
+    # Shift-Kandidat: p90 der Stunde > 0.3 cm und p10 > 0.5 cm unter dry_baseline.
+    # Echte Regenstunde: nur p10 fällt (trockene Minutenmessungen halten p90 hoch).
+    # Bestätigt wenn >= 3 aufeinanderfolgende Shift-Kandidat-Stunden.
+    df_h <- df_h %>%
+        mutate(
+            drop_p90        = dry_baseline - dist_p90,
+            drop_p10        = dry_baseline - dist_p10,
+            shift_candidate = (drop_p90 > 0.003) & (drop_p10 > 0.005)
+        )
+
+    rc      <- rle(df_h$shift_candidate)
+    df_h$run_id <- rep(seq_along(rc$lengths), rc$lengths)
+
+    df_h <- df_h %>%
+        group_by(run_id) %>%
+        mutate(confirmed_shift = shift_candidate & (n() >= 3)) %>%
+        ungroup()
+
+    # ---- Schritt 4: Level neu berechnen ----
+    df <- df %>%
+        mutate(hour = floor_date(Zeit_Datum, "hour")) %>%
+        left_join(
+            df_h %>% select(hour, dry_baseline, drop_p90, confirmed_shift),
+            by = "hour"
+        ) %>%
+        mutate(
+            # Rohes Level relativ zur rollierenden Trockenreferenz
+            level_raw  = pmax(0, dry_baseline - distance, na.rm = FALSE),
+            # Shift-Korrektur: bei bestätigtem Sensorshift den Drift abziehen
+            shift_corr = dplyr::if_else(
+                confirmed_shift & !is.na(drop_p90),
+                pmax(0, drop_p90),
+                0
+            ),
+            level_new  = pmax(0, level_raw - shift_corr, na.rm = FALSE),
+            level_new  = replace(level_new, is.na(level_new), 0),
+            level_new  = pmin(level_new, MAX_REALISTIC_LEVEL),
+            level_new  = round(level_new, 3),
+            level      = level_new
+        ) %>%
+        select(Zeit_Datum, level, distance)
+
+    write_csv(df, cleaned_csv_path)
+    cat("  Done –", nrow(df), "rows recomputed.\n")
+    invisible(NULL)
+}
+
+cat("\n---- Distance-baseline recomputation ----\n")
+for (fname in DISTANCE_BASELINE_STATIONS) {
+    fpath <- path(output_dir, fname)
+    if (file_exists(fpath)) {
+        recompute_distance_baseline(fpath)
+    } else {
+        cat("Not found, skipping:", fname, "\n")
+    }
+}

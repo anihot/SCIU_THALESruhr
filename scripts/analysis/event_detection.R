@@ -23,6 +23,18 @@ MIN_ACTIVE_FRAC    <- 0.5   # Min. Anteil Messpunkte im Fenster mit Pegel > LOW_
 MIN_ROLLING_MEDIAN <- 0.002 # Min. Maximum einer rollierenden 3-Punkt-Median (filtert isolierte Spikes)
 LEAD_IN_HOURS      <- 3     # Niederschlag-Vorlauf-Fenster vor Event-Start
 
+# Per-Station-Schwellwerte (überschreiben globale Defaults)
+# Königsallee: niedrigere Schwellen, weil die neu berechneten Level
+# (rolling-distance-baseline statt API-Festwert) kleinere Absolutwerte
+# haben und damit feiner aufgelöst sind.
+STATION_THRESHOLDS <- list(
+    "Königsallee_Springorum" = list(
+        threshold      = 0.002,  # 0.2 cm über station_baseline (statt 0.4 cm)
+        low_threshold  = 0.001,  # 0.1 cm über station_baseline (statt 0.2 cm)
+        min_active_frac = 0.30   # 30 % aktive Punkte gefordert (statt 50 %)
+    )
+)
+
 # Load precipitation data once (global, reused across all stations)
 precip <- tibble(
     timestamp          = as.POSIXct(character()),
@@ -50,11 +62,10 @@ detect_events <- function(df, station_name, precip) {
     # Ensure chronological order
     df <- df %>% arrange(Zeit_Datum)
 
-    # Per-Station Trockenpegel: 10. Percentile aller Level-Werte.
+    # Per-Station Trockenpegel: Mode aller Level-Werte (gerundet auf 3 Stellen).
     # Dient als dynamische Nulllinie — Sensoren mit unterschiedlichen
-    # Firmware-Referenzen (Königsallee ~0.5 cm, An der Kost ~0 cm)
-    # werden so vergleichbar. Schwellwerte werden relativ zur Nulllinie
-    # angewandt.
+    # Firmware-Referenzen werden so vergleichbar. Schwellwerte werden relativ
+    # zur Nulllinie angewandt.
     valid_levels <- df$level[!is.na(df$level)]
     station_baseline <- if (length(valid_levels) > 0) {
         lv_round <- round(valid_levels, 3)
@@ -62,8 +73,16 @@ detect_events <- function(df, station_name, precip) {
     } else 0
     cat("    Station baseline:", round(station_baseline * 100, 2), "cm\n")
 
-    low_abs  <- station_baseline + LOW_THRESHOLD
-    high_abs <- station_baseline + THRESHOLD
+    # Station-spezifische Schwellwerte (falls definiert, sonst globale Defaults)
+    station_key <- gsub("_merged_export$", "", station_name)
+    st_ov <- STATION_THRESHOLDS[[station_key]]
+    thresh_val    <- if (!is.null(st_ov)) st_ov$threshold       else THRESHOLD
+    low_thresh    <- if (!is.null(st_ov)) st_ov$low_threshold   else LOW_THRESHOLD
+    min_act_frac  <- if (!is.null(st_ov)) st_ov$min_active_frac else MIN_ACTIVE_FRAC
+    if (!is.null(st_ov)) cat("    Using station-specific thresholds for:", station_key, "\n")
+
+    low_abs  <- station_baseline + low_thresh
+    high_abs <- station_baseline + thresh_val
 
     activity <- df %>% filter(!is.na(level) & level > low_abs)
     if (nrow(activity) == 0) return(NULL)
@@ -232,7 +251,7 @@ detect_events <- function(df, station_name, precip) {
             fall_min         >= MIN_FALL_MINS,
             n_local_peaks      <= MAX_LOCAL_PEAKS * pmax(1, ceiling(duration_min / 60)),
             plateau_fraction   <= MAX_PLATEAU_FRAC,
-            active_fraction    >= MIN_ACTIVE_FRAC,
+            active_fraction    >= min_act_frac,
             max_rolling_median >= MIN_ROLLING_MEDIAN
         ) %>%
         select(
