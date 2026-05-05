@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### 🟡 Wetterausblick (48h)
+****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 04.05. 16:00 bis 06.05. 15:00)*
+*(Zeitraum: 05.05. 11:00 bis 07.05. 10:00)*
 
-- Temperatur: **18.6°C** (Min: 7.6°C | Max: 18.6°C)
-- Summe: **38.8 mm** | Max: **4.4 mm/h**
-- Max. 6h: **18.7 mm**
+- Temperatur: **13.5°C** (Min: 6.8°C | Max: 14.2°C)
+- Summe: **44.5 mm** | Max: **6.7 mm/h**
+- Max. 6h: **29 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,8 +23,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-04 13:59:47 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-05-05 08:11:51 UTC*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                |start_time          | peak_level_cm| duration_min|
+|:----------------------|:-------------------|-------------:|------------:|
+|Königsallee_Springorum |2026-05-04 16:10:00 |           0.8|          880|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Königsallee_Springorum
+![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
+
 
 ---
 
