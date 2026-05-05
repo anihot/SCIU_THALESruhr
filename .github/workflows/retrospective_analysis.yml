@@ -78,4 +78,5 @@ jobs:
           git add data/output/events_summary_table.md || true
           git add README.md || true
           git commit -m "Retrospective event analysis: full history re-processed [skip ci]" || echo "No changes to commit"
+          git pull --rebase --autostash origin main || true
           git push
