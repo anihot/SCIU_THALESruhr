@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 06.05. 05:00 bis 08.05. 04:00)*
+*(Zeitraum: 06.05. 11:00 bis 08.05. 10:00)*
 
-- Temperatur: **10.1°C** (Min: 5.5°C | Max: 13.2°C)
-- Summe: **13.8 mm** | Max: **1.8 mm/h**
-- Max. 6h: **6.6 mm**
+- Temperatur: **9°C** (Min: 5°C | Max: 14.9°C)
+- Summe: **10.4 mm** | Max: **1.9 mm/h**
+- Max. 6h: **8.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,8 +23,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-06 02:40:45 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-05-06 08:29:52 UTC*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station     |start_time          | peak_level_cm| duration_min|
+|:-----------|:-------------------|-------------:|------------:|
+|An_der_Kost |2026-05-06 00:06:00 |           0.5|         28.5|
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
 
 ---
 
