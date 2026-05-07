@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 07.05. 17:00 bis 09.05. 16:00)*
+*(Zeitraum: 07.05. 22:00 bis 09.05. 21:00)*
 
-- Temperatur: **16°C** (Min: 6.7°C | Max: 21.7°C)
+- Temperatur: **11.2°C** (Min: 6.4°C | Max: 22.1°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-07 14:06:01 UTC*
+*Stand: 2026-05-07 19:49:25 UTC*
 
 ---
 
