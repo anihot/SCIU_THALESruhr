@@ -23,7 +23,7 @@
 |An_der_Kost             |2025/09/15 04:22:00 |        602.0|           0.8|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            0.69|               3.24|
 |An_der_Kost             |2026/01/14 04:27:00 |        188.0|           0.7|               0.006|Leichter Regen / Unterhalb DWD-Schwelle |            0.44|               0.96|
 |Königsallee_Springorum  |2026/01/25 08:00:00 |        462.0|           0.6|               0.005|Leichter Regen / Unterhalb DWD-Schwelle |            0.11|               0.60|
-|An_der_Kost             |2026/05/06 00:06:00 |         28.5|           0.5|               0.020|Leichter Regen / Unterhalb DWD-Schwelle |            0.78|               1.44|
+|An_der_Kost             |2026/05/06 00:06:00 |         28.5|           0.5|               0.020|Leichter Regen / Unterhalb DWD-Schwelle |            3.90|               1.44|
 |An_der_Kost             |2026/02/23 22:16:00 |        320.0|           0.5|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            1.71|               1.56|
 |An_der_Kost             |2025/11/24 17:27:00 |         55.0|           0.5|               0.013|Leichter Regen / Unterhalb DWD-Schwelle |            0.03|               0.36|
 |An_der_Kost             |2025/10/23 17:14:00 |         22.0|           0.5|               0.082|Leichter Regen / Unterhalb DWD-Schwelle |            0.52|               2.40|

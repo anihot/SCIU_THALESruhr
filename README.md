@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 07.05. 05:00 bis 09.05. 04:00)*
+*(Zeitraum: 07.05. 11:00 bis 09.05. 10:00)*
 
-- Temperatur: **8.2°C** (Min: 6.8°C | Max: 17.7°C)
+- Temperatur: **12.5°C** (Min: 6.3°C | Max: 18.4°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -23,19 +23,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-05-07 02:47:03 UTC*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station     |start_time          | peak_level_cm| duration_min|
-|:-----------|:-------------------|-------------:|------------:|
-|An_der_Kost |2026-05-06 00:06:00 |           0.5|         28.5|
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: An_der_Kost
-![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-05-07 08:45:06 UTC*
 
 ---
 
