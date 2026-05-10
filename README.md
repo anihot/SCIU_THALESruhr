@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🟡 Wetterausblick (48h)
-****Warnung vor markantem Starkregen** (DWD Stufe 2)**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 10.05. 05:00 bis 12.05. 04:00)*
+*(Zeitraum: 10.05. 11:00 bis 12.05. 10:00)*
 
-- Temperatur: **12.2°C** (Min: 5.2°C | Max: 21.2°C)
-- Summe: **29.5 mm** | Max: **5.1 mm/h**
-- Max. 6h: **22 mm**
+- Temperatur: **17.4°C** (Min: 4.8°C | Max: 20.8°C)
+- Summe: **22.6 mm** | Max: **2.3 mm/h**
+- Max. 6h: **10.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-10 02:45:12 UTC*
+*Stand: 2026-05-10 08:17:11 UTC*
 
 ---
 
