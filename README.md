@@ -10,9 +10,9 @@
 
 *(Zeitraum: 11.05. 14:00 bis 13.05. 13:00)*
 
-- Temperatur: **9.8°C** (Min: 4.9°C | Max: 13.2°C)
-- Summe: **13.7 mm** | Max: **2.3 mm/h**
-- Max. 6h: **8.7 mm**
+- Temperatur: **10.4°C** (Min: 5.2°C | Max: 13.6°C)
+- Summe: **5.4 mm** | Max: **0.8 mm/h**
+- Max. 6h: **12.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-11 11:31:22 UTC*
+*Stand: 2026-05-11 11:55:26 UTC*
 
 ---
 
