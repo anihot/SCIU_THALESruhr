@@ -151,14 +151,31 @@ recompute_distance_baseline <- function(cleaned_csv_path) {
         return(invisible(NULL))
     }
 
+    # ---- Schritt 0: Obstruktions-Distance filtern ----
+    # Spikes (Autos, Objekte) erzeugen extrem niedrige Distance-Werte (z.B.
+    # 2–3 m statt ~5.82 m). Diese verfälschen p10, Shift-Erkennung und
+    # Level-Berechnung. Median ± 3×IQR als robuster Bereich.
+    dist_median <- median(df$distance, na.rm = TRUE)
+    dist_iqr    <- IQR(df$distance, na.rm = TRUE)
+    dist_lower  <- dist_median - 3 * pmax(dist_iqr, 0.01)
+    df$distance_clean <- ifelse(
+        !is.na(df$distance) & df$distance >= dist_lower,
+        df$distance,
+        NA_real_
+    )
+    n_dist_outliers <- sum(!is.na(df$distance) & is.na(df$distance_clean))
+    if (n_dist_outliers > 0) {
+        cat("  Filtered", n_dist_outliers, "distance outliers (< ", round(dist_lower, 3), "m)\n")
+    }
+
     # ---- Schritt 1: Stündliche p90/p10 der Distance ----
     df_h <- df %>%
-        filter(!is.na(distance)) %>%
+        filter(!is.na(distance_clean)) %>%
         mutate(hour = floor_date(Zeit_Datum, "hour")) %>%
         group_by(hour) %>%
         summarise(
-            dist_p90 = quantile(distance, 0.90, na.rm = TRUE),
-            dist_p10 = quantile(distance, 0.10, na.rm = TRUE),
+            dist_p90 = quantile(distance_clean, 0.90, na.rm = TRUE),
+            dist_p10 = quantile(distance_clean, 0.10, na.rm = TRUE),
             .groups = "drop"
         ) %>%
         arrange(hour)
@@ -225,7 +242,12 @@ recompute_distance_baseline <- function(cleaned_csv_path) {
         ) %>%
         mutate(
             # Rohes Level relativ zur rollierenden Trockenreferenz
-            level_raw  = pmax(0, dry_baseline - distance, na.rm = FALSE),
+            # Obstruktions-Distance (NA in distance_clean) → Level = 0
+            level_raw  = dplyr::if_else(
+                is.na(distance_clean),
+                0,
+                pmax(0, dry_baseline - distance, na.rm = FALSE)
+            ),
             # Shift-Korrektur: bei bestätigtem Sensorshift den Drift abziehen
             shift_corr = dplyr::if_else(
                 confirmed_shift & !is.na(drop_p90),
