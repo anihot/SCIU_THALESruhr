@@ -32,6 +32,11 @@ STATION_THRESHOLDS <- list(
         threshold      = 0.002,  # 0.2 cm über station_baseline (statt 0.4 cm)
         low_threshold  = 0.001,  # 0.1 cm über station_baseline (statt 0.2 cm)
         min_active_frac = 0.30   # 30 % aktive Punkte gefordert (statt 50 %)
+    ),
+    "An_der_Kost" = list(
+        threshold      = 0.002,  # 0.2 cm — Sensor zeigt bei Regen nur 0.1–0.3 cm
+        low_threshold  = 0.001,  # 0.1 cm
+        min_active_frac = 0.30   # 30 %
     )
 )
 
