@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### 🟡 Wetterausblick (48h)
+****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 12.05. 18:00 bis 14.05. 17:00)*
+*(Zeitraum: 12.05. 22:00 bis 14.05. 21:00)*
 
-- Temperatur: **11.6°C** (Min: 6.1°C | Max: 14.1°C)
-- Summe: **33.4 mm** | Max: **6.3 mm/h**
-- Max. 6h: **19.9 mm**
+- Temperatur: **9.7°C** (Min: 6.1°C | Max: 13.5°C)
+- Summe: **36.6 mm** | Max: **7.1 mm/h**
+- Max. 6h: **22.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -20,14 +20,11 @@
 
 ### 🛠 Sensor-Status-Check
 
-⚠️ **Achtung: Inaktive Sensoren erkannt!**
-*(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
-
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
+✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-12 15:42:32 UTC*
+*Stand: 2026-05-12 19:52:49 UTC*
 
 ---
 
