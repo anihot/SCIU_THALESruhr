@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 13.05. 11:00 bis 15.05. 10:00)*
+*(Zeitraum: 13.05. 17:00 bis 15.05. 16:00)*
 
-- Temperatur: **11.8°C** (Min: 4°C | Max: 13.1°C)
-- Summe: **42.3 mm** | Max: **6.5 mm/h**
-- Max. 6h: **19.5 mm**
+- Temperatur: **8.3°C** (Min: 6.2°C | Max: 12.4°C)
+- Summe: **23.3 mm** | Max: **4.1 mm/h**
+- Max. 6h: **10.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-13 08:50:18 UTC*
+*Stand: 2026-05-13 14:38:36 UTC*
 
 ---
 
