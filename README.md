@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 14.05. 11:00 bis 16.05. 10:00)*
+*(Zeitraum: 14.05. 17:00 bis 16.05. 16:00)*
 
-- Temperatur: **7.2°C** (Min: 4.8°C | Max: 13.9°C)
-- Summe: **13.1 mm** | Max: **5.8 mm/h**
-- Max. 6h: **8.9 mm**
+- Temperatur: **8.7°C** (Min: 5.2°C | Max: 14.4°C)
+- Summe: **4.6 mm** | Max: **1.4 mm/h**
+- Max. 6h: **2.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,21 +24,17 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-05-14 08:47:02 UTC*
+*Stand: 2026-05-14 14:13:46 UTC*
 
-Es wurden **2** neue potenzielle Ereignisse erkannt.
+Es wurden **1** neue potenzielle Ereignisse erkannt.
 
-|station                 |start_time          | peak_level_cm| duration_min|
-|:-----------------------|:-------------------|-------------:|------------:|
-|An_der_Kost             |2026-05-13 13:08:00 |           0.4|         50.0|
-|Wasserstraße_Springorum |2026-05-13 08:08:30 |           0.9|        222.5|
+|station     |start_time          | peak_level_cm| duration_min|
+|:-----------|:-------------------|-------------:|------------:|
+|An_der_Kost |2026-05-13 13:08:00 |           0.4|           50|
 
 ### 📈 Aktuelle Plots der betroffenen Stationen
 #### Station: An_der_Kost
 ![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
-#### Station: Wasserstraße_Springorum
-![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
 
 
 ---

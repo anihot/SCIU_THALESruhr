@@ -24908,14 +24908,14 @@ timestamp,station,precipitation_mm
 2026-05-13T03:00:00Z,Wasserbaulabor 2,0
 2026-05-13T03:00:00Z,Wasserstraße,0
 2026-05-13T04:00:00Z,An der Kost,0
-2026-05-13T04:00:00Z,Herzogstraße,0.08
+2026-05-13T04:00:00Z,Herzogstraße,0.16
 2026-05-13T04:00:00Z,Königsallee,0
-2026-05-13T04:00:00Z,Wasserbaulabor 2,0.02
+2026-05-13T04:00:00Z,Wasserbaulabor 2,0.04
 2026-05-13T04:00:00Z,Wasserstraße,0
 2026-05-13T05:00:00Z,An der Kost,0
 2026-05-13T05:00:00Z,Herzogstraße,0
 2026-05-13T05:00:00Z,Königsallee,0
-2026-05-13T05:00:00Z,Wasserbaulabor 2,0.01
+2026-05-13T05:00:00Z,Wasserbaulabor 2,0.02
 2026-05-13T05:00:00Z,Wasserstraße,0
 2026-05-13T06:00:00Z,An der Kost,0
 2026-05-13T06:00:00Z,Herzogstraße,0
@@ -24932,36 +24932,36 @@ timestamp,station,precipitation_mm
 2026-05-13T08:00:00Z,Königsallee,0
 2026-05-13T08:00:00Z,Wasserbaulabor 2,0
 2026-05-13T08:00:00Z,Wasserstraße,0
-2026-05-13T09:00:00Z,An der Kost,0.29
-2026-05-13T09:00:00Z,Herzogstraße,0.1
-2026-05-13T09:00:00Z,Königsallee,0.18
-2026-05-13T09:00:00Z,Wasserbaulabor 2,0.17
-2026-05-13T09:00:00Z,Wasserstraße,0.18
-2026-05-13T10:00:00Z,An der Kost,0.09
+2026-05-13T09:00:00Z,An der Kost,0.58
+2026-05-13T09:00:00Z,Herzogstraße,0.2
+2026-05-13T09:00:00Z,Königsallee,0.36
+2026-05-13T09:00:00Z,Wasserbaulabor 2,0.34
+2026-05-13T09:00:00Z,Wasserstraße,0.36
+2026-05-13T10:00:00Z,An der Kost,0.18
 2026-05-13T10:00:00Z,Herzogstraße,0
-2026-05-13T10:00:00Z,Königsallee,0.12
-2026-05-13T10:00:00Z,Wasserbaulabor 2,0.14
-2026-05-13T10:00:00Z,Wasserstraße,0.12
+2026-05-13T10:00:00Z,Königsallee,0.24
+2026-05-13T10:00:00Z,Wasserbaulabor 2,0.28
+2026-05-13T10:00:00Z,Wasserstraße,0.24
 2026-05-13T11:00:00Z,An der Kost,0
 2026-05-13T11:00:00Z,Herzogstraße,0
 2026-05-13T11:00:00Z,Königsallee,0
 2026-05-13T11:00:00Z,Wasserbaulabor 2,0
 2026-05-13T11:00:00Z,Wasserstraße,0
-2026-05-13T12:00:00Z,An der Kost,0.08
+2026-05-13T12:00:00Z,An der Kost,0.16
 2026-05-13T12:00:00Z,Herzogstraße,0
-2026-05-13T12:00:00Z,Königsallee,0.19
+2026-05-13T12:00:00Z,Königsallee,0.38
 2026-05-13T12:00:00Z,Wasserbaulabor 2,0
-2026-05-13T12:00:00Z,Wasserstraße,0.19
-2026-05-13T13:00:00Z,An der Kost,0.12
+2026-05-13T12:00:00Z,Wasserstraße,0.38
+2026-05-13T13:00:00Z,An der Kost,0.24
 2026-05-13T13:00:00Z,Herzogstraße,0
-2026-05-13T13:00:00Z,Königsallee,0.13
-2026-05-13T13:00:00Z,Wasserbaulabor 2,0.15
-2026-05-13T13:00:00Z,Wasserstraße,0.13
-2026-05-13T14:00:00Z,An der Kost,0.64
-2026-05-13T14:00:00Z,Herzogstraße,0.19
-2026-05-13T14:00:00Z,Königsallee,0.4
-2026-05-13T14:00:00Z,Wasserbaulabor 2,0.33
-2026-05-13T14:00:00Z,Wasserstraße,0.4
+2026-05-13T13:00:00Z,Königsallee,0.26
+2026-05-13T13:00:00Z,Wasserbaulabor 2,0.3
+2026-05-13T13:00:00Z,Wasserstraße,0.26
+2026-05-13T14:00:00Z,An der Kost,1.28
+2026-05-13T14:00:00Z,Herzogstraße,0.38
+2026-05-13T14:00:00Z,Königsallee,0.8
+2026-05-13T14:00:00Z,Wasserbaulabor 2,0.66
+2026-05-13T14:00:00Z,Wasserstraße,0.8
 2026-05-13T15:00:00Z,An der Kost,0
 2026-05-13T15:00:00Z,Herzogstraße,0
 2026-05-13T15:00:00Z,Königsallee,0
@@ -24982,16 +24982,16 @@ timestamp,station,precipitation_mm
 2026-05-13T18:00:00Z,Königsallee,0
 2026-05-13T18:00:00Z,Wasserbaulabor 2,0
 2026-05-13T18:00:00Z,Wasserstraße,0
-2026-05-13T19:00:00Z,An der Kost,0.16
-2026-05-13T19:00:00Z,Herzogstraße,0.29
-2026-05-13T19:00:00Z,Königsallee,0.22
+2026-05-13T19:00:00Z,An der Kost,0.32
+2026-05-13T19:00:00Z,Herzogstraße,0.58
+2026-05-13T19:00:00Z,Königsallee,0.44
 2026-05-13T19:00:00Z,Wasserbaulabor 2,0
-2026-05-13T19:00:00Z,Wasserstraße,0.22
-2026-05-13T20:00:00Z,An der Kost,1
-2026-05-13T20:00:00Z,Herzogstraße,0.74
-2026-05-13T20:00:00Z,Königsallee,0.96
-2026-05-13T20:00:00Z,Wasserbaulabor 2,0.9299999999999999
-2026-05-13T20:00:00Z,Wasserstraße,0.96
+2026-05-13T19:00:00Z,Wasserstraße,0.44
+2026-05-13T20:00:00Z,An der Kost,2
+2026-05-13T20:00:00Z,Herzogstraße,1.48
+2026-05-13T20:00:00Z,Königsallee,1.92
+2026-05-13T20:00:00Z,Wasserbaulabor 2,1.8599999999999999
+2026-05-13T20:00:00Z,Wasserstraße,1.92
 2026-05-13T21:00:00Z,An der Kost,0
 2026-05-13T21:00:00Z,Herzogstraße,0
 2026-05-13T21:00:00Z,Königsallee,0
