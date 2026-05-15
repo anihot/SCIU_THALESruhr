@@ -261,12 +261,11 @@ m <- leaflet(sensors, height = "100%", width = "100%") %>%
   addMiniMap(toggleDisplay = TRUE)
 
 # ---------------------------------------------------------------------------
-# Save leaflet widget, then wrap in split layout with sidebar
+# Save selfcontained widget, then inject sidebar via post-processing
 # ---------------------------------------------------------------------------
 library(htmltools)
 
-map_widget_file <- file.path(path_dir(output_file), "sensor_map_widget.html")
-saveWidget(m, file = normalizePath(map_widget_file, mustWork = FALSE), selfcontained = TRUE)
+saveWidget(m, file = normalizePath(output_file, mustWork = FALSE), selfcontained = TRUE)
 
 sidebar_items <- paste0(sapply(seq_len(nrow(sensors)), function(i) {
   paste0(
@@ -277,39 +276,40 @@ sidebar_items <- paste0(sapply(seq_len(nrow(sensors)), function(i) {
   )
 }), collapse = "\n")
 
-wrapper_html <- paste0('<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>SCIU THALESruhr – Sensorkarte</title>
+sidebar_html <- paste0('
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { height: 100%; font-family: "Segoe UI", Arial, sans-serif; }
-  .container { display: flex; height: 100vh; }
-  .map-panel { flex: 0 0 70%; height: 100%; }
-  .map-panel iframe { width: 100%; height: 100%; border: none; }
-  .sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
-              background: #fafafa; border-left: 2px solid #ddd; }
-  .sidebar-header { padding: 14px; background: #0072B2; color: white; }
-  .sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: "Segoe UI", Arial, sans-serif; }
+  .sciu-container { display: flex; height: 100vh; }
+  .sciu-map { flex: 0 0 70%; height: 100%; overflow: hidden; }
+  .sciu-sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
+                   background: #fafafa; border-left: 2px solid #ddd; }
+  .sciu-sidebar-header { padding: 14px; background: #0072B2; color: white; }
+  .sciu-sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
   .sidebar-station { padding: 10px 12px; border-bottom: 1px solid #e0e0e0; }
   .sidebar-station:hover { background: #f0f0f0; cursor: pointer; }
   .sidebar-station h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; }
   .sidebar-station p { margin: 0; font-size: 12px; color: #888; }
+  .htmlwidget { height: 100% !important; }
 </style>
-</head>
-<body>
-<div class="container">
-  <div class="map-panel">
-    <iframe src="sensor_map_widget.html"></iframe>
-  </div>
-  <div class="sidebar">
-    <div class="sidebar-header"><h3>Sensorstandorte</h3></div>
-    ', sidebar_items, '
-  </div>
-</div>
-</body>
-</html>')
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var widget = document.querySelector(".htmlwidget");
+  if (!widget) return;
+  var container = document.createElement("div");
+  container.className = "sciu-container";
+  var mapDiv = document.createElement("div");
+  mapDiv.className = "sciu-map";
+  var sidebar = document.createElement("div");
+  sidebar.className = "sciu-sidebar";
+  sidebar.innerHTML = \'<div class="sciu-sidebar-header"><h3>Sensorstandorte</h3></div>', sidebar_items, '\';
+  widget.parentNode.insertBefore(container, widget);
+  mapDiv.appendChild(widget);
+  container.appendChild(mapDiv);
+  container.appendChild(sidebar);
+});
+</script>')
 
-writeLines(wrapper_html, output_file, useBytes = TRUE)
+html_content <- readLines(output_file, warn = FALSE)
+html_content <- sub("</body>", paste0(sidebar_html, "\n</body>"), html_content, fixed = TRUE)
+writeLines(html_content, output_file, useBytes = TRUE)
 cat("✅ Map saved to", output_file, "\n")
