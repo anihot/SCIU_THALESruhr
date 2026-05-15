@@ -139,18 +139,56 @@
             font-size: 0.95rem;
         }
 
-        /* Karte */
-        .map-container {
-            width: 100%;
-            height: 400px;
+        /* Karte + Sidebar Layout */
+        .map-layout {
+            display: flex;
+            height: 500px;
             border: 1px solid var(--border);
             border-radius: 6px;
             overflow: hidden;
+        }
+        .map-container {
+            flex: 0 0 70%;
+            height: 100%;
         }
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: none;
+        }
+        .map-sidebar {
+            flex: 0 0 30%;
+            height: 100%;
+            overflow-y: auto;
+            background: #fafafa;
+            border-left: 2px solid var(--border);
+        }
+        .map-sidebar-header {
+            padding: 14px;
+            background: #0072B2;
+            color: white;
+        }
+        .map-sidebar-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .map-sidebar-station {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .map-sidebar-station:hover {
+            background: #f0f0f0;
+        }
+        .map-sidebar-station h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            color: #333;
+        }
+        .map-sidebar-station p {
+            margin: 0;
+            font-size: 12px;
+            color: #888;
         }
 
         /* Station Plots */
@@ -375,9 +413,34 @@ async function buildDashboard() {
             <!-- Karte (volle Breite darunter) -->
             <div class="card full">
                 <h2>Interaktive Sensorkarte</h2>
-                <div class="map-container">
-                    <iframe src="map.html" loading="lazy"
-                            title="Interaktive Sensorkarte"></iframe>
+                <div class="map-layout">
+                    <div class="map-container">
+                        <iframe src="map.html" loading="lazy"
+                                title="Interaktive Sensorkarte"></iframe>
+                    </div>
+                    <div class="map-sidebar">
+                        <div class="map-sidebar-header"><h3>Sensorstandorte</h3></div>
+                        <div class="map-sidebar-station">
+                            <h4>An der Kost (Hattingen)</h4>
+                            <p>Station: An der Kost</p>
+                        </div>
+                        <div class="map-sidebar-station">
+                            <h4>Wasserstra&szlig;e Springorum (Bochum)</h4>
+                            <p>Station: Wasserstra&szlig;e</p>
+                        </div>
+                        <div class="map-sidebar-station">
+                            <h4>K&ouml;nigsallee Springorum (Bochum)</h4>
+                            <p>Station: K&ouml;nigsallee</p>
+                        </div>
+                        <div class="map-sidebar-station">
+                            <h4>Wasserbaulabor 2 (Hochschule Bochum Campus)</h4>
+                            <p>Station: Wasserbaulabor 2</p>
+                        </div>
+                        <div class="map-sidebar-station">
+                            <h4>Herzogstra&szlig;e (Bochum)</h4>
+                            <p>Station: Herzogstra&szlig;e</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

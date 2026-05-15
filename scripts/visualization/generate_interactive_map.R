@@ -260,55 +260,6 @@ m <- leaflet(sensors, height = "100%", width = "100%") %>%
   ) %>%
   addMiniMap(toggleDisplay = TRUE)
 
-# ---------------------------------------------------------------------------
-# 1) Save map the same way it always worked
-# ---------------------------------------------------------------------------
-saveWidget(m, file = normalizePath(output_file, mustWork = FALSE), selfcontained = TRUE)
-
-# ---------------------------------------------------------------------------
-# 2) Post-process: inject sidebar via pure HTML/CSS string replacement
-# ---------------------------------------------------------------------------
-sidebar_items_html <- paste0(sapply(seq_len(nrow(sensors)), function(i) {
-  label <- gsub("&", "&amp;", gsub("<", "&lt;", sensors$label[i]))
-  sname <- gsub("&", "&amp;", gsub("<", "&lt;", sensors$station[i]))
-  paste0(
-    '<div style="padding:10px 12px;border-bottom:1px solid #e0e0e0;">',
-    '<h4 style="margin:0 0 4px 0;font-size:14px;color:#333;">', label, '</h4>',
-    '<p style="margin:0;font-size:12px;color:#888;">Station: ', sname, '</p>',
-    '</div>'
-  )
-}), collapse = "")
-
-sidebar_div <- paste0(
-  '<div style="flex:0 0 30%;height:100%;overflow-y:auto;background:#fafafa;border-left:2px solid #ddd;font-family:Segoe UI,Arial,sans-serif;">',
-  '<div style="padding:14px;background:#0072B2;color:white;"><h3 style="margin:0;font-size:16px;font-weight:600;">Sensorstandorte</h3></div>',
-  sidebar_items_html,
-  '</div>'
-)
-
-html_lines <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
-html_text <- paste(html_lines, collapse = "\n")
-
-# Wrap body content in a flex container: map 70% | sidebar 30%
-html_text <- sub(
-  "<body>",
-  '<body style="margin:0;padding:0;display:flex;height:100vh;overflow:hidden;">',
-  html_text, fixed = TRUE
-)
-
-# Give the widget container 70% width
-html_text <- sub(
-  'class="html-widget"',
-  'class="html-widget" style="flex:0 0 70%;height:100%;"',
-  html_text, fixed = TRUE
-)
-
-# Insert sidebar before </body>
-html_text <- sub(
-  "</body>",
-  paste0(sidebar_div, "\n</body>"),
-  html_text, fixed = TRUE
-)
-
-writeLines(html_text, output_file, useBytes = TRUE)
+# Save the main map — unchanged, exactly as before
+saveWidget(m, file = output_file, selfcontained = TRUE)
 cat("Map saved to", output_file, "\n")
