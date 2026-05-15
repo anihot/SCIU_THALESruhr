@@ -1,69 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<style>body{background-color:white;}</style>
-<script src="lib/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="lib/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
-<script src="lib/leaflet-1.3.1/leaflet.js"></script>
-<link href="lib/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="lib/proj4-2.6.2/proj4.min.js"></script>
-<script src="lib/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
-<link href="lib/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="lib/leaflet-binding-2.2.3/leaflet.js"></script>
-<script src="lib/leaflet-providers-3.0.0/leaflet-providers.js"></script>
-<script src="lib/leaflet-providers-plugin-2.2.3/leaflet-providers-plugin.js"></script>
-<link href="lib/leaflet-minimap-3.3.1/Control.MiniMap.min.css" rel="stylesheet" />
-<script src="lib/leaflet-minimap-3.3.1/Control.MiniMap.min.js"></script>
-<script src="lib/leaflet-minimap-3.3.1/Minimap-binding.js"></script>
-  <meta charset="utf-8"/>
-  <title>SCIU THALESruhr – Sensorkarte</title>
-  <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { height: 100%; font-family: 'Segoe UI', Arial, sans-serif; }
-      .container { display: flex; height: 100vh; }
-      .map-panel { flex: 0 0 70%; height: 100%; }
-      .sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
-                  background: #fafafa; border-left: 2px solid #ddd; }
-      .sidebar-header { padding: 14px; background: #0072B2; color: white; }
-      .sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
-      .sidebar-station:hover { background: #f0f0f0; }
-    </style>
-</head>
 <html>
-  <body>
-    <div class="container">
-      <div class="map-panel">
-        <div id="htmlwidget-6f4ab943440cb07b9266" style="width:100%;height:100%;" class="leaflet html-widget"></div>
-        <script type="application/json" data-for="htmlwidget-6f4ab943440cb07b9266">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[51.4167617,51.460978,51.459838,51.447778,51.511366],[7.2022587,7.223091,7.222267,7.270763,7.204454],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["<iframe src=\"graphs/An_der_Kost.html\" width=\"450\" height=\"320\" frameborder=\"0\" style=\"border:none;overflow:hidden;\"><\/iframe>","<iframe src=\"graphs/Wasserstra_e.html\" width=\"450\" height=\"320\" frameborder=\"0\" style=\"border:none;overflow:hidden;\"><\/iframe>","<iframe src=\"graphs/K_nigsallee.html\" width=\"450\" height=\"320\" frameborder=\"0\" style=\"border:none;overflow:hidden;\"><\/iframe>","<iframe src=\"graphs/Wasserbaulabor_2.html\" width=\"450\" height=\"320\" frameborder=\"0\" style=\"border:none;overflow:hidden;\"><\/iframe>","<iframe src=\"graphs/Herzogstra_e.html\" width=\"450\" height=\"320\" frameborder=\"0\" style=\"border:none;overflow:hidden;\"><\/iframe>"],{"maxWidth":480,"minWidth":460,"autoPan":true,"keepInView":false,"closeButton":true,"className":""},null,null,["An der Kost (Hattingen)","Wasserstraße Springorum (Bochum)","Königsallee Springorum (Bochum)","Wasserbaulabor 2 (Hochschule Bochum Campus)","Herzogstraße (Bochum)"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addMiniMap","args":[null,null,"bottomright",150,150,19,19,-5,false,false,false,true,false,false,{"color":"#ff7800","weight":1,"clickable":false},{"color":"#000000","weight":1,"clickable":false,"opacity":0,"fillOpacity":0},{"hideText":"Hide MiniMap","showText":"Show MiniMap"},[]]}],"limits":{"lat":[51.4167617,51.511366],"lng":[7.2022587,7.270763]}},"evals":[],"jsHooks":[]}</script>
-      </div>
-      <div class="sidebar">
-        <div class="sidebar-header">
-          <h3>Sensorstandorte</h3>
-        </div>
-        <div class="sidebar-station" style="padding: 10px 12px; border-bottom: 1px solid #e0e0e0;">
-          <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #333;">An der Kost (Hattingen)</h4>
-          <p style="margin: 0; font-size: 12px; color: #888;">Station: An der Kost</p>
-        </div>
-        <div class="sidebar-station" style="padding: 10px 12px; border-bottom: 1px solid #e0e0e0;">
-          <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #333;">Wasserstraße Springorum (Bochum)</h4>
-          <p style="margin: 0; font-size: 12px; color: #888;">Station: Wasserstraße</p>
-        </div>
-        <div class="sidebar-station" style="padding: 10px 12px; border-bottom: 1px solid #e0e0e0;">
-          <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #333;">Königsallee Springorum (Bochum)</h4>
-          <p style="margin: 0; font-size: 12px; color: #888;">Station: Königsallee</p>
-        </div>
-        <div class="sidebar-station" style="padding: 10px 12px; border-bottom: 1px solid #e0e0e0;">
-          <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #333;">Wasserbaulabor 2 (Hochschule Bochum Campus)</h4>
-          <p style="margin: 0; font-size: 12px; color: #888;">Station: Wasserbaulabor 2</p>
-        </div>
-        <div class="sidebar-station" style="padding: 10px 12px; border-bottom: 1px solid #e0e0e0;">
-          <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #333;">Herzogstraße (Bochum)</h4>
-          <p style="margin: 0; font-size: 12px; color: #888;">Station: Herzogstraße</p>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+<head>
+<meta charset="utf-8">
+<title>SCIU THALESruhr – Sensorkarte</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; font-family: "Segoe UI", Arial, sans-serif; }
+  .container { display: flex; height: 100vh; }
+  .map-panel { flex: 0 0 70%; height: 100%; }
+  .map-panel iframe { width: 100%; height: 100%; border: none; }
+  .sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
+              background: #fafafa; border-left: 2px solid #ddd; }
+  .sidebar-header { padding: 14px; background: #0072B2; color: white; }
+  .sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .sidebar-station { padding: 10px 12px; border-bottom: 1px solid #e0e0e0; }
+  .sidebar-station:hover { background: #f0f0f0; cursor: pointer; }
+  .sidebar-station h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; }
+  .sidebar-station p { margin: 0; font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="map-panel">
+    <iframe src="sensor_map_widget.html"></iframe>
+  </div>
+  <div class="sidebar">
+    <div class="sidebar-header"><h3>Sensorstandorte</h3></div>
+    <div class="sidebar-station"><h4>An der Kost (Hattingen)</h4><p>Station: An der Kost</p></div>
+<div class="sidebar-station"><h4>Wasserstraße Springorum (Bochum)</h4><p>Station: Wasserstraße</p></div>
+<div class="sidebar-station"><h4>Königsallee Springorum (Bochum)</h4><p>Station: Königsallee</p></div>
+<div class="sidebar-station"><h4>Wasserbaulabor 2 (Hochschule Bochum Campus)</h4><p>Station: Wasserbaulabor 2</p></div>
+<div class="sidebar-station"><h4>Herzogstraße (Bochum)</h4><p>Station: Herzogstraße</p></div>
+  </div>
+</div>
+</body>
 </html>
