@@ -248,7 +248,7 @@ for (i in seq_len(nrow(sensors))) {
 # ---------------------------------------------------------------------------
 # Build Leaflet map
 # ---------------------------------------------------------------------------
-m <- leaflet(sensors) %>%
+m <- leaflet(sensors, height = "100%", width = "100%") %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
   addMarkers(
     lng     = ~lon,
@@ -260,6 +260,49 @@ m <- leaflet(sensors) %>%
   ) %>%
   addMiniMap(toggleDisplay = TRUE)
 
-# Save the main map
-saveWidget(m, file = output_file, selfcontained = TRUE)
+# ---------------------------------------------------------------------------
+# Wrap map + sidebar in a split layout
+# ---------------------------------------------------------------------------
+library(htmltools)
+
+sidebar_items <- lapply(seq_len(nrow(sensors)), function(i) {
+  tags$div(
+    class = "sidebar-station",
+    style = "padding: 10px 12px; border-bottom: 1px solid #e0e0e0;",
+    tags$h4(style = "margin: 0 0 4px 0; font-size: 14px; color: #333;", sensors$label[i]),
+    tags$p(style = "margin: 0; font-size: 12px; color: #888;",
+           paste0("Station: ", sensors$station[i]))
+  )
+})
+
+page <- tags$html(
+  tags$head(
+    tags$meta(charset = "utf-8"),
+    tags$title("SCIU THALESruhr – Sensorkarte"),
+    tags$style(HTML("
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { height: 100%; font-family: 'Segoe UI', Arial, sans-serif; }
+      .container { display: flex; height: 100vh; }
+      .map-panel { flex: 0 0 70%; height: 100%; }
+      .sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
+                  background: #fafafa; border-left: 2px solid #ddd; }
+      .sidebar-header { padding: 14px; background: #0072B2; color: white; }
+      .sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+      .sidebar-station:hover { background: #f0f0f0; }
+    "))
+  ),
+  tags$body(
+    tags$div(class = "container",
+      tags$div(class = "map-panel", m),
+      tags$div(class = "sidebar",
+        tags$div(class = "sidebar-header",
+          tags$h3("Sensorstandorte")
+        ),
+        tagList(sidebar_items)
+      )
+    )
+  )
+)
+
+save_html(page, file = output_file)
 cat("✅ Map saved to", output_file, "\n")
