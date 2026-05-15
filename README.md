@@ -10,9 +10,9 @@
 
 *(Zeitraum: 15.05. 14:00 bis 17.05. 13:00)*
 
-- Temperatur: **13.7°C** (Min: 7°C | Max: 15.2°C)
-- Summe: **19.3 mm** | Max: **4.6 mm/h**
-- Max. 6h: **9.2 mm**
+- Temperatur: **13.2°C** (Min: 6.4°C | Max: 15.3°C)
+- Summe: **4.4 mm** | Max: **1.3 mm/h**
+- Max. 6h: **2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-15 11:37:29 UTC*
+*Stand: 2026-05-15 11:57:55 UTC*
 
 ---
 
