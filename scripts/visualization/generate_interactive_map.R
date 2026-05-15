@@ -261,46 +261,54 @@ m <- leaflet(sensors, height = "100%", width = "100%") %>%
   addMiniMap(toggleDisplay = TRUE)
 
 # ---------------------------------------------------------------------------
-# Build sidebar HTML and combine with map using htmltools
+# 1) Save map the same way it always worked
 # ---------------------------------------------------------------------------
-library(htmltools)
+saveWidget(m, file = normalizePath(output_file, mustWork = FALSE), selfcontained = TRUE)
 
-sidebar_items <- lapply(seq_len(nrow(sensors)), function(i) {
-  tags$div(
-    class = "sidebar-station",
-    tags$h4(htmlEscape(sensors$label[i])),
-    tags$p(paste0("Station: ", htmlEscape(sensors$station[i])))
+# ---------------------------------------------------------------------------
+# 2) Post-process: inject sidebar via pure HTML/CSS string replacement
+# ---------------------------------------------------------------------------
+sidebar_items_html <- paste0(sapply(seq_len(nrow(sensors)), function(i) {
+  label <- gsub("&", "&amp;", gsub("<", "&lt;", sensors$label[i]))
+  sname <- gsub("&", "&amp;", gsub("<", "&lt;", sensors$station[i]))
+  paste0(
+    '<div style="padding:10px 12px;border-bottom:1px solid #e0e0e0;">',
+    '<h4 style="margin:0 0 4px 0;font-size:14px;color:#333;">', label, '</h4>',
+    '<p style="margin:0;font-size:12px;color:#888;">Station: ', sname, '</p>',
+    '</div>'
   )
-})
+}), collapse = "")
 
-sidebar <- tags$div(
-  class = "sciu-sidebar",
-  tags$div(class = "sciu-sidebar-header", tags$h3("Sensorstandorte")),
-  tagList(sidebar_items)
+sidebar_div <- paste0(
+  '<div style="flex:0 0 30%;height:100%;overflow-y:auto;background:#fafafa;border-left:2px solid #ddd;font-family:Segoe UI,Arial,sans-serif;">',
+  '<div style="padding:14px;background:#0072B2;color:white;"><h3 style="margin:0;font-size:16px;font-weight:600;">Sensorstandorte</h3></div>',
+  sidebar_items_html,
+  '</div>'
 )
 
-layout_css <- tags$style(HTML("
-  body { margin: 0; padding: 0; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
-  .sciu-layout { display: flex; width: 100%; height: 100vh; }
-  .sciu-map { flex: 0 0 70%; height: 100%; }
-  .sciu-map .leaflet { width: 100% !important; height: 100% !important; }
-  .sciu-sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
-                   background: #fafafa; border-left: 2px solid #ddd; }
-  .sciu-sidebar-header { padding: 14px; background: #0072B2; color: white; }
-  .sciu-sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
-  .sidebar-station { padding: 10px 12px; border-bottom: 1px solid #e0e0e0; }
-  .sidebar-station:hover { background: #f0f0f0; cursor: pointer; }
-  .sidebar-station h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; }
-  .sidebar-station p { margin: 0; font-size: 12px; color: #888; }
-"))
+html_lines <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
+html_text <- paste(html_lines, collapse = "\n")
 
-page <- browsable(tagList(
-  layout_css,
-  tags$div(class = "sciu-layout",
-    tags$div(class = "sciu-map", m),
-    sidebar
-  )
-))
+# Wrap body content in a flex container: map 70% | sidebar 30%
+html_text <- sub(
+  "<body>",
+  '<body style="margin:0;padding:0;display:flex;height:100vh;overflow:hidden;">',
+  html_text, fixed = TRUE
+)
 
-save_html(page, file = normalizePath(output_file, mustWork = FALSE))
-cat("✅ Map saved to", output_file, "\n")
+# Give the widget container 70% width
+html_text <- sub(
+  'class="html-widget"',
+  'class="html-widget" style="flex:0 0 70%;height:100%;"',
+  html_text, fixed = TRUE
+)
+
+# Insert sidebar before </body>
+html_text <- sub(
+  "</body>",
+  paste0(sidebar_div, "\n</body>"),
+  html_text, fixed = TRUE
+)
+
+writeLines(html_text, output_file, useBytes = TRUE)
+cat("Map saved to", output_file, "\n")
