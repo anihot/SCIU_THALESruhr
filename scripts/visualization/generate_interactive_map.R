@@ -261,48 +261,55 @@ m <- leaflet(sensors, height = "100%", width = "100%") %>%
   addMiniMap(toggleDisplay = TRUE)
 
 # ---------------------------------------------------------------------------
-# Wrap map + sidebar in a split layout
+# Save leaflet widget, then wrap in split layout with sidebar
 # ---------------------------------------------------------------------------
 library(htmltools)
 
-sidebar_items <- lapply(seq_len(nrow(sensors)), function(i) {
-  tags$div(
-    class = "sidebar-station",
-    style = "padding: 10px 12px; border-bottom: 1px solid #e0e0e0;",
-    tags$h4(style = "margin: 0 0 4px 0; font-size: 14px; color: #333;", sensors$label[i]),
-    tags$p(style = "margin: 0; font-size: 12px; color: #888;",
-           paste0("Station: ", sensors$station[i]))
-  )
-})
+map_widget_file <- file.path(path_dir(output_file), "sensor_map_widget.html")
+saveWidget(m, file = normalizePath(map_widget_file, mustWork = FALSE), selfcontained = TRUE)
 
-page <- tags$html(
-  tags$head(
-    tags$meta(charset = "utf-8"),
-    tags$title("SCIU THALESruhr – Sensorkarte"),
-    tags$style(HTML("
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { height: 100%; font-family: 'Segoe UI', Arial, sans-serif; }
-      .container { display: flex; height: 100vh; }
-      .map-panel { flex: 0 0 70%; height: 100%; }
-      .sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
-                  background: #fafafa; border-left: 2px solid #ddd; }
-      .sidebar-header { padding: 14px; background: #0072B2; color: white; }
-      .sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
-      .sidebar-station:hover { background: #f0f0f0; }
-    "))
-  ),
-  tags$body(
-    tags$div(class = "container",
-      tags$div(class = "map-panel", m),
-      tags$div(class = "sidebar",
-        tags$div(class = "sidebar-header",
-          tags$h3("Sensorstandorte")
-        ),
-        tagList(sidebar_items)
-      )
-    )
+sidebar_items <- paste0(sapply(seq_len(nrow(sensors)), function(i) {
+  paste0(
+    '<div class="sidebar-station">',
+    '<h4>', htmlEscape(sensors$label[i]), '</h4>',
+    '<p>Station: ', htmlEscape(sensors$station[i]), '</p>',
+    '</div>'
   )
-)
+}), collapse = "\n")
 
-save_html(page, file = output_file)
+wrapper_html <- paste0('<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SCIU THALESruhr – Sensorkarte</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; font-family: "Segoe UI", Arial, sans-serif; }
+  .container { display: flex; height: 100vh; }
+  .map-panel { flex: 0 0 70%; height: 100%; }
+  .map-panel iframe { width: 100%; height: 100%; border: none; }
+  .sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
+              background: #fafafa; border-left: 2px solid #ddd; }
+  .sidebar-header { padding: 14px; background: #0072B2; color: white; }
+  .sidebar-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .sidebar-station { padding: 10px 12px; border-bottom: 1px solid #e0e0e0; }
+  .sidebar-station:hover { background: #f0f0f0; cursor: pointer; }
+  .sidebar-station h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; }
+  .sidebar-station p { margin: 0; font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="map-panel">
+    <iframe src="sensor_map_widget.html"></iframe>
+  </div>
+  <div class="sidebar">
+    <div class="sidebar-header"><h3>Sensorstandorte</h3></div>
+    ', sidebar_items, '
+  </div>
+</div>
+</body>
+</html>')
+
+writeLines(wrapper_html, output_file, useBytes = TRUE)
 cat("✅ Map saved to", output_file, "\n")
