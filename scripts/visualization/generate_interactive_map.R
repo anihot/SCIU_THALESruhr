@@ -261,26 +261,29 @@ m <- leaflet(sensors, height = "100%", width = "100%") %>%
   addMiniMap(toggleDisplay = TRUE)
 
 # ---------------------------------------------------------------------------
-# Save selfcontained widget, then inject sidebar via post-processing
+# Build sidebar HTML and combine with map using htmltools
 # ---------------------------------------------------------------------------
 library(htmltools)
 
-saveWidget(m, file = normalizePath(output_file, mustWork = FALSE), selfcontained = TRUE)
-
-sidebar_items <- paste0(sapply(seq_len(nrow(sensors)), function(i) {
-  paste0(
-    '<div class="sidebar-station">',
-    '<h4>', htmlEscape(sensors$label[i]), '</h4>',
-    '<p>Station: ', htmlEscape(sensors$station[i]), '</p>',
-    '</div>'
+sidebar_items <- lapply(seq_len(nrow(sensors)), function(i) {
+  tags$div(
+    class = "sidebar-station",
+    tags$h4(htmlEscape(sensors$label[i])),
+    tags$p(paste0("Station: ", htmlEscape(sensors$station[i])))
   )
-}), collapse = "\n")
+})
 
-sidebar_html <- paste0('
-<style>
-  html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; font-family: "Segoe UI", Arial, sans-serif; }
-  .sciu-container { display: flex; height: 100vh; }
-  .sciu-map { flex: 0 0 70%; height: 100%; overflow: hidden; }
+sidebar <- tags$div(
+  class = "sciu-sidebar",
+  tags$div(class = "sciu-sidebar-header", tags$h3("Sensorstandorte")),
+  tagList(sidebar_items)
+)
+
+layout_css <- tags$style(HTML("
+  body { margin: 0; padding: 0; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; }
+  .sciu-layout { display: flex; width: 100%; height: 100vh; }
+  .sciu-map { flex: 0 0 70%; height: 100%; }
+  .sciu-map .leaflet { width: 100% !important; height: 100% !important; }
   .sciu-sidebar { flex: 0 0 30%; height: 100%; overflow-y: auto;
                    background: #fafafa; border-left: 2px solid #ddd; }
   .sciu-sidebar-header { padding: 14px; background: #0072B2; color: white; }
@@ -289,27 +292,15 @@ sidebar_html <- paste0('
   .sidebar-station:hover { background: #f0f0f0; cursor: pointer; }
   .sidebar-station h4 { margin: 0 0 4px 0; font-size: 14px; color: #333; }
   .sidebar-station p { margin: 0; font-size: 12px; color: #888; }
-  .htmlwidget { height: 100% !important; }
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var widget = document.querySelector(".htmlwidget");
-  if (!widget) return;
-  var container = document.createElement("div");
-  container.className = "sciu-container";
-  var mapDiv = document.createElement("div");
-  mapDiv.className = "sciu-map";
-  var sidebar = document.createElement("div");
-  sidebar.className = "sciu-sidebar";
-  sidebar.innerHTML = \'<div class="sciu-sidebar-header"><h3>Sensorstandorte</h3></div>', sidebar_items, '\';
-  widget.parentNode.insertBefore(container, widget);
-  mapDiv.appendChild(widget);
-  container.appendChild(mapDiv);
-  container.appendChild(sidebar);
-});
-</script>')
+"))
 
-html_content <- readLines(output_file, warn = FALSE)
-html_content <- sub("</body>", paste0(sidebar_html, "\n</body>"), html_content, fixed = TRUE)
-writeLines(html_content, output_file, useBytes = TRUE)
+page <- browsable(tagList(
+  layout_css,
+  tags$div(class = "sciu-layout",
+    tags$div(class = "sciu-map", m),
+    sidebar
+  )
+))
+
+save_html(page, file = normalizePath(output_file, mustWork = FALSE))
 cat("✅ Map saved to", output_file, "\n")
