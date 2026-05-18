@@ -248,7 +248,7 @@ for (i in seq_len(nrow(sensors))) {
 # ---------------------------------------------------------------------------
 # Build Leaflet map
 # ---------------------------------------------------------------------------
-m <- leaflet(sensors, height = "100%", width = "100%") %>%
+m <- leaflet(sensors) %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
   addMarkers(
     lng     = ~lon,
