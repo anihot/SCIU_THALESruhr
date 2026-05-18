@@ -25289,9 +25289,9 @@ timestamp,station,precipitation_mm
 2026-05-16T07:00:00Z,Wasserstraße,0
 2026-05-16T08:00:00Z,An der Kost,0
 2026-05-16T08:00:00Z,Herzogstraße,0
-2026-05-16T08:00:00Z,Königsallee,1.02
-2026-05-16T08:00:00Z,Wasserbaulabor 2,1.29
-2026-05-16T08:00:00Z,Wasserstraße,1.02
+2026-05-16T08:00:00Z,Königsallee,1.36
+2026-05-16T08:00:00Z,Wasserbaulabor 2,1.72
+2026-05-16T08:00:00Z,Wasserstraße,1.36
 2026-05-16T09:00:00Z,An der Kost,0
 2026-05-16T09:00:00Z,Herzogstraße,0
 2026-05-16T09:00:00Z,Königsallee,0
@@ -25342,7 +25342,7 @@ timestamp,station,precipitation_mm
 2026-05-16T18:00:00Z,Königsallee,0
 2026-05-16T18:00:00Z,Wasserbaulabor 2,0
 2026-05-16T18:00:00Z,Wasserstraße,0
-2026-05-16T19:00:00Z,An der Kost,0.15
+2026-05-16T19:00:00Z,An der Kost,0.2
 2026-05-16T19:00:00Z,Herzogstraße,0
 2026-05-16T19:00:00Z,Königsallee,0
 2026-05-16T19:00:00Z,Wasserbaulabor 2,0
@@ -25350,7 +25350,7 @@ timestamp,station,precipitation_mm
 2026-05-16T20:00:00Z,An der Kost,0
 2026-05-16T20:00:00Z,Herzogstraße,0
 2026-05-16T20:00:00Z,Königsallee,0
-2026-05-16T20:00:00Z,Wasserbaulabor 2,0.09
+2026-05-16T20:00:00Z,Wasserbaulabor 2,0.12
 2026-05-16T20:00:00Z,Wasserstraße,0
 2026-05-16T21:00:00Z,An der Kost,0
 2026-05-16T21:00:00Z,Herzogstraße,0
