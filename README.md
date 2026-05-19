@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 18.05. 22:00 bis 20.05. 21:00)*
+*(Zeitraum: 19.05. 05:00 bis 21.05. 04:00)*
 
-- Temperatur: **10.4°C** (Min: 7.5°C | Max: 16.9°C)
-- Summe: **6.6 mm** | Max: **1.3 mm/h**
-- Max. 6h: **2.1 mm**
+- Temperatur: **8.2°C** (Min: 8°C | Max: 17°C)
+- Summe: **14.6 mm** | Max: **2.9 mm/h**
+- Max. 6h: **5.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-18 19:53:21 UTC*
+*Stand: 2026-05-19 02:59:38 UTC*
 
 ---
 
