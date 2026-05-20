@@ -9,7 +9,7 @@ library(lubridate)
 # Config
 metadata_file <- "data/metadata/sensor_metadata.csv"
 output_file   <- "data/output/sensor_map.html"
-cleaned_dir   <- "data/processed/cleaned_analysis"
+raw_dir       <- "data/raw/sensor_exports"
 graphs_dir    <- "data/output/graphs"
 
 cat("Generating interactive sensor map with external iframes...\n")
@@ -52,9 +52,9 @@ for (i in seq_len(nrow(sensors))) {
   graph_html_name <- paste0(safe_id, ".html")
   graph_html_path <- file.path(graphs_dir, graph_html_name)
   
-  # Robust data matching
+  # Robust data matching – read RAW sensor exports (unfiltered API level)
   clean_search   <- gsub("[^a-zA-Z0-9]+", "*", station_name)
-  file_glob      <- paste0(cleaned_dir, "/*", clean_search, "*_cleaned.csv")
+  file_glob      <- paste0(raw_dir, "/*", clean_search, "*.csv")
   matching_files <- Sys.glob(file_glob)
   
   cat("  Station:", station_name, "-> files:", length(matching_files), "\n")
@@ -67,11 +67,17 @@ for (i in seq_len(nrow(sensors))) {
     if (nrow(df) == 0) {
       p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Datei leer"), font=list(size=11)))
     } else {
+      # Raw files use "Timestamp" instead of "Zeit_Datum"
+      if ("Timestamp" %in% names(df) && !"Zeit_Datum" %in% names(df)) {
+          df <- df %>% rename(Zeit_Datum = Timestamp) %>%
+              mutate(Zeit_Datum = as_datetime(Zeit_Datum))
+      }
+
       # Data extraction
       latest_row <- tail(df, 1)
       meas_level <- ifelse(is.na(latest_row$level), "N/A", paste0(round(latest_row$level * 100, 1), " cm"))
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
-      
+
       now_time   <- now(tzone = tz(df$Zeit_Datum))
       start_time <- now_time - days(7)
       df_48h <- df %>% filter(Zeit_Datum >= start_time)
@@ -152,27 +158,10 @@ for (i in seq_len(nrow(sensors))) {
       } else {
         title_text <- paste0("<b>", station_label, "</b><br>Aktuell: ", meas_level, " (", meas_time, ")")
         
-        # Build base trace (Water Level)
-        has_raw_level <- "level_raw" %in% names(df_48h)
-
-        p <- plot_ly()
-
-        # Für Stationen mit Shift-Korrektur (Königsallee): erst Rohpegel als
-        # graue gestrichelte Linie, dann korrigierten Pegel darüber.
-        # So sind Baseline-Drift und Sensor-Shifts direkt erkennbar.
-        if (has_raw_level) {
-          p <- p %>%
-            add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level_raw * 100),
-                      type = "scatter", mode = "lines",
-                      name = "Rohpegel (inkl. Sensordrift)",
-                      line = list(color = "rgba(160,160,160,0.7)", width = 1, dash = "dot"),
-                      hovertemplate = "Rohpegel: %{y:.1f} cm<extra></extra>")
-        }
-
-        p <- p %>%
+        p <- plot_ly() %>%
           add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level * 100),
                     type = "scatter", mode = "lines",
-                    name = if (has_raw_level) "Pegel (korrigiert)" else "Pegel",
+                    name = "Pegel (Rohdaten)",
                     line = list(color = "#0072B2", width = 2),
                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
                     hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>")
