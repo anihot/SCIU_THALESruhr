@@ -25657,16 +25657,16 @@ timestamp,station,precipitation_mm
 2026-05-19T09:00:00Z,Königsallee,0
 2026-05-19T09:00:00Z,Wasserbaulabor 2,0
 2026-05-19T09:00:00Z,Wasserstraße,0
-2026-05-19T10:00:00Z,An der Kost,0.08
+2026-05-19T10:00:00Z,An der Kost,0.12
 2026-05-19T10:00:00Z,Herzogstraße,0
 2026-05-19T10:00:00Z,Königsallee,0
 2026-05-19T10:00:00Z,Wasserbaulabor 2,0
 2026-05-19T10:00:00Z,Wasserstraße,0
-2026-05-19T11:00:00Z,An der Kost,0.24
-2026-05-19T11:00:00Z,Herzogstraße,0.32
-2026-05-19T11:00:00Z,Königsallee,0.1
-2026-05-19T11:00:00Z,Wasserbaulabor 2,0.24
-2026-05-19T11:00:00Z,Wasserstraße,0.1
+2026-05-19T11:00:00Z,An der Kost,0.36
+2026-05-19T11:00:00Z,Herzogstraße,0.48
+2026-05-19T11:00:00Z,Königsallee,0.15
+2026-05-19T11:00:00Z,Wasserbaulabor 2,0.36
+2026-05-19T11:00:00Z,Wasserstraße,0.15
 2026-05-19T12:00:00Z,An der Kost,0
 2026-05-19T12:00:00Z,Herzogstraße,0
 2026-05-19T12:00:00Z,Königsallee,0
@@ -25688,35 +25688,35 @@ timestamp,station,precipitation_mm
 2026-05-19T15:00:00Z,Wasserbaulabor 2,0
 2026-05-19T15:00:00Z,Wasserstraße,0
 2026-05-19T16:00:00Z,An der Kost,0
-2026-05-19T16:00:00Z,Herzogstraße,0.22
+2026-05-19T16:00:00Z,Herzogstraße,0.33
 2026-05-19T16:00:00Z,Königsallee,0
 2026-05-19T16:00:00Z,Wasserbaulabor 2,0
 2026-05-19T16:00:00Z,Wasserstraße,0
-2026-05-19T17:00:00Z,An der Kost,0.9
-2026-05-19T17:00:00Z,Herzogstraße,2.64
-2026-05-19T17:00:00Z,Königsallee,2.12
-2026-05-19T17:00:00Z,Wasserbaulabor 2,1
-2026-05-19T17:00:00Z,Wasserstraße,2.12
-2026-05-19T18:00:00Z,An der Kost,3.7800000000000002
-2026-05-19T18:00:00Z,Herzogstraße,2.42
-2026-05-19T18:00:00Z,Königsallee,1.22
-2026-05-19T18:00:00Z,Wasserbaulabor 2,2.68
-2026-05-19T18:00:00Z,Wasserstraße,1.22
-2026-05-19T19:00:00Z,An der Kost,0.66
+2026-05-19T17:00:00Z,An der Kost,1.35
+2026-05-19T17:00:00Z,Herzogstraße,3.96
+2026-05-19T17:00:00Z,Königsallee,3.18
+2026-05-19T17:00:00Z,Wasserbaulabor 2,1.5
+2026-05-19T17:00:00Z,Wasserstraße,3.18
+2026-05-19T18:00:00Z,An der Kost,5.67
+2026-05-19T18:00:00Z,Herzogstraße,3.6300000000000003
+2026-05-19T18:00:00Z,Königsallee,1.83
+2026-05-19T18:00:00Z,Wasserbaulabor 2,4.02
+2026-05-19T18:00:00Z,Wasserstraße,1.83
+2026-05-19T19:00:00Z,An der Kost,0.99
 2026-05-19T19:00:00Z,Herzogstraße,0
 2026-05-19T19:00:00Z,Königsallee,0
-2026-05-19T19:00:00Z,Wasserbaulabor 2,0.08
+2026-05-19T19:00:00Z,Wasserbaulabor 2,0.12
 2026-05-19T19:00:00Z,Wasserstraße,0
-2026-05-19T20:00:00Z,An der Kost,1.04
-2026-05-19T20:00:00Z,Herzogstraße,1.96
-2026-05-19T20:00:00Z,Königsallee,0.9
-2026-05-19T20:00:00Z,Wasserbaulabor 2,1.2
-2026-05-19T20:00:00Z,Wasserstraße,0.9
-2026-05-19T21:00:00Z,An der Kost,0.84
-2026-05-19T21:00:00Z,Herzogstraße,0.8
-2026-05-19T21:00:00Z,Königsallee,1.52
-2026-05-19T21:00:00Z,Wasserbaulabor 2,1.88
-2026-05-19T21:00:00Z,Wasserstraße,1.52
+2026-05-19T20:00:00Z,An der Kost,1.56
+2026-05-19T20:00:00Z,Herzogstraße,2.94
+2026-05-19T20:00:00Z,Königsallee,1.35
+2026-05-19T20:00:00Z,Wasserbaulabor 2,1.8
+2026-05-19T20:00:00Z,Wasserstraße,1.35
+2026-05-19T21:00:00Z,An der Kost,1.26
+2026-05-19T21:00:00Z,Herzogstraße,1.2
+2026-05-19T21:00:00Z,Königsallee,2.28
+2026-05-19T21:00:00Z,Wasserbaulabor 2,2.82
+2026-05-19T21:00:00Z,Wasserstraße,2.28
 2026-05-19T22:00:00Z,An der Kost,0
 2026-05-19T22:00:00Z,Herzogstraße,0
 2026-05-19T22:00:00Z,Königsallee,0
