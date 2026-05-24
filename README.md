@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 24.05. 16:00 bis 26.05. 15:00)*
+*(Zeitraum: 24.05. 22:00 bis 26.05. 21:00)*
 
-- Temperatur: **25.7°C** (Min: 16.3°C | Max: 32.7°C)
+- Temperatur: **22.9°C** (Min: 16.2°C | Max: 32.5°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-24 13:22:35 UTC*
+*Stand: 2026-05-24 19:19:35 UTC*
 
 ---
 
