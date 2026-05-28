@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 28.05. 13:00 bis 30.05. 12:00)*
+*(Zeitraum: 28.05. 18:00 bis 30.05. 17:00)*
 
-- Temperatur: **22.6°C** (Min: 17.4°C | Max: 32°C)
-- Summe: **11 mm** | Max: **8.1 mm/h**
-- Max. 6h: **10.8 mm**
+- Temperatur: **24.7°C** (Min: 17.2°C | Max: 31.5°C)
+- Summe: **12.5 mm** | Max: **6.5 mm/h**
+- Max. 6h: **12.4 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-05-28 10:03:28 UTC*
+*Stand: 2026-05-28 15:50:19 UTC*
 
 ---
 
