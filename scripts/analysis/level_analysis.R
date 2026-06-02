@@ -24,7 +24,7 @@ get_mode <- function(v) {
 }
 
 # Function to process each file
-process_sensor_file <- function(file_path) {
+process_sensor_file <- function(file_path, max_level = 0.4) {
     station_name <- path_ext_remove(path_file(file_path))
     cat("Processing station:", station_name, "\n")
 
@@ -54,18 +54,21 @@ process_sensor_file <- function(file_path) {
     # baseline (a) dampened signals by ~0.5 cm, (b) created artificial
     # spike patterns from zero-clamping.
     # Only filter clearly unrealistic values (sensor errors, obstructions).
-    MAX_REALISTIC_LEVEL <- 0.4  # 40 cm
+    # max_level is station-specific: default 0.4 m (40 cm) for urban drain
+    # sensors; raised to e.g. 8 m for culvert/gorge sensors (Wasserstraße)
+    # where genuine API level values can reach 6+ m during flood events.
 
     df <- df %>%
         mutate(
             level_final = ifelse(!is.na(level), level, NA_real_),
-            is_unrealistic = !is.na(level_final) & level_final > MAX_REALISTIC_LEVEL,
+            is_unrealistic = !is.na(level_final) & level_final > max_level,
             level_final = ifelse(is_unrealistic, 0, level_final)
         )
 
     if (any(df$is_unrealistic, na.rm = TRUE)) {
         num_unrealistic <- sum(df$is_unrealistic, na.rm = TRUE)
-        cat("Note: Removed", num_unrealistic, "unrealistic data points (>40cm) for", station_name, "\n")
+        cat("Note: Removed", num_unrealistic, "unrealistic data points (>",
+            round(max_level * 100), "cm) for", station_name, "\n")
     }
 
     # 4. Filter Noise (Cars / isolated single-point spikes)
@@ -108,13 +111,26 @@ process_sensor_file <- function(file_path) {
     cat("Saved cleaned data to:", output_file, "\n\n")
 }
 
+# Stationsspezifische max_level-Obergrenzen (in Metern).
+# Standard: 0.4 m (40 cm) für urbane Entwässerungssensoren.
+# Wasserstraße_Springorum: Sensor hängt an einer Brücke über einem tiefen
+# Kanal/Gewässer. Im Trockenzustand misst der Sensor ~7.16 m nach unten,
+# bei Überflutung fällt die Distance auf ~0.82 m → API-level ≈ 6.34 m.
+# Das ist physikalisch korrekt und darf NICHT als "unrealistisch" gefiltert
+# werden. Obergrenze auf 8 m gesetzt (sicher über dem beobachteten Maximum).
+STATION_MAX_LEVEL <- c(
+    "Wasserstraße_Springorum_merged_export" = 8.0
+)
+
 # Main Loop
 files <- dir_ls(input_dir, glob = "*.csv")
 # Exclude "Wasserbaulabor_" (without "2") from analysis
 files <- files[!grepl("Wasserbaulabor__", basename(files))]
 
 for (f in files) {
-    process_sensor_file(f)
+    sname <- path_ext_remove(path_file(f))
+    max_lvl <- if (sname %in% names(STATION_MAX_LEVEL)) STATION_MAX_LEVEL[[sname]] else 0.4
+    process_sensor_file(f, max_level = max_lvl)
 }
 
 cat("Analysis complete.\n")
