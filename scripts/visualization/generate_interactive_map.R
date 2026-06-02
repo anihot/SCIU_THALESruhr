@@ -67,9 +67,29 @@ for (i in seq_len(nrow(sensors))) {
     if (nrow(df) == 0) {
       p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Datei leer"), font=list(size=11)))
     } else {
+      # Bimodal-Sensor-Erkennung und Normalisierung:
+      # Manche Sensoren (z.B. Brücken-/Kanalsensoren) liefern den API-level als
+      # absolute Höhe (mehrere Meter), nicht als Pegelanstieg über Null.
+      # Wenn max(level) > 1 m, normieren wir auf 0–10 cm:
+      #   0 cm = trocken  |  10 cm = Sensor auf Mindestabstand (Kanal voll)
+      # So bleibt der Plot neben den anderen Stationen lesbar.
+      max_level_all <- max(df$level, na.rm = TRUE)
+      is_bimodal    <- !is.na(max_level_all) && max_level_all > 1.0
+      if (is_bimodal) {
+          bimodal_scale <- 0.10 / max_level_all
+          df <- df %>% mutate(level = round(pmax(0, level * bimodal_scale), 4))
+          if ("level_raw" %in% names(df)) {
+              df <- df %>% mutate(level_raw = round(pmax(0, level_raw * bimodal_scale), 4))
+          }
+      }
+
       # Data extraction
       latest_row <- tail(df, 1)
-      meas_level <- ifelse(is.na(latest_row$level), "N/A", paste0(round(latest_row$level * 100, 1), " cm"))
+      meas_level <- ifelse(
+          is.na(latest_row$level), "N/A",
+          paste0(round(latest_row$level * 100, 1),
+                 if (is_bimodal) " cm (0–10 cm = trocken–voll)" else " cm")
+      )
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
 
       now_time   <- now(tzone = tz(df$Zeit_Datum))
@@ -172,10 +192,12 @@ for (i in seq_len(nrow(sensors))) {
         p <- p %>%
           add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level * 100),
                     type = "scatter", mode = "lines",
-                    name = if (has_raw_level) "Pegel (korrigiert)" else "Pegel",
+                    name = if (is_bimodal) "Füllstand (0–10 cm = trocken–voll)"
+                           else if (has_raw_level) "Pegel (korrigiert)" else "Pegel",
                     line = list(color = "#0072B2", width = 2),
                     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
-                    hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>")
+                    hovertemplate = if (is_bimodal) "Füllstand: %{y:.1f} cm<extra></extra>"
+                                    else "Pegel: %{y:.1f} cm<extra></extra>")
                     
         # Add precipitation traces: RADOLAN (gemessen) + Vorhersage (getrennt)
         has_radolan  <- nrow(radolan_precip) > 0
@@ -219,8 +241,10 @@ for (i in seq_len(nrow(sensors))) {
             title      = list(text = title_text, font = list(size = 11), x = 0),
             xaxis      = list(title = "", gridcolor = "#eeeeee",
                               range = c(as.character(start_time), as.character(now_time + hours(24)))),
-            yaxis      = list(title = "Pegel (cm)", gridcolor = "#eeeeee", side = "left",
-                              range = c(0, max(max(df_48h$level * 100, na.rm = TRUE) * 1.15, 20))),
+            yaxis      = list(title = if (is_bimodal) "Füllstand (cm)" else "Pegel (cm)",
+                              gridcolor = "#eeeeee", side = "left",
+                              range = c(0, if (is_bimodal) 12
+                                           else max(max(df_48h$level * 100, na.rm = TRUE) * 1.15, 20))),
             yaxis2     = list(title = "Regen (mm/h)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = TRUE,
                               range = c(0, max_precip * 1.2)),
