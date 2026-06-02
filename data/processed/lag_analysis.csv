@@ -1,26 +1,20 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","points_count","onset_lag_min","peak_lag_min","precip_onset_time","precip_peak_time","precip_total_mm","precip_max_mm_h"
 "An_der_Kost","2026/05/31 03:42:30","2026/05/31 05:28:00",0.7,"2026/05/31 04:49:30",105.5,0.01,"Leichter Regen / Unterhalb DWD-Schwelle",3.72,3.6,TRUE,212,NA,NA,NA,NA,0,0
-"Wasserstraße_Springorum","2026/05/30 05:52:00","2026/05/31 04:40:30",1.1,"2026/05/30 09:54:00",1368.5,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",7.08,1.44,TRUE,2738,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/05/13 13:08:00","2026/05/13 13:58:00",0.4,"2026/05/13 13:13:30",50,0.071,"Leichter Regen / Unterhalb DWD-Schwelle",1.15,0.84,TRUE,101,NA,NA,NA,NA,0,0
-"Wasserstraße_Springorum","2026/05/13 08:08:30","2026/05/13 11:51:00",0.9,"2026/05/13 08:40:00",222.5,0.028,"Leichter Regen / Unterhalb DWD-Schwelle",1.5,0.72,TRUE,446,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/05/11 06:13:00","2026/05/11 08:32:00",0.3,"2026/05/11 06:30:00",139,0.018,"Leichter Regen / Unterhalb DWD-Schwelle",29.75,5.16,TRUE,279,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/05/05 21:43:00","2026/05/06 03:44:00",0.5,"2026/05/06 00:31:00",361,0.003,"Leichter Regen / Unterhalb DWD-Schwelle",42.9,9.48,TRUE,723,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/04/19 00:35:00","2026/04/19 02:05:30",0.4,"2026/04/19 00:45:00",90.5,0.04,"Leichter Regen / Unterhalb DWD-Schwelle",44.02,20.16,TRUE,182,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/04/11 19:15:30","2026/04/11 20:16:00",0.3,"2026/04/11 19:21:00",60.5,0.054,"Leichter Regen / Unterhalb DWD-Schwelle",2.91,7.8,TRUE,122,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/03/30 01:37:00","2026/03/30 03:07:00",0.4,"2026/03/30 02:15:30",90,0.01,"Leichter Regen / Unterhalb DWD-Schwelle",1.09,2.04,TRUE,181,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/03/29 22:34:00","2026/03/29 23:24:30",0.3,"2026/03/29 22:44:00",50.5,0.03,"Leichter Regen / Unterhalb DWD-Schwelle",1.89,2.04,TRUE,102,NA,NA,NA,NA,0,0
-"Wasserstraße_Springorum","2026/03/29 11:16:00","2026/03/29 21:46:00",1.3,"2026/03/29 12:47:00",630,0.014,"Leichter Regen / Unterhalb DWD-Schwelle",0.77,0.96,TRUE,1261,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/03/14 08:47:00","2026/03/14 09:27:00",0.3,"2026/03/14 08:54:30",40,0.039,"Leichter Regen / Unterhalb DWD-Schwelle",0.08,0.96,TRUE,81,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/03/13 17:08:00","2026/03/13 21:44:30",0.3,"2026/03/13 17:31:00",276.5,0.013,"Leichter Regen / Unterhalb DWD-Schwelle",8.81,4.2,TRUE,554,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/03/13 10:40:00","2026/03/13 16:06:30",0.5,"2026/03/13 13:20:00",326.5,0.003,"Leichter Regen / Unterhalb DWD-Schwelle",1.05,3.12,TRUE,654,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/03/11 13:17:30","2026/03/11 14:50:30",0.3,"2026/03/11 14:14:30",93,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",2.91,2.52,TRUE,187,NA,NA,NA,NA,0,0
-"Wasserstraße_Springorum","2026/03/11 05:51:30","2026/03/11 12:06:00",6.5,"2026/03/11 11:31:30",374.5,0.019,"Regenereignis / Natürlich",1.01,4.8,TRUE,750,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/02/23 21:56:00","2026/02/24 04:06:00",0.5,"2026/02/24 03:24:00",370,0.002,"Leichter Regen / Unterhalb DWD-Schwelle",1.99,1.56,TRUE,371,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/02/22 17:17:00","2026/02/22 19:24:00",0.4,"2026/02/22 17:20:00",127,0.129,"Leichter Regen / Unterhalb DWD-Schwelle",4.49,4.68,TRUE,128,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/02/22 09:59:00","2026/02/22 15:21:00",0.4,"2026/02/22 11:29:00",322,0.004,"Leichter Regen / Unterhalb DWD-Schwelle",0.43,2.52,TRUE,323,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/02/19 09:40:00","2026/02/19 11:32:00",0.4,"2026/02/19 11:08:00",112,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",0.18,0.6,TRUE,113,NA,NA,NA,NA,0,0
-"Wasserstraße_Springorum","2026/02/19 04:48:00","2026/02/19 11:40:00",4.3,"2026/02/19 08:24:00",412,0.02,"Regenereignis / Natürlich",1.91,3,TRUE,413,NA,NA,NA,NA,0,0
-"Wasserstraße_Springorum","2026/02/18 13:27:00","2026/02/19 02:52:00",1.1,"2026/02/18 13:41:00",805,0.078,"Leichter Regen / Unterhalb DWD-Schwelle",2.02,2.16,TRUE,831,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/02/16 13:26:00","2026/02/16 16:12:00",0.5,"2026/02/16 14:46:00",166,0.006,"Leichter Regen / Unterhalb DWD-Schwelle",0.49,0.72,TRUE,332,NA,NA,NA,NA,0,0
 "Königsallee_Springorum","2026/02/02 16:59:00","2026/02/03 14:37:00",0.8,"2026/02/03 11:44:00",1298,0.001,"Leichter Regen / Unterhalb DWD-Schwelle",2.18,2.04,TRUE,2601,NA,NA,NA,NA,0,0
 "Königsallee_Springorum","2026/02/01 19:25:00","2026/02/02 09:49:00",0.8,"2026/02/02 04:14:00",864,0.002,"Leichter Regen / Unterhalb DWD-Schwelle",0.61,0.96,TRUE,1732,NA,NA,NA,NA,0,0
