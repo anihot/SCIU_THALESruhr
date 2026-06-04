@@ -8,11 +8,11 @@
 ### 🟡 Wetterausblick (48h)
 ****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 04.06. 06:00 bis 06.06. 05:00)*
+*(Zeitraum: 04.06. 13:00 bis 06.06. 12:00)*
 
-- Temperatur: **15°C** (Min: 11.9°C | Max: 17.4°C)
-- Summe: **30.5 mm** | Max: **8.3 mm/h**
-- Max. 6h: **20.2 mm**
+- Temperatur: **16.9°C** (Min: 11.5°C | Max: 19.4°C)
+- Summe: **39.4 mm** | Max: **10.1 mm/h**
+- Max. 6h: **23.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-04 03:45:46 UTC*
+*Stand: 2026-06-04 10:00:30 UTC*
 
 ---
 
