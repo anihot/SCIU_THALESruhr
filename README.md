@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 06.06. 16:00 bis 08.06. 15:00)*
+*(Zeitraum: 06.06. 22:00 bis 08.06. 21:00)*
 
-- Temperatur: **22°C** (Min: 12.4°C | Max: 22°C)
-- Summe: **1.9 mm** | Max: **1.2 mm/h**
-- Max. 6h: **1.7 mm**
+- Temperatur: **16.2°C** (Min: 12.3°C | Max: 22.3°C)
+- Summe: **0.3 mm** | Max: **0.2 mm/h**
+- Max. 6h: **5.4 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-06 13:31:40 UTC*
+*Stand: 2026-06-06 19:24:30 UTC*
 
 ---
 
