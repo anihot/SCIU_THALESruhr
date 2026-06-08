@@ -1,5 +1,5 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","points_count","onset_lag_min","peak_lag_min","precip_onset_time","precip_peak_time","precip_total_mm","precip_max_mm_h"
-"Wasserstraße_Springorum","2026/06/06 18:56:00","2026/06/06 23:48:30",6.1,"2026/06/06 18:59:30",292.5,1.694,"Sturzflut-Ereignis",0.03,0.12,TRUE,586,NA,NA,NA,NA,0,0
+"Wasserstraße_Springorum","2026/06/06 18:56:00","2026/06/06 23:48:30",6.1,"2026/06/06 18:59:30",292.5,1.694,"Sturzflut-Ereignis",0.04,0.12,TRUE,586,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/05/31 03:42:30","2026/05/31 05:28:00",0.7,"2026/05/31 04:49:30",105.5,0.01,"Leichter Regen / Unterhalb DWD-Schwelle",3.72,3.6,TRUE,212,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/05/13 13:08:00","2026/05/13 13:58:00",0.4,"2026/05/13 13:13:30",50,0.071,"Leichter Regen / Unterhalb DWD-Schwelle",1.15,0.84,TRUE,101,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/05/11 06:13:00","2026/05/11 08:32:00",0.3,"2026/05/11 06:30:00",139,0.018,"Leichter Regen / Unterhalb DWD-Schwelle",29.75,5.16,TRUE,279,NA,NA,NA,NA,0,0
