@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 07.06. 22:00 bis 09.06. 21:00)*
+*(Zeitraum: 08.06. 06:00 bis 10.06. 05:00)*
 
-- Temperatur: **16.2°C** (Min: 12.1°C | Max: 22.7°C)
-- Summe: **12.1 mm** | Max: **4.6 mm/h**
-- Max. 6h: **9.8 mm**
+- Temperatur: **13°C** (Min: 10°C | Max: 23.1°C)
+- Summe: **15.3 mm** | Max: **2.8 mm/h**
+- Max. 6h: **5.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -23,19 +23,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-06-07 19:24:43 UTC*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station                 |start_time          | peak_level_cm| duration_min|
-|:-----------------------|:-------------------|-------------:|------------:|
-|Wasserstraße_Springorum |2026-06-06 18:56:00 |           6.1|        292.5|
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Wasserstraße_Springorum
-![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-06-08 03:44:39 UTC*
 
 ---
 
