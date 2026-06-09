@@ -76,27 +76,22 @@ for (i in seq_len(nrow(rain_episodes))) {
     if (nrow(ws_window) == 0) next
 
     # --- Build dual-axis plot ---
-    # Primary y: Distance (m) — inverted so lower distance (more water) is higher
-    # Secondary y: Precipitation (mm/5min)
+    # Primary y: Distance (m) — raw values, reversed (low distance = water close = top)
+    # Secondary y: Precipitation (mm/5min) — bars hanging from top
 
     max_precip <- if (nrow(precip_window) > 0) max(precip_window$precipitation_mm, na.rm = TRUE) else 0.1
     if (max_precip == 0) max_precip <- 0.1
 
-    # Distance range
-    dist_min <- min(ws_window$distance, na.rm = TRUE)
-    dist_max <- max(ws_window$distance, na.rm = TRUE)
+    # Fixed y-axis range to always show full distance scale
+    y_min <- 0
+    y_max <- 8.5
 
-    # Scale factor: map precip to distance axis range
-    # We want precip bars at top of plot (high distance area)
-    dist_range <- dist_max - dist_min
-    if (dist_range < 0.5) dist_range <- max(dist_max * 0.3, 1)
-
-    # Precip bars should fill ~30% of the plot height from the top
-    precip_height <- dist_range * 0.35
-    scale_factor <- precip_height / max_precip
-
-    # Shift precip bars to top of plot
-    precip_offset <- dist_max + dist_range * 0.05
+    # Precipitation: bars hang from top of plot, scaled into the upper portion
+    # Reserve top 25% of y-range for precip
+    precip_zone_top <- y_max
+    precip_zone_height <- (y_max - y_min) * 0.25
+    precip_zone_bottom <- precip_zone_top - precip_zone_height
+    scale_factor <- precip_zone_height / max_precip
 
     # Episode time label
     ep_label <- sprintf("Episode %s bis %s (%.1fh)",
@@ -104,78 +99,63 @@ for (i in seq_len(nrow(rain_episodes))) {
                         format(ep$end, "%d.%m.%Y %H:%M"),
                         ep$duration_h)
 
-    # Color: mark readings in the artifact range
-    ws_window <- ws_window %>%
-        mutate(reading_type = ifelse(distance < 1.0 & distance > 0.1,
-                                     "Artefakt (~0.82m)", "Normal (~7.16m)"))
-
     p <- ggplot()
 
-    # Precipitation bars (drawn from top, hanging down)
-    if (nrow(precip_window) > 0 && max(precip_window$precipitation_mm, na.rm = TRUE) > 0) {
-        precip_plot <- precip_window %>%
-            filter(precipitation_mm > 0)
-
-        if (nrow(precip_plot) > 0) {
-            p <- p +
-                geom_col(
-                    data = precip_plot,
-                    aes(x = timestamp,
-                        y = precip_offset + precipitation_mm * scale_factor,
-                        fill = "DWD Niederschlag"),
-                    width = 300, alpha = 0.5
-                )
-        }
-    }
-
-    # Distance line
-    p <- p +
-        geom_line(
-            data = ws_window,
-            aes(x = Zeit_Datum, y = distance, color = reading_type),
-            linewidth = 0.6
-        ) +
-        geom_point(
-            data = ws_window,
-            aes(x = Zeit_Datum, y = distance, color = reading_type),
-            size = 0.3, alpha = 0.5
-        )
-
-    # Episode rectangle (shaded background)
+    # Episode time range (subtle background shading)
     p <- p +
         annotate("rect",
                  xmin = ep$start, xmax = ep$end,
                  ymin = -Inf, ymax = Inf,
-                 fill = "red", alpha = 0.05)
+                 fill = "#FFE0E0", alpha = 0.4)
 
-    # Axis labels and scaling
+    # Precipitation bars (hanging from top)
+    if (nrow(precip_window) > 0 && max(precip_window$precipitation_mm, na.rm = TRUE) > 0) {
+        precip_plot <- precip_window %>%
+            filter(precipitation_mm > 0) %>%
+            mutate(bar_top = precip_zone_top,
+                   bar_bottom = precip_zone_top - precipitation_mm * scale_factor)
+
+        if (nrow(precip_plot) > 0) {
+            p <- p +
+                geom_rect(
+                    data = precip_plot,
+                    aes(xmin = timestamp - 150, xmax = timestamp + 150,
+                        ymin = bar_bottom, ymax = bar_top),
+                    fill = "#56B4E9", alpha = 0.45
+                )
+        }
+    }
+
+    # Raw distance data — simple line + points
+    p <- p +
+        geom_line(
+            data = ws_window,
+            aes(x = Zeit_Datum, y = distance),
+            color = "#2C3E50", linewidth = 0.5, alpha = 0.8
+        ) +
+        geom_point(
+            data = ws_window,
+            aes(x = Zeit_Datum, y = distance),
+            color = "#2C3E50", size = 0.2, alpha = 0.4
+        )
+
+    # Secondary axis: precipitation labels
     sec_breaks <- pretty(c(0, max_precip), n = 4)
-    sec_labels <- as.character(sec_breaks)
 
     p <- p +
         scale_y_continuous(
-            name = "Distance (m)",
-            limits = c(
-                min(dist_min - dist_range * 0.05, 0),
-                precip_offset + max_precip * scale_factor * 1.1
-            ),
+            name = "Distance zum Boden (m)",
+            limits = c(y_min, y_max),
+            breaks = seq(0, 8, by = 1),
             sec.axis = sec_axis(
-                ~ (. - precip_offset) / scale_factor,
+                ~ (precip_zone_top - .) / scale_factor,
                 name = "Niederschlag (mm / 5 min)",
                 breaks = sec_breaks
             )
         ) +
-        scale_color_manual(
-            values = c("Artefakt (~0.82m)" = "#E63946", "Normal (~7.16m)" = "#457B9D"),
-            name = "Sensorwert"
-        ) +
-        scale_fill_manual(
-            values = c("DWD Niederschlag" = "#56B4E9"),
-            name = ""
-        ) +
         theme_minimal(base_size = 11) +
         labs(
-            title = sprintf("Wasserstraße: Distance + DWD-Niederschlag"),
+            title = sprintf("Wasserstraße: Sensor-Rohdaten + DWD-Niederschlag"),
             subtitle = ep_label,
             x = "Zeit",
             caption = sprintf(
@@ -190,8 +170,7 @@ for (i in seq_len(nrow(rain_episodes))) {
             axis.text.x = element_text(angle = 30, hjust = 1, size = 8),
             axis.title.y.right = element_text(color = "#56B4E9"),
             axis.text.y.right = element_text(color = "#56B4E9"),
-            legend.position = "bottom",
-            legend.box = "horizontal",
+            legend.position = "none",
             panel.grid.minor = element_blank()
         )
 
