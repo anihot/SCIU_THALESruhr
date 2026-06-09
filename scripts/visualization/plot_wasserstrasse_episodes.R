@@ -65,9 +65,17 @@ for (i in seq_len(nrow(rain_episodes))) {
     plot_start <- ep$start - hours(3)
     plot_end <- ep$end + hours(2)
 
-    # Sensor data in window (ALL readings, not just suspicious ones)
+    # Sensor data in window — use level (computed from distance)
+    # level = baseline - distance, so higher level = more water
+    # For readings with NA level but valid distance, compute level from baseline ~7.16m
+    baseline <- 7.16
     ws_window <- ws %>%
-        filter(Zeit_Datum >= plot_start, Zeit_Datum <= plot_end, !is.na(distance))
+        filter(Zeit_Datum >= plot_start, Zeit_Datum <= plot_end) %>%
+        mutate(
+            level_plot = ifelse(!is.na(level), level,
+                         ifelse(!is.na(distance), baseline - distance, NA_real_))
+        ) %>%
+        filter(!is.na(level_plot))
 
     # Precipitation in window
     precip_window <- precip %>%
@@ -76,21 +84,22 @@ for (i in seq_len(nrow(rain_episodes))) {
     if (nrow(ws_window) == 0) next
 
     # --- Build dual-axis plot ---
-    # Primary y: Distance (m) — raw values, reversed (low distance = water close = top)
-    # Secondary y: Precipitation (mm/5min) — bars hanging from top
+    # Primary y: Level (m) — higher = more water
+    # Secondary y: Precipitation (mm/5min) — bars from top
 
     max_precip <- if (nrow(precip_window) > 0) max(precip_window$precipitation_mm, na.rm = TRUE) else 0.1
     if (max_precip == 0) max_precip <- 0.1
 
-    # Fixed y-axis range to always show full distance scale
-    y_min <- 0
-    y_max <- 8.5
+    # Y-axis: level range, include 0 and enough headroom
+    level_max_data <- max(ws_window$level_plot, na.rm = TRUE)
+    y_max <- max(level_max_data * 1.3, 0.5)  # at least 0.5m headroom
 
-    # Precipitation: bars hang from top of plot, scaled into the upper portion
-    # Reserve top 25% of y-range for precip
+    # If artifact values present (~6.34m), use fixed range
+    if (level_max_data > 5) y_max <- 7.5
+
+    # Reserve top 25% for precip bars
     precip_zone_top <- y_max
-    precip_zone_height <- (y_max - y_min) * 0.25
-    precip_zone_bottom <- precip_zone_top - precip_zone_height
+    precip_zone_height <- y_max * 0.25
     scale_factor <- precip_zone_height / max_precip
 
     # Episode time label
@@ -126,16 +135,16 @@ for (i in seq_len(nrow(rain_episodes))) {
         }
     }
 
-    # Raw distance data — simple line + points
+    # Raw level data — simple line + points
     p <- p +
         geom_line(
             data = ws_window,
-            aes(x = Zeit_Datum, y = distance),
+            aes(x = Zeit_Datum, y = level_plot),
             color = "#2C3E50", linewidth = 0.5, alpha = 0.8
         ) +
         geom_point(
             data = ws_window,
-            aes(x = Zeit_Datum, y = distance),
+            aes(x = Zeit_Datum, y = level_plot),
             color = "#2C3E50", size = 0.2, alpha = 0.4
         )
 
@@ -144,9 +153,8 @@ for (i in seq_len(nrow(rain_episodes))) {
 
     p <- p +
         scale_y_continuous(
-            name = "Distance zum Boden (m)",
-            limits = c(y_min, y_max),
-            breaks = seq(0, 8, by = 1),
+            name = "Wasserstand / Level (m)",
+            limits = c(-0.1, y_max),
             sec.axis = sec_axis(
                 ~ (precip_zone_top - .) / scale_factor,
                 name = "Niederschlag (mm / 5 min)",
@@ -155,12 +163,12 @@ for (i in seq_len(nrow(rain_episodes))) {
         ) +
         theme_minimal(base_size = 11) +
         labs(
-            title = sprintf("Wasserstraße: Sensor-Rohdaten + DWD-Niederschlag"),
+            title = sprintf("Wasserstraße: Wasserstand + DWD-Niederschlag"),
             subtitle = ep_label,
             x = "Zeit",
             caption = sprintf(
-                "DWD RADOLAN: %.1f mm gesamt, max. %.1f mm/h | %d Messwerte | Mittl. Distance: %.3f m",
-                ep$total_precip, ep$max_intensity, ep$n_readings, ep$mean_dist
+                "DWD RADOLAN: %.1f mm gesamt, max. %.1f mm/h | %d Messwerte | Level = Baseline (7.16m) - Distance",
+                ep$total_precip, ep$max_intensity, ep$n_readings
             )
         ) +
         theme(
