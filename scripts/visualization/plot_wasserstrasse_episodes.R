@@ -218,12 +218,12 @@ p_overview <- ggplot(overview_data) +
     scale_size_continuous(name = "Dauer (h)", range = c(1, 6)) +
     theme_minimal(base_size = 11) +
     labs(
-        title = "Wasserstraße: Alle Distance-~0.82m-Episoden vs. DWD-Niederschlag",
-        subtitle = sprintf("136 Episoden gesamt — %d mit Regen (blau), %d ohne Regen (rot)",
-                           sum(overview_data$rain), sum(!overview_data$rain)),
+        title = "Wasserstraße: Alle Fehlwert-Episoden (Level ~6.34m) vs. DWD-Niederschlag",
+        subtitle = sprintf("%d Episoden gesamt — %d mit Regen (blau), %d ohne Regen (rot)",
+                           nrow(overview_data), sum(overview_data$rain), sum(!overview_data$rain)),
         x = "Datum",
         y = "DWD-Niederschlag im Zeitfenster (mm)",
-        caption = "Rote Punkte bei 0 mm = Sensor-Artefakte ohne Niederschlag"
+        caption = "Rote Punkte bei 0 mm = Sensor-Artefakte ohne Niederschlag | Level = Baseline (7.16m) − Distance"
     ) +
     theme(
         plot.title = element_text(face = "bold", size = 13),
