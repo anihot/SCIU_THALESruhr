@@ -12,7 +12,7 @@
 
 |station                 |start_time          | duration_min| peak_level_cm| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|
 |:-----------------------|:-------------------|------------:|-------------:|-------------------:|:---------------------------------------|---------------:|------------------:|
-|Wasserstraße_Springorum |2026/06/06 18:56:00 |        292.5|           6.1|               1.694|Sturzflut-Ereignis                      |            0.01|               0.12|
+|Wasserstraße_Springorum |2026/06/06 18:56:00 |        292.5|           6.1|               1.694|Sturzflut-Ereignis                      |            0.04|               0.12|
 |An_der_Kost             |2025/11/17 13:29:00 |         96.0|           1.4|               0.082|Leichter Regen / Unterhalb DWD-Schwelle |            2.04|               8.76|
 |Königsallee_Springorum  |2026/01/28 04:12:00 |        862.0|           0.9|               0.005|Leichter Regen / Unterhalb DWD-Schwelle |            1.29|               1.80|
 |Königsallee_Springorum  |2026/02/02 16:59:00 |       1298.0|           0.8|               0.001|Leichter Regen / Unterhalb DWD-Schwelle |            2.18|               2.04|
