@@ -31,12 +31,6 @@ Analyse ergänzt die reguläre Detection um **rekonstruierte Ereignisse**:
   - davon mittel: 23
   - davon niedrig: 20
 
-### Reguläre Events (direkt erkannt) (1)
-
-| Start | Ende | Dauer | DWD (mm) | Max (mm/h) | Andere Sensoren | Ereignistyp |
-|---|---|---|---|---|---|---|
-| 06.06.2026 16:56 | 06.06.2026 21:48 | 292 min | 0.0 | 0.1 | — | Sturzflut-Ereignis |
-
 ### Hohe Konfidenz (DWD + Quervergleich) (13)
 
 | Start | Ende | Dauer | DWD (mm) | Max (mm/h) | Andere Sensoren | Ereignistyp |

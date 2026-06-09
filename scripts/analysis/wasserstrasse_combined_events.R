@@ -165,6 +165,10 @@ cat("B) Artefakt-Rekonstruktion:", nrow(artifact_events), "Ereignisse aus",
     nrow(episodes), "Artefakt-Episoden\n\n")
 
 # --- C) Reguläre Events hinzufügen ---
+# DWD-Mindest-Niederschlag: reguläre Events nur als "direkt" einstufen
+# wenn DWD >= 0.5mm, sonst als "nicht DWD-bestätigt" markieren
+MIN_DWD_PRECIP <- 0.5
+
 regular_formatted <- ws_regular %>%
     transmute(
         start_time = as.POSIXct(start_time),
@@ -179,10 +183,30 @@ regular_formatted <- ws_regular %>%
         other_stations = NA_character_,
         other_peak_cm = NA_real_,
         other_event_types = NA_character_,
-        event_type = event_type,
-        is_real_event = TRUE,
-        confidence = "direkt (Level-basiert)"
+        event_type = ifelse(total_precip_mm >= MIN_DWD_PRECIP,
+                            event_type,
+                            paste0(event_type, " (NICHT DWD-bestätigt — nur ",
+                                   round(total_precip_mm, 2), " mm)")),
+        is_real_event = total_precip_mm >= MIN_DWD_PRECIP,
+        confidence = ifelse(total_precip_mm >= MIN_DWD_PRECIP,
+                            "direkt (Level-basiert)",
+                            "verworfen (kein DWD-Niederschlag)")
     )
+
+# Nicht-DWD-bestätigte reguläre Events melden
+rejected_regular <- regular_formatted %>% filter(!is_real_event)
+if (nrow(rejected_regular) > 0) {
+    cat("C) ACHTUNG: Reguläre Events ohne DWD-Bestätigung (verworfen):\n")
+    for (j in seq_len(nrow(rejected_regular))) {
+        r <- rejected_regular[j, ]
+        cat(sprintf("   %s bis %s — %s (DWD: nur %.2f mm)\n",
+            format(r$start_time, "%d.%m.%Y %H:%M"),
+            format(r$end_time, "%d.%m.%Y %H:%M"),
+            ws_regular$event_type[j],
+            r$total_precip_mm))
+    }
+    cat("\n")
+}
 
 # Zusammenführen und Duplikate entfernen
 # (reguläre Events haben Vorrang, Artefakt-Events nur wenn kein reguläres im gleichen Zeitfenster)
