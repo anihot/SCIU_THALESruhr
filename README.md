@@ -8,11 +8,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 17.06. 06:00 bis 19.06. 05:00)*
+*(Zeitraum: 17.06. 13:00 bis 19.06. 12:00)*
 
-- Temperatur: **16.4°C** (Min: 16.4°C | Max: 32.4°C)
-- Summe: **14.4 mm** | Max: **8.3 mm/h**
-- Max. 6h: **14.1 mm**
+- Temperatur: **18.1°C** (Min: 18.1°C | Max: 33°C)
+- Summe: **6.6 mm** | Max: **4 mm/h**
+- Max. 6h: **4.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-17 03:50:44 UTC*
+*Stand: 2026-06-17 10:56:11 UTC*
 
 ---
 
