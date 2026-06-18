@@ -5,14 +5,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🟡 Wetterausblick (48h)
-****Warnung vor markantem Starkregen** (DWD Stufe 2)**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 18.06. 13:00 bis 20.06. 12:00)*
+*(Zeitraum: 18.06. 18:00 bis 20.06. 17:00)*
 
-- Temperatur: **30.2°C** (Min: 20.4°C | Max: 36.9°C)
-- Summe: **28.1 mm** | Max: **19.4 mm/h**
-- Max. 6h: **23 mm**
+- Temperatur: **32°C** (Min: 22.2°C | Max: 36.4°C)
+- Summe: **0.8 mm** | Max: **0.3 mm/h**
+- Max. 6h: **0.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -24,7 +24,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-18 10:22:32 UTC*
+*Stand: 2026-06-18 15:31:51 UTC*
 
 ---
 
