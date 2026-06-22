@@ -23,6 +23,13 @@ MIN_ACTIVE_FRAC    <- 0.5   # Min. Anteil Messpunkte im Fenster mit Pegel > LOW_
 MIN_ROLLING_MEDIAN <- 0.002 # Min. Maximum einer rollierenden 3-Punkt-Median (filtert isolierte Spikes)
 LEAD_IN_HOURS      <- 3     # Niederschlag-Vorlauf-Fenster vor Event-Start
 
+# Wasserstraße Reflexions-Artefakt: bei schräger Sensorausrichtung erzeugt
+# Regen ein Phantomsignal bei ~80 cm. Events in diesem Bereich werden als
+# "Ereignis erkannt (Pegel unzuverlässig)" markiert statt verworfen.
+ARTIFACT_STATION      <- "Wasserstraße_Springorum"
+ARTIFACT_PEAK_MIN_CM  <- 60   # untere Grenze des Artefakt-Bereichs
+ARTIFACT_PEAK_MAX_CM  <- 100  # obere Grenze des Artefakt-Bereichs
+
 # Per-Station-Schwellwerte (überschreiben globale Defaults)
 # Königsallee: niedrigere Schwellen, weil die neu berechneten Level
 # (rolling-distance-baseline statt API-Festwert) kleinere Absolutwerte
@@ -235,10 +242,30 @@ detect_events <- function(df, station_name, precip) {
     events <- events %>%
         filter(!is.na(radolan_verified) & radolan_verified)
 
+    # --- Flag Wasserstraße reflection artifacts ---
+    station_clean <- gsub("_merged_export$", "", station_name)
+    is_artifact_station <- (station_clean == ARTIFACT_STATION)
+
+    events <- events %>%
+        mutate(
+            level_reliable = !(is_artifact_station &
+                               peak_level_cm >= ARTIFACT_PEAK_MIN_CM &
+                               peak_level_cm <= ARTIFACT_PEAK_MAX_CM)
+        )
+
+    if (is_artifact_station) {
+        n_artifact <- sum(!events$level_reliable)
+        if (n_artifact > 0)
+            cat("    Wasserstraße: ", n_artifact, " Events im Artefakt-Bereich (",
+                ARTIFACT_PEAK_MIN_CM, "-", ARTIFACT_PEAK_MAX_CM, " cm) markiert.\n")
+    }
+
     # --- Classify ---
     events <- events %>%
         mutate(
             event_type = case_when(
+                !level_reliable ~ "Ereignis erkannt (Pegel unzuverlässig)",
+
                 # Flash flood: sharp gradient OR short intense pulse
                 (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Sturzflut-Ereignis",
 
@@ -263,7 +290,7 @@ detect_events <- function(df, station_name, precip) {
             station, start_time, end_time, peak_level_cm, peak_time,
             duration_min, avg_gradient_cm_min, event_type,
             total_precip_mm, max_intensity_mm_h, radolan_verified,
-            points_count
+            level_reliable, points_count
         ) %>%
         mutate(
             station = gsub("_merged_export", "", station)
@@ -349,6 +376,7 @@ if (length(all_events) > 0) {
         total_precip_mm    = numeric(),
         max_intensity_mm_h = numeric(),
         radolan_verified   = logical(),
+        level_reliable     = logical(),
         points_count       = integer()
     )
     write_excel_csv(empty_df, events_file)
