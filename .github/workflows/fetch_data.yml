@@ -28,13 +28,21 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev
+          sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev libsqlite3-dev libnetcdf-dev
 
       - name: Install dependencies
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          Rscript -e 'install.packages(c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr", "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd", "terra", "stars", "leaflet", "htmlwidgets", "htmltools", "plotly", "leafpop", "remotes", "zoo"))'
+          Rscript -e '
+            pkgs <- c("httr", "jsonlite", "lubridate", "dplyr", "purrr", "tidyr",
+                       "ggplot2", "fs", "readr", "knitr", "openxlsx", "rdwd",
+                       "terra", "stars", "leaflet", "htmlwidgets", "htmltools",
+                       "plotly", "leafpop", "remotes", "zoo")
+            install.packages(pkgs)
+            failed <- pkgs[!sapply(pkgs, requireNamespace, quietly = TRUE)]
+            if (length(failed) > 0) stop("Failed to install: ", paste(failed, collapse = ", "))
+          '
           Rscript -e 'remotes::install_github("brry/dwdradar", quiet = TRUE)'
 
       - name: Fetch weather forecast
