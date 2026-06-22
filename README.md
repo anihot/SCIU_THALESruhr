@@ -20,11 +20,14 @@
 
 ### 🛠 Sensor-Status-Check
 
-✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
+⚠️ **Achtung: Inaktive Sensoren erkannt!**
+*(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
+
+- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-22 12:10:36 UTC*
+*Stand: 2026-06-22 12:39:29 UTC*
 
 ---
 
