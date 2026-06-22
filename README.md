@@ -1,5 +1,7 @@
 # SCIU THALESruhr - Sensor Data Management
 
+**[Live-Dashboard & Interaktive Karte](https://anihot.github.io/SCIU_THALESruhr/)**
+
 <table>
 <tr>
 <td width="60%" valign="top">
