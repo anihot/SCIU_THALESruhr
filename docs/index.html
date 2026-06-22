@@ -176,19 +176,90 @@
         .map-sidebar-station {
             padding: 10px 12px;
             border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: background 0.15s;
         }
         .map-sidebar-station:hover {
-            background: #f0f0f0;
+            background: #e3f0fa;
+        }
+        .map-sidebar-station.active {
+            background: #d0e8f7;
+            border-left: 3px solid var(--accent);
         }
         .map-sidebar-station h4 {
             margin: 0 0 4px 0;
             font-size: 14px;
             color: #333;
         }
+        .map-sidebar-station h4::after {
+            content: ' ›';
+            color: var(--accent);
+            font-weight: normal;
+        }
         .map-sidebar-station p {
             margin: 0;
             font-size: 12px;
             color: #888;
+        }
+
+        /* Station Events Panel */
+        .station-events-panel {
+            display: none;
+            grid-column: 1 / -1;
+        }
+        .station-events-panel.visible { display: block; }
+        .station-events-panel .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        .station-events-panel .close-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        .station-events-panel .close-btn:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        .station-events-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+        .station-events-table th {
+            text-align: left;
+            padding: 0.4rem 0.5rem;
+            border-bottom: 2px solid var(--border);
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            background: var(--card);
+        }
+        .station-events-table td {
+            padding: 0.4rem 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .station-events-table a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .station-events-table a:hover { text-decoration: underline; }
+        .station-events-table .unreliable {
+            color: var(--yellow);
+            font-style: italic;
+        }
+        .events-scroll {
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         /* Station Plots */
@@ -420,27 +491,37 @@ async function buildDashboard() {
                     </div>
                     <div class="map-sidebar">
                         <div class="map-sidebar-header"><h3>Sensorstandorte</h3></div>
-                        <div class="map-sidebar-station">
+                        <div class="map-sidebar-station" data-station="An_der_Kost" data-plot-prefix="An_der_Kost">
                             <h4>An der Kost (Hattingen)</h4>
-                            <p>Station: An der Kost</p>
+                            <p>Klicken für Ereignisliste</p>
                         </div>
-                        <div class="map-sidebar-station">
+                        <div class="map-sidebar-station" data-station="Wasserstraße_Springorum" data-plot-prefix="Wasserstra_e_Springorum">
                             <h4>Wasserstra&szlig;e Springorum (Bochum)</h4>
-                            <p>Station: Wasserstra&szlig;e</p>
+                            <p>Klicken für Ereignisliste</p>
                         </div>
-                        <div class="map-sidebar-station">
+                        <div class="map-sidebar-station" data-station="Königsallee_Springorum" data-plot-prefix="K_nigsallee_Springorum">
                             <h4>K&ouml;nigsallee Springorum (Bochum)</h4>
-                            <p>Station: K&ouml;nigsallee</p>
+                            <p>Klicken für Ereignisliste</p>
                         </div>
-                        <div class="map-sidebar-station">
+                        <div class="map-sidebar-station" data-station="Wasserbaulabor_2" data-plot-prefix="Wasserbaulabor_2">
                             <h4>Wasserbaulabor 2 (Hochschule Bochum Campus)</h4>
-                            <p>Station: Wasserbaulabor 2</p>
+                            <p>Klicken für Ereignisliste</p>
                         </div>
-                        <div class="map-sidebar-station">
+                        <div class="map-sidebar-station" data-station="Herzogstraße" data-plot-prefix="Herzogstra_e">
                             <h4>Herzogstra&szlig;e (Bochum)</h4>
-                            <p>Station: Herzogstra&szlig;e</p>
+                            <p>Klicken für Ereignisliste</p>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Station Events Panel (erscheint bei Klick auf Station) -->
+            <div class="station-events-panel card full" id="stationEventsPanel">
+                <div class="panel-header">
+                    <h2 id="stationEventsTitle">Ereignisse</h2>
+                    <button class="close-btn" id="closeEventsPanel">✕ Schließen</button>
+                </div>
+                <div class="events-scroll" id="stationEventsBody">
                 </div>
             </div>
 
@@ -503,6 +584,127 @@ document.addEventListener('click', (e) => {
     if (e.target.matches('.plot-card img')) {
         lightbox.querySelector('img').src = e.target.src;
         lightbox.classList.add('active');
+    }
+});
+
+// ── Station Events: CSV laden und bei Klick anzeigen ──────────────────────
+let historicalEvents = null;
+
+function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, ''));
+    return lines.slice(1).map(line => {
+        const vals = [];
+        let current = '', inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            if (line[i] === '"') { inQuotes = !inQuotes; }
+            else if (line[i] === ',' && !inQuotes) { vals.push(current); current = ''; }
+            else { current += line[i]; }
+        }
+        vals.push(current);
+        const obj = {};
+        headers.forEach((h, idx) => obj[h] = vals[idx] || '');
+        return obj;
+    });
+}
+
+async function loadHistoricalEvents() {
+    if (historicalEvents !== null) return historicalEvents;
+    try {
+        const csv = await fetchText(`${REPO_RAW}/data/metadata/historical_verified_events.csv`);
+        historicalEvents = parseCSV(csv);
+        return historicalEvents;
+    } catch (e) {
+        historicalEvents = [];
+        return [];
+    }
+}
+
+function formatDateTime(str) {
+    if (!str) return '';
+    const d = new Date(str.replace(/\//g, '-'));
+    if (isNaN(d)) return str;
+    return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
+         + ' ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+}
+
+function eventPlotFilename(plotPrefix, startTime) {
+    if (!startTime) return null;
+    const d = new Date(startTime.replace(/\//g, '-'));
+    if (isNaN(d)) return null;
+    const pad = n => String(n).padStart(2, '0');
+    return `${plotPrefix}_${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.html`;
+}
+
+async function showStationEvents(stationKey, plotPrefix, displayName) {
+    const panel = document.getElementById('stationEventsPanel');
+    const title = document.getElementById('stationEventsTitle');
+    const body  = document.getElementById('stationEventsBody');
+
+    title.textContent = `Bestätigte Ereignisse: ${displayName}`;
+    body.innerHTML = '<p style="color:var(--muted);padding:1rem;">Lade Ereignisse...</p>';
+    panel.classList.add('visible');
+    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    const events = await loadHistoricalEvents();
+    const stationEvents = events
+        .filter(e => e.station === stationKey)
+        .sort((a, b) => (b.start_time || '').localeCompare(a.start_time || ''));
+
+    if (stationEvents.length === 0) {
+        body.innerHTML = '<p style="color:var(--muted);padding:1rem;">Keine bestätigten Ereignisse für diese Station.</p>';
+        return;
+    }
+
+    let html = '<table class="station-events-table"><thead><tr>'
+        + '<th>Datum</th><th>Peak (cm)</th><th>Dauer (min)</th><th>Typ</th>'
+        + '<th>Niederschlag (mm)</th><th>Plot</th></tr></thead><tbody>';
+
+    for (const ev of stationEvents) {
+        const unreliable = ev.level_reliable === 'FALSE';
+        const peakClass = unreliable ? ' class="unreliable"' : '';
+        const peakVal = unreliable ? '~' + ev.peak_level_cm + ' ⚠' : ev.peak_level_cm;
+
+        const plotFile = eventPlotFilename(plotPrefix, ev.start_time);
+        const plotLink = plotFile
+            ? `<a href="event_plots/${plotFile}" target="_blank">📊 Ansehen</a>`
+            : '';
+
+        html += '<tr>'
+            + `<td>${formatDateTime(ev.start_time)}</td>`
+            + `<td${peakClass}>${peakVal}</td>`
+            + `<td>${ev.duration_min}</td>`
+            + `<td>${ev.event_type || ''}</td>`
+            + `<td>${ev.total_precip_mm || '–'}</td>`
+            + `<td>${plotLink}</td>`
+            + '</tr>';
+    }
+
+    html += '</tbody></table>';
+    html += `<p style="color:var(--muted);font-size:0.78rem;margin-top:0.6rem;">${stationEvents.length} Ereignisse gesamt</p>`;
+    body.innerHTML = html;
+}
+
+document.addEventListener('click', (e) => {
+    const stationEl = e.target.closest('.map-sidebar-station');
+    if (!stationEl) return;
+
+    const stationKey = stationEl.dataset.station;
+    const plotPrefix = stationEl.dataset.plotPrefix;
+    const displayName = stationEl.querySelector('h4').textContent;
+    if (!stationKey) return;
+
+    document.querySelectorAll('.map-sidebar-station').forEach(el => el.classList.remove('active'));
+    stationEl.classList.add('active');
+
+    showStationEvents(stationKey, plotPrefix, displayName);
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'closeEventsPanel' || e.target.closest('#closeEventsPanel')) {
+        document.getElementById('stationEventsPanel').classList.remove('visible');
+        document.querySelectorAll('.map-sidebar-station').forEach(el => el.classList.remove('active'));
     }
 });
 </script>
