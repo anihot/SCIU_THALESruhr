@@ -138,26 +138,34 @@ process_radolan_file <- function(file_path, out_file, nodata_threshold = 30) {
 }
 
 # 3. Resume-Logik: Startdatum je Produkt bestimmen
+#    Gibt eine Liste mit $date (Date) und $last_ts (POSIXct) zurück.
+#    Dedupliziert die Datei beim Laden, damit alte Duplikate nicht akkumulieren.
 determine_start_date <- function(out_file, default_start = as.Date("2025-09-01")) {
     if (file.exists(out_file)) {
         existing <- read_csv(out_file, show_col_types = FALSE)
         if (nrow(existing) > 0) {
-            # Prüfe ob alle Werte 0 sind (= kaputte Daten durch alten Extent-Bug)
             all_zero <- all(existing$precipitation_mm == 0, na.rm = TRUE)
             if (all_zero) {
                 cat("WARNING: All existing precipitation values are 0 — resetting file (likely projection bug).\n")
                 df_init <- data.frame(timestamp = as.POSIXct(character()), station = character(), precipitation_mm = numeric())
                 write_csv(df_init, out_file)
-                return(default_start)
+                return(list(date = default_start, last_ts = as.POSIXct(NA)))
             }
-            last_date <- max(as.Date(existing$timestamp))
-            return(max(default_start, last_date))
+            n_before <- nrow(existing)
+            existing <- distinct(existing)
+            if (nrow(existing) < n_before) {
+                cat("Deduplicated", out_file, ":", n_before, "->", nrow(existing), "rows.\n")
+                write_csv(existing, out_file)
+            }
+            last_ts   <- max(as.POSIXct(existing$timestamp), na.rm = TRUE)
+            last_date <- as.Date(last_ts)
+            return(list(date = max(default_start, last_date), last_ts = last_ts))
         }
     } else {
         df_init <- data.frame(timestamp = as.POSIXct(character()), station = character(), precipitation_mm = numeric())
         write_csv(df_init, out_file)
     }
-    default_start
+    list(date = default_start, last_ts = as.POSIXct(NA))
 }
 
 end_date <- Sys.Date()
@@ -173,8 +181,11 @@ cat("\n", strrep("=", 70), "\n")
 cat(" RADOLAN YW (5 min) – für Event-Detektion & Visualisierung\n")
 cat(strrep("=", 70), "\n")
 
-start_date_ry <- determine_start_date(output_file_ry)
-cat("Resume from:", as.character(start_date_ry), "\n")
+resume_ry     <- determine_start_date(output_file_ry)
+start_date_ry <- resume_ry$date
+last_ts_ry    <- resume_ry$last_ts
+cat("Resume from:", as.character(start_date_ry),
+    if (!is.na(last_ts_ry)) paste("(last timestamp:", last_ts_ry, ")") else "", "\n")
 
 if (start_date_ry >= end_date) {
     cat("YW data is already up to date.\n")
@@ -205,13 +216,17 @@ if (start_date_ry >= end_date) {
 
         bin_files <- sort(list.files(extract_dir, pattern = "^raa01-yw", full.names = TRUE, recursive = TRUE))
 
-        # Nur Dateien ab start_date_ry verarbeiten (relevant für ersten Tag)
+        # Nur Dateien verarbeiten, die noch nicht in der CSV sind
         file_ts <- as.POSIXct(
             gsub(".*-([0-9]{10})-.*", "\\1", basename(bin_files)),
             format = "%y%m%d%H%M", tz = "UTC"
         )
-        start_posix <- as.POSIXct(start_date_ry, tz = "UTC")
-        bin_files   <- bin_files[!is.na(file_ts) & file_ts >= start_posix]
+        if (!is.na(last_ts_ry)) {
+            bin_files <- bin_files[!is.na(file_ts) & file_ts > last_ts_ry]
+        } else {
+            start_posix <- as.POSIXct(start_date_ry, tz = "UTC")
+            bin_files   <- bin_files[!is.na(file_ts) & file_ts >= start_posix]
+        }
 
         cat("    Processing", length(bin_files), "5-min files...\n")
         ok <- 0L
