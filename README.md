@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 22.06. 16:00 bis 24.06. 15:00)*
+*(Zeitraum: 22.06. 19:00 bis 24.06. 18:00)*
 
-- Temperatur: **31°C** (Min: 18.8°C | Max: 37.8°C)
+- Temperatur: **28.9°C** (Min: 19.1°C | Max: 38.3°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -22,14 +22,11 @@
 
 ### 🛠 Sensor-Status-Check
 
-⚠️ **Achtung: Inaktive Sensoren erkannt!**
-*(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
-
-- 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
+✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-22 13:35:37 UTC*
+*Stand: 2026-06-22 16:55:51 UTC*
 
 ---
 
