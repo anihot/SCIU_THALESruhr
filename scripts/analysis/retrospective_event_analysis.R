@@ -29,6 +29,11 @@ MIN_ACTIVE_FRAC    <- 0.5 # Min. Anteil Messpunkte mit Pegel > LOW_THRESHOLD (fi
 MIN_ROLLING_MEDIAN <- 0.002 # Min. Maximum einer rollierenden 3-Punkt-Median (filtert isolierte Spikes)
 LEAD_IN_HOURS      <- 3   # Niederschlag-Vorlauf-Fenster vor Event-Start
 
+# Wasserstraße Reflexions-Artefakt (siehe event_detection.R)
+ARTIFACT_STATION      <- "Wasserstraße_Springorum"
+ARTIFACT_PEAK_MIN_CM  <- 60
+ARTIFACT_PEAK_MAX_CM  <- 100
+
 cat("=== Retrospective Event Analysis ===\n")
 cat("Detects ALL historical events and correlates with Open-Meteo archive precipitation.\n\n")
 
@@ -82,7 +87,11 @@ detect_events <- function(df, station_name) {
             avg_gradient_cm_min = (peak_level_m * 100) / (as.numeric(difftime(peak_time, start_time, units = "mins")) + 0.1),
             avg_gradient_cm_min = round(avg_gradient_cm_min, 3),
             peak_level_cm       = round(peak_level_m * 100, 2),
+            level_reliable = !(gsub("_merged_export", "", station) == ARTIFACT_STATION &
+                               peak_level_cm >= ARTIFACT_PEAK_MIN_CM &
+                               peak_level_cm <= ARTIFACT_PEAK_MAX_CM),
             event_type = case_when(
+                !level_reliable ~ "Ereignis erkannt (Pegel unzuverlässig)",
                 (avg_gradient_cm_min > 0.5) | (duration_min < 45 & peak_level_cm > 2.0) ~ "Sturzflut-Ereignis",
                 peak_level_cm >= 2.0 ~ "Regenereignis / Natürlich",
                 TRUE ~ "Leichter Regen / Unterhalb DWD-Schwelle"
@@ -115,7 +124,7 @@ detect_events <- function(df, station_name) {
             max_rolling_median >= MIN_ROLLING_MEDIAN
         ) %>%
         select(station, start_time, end_time, peak_level_cm, peak_time,
-               duration_min, avg_gradient_cm_min, event_type, points_count) %>%
+               duration_min, avg_gradient_cm_min, event_type, level_reliable, points_count) %>%
         mutate(station = gsub("_merged_export", "", station))
 
     return(events)
@@ -326,6 +335,7 @@ if (nrow(events_for_export) > 0) {
             Sturzflut_Anzahl  = sum(event_type == "Sturzflut-Ereignis", na.rm = TRUE),
             Regen_Anzahl      = sum(event_type == "Regenereignis / Natürlich", na.rm = TRUE),
             Verdächtig_Anzahl = sum(event_type == "Verdächtig / Kein Regen", na.rm = TRUE),
+            Pegel_unzuverl    = sum(event_type == "Ereignis erkannt (Pegel unzuverlässig)", na.rm = TRUE),
             .groups = "drop"
         ) %>%
         arrange(desc(Ereignisse))
