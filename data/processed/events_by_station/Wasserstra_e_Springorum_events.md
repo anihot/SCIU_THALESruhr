@@ -2,4 +2,4 @@
 
 |station                 |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type         | total_precip_mm| max_intensity_mm_h|radolan_verified |level_reliable | points_count|
 |:-----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:------------------|---------------:|------------------:|:----------------|:--------------|------------:|
-|Wasserstraße_Springorum |2026-06-06 18:56:00 |2026-06-06 23:48:30 |           6.1|2026-06-06 18:59:30 |        292.5|               1.694|Sturzflut-Ereignis |            0.04|               0.12|TRUE             |TRUE           |          586|
+|Wasserstraße_Springorum |2026-06-06 18:56:00 |2026-06-06 23:48:30 |           6.1|2026-06-06 18:59:30 |        292.5|               1.694|Sturzflut-Ereignis |            0.01|               0.12|TRUE             |TRUE           |          586|
