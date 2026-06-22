@@ -44,8 +44,19 @@ if (nrow(events_recent) > 0) {
         "Es wurden **", nrow(events_recent), "** neue potenzielle Ereignisse erkannt.\n\n"
     )
 
+    # For unreliable levels, replace numeric value with hint
+    display_events <- events_recent %>%
+        mutate(
+            peak_level_cm = if ("level_reliable" %in% names(.))
+                ifelse(!is.na(level_reliable) & !level_reliable, NA_real_, peak_level_cm)
+            else peak_level_cm,
+            Hinweis = if ("level_reliable" %in% names(.))
+                ifelse(!is.na(level_reliable) & !level_reliable, "Pegel unzuverlässig (Sensor-Artefakt)", "")
+            else ""
+        )
+
     # Table of recent events
-    event_table <- kable(events_recent %>% select(station, start_time, peak_level_cm, duration_min), format = "markdown")
+    event_table <- kable(display_events %>% select(station, start_time, peak_level_cm, duration_min, event_type), format = "markdown")
     event_table <- paste(event_table, collapse = "\n")
 
     # Matching plots
