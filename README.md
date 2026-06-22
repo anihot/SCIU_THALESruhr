@@ -8,9 +8,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 22.06. 10:00 bis 24.06. 09:00)*
+*(Zeitraum: 22.06. 12:00 bis 24.06. 11:00)*
 
-- Temperatur: **24.5°C** (Min: 18.6°C | Max: 32.4°C)
+- Temperatur: **28.1°C** (Min: 18.6°C | Max: 32.4°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -26,19 +26,8 @@
 - 🔴 **Wasserbaulabor_**: Letzte Daten vor 460.3 Stunden (18.02. 09:22)
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-06-22 07:25:15 UTC*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station     |start_time          | peak_level_cm| duration_min|
-|:-----------|:-------------------|-------------:|------------:|
-|An_der_Kost |2026-06-21 01:43:00 |           0.3|           33|
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: An_der_Kost
-![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-06-22 09:30:47 UTC*
 
 ---
 
