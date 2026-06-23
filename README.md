@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 23.06. 12:00 bis 25.06. 11:00)*
+*(Zeitraum: 23.06. 17:00 bis 25.06. 16:00)*
 
-- Temperatur: **24.7°C** (Min: 23.3°C | Max: 37.2°C)
+- Temperatur: **30.6°C** (Min: 22.8°C | Max: 37°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-23 09:40:54 UTC*
+*Stand: 2026-06-23 14:47:11 UTC*
 
 ---
 
