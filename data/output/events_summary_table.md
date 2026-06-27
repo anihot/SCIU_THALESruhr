@@ -6,7 +6,7 @@
 |:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|--------------:|
 |An_der_Kost             |         45|       0.4|         1.4|                0|            0|                 0|              0|
 |Königsallee_Springorum  |          7|       0.7|         0.9|                0|            0|                 0|              0|
-|Wasserstraße_Springorum |          1|       6.1|         6.1|                1|            0|                 0|              0|
+|Wasserstraße_Springorum |          2|       3.6|         6.1|                1|            0|                 0|              0|
 
 ## Top 20 Most Intense Events
 
@@ -14,6 +14,7 @@
 |:-----------------------|:-------------------|------------:|-------------:|-------------------:|:---------------------------------------|---------------:|------------------:|
 |Wasserstraße_Springorum |2026/06/06 18:56:00 |        292.5|           6.1|               1.694|Sturzflut-Ereignis                      |            0.01|               0.12|
 |An_der_Kost             |2025/11/17 13:29:00 |         96.0|           1.4|               0.082|Leichter Regen / Unterhalb DWD-Schwelle |            2.04|               8.76|
+|Wasserstraße_Springorum |2026/06/26 05:44:00 |       1160.5|           1.1|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            9.30|              62.52|
 |Königsallee_Springorum  |2026/01/28 04:12:00 |        862.0|           0.9|               0.005|Leichter Regen / Unterhalb DWD-Schwelle |            1.29|               1.80|
 |Königsallee_Springorum  |2026/02/02 16:59:00 |       1298.0|           0.8|               0.001|Leichter Regen / Unterhalb DWD-Schwelle |            2.18|               2.04|
 |Königsallee_Springorum  |2026/02/01 19:25:00 |        864.0|           0.8|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            0.61|               0.96|
@@ -31,6 +32,5 @@
 |An_der_Kost             |2025/10/28 06:47:00 |        214.0|           0.5|               0.005|Leichter Regen / Unterhalb DWD-Schwelle |            0.47|               1.20|
 |An_der_Kost             |2025/10/23 16:56:00 |         46.0|           0.5|               0.021|Leichter Regen / Unterhalb DWD-Schwelle |            0.52|               2.40|
 |Königsallee_Springorum  |2025/10/04 00:17:00 |         41.0|           0.5|               0.050|Leichter Regen / Unterhalb DWD-Schwelle |            1.79|               3.36|
-|An_der_Kost             |2026/05/13 13:08:00 |         50.0|           0.4|               0.071|Leichter Regen / Unterhalb DWD-Schwelle |            0.23|               0.84|
 
-*Full log available in data/processed/detected_events.csv — 53 events total.*
+*Full log available in data/processed/detected_events.csv — 54 events total.*

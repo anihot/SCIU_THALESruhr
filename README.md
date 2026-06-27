@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔴 Wetterausblick (48h)
-****UNWETTERWARNUNG vor Starkregen** (DWD Stufe 3)**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 27.06. 05:00 bis 29.06. 04:00)*
+*(Zeitraum: 27.06. 11:00 bis 29.06. 10:00)*
 
-- Temperatur: **27.9°C** (Min: 21.8°C | Max: 36.9°C)
-- Summe: **53.3 mm** | Max: **28.7 mm/h**
-- Max. 6h: **49.4 mm**
+- Temperatur: **28.5°C** (Min: 21.1°C | Max: 34.4°C)
+- Summe: **15.7 mm** | Max: **12 mm/h**
+- Max. 6h: **15.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-27 02:53:54 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-06-27 08:40:18 UTC*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                 |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|Wasserstraße_Springorum |2026-06-26 05:44:00 |           1.1|       1160.5|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+
 
 ---
 
