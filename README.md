@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 27.06. 16:00 bis 29.06. 15:00)*
+*(Zeitraum: 27.06. 22:00 bis 29.06. 21:00)*
 
-- Temperatur: **36.8°C** (Min: 19.4°C | Max: 36.8°C)
-- Summe: **5.5 mm** | Max: **2.7 mm/h**
-- Max. 6h: **3.9 mm**
+- Temperatur: **26.7°C** (Min: 21°C | Max: 32.9°C)
+- Summe: **6.3 mm** | Max: **4.5 mm/h**
+- Max. 6h: **5.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-06-27 13:31:53 UTC*
+*Stand: 2026-06-27 19:21:35 UTC*
 
 ---
 
