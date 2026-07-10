@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 08.07. 05:00 bis 10.07. 04:00)*
+*(Zeitraum: 10.07. 17:00 bis 12.07. 16:00)*
 
-- Temperatur: **18.3°C** (Min: 17°C | Max: 27.3°C)
+- Temperatur: **29°C** (Min: 18.7°C | Max: 33.3°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -25,14 +25,14 @@
 ⚠️ **Achtung: Inaktive Sensoren erkannt!**
 *(Hinweis: Dies kann auch durch einen Fehler im automatisierten Download-Prozess verursacht werden)*
 
-- 🔴 **An_der_Kost**: Letzte Daten vor 248.4 Stunden (27.06. 18:00)
-- 🔴 **Königsallee_Springorum**: Letzte Daten vor 248.4 Stunden (27.06. 18:00)
-- 🔴 **Wasserbaulabor_2**: Letzte Daten vor 247.2 Stunden (27.06. 19:15)
-- 🔴 **Wasserstraße_Springorum**: Letzte Daten vor 248.4 Stunden (27.06. 18:00)
+- 🔴 **An_der_Kost**: Letzte Daten vor 308.3 Stunden (27.06. 18:00)
+- 🔴 **Königsallee_Springorum**: Letzte Daten vor 308.3 Stunden (27.06. 18:00)
+- 🔴 **Wasserbaulabor_2**: Letzte Daten vor 307.1 Stunden (27.06. 19:15)
+- 🔴 **Wasserstraße_Springorum**: Letzte Daten vor 308.3 Stunden (27.06. 18:00)
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-08 02:26:03 UTC*
+*Stand: 2026-07-10 14:18:09 UTC*
 
 ---
 
