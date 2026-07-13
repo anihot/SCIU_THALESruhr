@@ -143,8 +143,6 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git add data/raw/sensor_exports/*.csv || true
-          git add data/processed/cleaned_analysis/*.csv || true
           git add data/output/plots/*.png || true
           git add data/processed/detected_events.csv || true
           git add data/processed/detected_events.md || true

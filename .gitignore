@@ -37,11 +37,8 @@ r_output.txt
 
 # Project specific data that should not be on GitHub
 data/rain_extra/schillerschule/
-data/raw/sensor_exports/*
-!data/raw/sensor_exports/*.csv
-!data/raw/sensor_exports/README.md
-data/processed/cleaned_analysis/*
-!data/processed/cleaned_analysis/*.csv
+data/raw/sensor_exports/
+data/processed/cleaned_analysis/
 data/processed/tmp_radolan/
 
 # Output
