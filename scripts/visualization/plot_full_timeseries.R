@@ -52,25 +52,34 @@ for (st in stations) {
 
   if (nrow(df_hourly) == 0) next
 
+  # Bimodal sensors (e.g. Wasserstraße bridge sensor) have level values in
+  # meters (up to ~6 m). Normal drain sensors have level in meters too but
+  # max ~0.2 m, so we display those as cm for readability.
+  max_level <- max(df_hourly$level, na.rm = TRUE)
+  is_bimodal <- !is.na(max_level) && max_level > 1.0
+  y_unit  <- if (is_bimodal) "m" else "cm"
+  y_scale <- if (is_bimodal) 1 else 100
+  y_label <- if (is_bimodal) "Wasserstand (m)" else "Pegel (cm)"
+
   p <- plot_ly()
 
   if (has_raw && any(!is.na(df_hourly$level_raw))) {
     p <- p %>% add_trace(
-      data = df_hourly, x = ~Zeit_Datum, y = ~(level_raw * 100),
+      data = df_hourly, x = ~Zeit_Datum, y = ~(level_raw * y_scale),
       type = "scatter", mode = "lines",
       name = "Rohpegel",
       line = list(color = "rgba(160,160,160,0.6)", width = 1, dash = "dot"),
-      hovertemplate = "Rohpegel: %{y:.1f} cm<extra></extra>"
+      hovertemplate = paste0("Rohpegel: %{y:.2f} ", y_unit, "<extra></extra>")
     )
   }
 
   p <- p %>% add_trace(
-    data = df_hourly, x = ~Zeit_Datum, y = ~(level * 100),
+    data = df_hourly, x = ~Zeit_Datum, y = ~(level * y_scale),
     type = "scatter", mode = "lines",
     name = if (has_raw) "Pegel (bereinigt)" else "Pegel",
     line = list(color = "#0072B2", width = 1.5),
     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.15)",
-    hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>"
+    hovertemplate = paste0("Pegel: %{y:.2f} ", y_unit, "<extra></extra>")
   )
 
   date_range <- paste0(
@@ -100,7 +109,7 @@ for (st in stations) {
       ),
       rangeslider = list(visible = TRUE, thickness = 0.06)
     ),
-    yaxis = list(title = "Pegel (cm)", gridcolor = "#eeeeee"),
+    yaxis = list(title = y_label, gridcolor = "#eeeeee"),
     margin = list(l = 50, r = 20, t = 90, b = 40),
     showlegend = has_raw,
     legend = list(orientation = "h", x = 0, y = -0.25, font = list(size = 10)),
