@@ -52,19 +52,6 @@ for (st in stations) {
 
   if (nrow(df_hourly) == 0) next
 
-  # Bimodal detection (same logic as generate_interactive_map.R)
-  max_level <- max(df_hourly$level, na.rm = TRUE)
-  is_bimodal <- !is.na(max_level) && max_level > 1.0
-  if (is_bimodal) {
-    scale_f <- 0.10 / max_level
-    df_hourly <- df_hourly %>% mutate(
-      level     = round(pmax(0, level * scale_f), 4),
-      level_raw = if (has_raw) round(pmax(0, level_raw * scale_f), 4) else NA_real_
-    )
-  }
-
-  y_label <- if (is_bimodal) "Füllstand (cm)" else "Pegel (cm)"
-
   p <- plot_ly()
 
   if (has_raw && any(!is.na(df_hourly$level_raw))) {
@@ -80,10 +67,10 @@ for (st in stations) {
   p <- p %>% add_trace(
     data = df_hourly, x = ~Zeit_Datum, y = ~(level * 100),
     type = "scatter", mode = "lines",
-    name = if (is_bimodal) "Füllstand" else "Pegel",
+    name = if (has_raw) "Pegel (bereinigt)" else "Pegel",
     line = list(color = "#0072B2", width = 1.5),
     fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.15)",
-    hovertemplate = paste0(if (is_bimodal) "Füllstand" else "Pegel", ": %{y:.1f} cm<extra></extra>")
+    hovertemplate = "Pegel: %{y:.1f} cm<extra></extra>"
   )
 
   date_range <- paste0(
@@ -94,24 +81,27 @@ for (st in stations) {
 
   p <- p %>% layout(
     title = list(
-      text = paste0("<b>", st$name, "</b> – Vollständige Zeitreihe<br>",
+      text = paste0("<b>", st$name, "</b> – Vollständige Zeitreihe (bereinigt)<br>",
                     "<span style='font-size:11px;color:#888;'>", date_range,
                     " (Stundenmittel, ", format(nrow(df_hourly), big.mark = " "), " Punkte)</span>"),
-      font = list(size = 14), x = 0
+      font = list(size = 14), x = 0, y = 0.98
     ),
     xaxis = list(
       title = "", gridcolor = "#eeeeee",
-      rangeselector = list(buttons = list(
-        list(count = 7,  label = "7T",  step = "day",   stepmode = "backward"),
-        list(count = 1,  label = "1M",  step = "month", stepmode = "backward"),
-        list(count = 3,  label = "3M",  step = "month", stepmode = "backward"),
-        list(count = 6,  label = "6M",  step = "month", stepmode = "backward"),
-        list(step = "all", label = "Alle")
-      )),
+      rangeselector = list(
+        x = 0, y = 1.13,
+        buttons = list(
+          list(count = 7,  label = "7T",  step = "day",   stepmode = "backward"),
+          list(count = 1,  label = "1M",  step = "month", stepmode = "backward"),
+          list(count = 3,  label = "3M",  step = "month", stepmode = "backward"),
+          list(count = 6,  label = "6M",  step = "month", stepmode = "backward"),
+          list(step = "all", label = "Alle")
+        )
+      ),
       rangeslider = list(visible = TRUE, thickness = 0.06)
     ),
-    yaxis = list(title = y_label, gridcolor = "#eeeeee"),
-    margin = list(l = 50, r = 20, t = 60, b = 40),
+    yaxis = list(title = "Pegel (cm)", gridcolor = "#eeeeee"),
+    margin = list(l = 50, r = 20, t = 90, b = 40),
     showlegend = has_raw,
     legend = list(orientation = "h", x = 0, y = -0.25, font = list(size = 10)),
     hovermode = "x unified",
