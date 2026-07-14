@@ -97,7 +97,7 @@ for (st in stations) {
     type = "scatter", mode = "lines",
     name = if (has_raw) "Pegel (bereinigt)" else "Pegel",
     line = list(color = "#0072B2", width = 1.5),
-    fill = "tozeroy", fillcolor = "rgba(255, 78, 0, 0.93)",
+    fill = "tozeroy", fillcolor = "rgba(0, 158, 115, 0.5)",
     hovertemplate = paste0("Pegel: %{y:.2f} ", y_unit, "<extra></extra>")
   )
 
@@ -107,7 +107,7 @@ for (st in stations) {
       data = precip_hourly, x = ~timestamp, y = ~precipitation_mm,
       type = "bar", name = "Niederschlag (RADOLAN)",
       yaxis = "y2",
-      marker = list(color = "rgba(0, 158, 115, 0.5)"),
+      marker = list(color = "rgba(255, 78, 0, 0.93)"),
       hovertemplate = "Regen: %{y:.2f} mm/h<extra></extra>"
     )
   }
