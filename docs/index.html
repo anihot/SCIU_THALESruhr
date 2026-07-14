@@ -202,6 +202,38 @@
             color: #888;
         }
 
+        /* Timeseries panel */
+        .timeseries-panel {
+            display: none;
+            grid-column: 1 / -1;
+        }
+        .timeseries-panel.visible { display: block; }
+        .timeseries-panel .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        .timeseries-panel .close-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        .timeseries-panel .close-btn:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        .timeseries-iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
         /* Station Events Panel */
         .station-events-panel {
             display: none;
@@ -491,28 +523,37 @@ async function buildDashboard() {
                     </div>
                     <div class="map-sidebar">
                         <div class="map-sidebar-header"><h3>Sensorstandorte</h3></div>
-                        <div class="map-sidebar-station" data-station="An_der_Kost" data-plot-prefix="An_der_Kost">
+                        <div class="map-sidebar-station" data-station="An_der_Kost" data-plot-prefix="An_der_Kost" data-graph="An_der_Kost_full.html">
                             <h4>An der Kost (Hattingen)</h4>
-                            <p>Klicken für Ereignisliste</p>
+                            <p>Klicken für Zeitreihe &amp; Ereignisse</p>
                         </div>
-                        <div class="map-sidebar-station" data-station="Wasserstraße_Springorum" data-plot-prefix="Wasserstra_e_Springorum">
+                        <div class="map-sidebar-station" data-station="Wasserstraße_Springorum" data-plot-prefix="Wasserstra_e_Springorum" data-graph="Wasserstra_e_full.html">
                             <h4>Wasserstra&szlig;e Springorum (Bochum)</h4>
-                            <p>Klicken für Ereignisliste</p>
+                            <p>Klicken für Zeitreihe &amp; Ereignisse</p>
                         </div>
-                        <div class="map-sidebar-station" data-station="Königsallee_Springorum" data-plot-prefix="K_nigsallee_Springorum">
+                        <div class="map-sidebar-station" data-station="Königsallee_Springorum" data-plot-prefix="K_nigsallee_Springorum" data-graph="K_nigsallee_full.html">
                             <h4>K&ouml;nigsallee Springorum (Bochum)</h4>
-                            <p>Klicken für Ereignisliste</p>
+                            <p>Klicken für Zeitreihe &amp; Ereignisse</p>
                         </div>
-                        <div class="map-sidebar-station" data-station="Wasserbaulabor_2" data-plot-prefix="Wasserbaulabor_2">
+                        <div class="map-sidebar-station" data-station="Wasserbaulabor_2" data-plot-prefix="Wasserbaulabor_2" data-graph="Wasserbaulabor_2_full.html">
                             <h4>Wasserbaulabor 2 (Hochschule Bochum Campus)</h4>
-                            <p>Klicken für Ereignisliste</p>
+                            <p>Klicken für Zeitreihe &amp; Ereignisse</p>
                         </div>
-                        <div class="map-sidebar-station" data-station="Herzogstraße" data-plot-prefix="Herzogstra_e">
+                        <div class="map-sidebar-station" data-station="Herzogstraße" data-plot-prefix="Herzogstra_e" data-graph="Herzogstra_e_full.html">
                             <h4>Herzogstra&szlig;e (Bochum)</h4>
-                            <p>Klicken für Ereignisliste</p>
+                            <p>Klicken für Zeitreihe &amp; Ereignisse</p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Timeseries Panel (erscheint bei Klick auf Station) -->
+            <div class="timeseries-panel card full" id="timeseriesPanel">
+                <div class="panel-header">
+                    <h2 id="timeseriesTitle">Vollständige Zeitreihe</h2>
+                    <button class="close-btn" id="closeTimeseriesPanel">✕ Schließen</button>
+                </div>
+                <iframe id="timeseriesIframe" class="timeseries-iframe" src="" loading="lazy"></iframe>
             </div>
 
             <!-- Station Events Panel (erscheint bei Klick auf Station) -->
@@ -699,12 +740,33 @@ document.addEventListener('click', (e) => {
     stationEl.classList.add('active');
 
     showStationEvents(stationKey, plotPrefix, displayName);
+
+    // Show timeseries panel
+    const graphFile = stationEl.dataset.graph;
+    if (graphFile) {
+        const tsPanel = document.getElementById('timeseriesPanel');
+        const tsTitle = document.getElementById('timeseriesTitle');
+        const tsIframe = document.getElementById('timeseriesIframe');
+        tsTitle.textContent = `Vollständige Zeitreihe: ${displayName}`;
+        tsIframe.src = `graphs/${graphFile}`;
+        tsPanel.classList.add('visible');
+        tsPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 });
 
 document.addEventListener('click', (e) => {
     if (e.target.id === 'closeEventsPanel' || e.target.closest('#closeEventsPanel')) {
         document.getElementById('stationEventsPanel').classList.remove('visible');
         document.querySelectorAll('.map-sidebar-station').forEach(el => el.classList.remove('active'));
+        document.getElementById('timeseriesPanel').classList.remove('visible');
+        document.getElementById('timeseriesIframe').src = '';
+    }
+});
+
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'closeTimeseriesPanel' || e.target.closest('#closeTimeseriesPanel')) {
+        document.getElementById('timeseriesPanel').classList.remove('visible');
+        document.getElementById('timeseriesIframe').src = '';
     }
 });
 </script>
