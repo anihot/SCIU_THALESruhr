@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 14.07. 13:00 bis 16.07. 12:00)*
+*(Zeitraum: 14.07. 14:00 bis 16.07. 13:00)*
 
-- Temperatur: **28.7°C** (Min: 19.1°C | Max: 30°C)
-- Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **1 mm**
+- Temperatur: **29.9°C** (Min: 19.2°C | Max: 30.6°C)
+- Summe: **0.1 mm** | Max: **0.1 mm/h**
+- Max. 6h: **0.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-14 10:03:00 UTC*
+*Stand: 2026-07-14 11:19:36 UTC*
 
 ---
 
