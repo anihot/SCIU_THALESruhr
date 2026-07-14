@@ -94,6 +94,10 @@ jobs:
         if: steps.check_rain.outputs.should_continue == 'true'
         run: Rscript scripts/visualization/generate_interactive_map.R
 
+      - name: Generate full timeseries plots
+        if: steps.check_rain.outputs.should_continue == 'true'
+        run: Rscript scripts/visualization/plot_full_timeseries.R
+
       # Event detection läuft immer (auch ohne Regenvorhersage),
       # damit unvorhergesehene Ereignisse nicht verloren gehen.
       - name: Detect events

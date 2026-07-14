@@ -30,11 +30,14 @@ Write-Host "5/7: Generating 24h plots (for popups)..." -ForegroundColor Yellow
 Write-Host "6/7: Generating static map..." -ForegroundColor Yellow
 & $RscriptPath "scripts/visualization/generate_static_map.R"
 
-Write-Host "7/7: Generating interactive map..." -ForegroundColor Yellow
+Write-Host "7/8: Generating interactive map..." -ForegroundColor Yellow
 & $RscriptPath "scripts/visualization/generate_interactive_map.R"
 
+Write-Host "8/8: Generating full timeseries plots..." -ForegroundColor Yellow
+& $RscriptPath "scripts/visualization/plot_full_timeseries.R"
+
 # 4. Schillerschule comparison (local only)
-Write-Host "8/8: Schillerschule rain gauge comparison..." -ForegroundColor Yellow
+Write-Host "9/9: Schillerschule rain gauge comparison..." -ForegroundColor Yellow
 & $RscriptPath "scripts/analysis/schillerschule_comparison.R"
 
 # 5. Final Updates
