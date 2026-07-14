@@ -154,6 +154,39 @@ for (st in stations) {
     paper_bgcolor = "white"
   ) %>% config(displayModeBar = TRUE, scrollZoom = TRUE)
 
+  # Vor/Zurück-Buttons: verschieben das aktuelle Zeitfenster um dessen Breite
+  p <- p %>% htmlwidgets::onRender("
+    function(el, x) {
+      var gd = el;
+      var btnStyle = 'padding:4px 12px;margin:0 3px;cursor:pointer;border:1px solid #ccc;' +
+                     'border-radius:4px;background:#f8f8f8;font-size:13px;color:#333;';
+      var container = document.createElement('div');
+      container.style.cssText = 'text-align:center;margin:6px 0 2px 0;';
+      var btnPrev = document.createElement('button');
+      btnPrev.innerHTML = '&#9664; Zurück';
+      btnPrev.style.cssText = btnStyle;
+      var btnNext = document.createElement('button');
+      btnNext.innerHTML = 'Vor &#9654;';
+      btnNext.style.cssText = btnStyle;
+
+      function shiftRange(direction) {
+        var xRange = gd._fullLayout.xaxis.range;
+        var t0 = new Date(xRange[0]).getTime();
+        var t1 = new Date(xRange[1]).getTime();
+        var span = t1 - t0;
+        var newT0 = new Date(t0 + direction * span);
+        var newT1 = new Date(t1 + direction * span);
+        Plotly.relayout(gd, {'xaxis.range': [newT0.toISOString(), newT1.toISOString()]});
+      }
+
+      btnPrev.onclick = function() { shiftRange(-1); };
+      btnNext.onclick = function() { shiftRange(1); };
+      container.appendChild(btnPrev);
+      container.appendChild(btnNext);
+      gd.parentNode.insertBefore(container, gd.nextSibling);
+    }
+  ")
+
   out_name <- paste0(st$safe, "_full.html")
   out_path <- file.path(output_dir, out_name)
   tryCatch(
