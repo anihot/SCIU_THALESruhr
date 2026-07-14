@@ -97,7 +97,7 @@ for (st in stations) {
     type = "scatter", mode = "lines",
     name = if (has_raw) "Pegel (bereinigt)" else "Pegel",
     line = list(color = "#0072B2", width = 1.5),
-    fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.15)",
+    fill = "tozeroy", fillcolor = "rgba(255, 78, 0, 0.93)",
     hovertemplate = paste0("Pegel: %{y:.2f} ", y_unit, "<extra></extra>")
   )
 
