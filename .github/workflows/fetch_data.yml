@@ -177,7 +177,15 @@ jobs:
           git add README.md || true
           git add docs/ || true
           git commit -m "Auto-update sensor data, events, risk analysis and dashboard [skip ci]" || echo "No changes to commit"
-          # Rebase auf Remote falls in der Zwischenzeit ein PR gemerged wurde,
-          # sonst scheitert der Push mit "fetch first".
-          git pull --rebase --autostash origin main || true
+          # Rebase auf Remote falls in der Zwischenzeit ein PR gemerged wurde.
+          # Bei Konflikten in generierten Dateien (HTML-Plots, PNGs, CSVs)
+          # behalten wir unsere frisch erzeugten Versionen.
+          git pull --rebase --autostash origin main || {
+            echo "Rebase conflict detected — keeping our freshly generated files..."
+            git diff --name-only --diff-filter=U | while read -r f; do
+              git checkout --theirs "$f" 2>/dev/null || git checkout --ours "$f" 2>/dev/null || true
+              git add "$f"
+            done
+            GIT_EDITOR=true git rebase --continue || true
+          }
           git push
