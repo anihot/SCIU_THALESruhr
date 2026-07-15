@@ -1,5 +1,6 @@
 library(plotly)
 library(htmlwidgets)
+library(htmltools)
 library(dplyr)
 library(readr)
 library(lubridate)
@@ -154,44 +155,49 @@ for (st in stations) {
     paper_bgcolor = "white"
   ) %>% config(displayModeBar = TRUE, scrollZoom = TRUE)
 
-  # Vor/Zurück-Buttons: verschieben das aktuelle Zeitfenster um dessen Breite
-  p <- p %>% htmlwidgets::onRender("
-    function(el, x) {
-      var gd = el;
-      var btnStyle = 'padding:4px 12px;margin:0 3px;cursor:pointer;border:1px solid #ccc;' +
-                     'border-radius:4px;background:#f8f8f8;font-size:13px;color:#333;';
-      var container = document.createElement('div');
-      container.style.cssText = 'text-align:center;margin:6px 0 2px 0;';
-      var btnPrev = document.createElement('button');
-      btnPrev.innerHTML = '&#9664; Zurück';
-      btnPrev.style.cssText = btnStyle;
-      var btnNext = document.createElement('button');
-      btnNext.innerHTML = 'Vor &#9654;';
-      btnNext.style.cssText = btnStyle;
-
-      function shiftRange(direction) {
-        var xRange = gd._fullLayout.xaxis.range;
-        var t0 = new Date(xRange[0]).getTime();
-        var t1 = new Date(xRange[1]).getTime();
-        var span = t1 - t0;
-        var newT0 = new Date(t0 + direction * span);
-        var newT1 = new Date(t1 + direction * span);
-        Plotly.relayout(gd, {'xaxis.range': [newT0.toISOString(), newT1.toISOString()]});
-      }
-
-      btnPrev.onclick = function() { shiftRange(-1); };
-      btnNext.onclick = function() { shiftRange(1); };
-      container.appendChild(btnPrev);
-      container.appendChild(btnNext);
-      gd.parentNode.insertBefore(container, gd.nextSibling);
-    }
-  ")
-
   out_name <- paste0(st$safe, "_full.html")
   out_path <- file.path(output_dir, out_name)
+
+  nav_js <- tags$script(HTML("
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        var gd = document.querySelector('.plotly.html-widget');
+        if (!gd) return;
+        var btnStyle = 'padding:6px 16px;margin:0 4px;cursor:pointer;border:1px solid #bbb;' +
+                       'border-radius:5px;background:#f4f4f4;font-size:14px;color:#333;';
+        var container = document.createElement('div');
+        container.style.cssText = 'text-align:center;margin:8px 0 4px 0;';
+        var btnPrev = document.createElement('button');
+        btnPrev.innerHTML = '\\u25C0 Zur\\u00FCck';
+        btnPrev.style.cssText = btnStyle;
+        var btnNext = document.createElement('button');
+        btnNext.innerHTML = 'Vor \\u25B6';
+        btnNext.style.cssText = btnStyle;
+        function shiftRange(dir) {
+          var r = gd._fullLayout.xaxis.range;
+          var t0 = new Date(r[0]).getTime(), t1 = new Date(r[1]).getTime();
+          var span = t1 - t0;
+          Plotly.relayout(gd, {'xaxis.range': [
+            new Date(t0 + dir * span).toISOString(),
+            new Date(t1 + dir * span).toISOString()
+          ]});
+        }
+        btnPrev.onclick = function() { shiftRange(-1); };
+        btnNext.onclick = function() { shiftRange(1); };
+        container.appendChild(btnPrev);
+        container.appendChild(btnNext);
+        gd.parentNode.insertBefore(container, gd.nextSibling);
+      }, 500);
+    });
+  "))
+  widget_with_nav <- tagList(p, nav_js)
+
   tryCatch(
-    saveWidget(p, file = out_path, selfcontained = TRUE),
-    error = function(e) saveWidget(p, file = out_path, selfcontained = FALSE)
+    save_html(widget_with_nav, file = out_path),
+    error = function(e) {
+      cat("  save_html failed, falling back to saveWidget:", conditionMessage(e), "\n")
+      saveWidget(p, file = out_path, selfcontained = FALSE)
+    }
   )
   file_copy(out_path, file.path(docs_dir, out_name), overwrite = TRUE)
   lib_dir <- paste0(tools::file_path_sans_ext(out_path), "_files")
