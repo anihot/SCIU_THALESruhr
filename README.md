@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 17.07. 05:00 bis 19.07. 04:00)*
+*(Zeitraum: 17.07. 11:00 bis 19.07. 10:00)*
 
-- Temperatur: **19.4°C** (Min: 16.4°C | Max: 30.1°C)
+- Temperatur: **24.6°C** (Min: 15.5°C | Max: 30°C)
 - Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **0.1 mm**
+- Max. 6h: **0.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-17 02:28:39 UTC*
+*Stand: 2026-07-17 08:11:33 UTC*
 
 ---
 
