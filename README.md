@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 17.07. 22:00 bis 19.07. 21:00)*
+*(Zeitraum: 18.07. 05:00 bis 20.07. 04:00)*
 
-- Temperatur: **23.7°C** (Min: 15.4°C | Max: 23.7°C)
-- Summe: **2.1 mm** | Max: **0.9 mm/h**
-- Max. 6h: **2.1 mm**
+- Temperatur: **17.6°C** (Min: 15°C | Max: 23.8°C)
+- Summe: **1.3 mm** | Max: **0.8 mm/h**
+- Max. 6h: **1.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-17 19:08:09 UTC*
+*Stand: 2026-07-18 02:12:22 UTC*
 
 ---
 
