@@ -65,6 +65,38 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
             level_final = ifelse(is_unrealistic, 0, level_final)
         )
 
+    # Fallback: compute level from distance when API level is NA.
+    # Uses rolling 7-day p90 of distance as dry-state baseline,
+    # then level = baseline - distance.
+    na_with_dist <- is.na(df$level_final) & !is.na(df$distance) & df$distance > 0
+    n_fallback <- sum(na_with_dist)
+    if (n_fallback > 0) {
+        cat("  Computing level from distance for", n_fallback, "rows with level=NA\n")
+        dist_vals <- df$distance
+        dist_vals[!na_with_dist & !is.na(df$level_final)] <- NA_real_
+        window_pts <- min(7L * 24L * 60L, sum(!is.na(dist_vals)))
+        if (window_pts >= 10) {
+            baseline <- zoo::rollapply(
+                dist_vals,
+                width = window_pts,
+                FUN = function(x) { x <- x[!is.na(x)]; if (length(x) < 3) NA else quantile(x, 0.90) },
+                fill = NA, align = "right"
+            )
+            early_na <- which(is.na(baseline) & na_with_dist)
+            for (i in early_na) {
+                prev <- dist_vals[seq_len(i)]
+                prev <- prev[!is.na(prev)]
+                if (length(prev) >= 3) baseline[i] <- quantile(prev, 0.90)
+            }
+            computed_level <- pmax(0, baseline - df$distance)
+            computed_level <- ifelse(computed_level > max_level, 0, computed_level)
+            df$level_final[na_with_dist & !is.na(baseline)] <-
+                computed_level[na_with_dist & !is.na(baseline)]
+            n_filled <- sum(!is.na(df$level_final[na_with_dist]))
+            cat("  Filled", n_filled, "of", n_fallback, "NA rows from distance baseline\n")
+        }
+    }
+
     if (any(df$is_unrealistic, na.rm = TRUE)) {
         num_unrealistic <- sum(df$is_unrealistic, na.rm = TRUE)
         cat("Note: Removed", num_unrealistic, "unrealistic data points (>",
