@@ -90,7 +90,7 @@ for (st in stations) {
       data = df_hourly, x = ~Zeit_Datum, y = ~(level_raw * y_scale),
       type = "scatter", mode = "lines",
       name = "Rohpegel",
-      line = list(color = "rgba(0,0,0,0.6)", width = 1, dash = "dot"),
+      line = list(color = "rgba(0,0,0,0.6)", width = 1),
       hovertemplate = paste0("Rohpegel: %{y:.2f} ", y_unit, "<extra></extra>")
     )
   }
