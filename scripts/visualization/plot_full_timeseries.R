@@ -61,9 +61,7 @@ for (st in stations) {
   if (nrow(df_hourly) == 0) next
 
   max_level  <- max(df_hourly$level, na.rm = TRUE)
-  max_raw    <- if (has_raw) max(df_hourly$level_raw, na.rm = TRUE) else max_level
-  max_any    <- max(max_level, max_raw, na.rm = TRUE)
-  is_bimodal <- !is.na(max_any) && max_any > 1.0
+  is_bimodal <- !is.na(max_level) && max_level > 1.0
   y_unit     <- if (is_bimodal) "m" else "cm"
   y_scale    <- if (is_bimodal) 1 else 100
   y_label    <- if (is_bimodal) "Wasserstand (m)" else "Pegel (cm)"
