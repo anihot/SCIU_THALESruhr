@@ -65,6 +65,9 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
             level_final = ifelse(is_unrealistic, 0, level_final)
         )
 
+    # Preserve raw API level before any filtering for plot overlay
+    df$level_raw <- ifelse(!is.na(df$level), df$level, NA_real_)
+
     # Fallback: compute level from distance when API level is NA.
     # Uses rolling 7-day p90 of distance as dry-state baseline,
     # then level = baseline - distance.
@@ -113,8 +116,11 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
                     if (length(prev) >= 3) baseline[i] <- quantile(prev, 0.90)
                 }
             }
-            computed_level <- pmax(0, baseline - df$distance)
-            computed_level <- ifelse(computed_level > max_level, 0, computed_level)
+            raw_computed <- pmax(0, baseline - df$distance)
+            # Store unfiltered computed level in level_raw for plot overlay
+            df$level_raw[na_with_dist & !is.na(baseline)] <-
+                raw_computed[na_with_dist & !is.na(baseline)]
+            computed_level <- ifelse(raw_computed > max_level, 0, raw_computed)
             df$level_final[na_with_dist & !is.na(baseline)] <-
                 computed_level[na_with_dist & !is.na(baseline)]
             n_filled <- sum(!is.na(df$level_final[na_with_dist]))
@@ -158,8 +164,9 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
             is_car = ifelse(!is.na(diff_prev) & diff_prev > threshold & !is.na(diff_next) & diff_next > threshold, TRUE, FALSE)
         ) %>%
         filter(!is_car) %>%
-        mutate(level = round(level_final, 3), distance = round(distance, 3)) %>%
-        select(Zeit_Datum = Timestamp, level, distance)
+        mutate(level = round(level_final, 3), distance = round(distance, 3),
+               level_raw = round(level_raw, 3)) %>%
+        select(Zeit_Datum = Timestamp, level, distance, level_raw)
 
     # Save cleaned data
     output_file <- path(output_dir, paste0(station_name, "_cleaned.csv"))
