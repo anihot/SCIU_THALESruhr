@@ -90,7 +90,7 @@ for (st in stations) {
       data = df_hourly, x = ~Zeit_Datum, y = ~(level_raw * y_scale),
       type = "scatter", mode = "lines",
       name = "Rohpegel",
-      line = list(color = "rgba(160,160,160,0.6)", width = 1, dash = "dot"),
+      line = list(color = "rgba(0,0,0,0.6)", width = 1, dash = "dot"),
       hovertemplate = paste0("Rohpegel: %{y:.2f} ", y_unit, "<extra></extra>")
     )
   }
@@ -145,7 +145,7 @@ for (st in stations) {
       ),
       rangeslider = list(visible = TRUE, thickness = 0.06)
     ),
-    yaxis  = list(title = y_label, gridcolor = "#eeeeee"),
+    yaxis  = list(title = y_label, gridcolor = "#eeeeee", rangemode = "tozero"),
     yaxis2 = list(title = "Niederschlag (mm/h)", overlaying = "y", side = "right",
                   showgrid = FALSE, zeroline = TRUE,
                   range = c(0, max_precip_range)),
