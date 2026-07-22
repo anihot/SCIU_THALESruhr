@@ -74,19 +74,44 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
         cat("  Computing level from distance for", n_fallback, "rows with level=NA\n")
         dist_vals <- df$distance
         dist_vals[!na_with_dist & !is.na(df$level_final)] <- NA_real_
-        window_pts <- min(7L * 24L * 60L, sum(!is.na(dist_vals)))
+
+        # Filter distance outliers before baseline computation.
+        # Some sensors (e.g. Wasserstraße) briefly switch measurement mode,
+        # producing distance values ~0.8m in a ~7.1m channel. These corrupt
+        # the baseline and create fake 6m+ level spikes.
+        d_valid <- dist_vals[!is.na(dist_vals)]
+        if (length(d_valid) >= 10) {
+            d_med <- median(d_valid)
+            d_iqr <- IQR(d_valid)
+            d_lower <- d_med - 3 * pmax(d_iqr, 0.01)
+            n_outlier <- sum(!is.na(dist_vals) & dist_vals < d_lower)
+            if (n_outlier > 0) {
+                cat("  Filtered", n_outlier, "distance outliers (<", round(d_lower, 3), "m)\n")
+                dist_vals[!is.na(dist_vals) & dist_vals < d_lower] <- NA_real_
+                na_with_dist <- na_with_dist & !is.na(dist_vals)
+            }
+        }
+
+        n_valid <- sum(!is.na(dist_vals))
+        window_pts <- min(7L * 24L * 60L, n_valid)
         if (window_pts >= 10) {
-            baseline <- zoo::rollapply(
-                dist_vals,
-                width = window_pts,
-                FUN = function(x) { x <- x[!is.na(x)]; if (length(x) < 3) NA else quantile(x, 0.90) },
-                fill = NA, align = "right"
-            )
-            early_na <- which(is.na(baseline) & na_with_dist)
-            for (i in early_na) {
-                prev <- dist_vals[seq_len(i)]
-                prev <- prev[!is.na(prev)]
-                if (length(prev) >= 3) baseline[i] <- quantile(prev, 0.90)
+            if (window_pts >= n_valid) {
+                # Window covers all data — single global baseline is sufficient
+                global_p90 <- quantile(dist_vals[!is.na(dist_vals)], 0.90)
+                baseline <- rep(global_p90, length(dist_vals))
+            } else {
+                baseline <- zoo::rollapply(
+                    dist_vals,
+                    width = window_pts,
+                    FUN = function(x) { x <- x[!is.na(x)]; if (length(x) < 3) NA else quantile(x, 0.90) },
+                    fill = NA, align = "right"
+                )
+                early_na <- which(is.na(baseline) & na_with_dist)
+                for (i in early_na) {
+                    prev <- dist_vals[seq_len(i)]
+                    prev <- prev[!is.na(prev)]
+                    if (length(prev) >= 3) baseline[i] <- quantile(prev, 0.90)
+                }
             }
             computed_level <- pmax(0, baseline - df$distance)
             computed_level <- ifelse(computed_level > max_level, 0, computed_level)
@@ -147,11 +172,8 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
 # Standard: 0.4 m (40 cm) für urbane Entwässerungssensoren.
 # Wasserstraße_Springorum: Sensor hängt an einer Brücke über einem tiefen
 # Kanal/Gewässer. Im Trockenzustand misst der Sensor ~7.16 m nach unten,
-# bei Überflutung fällt die Distance auf ~0.82 m → API-level ≈ 6.34 m.
-# Das ist physikalisch korrekt und darf NICHT als "unrealistisch" gefiltert
-# werden. Obergrenze auf 8 m gesetzt (sicher über dem beobachteten Maximum).
+# Station-specific max level overrides (default 0.4 m = 40 cm).
 STATION_MAX_LEVEL <- c(
-    "Wasserstraße_Springorum_merged_export" = 8.0
 )
 
 # Main Loop
