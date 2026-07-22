@@ -138,6 +138,9 @@ jobs:
           if [ -d "data/output/graphs" ]; then
             mkdir -p docs/graphs
             cp data/output/graphs/*.html docs/graphs/ 2>/dev/null || true
+            if [ -d "data/output/graphs/lib" ]; then
+              cp -r data/output/graphs/lib docs/graphs/ 2>/dev/null || true
+            fi
           fi
           if [ -d "data/output/event_plots" ]; then
             rm -rf docs/event_plots
@@ -167,6 +170,7 @@ jobs:
           git add data/output/plots/lag_*.png || true
           git add data/output/sensor_map.html || true
           git add data/output/graphs/*.html || true
+          git add data/output/graphs/lib/ || true
           git add data/output/event_plots/*.html || true
           git add data/output/all_detected_events.xlsx || true
           git add data/output/events_summary_table.md || true

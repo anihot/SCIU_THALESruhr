@@ -200,11 +200,25 @@ for (st in stations) {
     }
   )
   file_copy(out_path, file.path(docs_dir, out_name), overwrite = TRUE)
-  lib_dir <- paste0(tools::file_path_sans_ext(out_path), "_files")
-  if (dir_exists(lib_dir)) {
-    docs_lib <- file.path(docs_dir, basename(lib_dir))
-    if (dir_exists(docs_lib)) dir_delete(docs_lib)
-    dir_copy(lib_dir, docs_lib)
+
+  # save_html() puts dependencies in lib/ (not _files/), sync to docs
+  src_lib <- file.path(output_dir, "lib")
+  if (dir_exists(src_lib)) {
+    docs_lib <- file.path(docs_dir, "lib")
+    if (!dir_exists(docs_lib)) dir_create(docs_lib)
+    for (subdir in dir_ls(src_lib, type = "directory")) {
+      dest <- file.path(docs_lib, basename(subdir))
+      if (dir_exists(dest)) dir_delete(dest)
+      dir_copy(subdir, dest)
+    }
+  }
+
+  # fallback: saveWidget uses _files/ convention
+  files_dir <- paste0(tools::file_path_sans_ext(out_path), "_files")
+  if (dir_exists(files_dir)) {
+    docs_files <- file.path(docs_dir, basename(files_dir))
+    if (dir_exists(docs_files)) dir_delete(docs_files)
+    dir_copy(files_dir, docs_files)
   }
   cat("  ", st$name, "->", out_name, "(", nrow(df_hourly), "lvl,",
       if (has_precip) nrow(precip_hourly) else 0, "precip points)\n")

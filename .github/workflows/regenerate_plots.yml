@@ -58,6 +58,9 @@ jobs:
           if [ -d "data/output/graphs" ]; then
             mkdir -p docs/graphs
             cp data/output/graphs/*.html docs/graphs/ 2>/dev/null || true
+            if [ -d "data/output/graphs/lib" ]; then
+              cp -r data/output/graphs/lib docs/graphs/ 2>/dev/null || true
+            fi
           fi
 
       - name: Commit and push
