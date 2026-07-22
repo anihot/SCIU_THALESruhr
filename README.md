@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 22.07. 16:00 bis 24.07. 15:00)*
+*(Zeitraum: 22.07. 22:00 bis 24.07. 21:00)*
 
-- Temperatur: **20.8°C** (Min: 14.6°C | Max: 23.6°C)
-- Summe: **0.6 mm** | Max: **0.2 mm/h**
-- Max. 6h: **0.3 mm**
+- Temperatur: **17.1°C** (Min: 14.6°C | Max: 24.9°C)
+- Summe: **0.1 mm** | Max: **0.1 mm/h**
+- Max. 6h: **0.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-22 13:56:35 UTC*
+*Stand: 2026-07-22 19:22:11 UTC*
 
 ---
 
