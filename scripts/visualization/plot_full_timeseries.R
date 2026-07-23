@@ -143,7 +143,8 @@ for (st in stations) {
       ),
       rangeslider = list(visible = TRUE, thickness = 0.06)
     ),
-    yaxis  = list(title = y_label, gridcolor = "#eeeeee", rangemode = "tozero"),
+    yaxis  = list(title = y_label, gridcolor = "#eeeeee",
+                  range = c(0, max(df_hourly$level, na.rm = TRUE) * y_scale * 1.1)),
     yaxis2 = list(title = "Niederschlag (mm/h)", overlaying = "y", side = "right",
                   showgrid = FALSE, zeroline = TRUE,
                   range = c(0, max_precip_range)),
