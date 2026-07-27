@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 27.07. 05:00 bis 29.07. 04:00)*
+*(Zeitraum: 27.07. 12:00 bis 29.07. 11:00)*
 
-- Temperatur: **17.3°C** (Min: 14.4°C | Max: 30.1°C)
-- Summe: **5.3 mm** | Max: **3.7 mm/h**
-- Max. 6h: **4.3 mm**
+- Temperatur: **18.5°C** (Min: 14.6°C | Max: 30.5°C)
+- Summe: **1.6 mm** | Max: **0.7 mm/h**
+- Max. 6h: **1.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-27 02:46:39 UTC*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-07-27 09:57:50 UTC*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station     |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
+|An_der_Kost |2026-07-26 18:02:30 |           0.9|           44|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
 
 ---
 

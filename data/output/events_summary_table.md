@@ -4,7 +4,7 @@
 
 |station                 | Ereignisse| Ø_Peak_cm| Max_Peak_cm| Sturzflut_Anzahl| Regen_Anzahl| Verdächtig_Anzahl| Pegel_unzuverl|
 |:-----------------------|----------:|---------:|-----------:|----------------:|------------:|-----------------:|--------------:|
-|An_der_Kost             |         48|       0.4|         1.4|                0|            0|                 0|              0|
+|An_der_Kost             |         49|       0.4|         1.4|                0|            0|                 0|              0|
 |Wasserstraße_Springorum |         24|       3.1|         7.5|                1|            9|                 0|              0|
 |Königsallee_Springorum  |          7|       0.7|         0.9|                0|            0|                 0|              0|
 
@@ -33,4 +33,4 @@
 |Wasserstraße_Springorum |2025/12/04 11:03:00 |       1087.0|           1.2|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            0.57|               1.44|
 |Wasserstraße_Springorum |2026/06/26 05:44:00 |       1160.5|           1.1|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            9.30|              62.52|
 
-*Full log available in data/processed/detected_events.csv — 79 events total.*
+*Full log available in data/processed/detected_events.csv — 80 events total.*
