@@ -7,13 +7,13 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### ☀️ Wetterausblick (48h)
-**Kein nennenswerter Regen vorhergesagt.**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 28.07. 17:00 bis 30.07. 16:00)*
+*(Zeitraum: 28.07. 22:00 bis 30.07. 21:00)*
 
-- Temperatur: **29.2°C** (Min: 22.2°C | Max: 36.8°C)
-- Summe: **0.9 mm** | Max: **0.5 mm/h**
+- Temperatur: **25.9°C** (Min: 22.3°C | Max: 36.9°C)
+- Summe: **0.9 mm** | Max: **0.7 mm/h**
 - Max. 6h: **0.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-07-28 14:07:39 UTC*
+*Stand: 2026-07-28 19:27:40 UTC*
 
 ---
 
