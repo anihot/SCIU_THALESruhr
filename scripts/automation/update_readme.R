@@ -24,12 +24,12 @@ if (file_exists(events_file)) {
 }
 
 # 2. Filter for recent events (last 30 hours)
-current_time <- with_tz(Sys.time(), tzone = "UTC")
+current_time <- with_tz(Sys.time(), tzone = "Europe/Berlin")
 
 # Handle empty events list gracefully
 if (nrow(events) > 0) {
     events_recent <- events %>%
-        mutate(start_time = as.POSIXct(start_time, tz = "UTC")) %>%
+        mutate(start_time = with_tz(as.POSIXct(start_time, tz = "UTC"), "Europe/Berlin")) %>%
         filter(start_time > (current_time - hours(30))) %>%
         arrange(desc(start_time))
 } else {
@@ -40,7 +40,7 @@ if (nrow(events) > 0) {
 if (nrow(events_recent) > 0) {
     header_text <- paste0(
         "\n## 🔔 Aktuelle Ereignisse (Letzte 24-30h)\n",
-        "*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S UTC"), "*\n\n",
+        "*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S %Z"), "*\n\n",
         "Es wurden **", nrow(events_recent), "** neue potenzielle Ereignisse erkannt.\n\n"
     )
 
@@ -85,7 +85,7 @@ if (nrow(events_recent) > 0) {
 
     new_content <- paste0(header_text, event_table, "\n", plot_links, "\n---\n")
 } else {
-    new_content <- paste0("\n## ✅ Keine neuen Ereignisse in den letzten 24h\n*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S UTC"), "*\n\n---\n")
+    new_content <- paste0("\n## ✅ Keine neuen Ereignisse in den letzten 24h\n*Stand: ", format(current_time, "%Y-%m-%d %H:%M:%S %Z"), "*\n\n---\n")
 }
 
 # 3b. Weather Outlook (DWD-compliant criteria)

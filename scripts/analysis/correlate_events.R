@@ -18,8 +18,8 @@ if (!file.exists(events_file)) {
 #    from event_detection.R)
 events <- read_csv(events_file, show_col_types = FALSE) %>%
     mutate(
-        start_time = as.POSIXct(start_time),
-        end_time   = as.POSIXct(end_time)
+        start_time = as.POSIXct(start_time, tz = "UTC"),
+        end_time   = as.POSIXct(end_time, tz = "UTC")
     )
 
 cat("Loaded", nrow(events), "events from detection.\n")
@@ -58,17 +58,16 @@ if (nrow(correlation) > 0) {
     if (file_exists(historical_log)) {
         hist_orig <- read_csv(historical_log, show_col_types = FALSE) %>%
             mutate(
-                start_time = as.POSIXct(start_time),
-                end_time   = as.POSIXct(end_time),
-                peak_time  = as.POSIXct(peak_time)
+                start_time = as.POSIXct(start_time, tz = "UTC"),
+                end_time   = as.POSIXct(end_time, tz = "UTC"),
+                peak_time  = as.POSIXct(peak_time, tz = "UTC")
             )
 
-        # Zeitstempel-Typen angleichen (event_detection liefert ggf. character)
         correlation <- correlation %>%
             mutate(
-                start_time = as.POSIXct(start_time),
-                end_time   = as.POSIXct(end_time),
-                peak_time  = as.POSIXct(peak_time)
+                start_time = as.POSIXct(start_time, tz = "UTC"),
+                end_time   = as.POSIXct(end_time, tz = "UTC"),
+                peak_time  = as.POSIXct(peak_time, tz = "UTC")
             )
 
         new_entries <- correlation %>% anti_join(hist_orig, by = c("station", "start_time"))

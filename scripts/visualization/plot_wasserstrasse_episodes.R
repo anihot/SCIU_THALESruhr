@@ -10,12 +10,13 @@ if (!dir_exists(plots_dir)) dir_create(plots_dir, recurse = TRUE)
 
 # --- 1. Load data ---
 ws <- read_csv("data/processed/cleaned_analysis/Wasserstraße_Springorum_merged_export_cleaned.csv",
-               show_col_types = FALSE)
+               show_col_types = FALSE) %>%
+    mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
 
 precip <- read_csv("data/processed/precipitation_at_sensors.csv",
                    show_col_types = FALSE) %>%
     filter(grepl("Wasserstra", station, ignore.case = TRUE)) %>%
-    mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+    mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
 
 cat("Sensor data:", nrow(ws), "rows\n")
 cat("Precip data:", nrow(precip), "rows\n\n")

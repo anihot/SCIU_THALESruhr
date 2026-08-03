@@ -26,7 +26,7 @@ stations <- list(
 precip_all <- NULL
 if (file_exists(precip_file)) {
   precip_all <- read_csv(precip_file, show_col_types = FALSE) %>%
-    mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+    mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
 }
 
 cat("Generating full timeseries plots...\n")
@@ -42,7 +42,7 @@ for (st in stations) {
   if (nrow(df) == 0) next
 
   df <- df %>%
-    mutate(Zeit_Datum = as.POSIXct(Zeit_Datum, tz = "UTC")) %>%
+    mutate(Zeit_Datum = with_tz(as.POSIXct(Zeit_Datum, tz = "UTC"), "Europe/Berlin")) %>%
     filter(!is.na(Zeit_Datum))
 
   has_raw <- "level_raw" %in% names(df)
