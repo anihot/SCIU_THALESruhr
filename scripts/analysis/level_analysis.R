@@ -28,12 +28,7 @@ process_sensor_file <- function(file_path) {
         select(Timestamp, level, any_of("distance")) %>%
         mutate(Timestamp = as_datetime(Timestamp)) %>%
         arrange(Timestamp) %>%
-        mutate(
-            level_raw = level,
-            level = round(level, 3),
-            distance = if ("distance" %in% names(.)) round(distance, 3) else NA_real_,
-            level_raw = round(level_raw, 3)
-        ) %>%
+        mutate(level_raw = level) %>%
         select(Zeit_Datum = Timestamp, level, distance, level_raw)
 
     output_file <- path(output_dir, paste0(station_name, "_cleaned.csv"))
