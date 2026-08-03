@@ -48,14 +48,14 @@ for (st in stations) {
   has_raw <- "level_raw" %in% names(df)
 
   df_hourly <- df %>%
-    mutate(hour = floor_date(Zeit_Datum, "hour")) %>%
-    group_by(hour) %>%
+    mutate(bin = floor_date(Zeit_Datum, "10 minutes")) %>%
+    group_by(bin) %>%
     summarise(
-      level     = max(level, na.rm = TRUE),
-      level_raw = if (has_raw) max(level_raw, na.rm = TRUE) else NA_real_,
+      level     = mean(level, na.rm = TRUE),
+      level_raw = if (has_raw) mean(level_raw, na.rm = TRUE) else NA_real_,
       .groups   = "drop"
     ) %>%
-    rename(Zeit_Datum = hour) %>%
+    rename(Zeit_Datum = bin) %>%
     filter(!is.na(level))
 
   if (nrow(df_hourly) == 0) next
@@ -126,7 +126,7 @@ for (st in stations) {
     title = list(
       text = paste0("<b>", st$name, "</b> – Vollständige Zeitreihe (bereinigt)<br>",
                     "<span style='font-size:11px;color:#888;'>", date_range,
-                    " (Stundenmaximum, ", format(nrow(df_hourly), big.mark = " "), " Punkte)</span>"),
+                    " (10-min-Mittel, ", format(nrow(df_hourly), big.mark = " "), " Punkte)</span>"),
       font = list(size = 14), x = 0, y = 0.98
     ),
     xaxis = list(
