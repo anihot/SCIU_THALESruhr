@@ -55,7 +55,7 @@ for (f in files) {
             }
 
             if (nrow(data) > 0) {
-                latest_time <- max(as.POSIXct(data$Timestamp), na.rm = TRUE)
+                latest_time <- max(as_datetime(data$Timestamp), na.rm = TRUE)
                 diff_hours <- as.numeric(difftime(now(tzone = "UTC"), latest_time, units = "hours"))
 
                 status <- ifelse(diff_hours > HEALTH_THRESHOLD_HOURS, "Inactive", "Healthy")
