@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 03.08. 14:00 bis 05.08. 13:00)*
+*(Zeitraum: 03.08. 16:00 bis 05.08. 15:00)*
 
-- Temperatur: **33.7°C** (Min: 21.7°C | Max: 35.2°C)
-- Summe: **8.6 mm** | Max: **5.1 mm/h**
-- Max. 6h: **8.3 mm**
+- Temperatur: **34.8°C** (Min: 22°C | Max: 35.4°C)
+- Summe: **10.1 mm** | Max: **4.1 mm/h**
+- Max. 6h: **8.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-08-03 13:41:23 CEST*
+*Stand: 2026-08-03 15:05:00 CEST*
 
 ---
 
