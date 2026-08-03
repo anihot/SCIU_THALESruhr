@@ -58,7 +58,7 @@ precip_available <- FALSE
 if (file.exists(precip_file)) {
     precip_raw <- read_csv(precip_file, show_col_types = FALSE)
     if (nrow(precip_raw) > 0) {
-        precip           <- precip_raw %>% mutate(timestamp = as.POSIXct(timestamp))
+        precip           <- precip_raw %>% mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
         precip_available <- TRUE
         cat("Precipitation data loaded:", nrow(precip), "records.\n")
     } else {

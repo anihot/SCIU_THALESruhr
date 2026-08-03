@@ -6,27 +6,7 @@ on:
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  pause-gate:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
-    outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
-    steps:
-      - name: Check if pipeline pause has ended
-        id: check
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          elif [ "$(date -u +%Y%m%d)" -ge "20260801" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-            echo "⏸️ Pipeline paused until 2026-08-01"
-          fi
-
   fetch-data:
-    needs: pause-gate
-    if: needs.pause-gate.outputs.should_run == 'true'
     runs-on: ubuntu-24.04
     permissions:
       contents: write

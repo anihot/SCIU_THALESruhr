@@ -63,7 +63,8 @@ for (i in seq_len(nrow(sensors))) {
   if (length(matching_files) == 0) {
     p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Keine Datei gefunden"), font=list(size=11)))
   } else {
-    df <- read_csv(matching_files[1], show_col_types = FALSE)
+    df <- read_csv(matching_files[1], show_col_types = FALSE) %>%
+        mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
     if (nrow(df) == 0) {
       p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Datei leer"), font=list(size=11)))
     } else {
@@ -92,7 +93,7 @@ for (i in seq_len(nrow(sensors))) {
       )
       meas_time  <- format(latest_row$Zeit_Datum, "%d.%m. %H:%M")
 
-      now_time   <- now(tzone = tz(df$Zeit_Datum))
+      now_time   <- now(tzone = "Europe/Berlin")
       start_time <- now_time - days(7)
       df_48h <- df %>% filter(Zeit_Datum >= start_time)
 
@@ -105,7 +106,7 @@ for (i in seq_len(nrow(sensors))) {
       # 1) RADOLAN laden (gemessener Niederschlag)
       if (file_exists(precip_file)) {
           precip_df <- read_csv(precip_file, show_col_types = FALSE) %>%
-              mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+              mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
           if (nrow(precip_df) > 0) {
               radolan_station <- precip_df %>%
                   filter(station == station_name, timestamp >= start_time) %>%

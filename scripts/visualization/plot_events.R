@@ -19,11 +19,11 @@ cat("Generating event plots...\n")
 # 1. Events laden
 if (!file_exists(events_file)) stop("Events file not found: ", events_file)
 parse_event_time <- function(x) {
-    # CSV stores timestamps as "YYYY/MM/DD HH:MM:SS"; fall back to default parser if needed
-    out <- as.POSIXct(x, format = "%Y/%m/%d %H:%M:%S", tz = "")
+    # CSV stores timestamps as "YYYY/MM/DD HH:MM:SS" in UTC
+    out <- as.POSIXct(x, format = "%Y/%m/%d %H:%M:%S", tz = "UTC")
     bad <- is.na(out) & !is.na(x) & nzchar(x)
-    if (any(bad)) out[bad] <- as.POSIXct(x[bad])
-    out
+    if (any(bad)) out[bad] <- as.POSIXct(x[bad], tz = "UTC")
+    with_tz(out, "Europe/Berlin")
 }
 
 events <- read_csv(events_file, show_col_types = FALSE) %>%
@@ -43,7 +43,7 @@ if (nrow(events) == 0) {
 precip <- NULL
 if (file_exists(precip_file)) {
     precip <- read_csv(precip_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+        mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
     cat("RADOLAN data loaded:", nrow(precip), "records.\n")
 }
 
@@ -51,8 +51,8 @@ if (file_exists(precip_file)) {
 sensor_data <- list()
 cleaned_files <- dir_ls(cleaned_dir, glob = "*.csv")
 for (f in cleaned_files) {
-    df <- read_csv(f, show_col_types = FALSE)
-    # Stationsname aus Dateiname ableiten (z.B. "An_der_Kost_merged_export_cleaned.csv")
+    df <- read_csv(f, show_col_types = FALSE) %>%
+        mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
     station_key <- gsub("_merged_export_cleaned\\.csv$", "", basename(f))
     sensor_data[[station_key]] <- df
 }

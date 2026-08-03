@@ -21,7 +21,7 @@ precip_file <- "data/processed/precipitation_at_sensors.csv"
 # Load RADOLAN precipitation data
 if (file_exists(precip_file)) {
     precip_data <- read_csv(precip_file, show_col_types = FALSE) %>%
-        mutate(timestamp = as.POSIXct(timestamp))
+        mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
 } else {
     precip_data <- NULL
 }
@@ -47,7 +47,8 @@ for (file_path in cleaned_files) {
     cat("Plotting station:", station_name, "\n")
 
     # Load data
-    df <- read_csv(file_path, show_col_types = FALSE)
+    df <- read_csv(file_path, show_col_types = FALSE) %>%
+        mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
 
     if (nrow(df) == 0) {
         cat("Warning: No data to plot for", station_name, "\n")
@@ -55,7 +56,7 @@ for (file_path in cleaned_files) {
     }
 
     # Filter for the last 24 hours
-    current_time <- now(tzone = lubridate::tz(df$Zeit_Datum))
+    current_time <- now(tzone = "Europe/Berlin")
     start_time <- current_time - hours(24)
 
     df_24h <- df %>%
