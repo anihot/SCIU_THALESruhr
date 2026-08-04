@@ -55,7 +55,7 @@ if (file_exists(events_file)) {
         events <- read_csv(events_file, show_col_types = FALSE)
         if (nrow(events) > 0 && "start_time" %in% colnames(events)) {
             events_recent <- events %>%
-                mutate(start_time = as.POSIXct(start_time, tz = "UTC")) %>%
+                mutate(start_time = as_datetime(start_time, tz = "UTC")) %>%
                 filter(start_time >= now() - hours(24))
                 
             if (nrow(events_recent) > 0) {
