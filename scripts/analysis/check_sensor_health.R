@@ -38,26 +38,14 @@ for (f in files) {
         next
     }
 
-    # Read only the last few lines to find the latest timestamp
-    # (efficiency for large files)
     tryCatch(
         {
-            # Read the last 5 lines using tail command (system dependent but usually works on GH actions/Linux)
-            # Fallback to reading the whole file if tail fails or on Windows if not configured
-            if (.Platform$OS.type == "windows") {
-                data <- read_csv(f, show_col_types = FALSE)
-            } else {
-                # Unix-like (GitHub Actions)
-                data <- read_csv(pipe(paste0("tail -n 5 '", f, "'")), col_names = FALSE, show_col_types = FALSE)
-                # We need to manually assign column names since it's just tail
-                col_names <- names(read_csv(f, n_max = 0, show_col_types = FALSE))
-                names(data) <- col_names
-            }
+            last_line <- tail(readLines(f, warn = FALSE), 1)
+            ts_str <- sub('^"([^"]*)".*', '\\1', last_line)
+            latest_time <- as_datetime(ts_str)
 
-            if (nrow(data) > 0) {
-                latest_time <- max(as_datetime(data$Timestamp), na.rm = TRUE)
+            if (!is.na(latest_time)) {
                 diff_hours <- as.numeric(difftime(now(tzone = "UTC"), latest_time, units = "hours"))
-
                 status <- ifelse(diff_hours > HEALTH_THRESHOLD_HOURS, "Inactive", "Healthy")
 
                 health_data[[length(health_data) + 1]] <- tibble(
