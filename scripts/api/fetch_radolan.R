@@ -315,35 +315,71 @@ if (length(listing) > 0) {
 cat("RADOLAN YW processing complete.\n")
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# AGGREGATION: YW 5-min → stündliche Werte
-#   DWD RW (stündlich, stationsgeeicht) ist ab 2025 nicht mehr verfügbar.
-#   Daher aggregieren wir die YW 5-min-Daten zu Stundensummen.
-#   Vorteil: pro Sensor (nicht ein globaler Punkt wie Open-Meteo)
+# AGGREGATION: YW 5-min → stündliche Werte (dauerhaft)
+#   Stundendaten werden dauerhaft vorgehalten; 5-min-Daten nur 7 Tage.
+#   Neue 5-min-Daten werden inkrementell zu Stundenwerten aggregiert
+#   und an die bestehende Stundendatei angehängt.
 # ═══════════════════════════════════════════════════════════════════════════════
 
 cat("\n", strrep("=", 70), "\n")
-cat(" Aggregation: YW 5-min → stündlich (für Lag-Analyse)\n")
+cat(" Aggregation: YW 5-min → stündlich (dauerhaft) + Retention\n")
 cat(strrep("=", 70), "\n")
 
 if (file.exists(output_file_ry)) {
     ry_data <- read_csv(output_file_ry, show_col_types = FALSE)
-    if (nrow(ry_data) > 0) {
-        hourly_agg <- ry_data %>%
-            mutate(
-                timestamp = as.POSIXct(timestamp, tz = "UTC"),
-                hour      = floor_date(timestamp, "hour")
-            ) %>%
-            group_by(timestamp = hour, station) %>%
-            summarise(precipitation_mm = sum(precipitation_mm, na.rm = TRUE), .groups = "drop") %>%
-            arrange(timestamp, station)
 
-        write_csv(hourly_agg, output_file_rw)
-        cat("Aggregiert:", nrow(hourly_agg), "Stundenwerte aus", nrow(ry_data), "5-min-Werten.\n")
-    } else {
-        cat("Keine YW-Daten vorhanden. Stündliche Aggregation übersprungen.\n")
+    if (nrow(ry_data) > 0) {
+        ry_data <- ry_data %>%
+            mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+
+        existing_hourly <- tibble(timestamp = as.POSIXct(character(), tz = "UTC"),
+                                  station = character(), precipitation_mm = numeric())
+        cutoff_hour <- as.POSIXct(NA)
+
+        if (file.exists(output_file_rw)) {
+            existing_hourly <- read_csv(output_file_rw, show_col_types = FALSE) %>%
+                mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+            if (nrow(existing_hourly) > 0) {
+                cutoff_hour <- floor_date(max(existing_hourly$timestamp, na.rm = TRUE), "hour")
+                existing_hourly <- existing_hourly %>% filter(timestamp < cutoff_hour)
+            }
+        }
+
+        new_5min <- if (!is.na(cutoff_hour)) {
+            ry_data %>% filter(timestamp >= cutoff_hour)
+        } else {
+            ry_data
+        }
+
+        if (nrow(new_5min) > 0) {
+            new_hourly <- new_5min %>%
+                mutate(hour = floor_date(timestamp, "hour")) %>%
+                group_by(timestamp = hour, station) %>%
+                summarise(precipitation_mm = sum(precipitation_mm, na.rm = TRUE), .groups = "drop") %>%
+                arrange(timestamp, station)
+
+            all_hourly <- bind_rows(existing_hourly, new_hourly) %>%
+                arrange(timestamp, station)
+            write_csv(all_hourly, output_file_rw)
+            cat("Stündliche Daten aktualisiert:", nrow(all_hourly), "Zeilen",
+                "(", nrow(new_hourly), "neu).\n")
+        } else {
+            cat("Keine neuen 5-min-Daten zu aggregieren.\n")
+        }
+
+        # 5-min-Daten auf letzte 7 Tage trimmen
+        cutoff <- Sys.time() - days(7)
+        n_before <- nrow(ry_data)
+        ry_trimmed <- ry_data %>% filter(timestamp >= cutoff)
+        write_csv(ry_trimmed, output_file_ry)
+        n_removed <- n_before - nrow(ry_trimmed)
+        if (n_removed > 0) {
+            cat("Retention: 5-min-Daten getrimmt,", n_removed, "alte Zeilen entfernt (",
+                nrow(ry_trimmed), "behalten).\n")
+        }
     }
 } else {
-    cat("YW-Datei nicht gefunden. Stündliche Aggregation übersprungen.\n")
+    cat("YW-Datei nicht gefunden.\n")
 }
 
 cat("\nRADOLAN Fetcher finished.\n")
