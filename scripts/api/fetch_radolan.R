@@ -241,6 +241,77 @@ if (start_date_ry >= end_date) {
     }
 }
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# NEAR-REALTIME: Einzelne 5-min-Dateien vom DWD-Radar-Server
+#   Für den aktuellen Tag (und gestrigen falls Archiv noch nicht verfügbar):
+#     https://opendata.dwd.de/weather/radar/radolan/yw/
+#   Dateien: raa01-yw_10000-YYMMDDHHMM-dwd---bin.bz2
+#   Verfügbar ca. 30 Min nach Messzeit, letzte ~48h vorgehalten
+# ═══════════════════════════════════════════════════════════════════════════════
+
+cat("\n", strrep("=", 70), "\n")
+cat(" RADOLAN YW Near-Realtime – aktuelle Einzeldateien\n")
+cat(strrep("=", 70), "\n")
+
+if (file.exists(output_file_ry)) {
+    existing_rt <- read_csv(output_file_ry, show_col_types = FALSE)
+    if (nrow(existing_rt) > 0) {
+        last_ts_ry <- max(as.POSIXct(existing_rt$timestamp), na.rm = TRUE)
+    }
+}
+
+yw_rt_base <- "https://opendata.dwd.de/weather/radar/radolan/yw/"
+listing <- tryCatch(readLines(yw_rt_base, warn = FALSE), error = function(e) character(0))
+
+if (length(listing) > 0) {
+    bz2_names <- unique(unlist(regmatches(
+        listing, gregexpr("raa01-yw_10000-[0-9]{10}-dwd---bin\\.bz2", listing)
+    )))
+
+    file_ts <- as.POSIXct(
+        gsub(".*-([0-9]{10})-.*", "\\1", bz2_names),
+        format = "%y%m%d%H%M", tz = "UTC"
+    )
+
+    if (!is.na(last_ts_ry)) {
+        bz2_names <- bz2_names[!is.na(file_ts) & file_ts > last_ts_ry]
+    }
+
+    cat("Found", length(bz2_names), "new near-realtime files.\n")
+
+    if (length(bz2_names) > 0) {
+        ok_rt <- 0L
+        for (fname in bz2_names) {
+            bz2_path <- file.path(temp_dir, fname)
+            bin_path <- sub("\\.bz2$", "", bz2_path)
+
+            dl <- tryCatch(
+                download.file(paste0(yw_rt_base, fname), bz2_path, mode = "wb", quiet = TRUE),
+                error = function(e) -1L
+            )
+            if (dl != 0) next
+
+            decomp_ok <- tryCatch({
+                con <- bzfile(bz2_path, "rb")
+                raw <- readBin(con, what = "raw", n = 5e6)
+                close(con)
+                writeBin(raw, bin_path)
+                TRUE
+            }, error = function(e) FALSE)
+
+            if (decomp_ok && file.exists(bin_path)) {
+                res <- process_radolan_file(bin_path, output_file_ry, nodata_threshold = 100)
+                if (!is.null(res)) ok_rt <- ok_rt + 1L
+                file_delete(bin_path)
+            }
+            if (file.exists(bz2_path)) file_delete(bz2_path)
+        }
+        cat("Near-realtime: processed", ok_rt, "/", length(bz2_names), "files.\n")
+    }
+} else {
+    cat("Could not fetch near-realtime directory listing.\n")
+}
+
 cat("RADOLAN YW processing complete.\n")
 
 # ═══════════════════════════════════════════════════════════════════════════════
