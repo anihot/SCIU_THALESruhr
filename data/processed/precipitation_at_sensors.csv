@@ -1,19 +1,4 @@
 timestamp,station,precipitation_mm
-2026-07-29T08:20:00Z,An der Kost,0
-2026-07-29T08:20:00Z,Wasserstraße,0
-2026-07-29T08:20:00Z,Königsallee,0
-2026-07-29T08:20:00Z,Wasserbaulabor 2,0
-2026-07-29T08:20:00Z,Herzogstraße,0
-2026-07-29T08:25:00Z,An der Kost,0
-2026-07-29T08:25:00Z,Wasserstraße,0
-2026-07-29T08:25:00Z,Königsallee,0
-2026-07-29T08:25:00Z,Wasserbaulabor 2,0
-2026-07-29T08:25:00Z,Herzogstraße,0
-2026-07-29T08:30:00Z,An der Kost,0
-2026-07-29T08:30:00Z,Wasserstraße,0
-2026-07-29T08:30:00Z,Königsallee,0
-2026-07-29T08:30:00Z,Wasserbaulabor 2,0
-2026-07-29T08:30:00Z,Herzogstraße,0
 2026-07-29T08:35:00Z,An der Kost,0
 2026-07-29T08:35:00Z,Wasserstraße,0
 2026-07-29T08:35:00Z,Königsallee,0
@@ -10049,3 +10034,13 @@ timestamp,station,precipitation_mm
 2026-08-05T07:45:00Z,Königsallee,0
 2026-08-05T07:45:00Z,Wasserbaulabor 2,0
 2026-08-05T07:45:00Z,Herzogstraße,0
+2026-08-05T07:50:00Z,An der Kost,0
+2026-08-05T07:50:00Z,Wasserstraße,0
+2026-08-05T07:50:00Z,Königsallee,0
+2026-08-05T07:50:00Z,Wasserbaulabor 2,0
+2026-08-05T07:50:00Z,Herzogstraße,0
+2026-08-05T07:55:00Z,An der Kost,0
+2026-08-05T07:55:00Z,Wasserstraße,0
+2026-08-05T07:55:00Z,Königsallee,0
+2026-08-05T07:55:00Z,Wasserbaulabor 2,0
+2026-08-05T07:55:00Z,Herzogstraße,0
