@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 05.08. 22:00 bis 07.08. 21:00)*
+*(Zeitraum: 06.08. 05:00 bis 08.08. 04:00)*
 
-- Temperatur: **25.2°C** (Min: 15°C | Max: 25.4°C)
+- Temperatur: **19°C** (Min: 15.3°C | Max: 25.9°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-08-05 21:32:53 CEST*
+*Stand: 2026-08-06 04:13:55 CEST*
 
 ---
 
