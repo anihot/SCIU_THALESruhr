@@ -47,8 +47,14 @@ for (file_path in cleaned_files) {
     cat("Plotting station:", station_name, "\n")
 
     # Load data
-    df <- read_csv(file_path, show_col_types = FALSE) %>%
-        mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
+    df <- read_csv(file_path, show_col_types = FALSE)
+
+    if (!"Zeit_Datum" %in% names(df) || !"level" %in% names(df)) {
+        cat("Warning: Required columns missing in", file_path, "- skipping\n")
+        next
+    }
+
+    df <- df %>% mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
 
     if (nrow(df) == 0) {
         cat("Warning: No data to plot for", station_name, "\n")
