@@ -39,7 +39,10 @@ for (st in stations) {
   }
 
   df <- read_csv(csv_path, show_col_types = FALSE)
-  if (nrow(df) == 0) next
+  if (nrow(df) == 0 || !"Zeit_Datum" %in% names(df) || !"level" %in% names(df)) {
+    cat("  SKIP:", st$name, "- missing required columns or empty\n")
+    next
+  }
 
   df <- df %>%
     mutate(Zeit_Datum = with_tz(as.POSIXct(Zeit_Datum, tz = "UTC"), "Europe/Berlin")) %>%

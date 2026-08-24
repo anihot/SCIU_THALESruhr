@@ -63,8 +63,11 @@ for (i in seq_len(nrow(sensors))) {
   if (length(matching_files) == 0) {
     p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Keine Datei gefunden"), font=list(size=11)))
   } else {
-    df <- read_csv(matching_files[1], show_col_types = FALSE) %>%
-        mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
+    df <- read_csv(matching_files[1], show_col_types = FALSE)
+    if (!"Zeit_Datum" %in% names(df) || !"level" %in% names(df)) {
+      p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Spalten fehlen"), font=list(size=11)))
+    } else {
+    df <- df %>% mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
     if (nrow(df) == 0) {
       p <- plotly_empty() %>% layout(title = list(text = paste(station_label, "<br>Datei leer"), font=list(size=11)))
     } else {
@@ -260,8 +263,9 @@ for (i in seq_len(nrow(sensors))) {
           config(displayModeBar = TRUE, scrollZoom = TRUE)
       }
     }
+    }
   }
-  
+
   # Save the individual widget
   # Note: selfcontained = TRUE makes the iframe completely independent
   saveWidget(p, file = graph_html_path, selfcontained = TRUE)

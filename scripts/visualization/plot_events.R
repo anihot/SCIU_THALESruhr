@@ -51,8 +51,12 @@ if (file_exists(precip_file)) {
 sensor_data <- list()
 cleaned_files <- dir_ls(cleaned_dir, glob = "*.csv")
 for (f in cleaned_files) {
-    df <- read_csv(f, show_col_types = FALSE) %>%
-        mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
+    df <- read_csv(f, show_col_types = FALSE)
+    if (!"Zeit_Datum" %in% names(df) || !"level" %in% names(df)) {
+        cat("  SKIP:", basename(f), "- missing required columns\n")
+        next
+    }
+    df <- df %>% mutate(Zeit_Datum = with_tz(Zeit_Datum, "Europe/Berlin"))
     station_key <- gsub("_merged_export_cleaned\\.csv$", "", basename(f))
     sensor_data[[station_key]] <- df
 }
