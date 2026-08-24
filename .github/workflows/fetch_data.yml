@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -152,7 +150,6 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git lfs install
           git add data/raw/sensor_exports/*.csv || true
           git add data/processed/cleaned_analysis/*.csv || true
           git add data/output/plots/*.png || true
