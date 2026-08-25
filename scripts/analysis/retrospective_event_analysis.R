@@ -161,6 +161,11 @@ if (length(all_events) == 0) {
 events_df <- bind_rows(all_events) %>% arrange(start_time)
 cat("\nTotal events detected:", nrow(events_df), "\n")
 
+if (nrow(events_df) == 0) {
+    cat("No events with data rows. Exiting.\n")
+    quit(save = "no", status = 0)
+}
+
 # ── 2. RADOLAN-Niederschlagsdaten laden (gemessen, pro Sensor) ────────────────
 
 precip <- tibble(timestamp = as.POSIXct(character()), station = character(), precipitation_mm = numeric())
