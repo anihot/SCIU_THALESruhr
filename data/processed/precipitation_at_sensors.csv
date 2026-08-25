@@ -1,354 +1,4 @@
 timestamp,station,precipitation_mm
-2026-08-18T07:00:00Z,An der Kost,0.15
-2026-08-18T07:00:00Z,Wasserstraße,0.09
-2026-08-18T07:00:00Z,Königsallee,0.09
-2026-08-18T07:00:00Z,Wasserbaulabor 2,0.07
-2026-08-18T07:00:00Z,Herzogstraße,0.05
-2026-08-18T07:05:00Z,An der Kost,0.12
-2026-08-18T07:05:00Z,Wasserstraße,0.17
-2026-08-18T07:05:00Z,Königsallee,0.17
-2026-08-18T07:05:00Z,Wasserbaulabor 2,0.07
-2026-08-18T07:05:00Z,Herzogstraße,0.06
-2026-08-18T07:10:00Z,An der Kost,0.32
-2026-08-18T07:10:00Z,Wasserstraße,0.21
-2026-08-18T07:10:00Z,Königsallee,0.21
-2026-08-18T07:10:00Z,Wasserbaulabor 2,0.13
-2026-08-18T07:10:00Z,Herzogstraße,0.17
-2026-08-18T07:15:00Z,An der Kost,0.3
-2026-08-18T07:15:00Z,Wasserstraße,0.36
-2026-08-18T07:15:00Z,Königsallee,0.36
-2026-08-18T07:15:00Z,Wasserbaulabor 2,0.17
-2026-08-18T07:15:00Z,Herzogstraße,0.32
-2026-08-18T07:20:00Z,An der Kost,0.15
-2026-08-18T07:20:00Z,Wasserstraße,0.3
-2026-08-18T07:20:00Z,Königsallee,0.3
-2026-08-18T07:20:00Z,Wasserbaulabor 2,0.19
-2026-08-18T07:20:00Z,Herzogstraße,0.6
-2026-08-18T07:25:00Z,An der Kost,0.11
-2026-08-18T07:25:00Z,Wasserstraße,0.05
-2026-08-18T07:25:00Z,Königsallee,0.05
-2026-08-18T07:25:00Z,Wasserbaulabor 2,0.09
-2026-08-18T07:25:00Z,Herzogstraße,0.15
-2026-08-18T07:30:00Z,An der Kost,0.1
-2026-08-18T07:30:00Z,Wasserstraße,0.1
-2026-08-18T07:30:00Z,Königsallee,0.1
-2026-08-18T07:30:00Z,Wasserbaulabor 2,0.08
-2026-08-18T07:30:00Z,Herzogstraße,0.09
-2026-08-18T07:35:00Z,An der Kost,0.06
-2026-08-18T07:35:00Z,Wasserstraße,0.1
-2026-08-18T07:35:00Z,Königsallee,0.1
-2026-08-18T07:35:00Z,Wasserbaulabor 2,0.13
-2026-08-18T07:35:00Z,Herzogstraße,0.25
-2026-08-18T07:40:00Z,An der Kost,0.09
-2026-08-18T07:40:00Z,Wasserstraße,0.16
-2026-08-18T07:40:00Z,Königsallee,0.16
-2026-08-18T07:40:00Z,Wasserbaulabor 2,0.06
-2026-08-18T07:40:00Z,Herzogstraße,0.08
-2026-08-18T07:45:00Z,An der Kost,0.04
-2026-08-18T07:45:00Z,Wasserstraße,0.01
-2026-08-18T07:45:00Z,Königsallee,0.01
-2026-08-18T07:45:00Z,Wasserbaulabor 2,0.05
-2026-08-18T07:45:00Z,Herzogstraße,0.02
-2026-08-18T07:50:00Z,An der Kost,0
-2026-08-18T07:50:00Z,Wasserstraße,0
-2026-08-18T07:50:00Z,Königsallee,0
-2026-08-18T07:50:00Z,Wasserbaulabor 2,0.03
-2026-08-18T07:50:00Z,Herzogstraße,0
-2026-08-18T07:55:00Z,An der Kost,0
-2026-08-18T07:55:00Z,Wasserstraße,0
-2026-08-18T07:55:00Z,Königsallee,0
-2026-08-18T07:55:00Z,Wasserbaulabor 2,0
-2026-08-18T07:55:00Z,Herzogstraße,0
-2026-08-18T08:00:00Z,An der Kost,0
-2026-08-18T08:00:00Z,Wasserstraße,0
-2026-08-18T08:00:00Z,Königsallee,0
-2026-08-18T08:00:00Z,Wasserbaulabor 2,0
-2026-08-18T08:00:00Z,Herzogstraße,0
-2026-08-18T08:05:00Z,An der Kost,0
-2026-08-18T08:05:00Z,Wasserstraße,0
-2026-08-18T08:05:00Z,Königsallee,0
-2026-08-18T08:05:00Z,Wasserbaulabor 2,0
-2026-08-18T08:05:00Z,Herzogstraße,0
-2026-08-18T08:10:00Z,An der Kost,0
-2026-08-18T08:10:00Z,Wasserstraße,0
-2026-08-18T08:10:00Z,Königsallee,0
-2026-08-18T08:10:00Z,Wasserbaulabor 2,0
-2026-08-18T08:10:00Z,Herzogstraße,0
-2026-08-18T08:15:00Z,An der Kost,0
-2026-08-18T08:15:00Z,Wasserstraße,0
-2026-08-18T08:15:00Z,Königsallee,0
-2026-08-18T08:15:00Z,Wasserbaulabor 2,0
-2026-08-18T08:15:00Z,Herzogstraße,0
-2026-08-18T08:20:00Z,An der Kost,0
-2026-08-18T08:20:00Z,Wasserstraße,0
-2026-08-18T08:20:00Z,Königsallee,0
-2026-08-18T08:20:00Z,Wasserbaulabor 2,0
-2026-08-18T08:20:00Z,Herzogstraße,0
-2026-08-18T08:25:00Z,An der Kost,0
-2026-08-18T08:25:00Z,Wasserstraße,0.01
-2026-08-18T08:25:00Z,Königsallee,0.01
-2026-08-18T08:25:00Z,Wasserbaulabor 2,0
-2026-08-18T08:25:00Z,Herzogstraße,0
-2026-08-18T08:30:00Z,An der Kost,0
-2026-08-18T08:30:00Z,Wasserstraße,0.01
-2026-08-18T08:30:00Z,Königsallee,0.01
-2026-08-18T08:30:00Z,Wasserbaulabor 2,0.02
-2026-08-18T08:30:00Z,Herzogstraße,0.05
-2026-08-18T08:35:00Z,An der Kost,0.05
-2026-08-18T08:35:00Z,Wasserstraße,0.05
-2026-08-18T08:35:00Z,Königsallee,0.05
-2026-08-18T08:35:00Z,Wasserbaulabor 2,0.02
-2026-08-18T08:35:00Z,Herzogstraße,0.06
-2026-08-18T08:40:00Z,An der Kost,0.21
-2026-08-18T08:40:00Z,Wasserstraße,0.2
-2026-08-18T08:40:00Z,Königsallee,0.2
-2026-08-18T08:40:00Z,Wasserbaulabor 2,0.05
-2026-08-18T08:40:00Z,Herzogstraße,0.15
-2026-08-18T08:45:00Z,An der Kost,0.55
-2026-08-18T08:45:00Z,Wasserstraße,0.3
-2026-08-18T08:45:00Z,Königsallee,0.3
-2026-08-18T08:45:00Z,Wasserbaulabor 2,0.24
-2026-08-18T08:45:00Z,Herzogstraße,0.11
-2026-08-18T08:50:00Z,An der Kost,0.09
-2026-08-18T08:50:00Z,Wasserstraße,0.12
-2026-08-18T08:50:00Z,Königsallee,0.12
-2026-08-18T08:50:00Z,Wasserbaulabor 2,0.33
-2026-08-18T08:50:00Z,Herzogstraße,0.02
-2026-08-18T08:55:00Z,An der Kost,0.07
-2026-08-18T08:55:00Z,Wasserstraße,0
-2026-08-18T08:55:00Z,Königsallee,0
-2026-08-18T08:55:00Z,Wasserbaulabor 2,0.02
-2026-08-18T08:55:00Z,Herzogstraße,0
-2026-08-18T09:00:00Z,An der Kost,0.05
-2026-08-18T09:00:00Z,Wasserstraße,0.03
-2026-08-18T09:00:00Z,Königsallee,0.03
-2026-08-18T09:00:00Z,Wasserbaulabor 2,0.05
-2026-08-18T09:00:00Z,Herzogstraße,0.01
-2026-08-18T09:05:00Z,An der Kost,0.01
-2026-08-18T09:05:00Z,Wasserstraße,0
-2026-08-18T09:05:00Z,Königsallee,0
-2026-08-18T09:05:00Z,Wasserbaulabor 2,0.02
-2026-08-18T09:05:00Z,Herzogstraße,0.01
-2026-08-18T09:10:00Z,An der Kost,0.02
-2026-08-18T09:10:00Z,Wasserstraße,0.11
-2026-08-18T09:10:00Z,Königsallee,0.11
-2026-08-18T09:10:00Z,Wasserbaulabor 2,0.01
-2026-08-18T09:10:00Z,Herzogstraße,0.02
-2026-08-18T09:15:00Z,An der Kost,0.02
-2026-08-18T09:15:00Z,Wasserstraße,0
-2026-08-18T09:15:00Z,Königsallee,0
-2026-08-18T09:15:00Z,Wasserbaulabor 2,0.03
-2026-08-18T09:15:00Z,Herzogstraße,0
-2026-08-18T09:20:00Z,An der Kost,0
-2026-08-18T09:20:00Z,Wasserstraße,0.06
-2026-08-18T09:20:00Z,Königsallee,0.06
-2026-08-18T09:20:00Z,Wasserbaulabor 2,0.02
-2026-08-18T09:20:00Z,Herzogstraße,0.02
-2026-08-18T09:25:00Z,An der Kost,0.01
-2026-08-18T09:25:00Z,Wasserstraße,0.01
-2026-08-18T09:25:00Z,Königsallee,0.01
-2026-08-18T09:25:00Z,Wasserbaulabor 2,0
-2026-08-18T09:25:00Z,Herzogstraße,0.01
-2026-08-18T09:30:00Z,An der Kost,0
-2026-08-18T09:30:00Z,Wasserstraße,0
-2026-08-18T09:30:00Z,Königsallee,0
-2026-08-18T09:30:00Z,Wasserbaulabor 2,0.05
-2026-08-18T09:30:00Z,Herzogstraße,0
-2026-08-18T09:35:00Z,An der Kost,0
-2026-08-18T09:35:00Z,Wasserstraße,0
-2026-08-18T09:35:00Z,Königsallee,0
-2026-08-18T09:35:00Z,Wasserbaulabor 2,0
-2026-08-18T09:35:00Z,Herzogstraße,0
-2026-08-18T09:40:00Z,An der Kost,0
-2026-08-18T09:40:00Z,Wasserstraße,0
-2026-08-18T09:40:00Z,Königsallee,0
-2026-08-18T09:40:00Z,Wasserbaulabor 2,0
-2026-08-18T09:40:00Z,Herzogstraße,0
-2026-08-18T09:45:00Z,An der Kost,0
-2026-08-18T09:45:00Z,Wasserstraße,0.03
-2026-08-18T09:45:00Z,Königsallee,0.03
-2026-08-18T09:45:00Z,Wasserbaulabor 2,0
-2026-08-18T09:45:00Z,Herzogstraße,0
-2026-08-18T09:50:00Z,An der Kost,0
-2026-08-18T09:50:00Z,Wasserstraße,0
-2026-08-18T09:50:00Z,Königsallee,0
-2026-08-18T09:50:00Z,Wasserbaulabor 2,0
-2026-08-18T09:50:00Z,Herzogstraße,0
-2026-08-18T09:55:00Z,An der Kost,0
-2026-08-18T09:55:00Z,Wasserstraße,0
-2026-08-18T09:55:00Z,Königsallee,0
-2026-08-18T09:55:00Z,Wasserbaulabor 2,0
-2026-08-18T09:55:00Z,Herzogstraße,0
-2026-08-18T10:00:00Z,An der Kost,0
-2026-08-18T10:00:00Z,Wasserstraße,0
-2026-08-18T10:00:00Z,Königsallee,0
-2026-08-18T10:00:00Z,Wasserbaulabor 2,0
-2026-08-18T10:00:00Z,Herzogstraße,0
-2026-08-18T10:05:00Z,An der Kost,0
-2026-08-18T10:05:00Z,Wasserstraße,0
-2026-08-18T10:05:00Z,Königsallee,0
-2026-08-18T10:05:00Z,Wasserbaulabor 2,0
-2026-08-18T10:05:00Z,Herzogstraße,0
-2026-08-18T10:10:00Z,An der Kost,0
-2026-08-18T10:10:00Z,Wasserstraße,0
-2026-08-18T10:10:00Z,Königsallee,0
-2026-08-18T10:10:00Z,Wasserbaulabor 2,0
-2026-08-18T10:10:00Z,Herzogstraße,0
-2026-08-18T10:15:00Z,An der Kost,0
-2026-08-18T10:15:00Z,Wasserstraße,0
-2026-08-18T10:15:00Z,Königsallee,0
-2026-08-18T10:15:00Z,Wasserbaulabor 2,0
-2026-08-18T10:15:00Z,Herzogstraße,0
-2026-08-18T10:20:00Z,An der Kost,0
-2026-08-18T10:20:00Z,Wasserstraße,0
-2026-08-18T10:20:00Z,Königsallee,0
-2026-08-18T10:20:00Z,Wasserbaulabor 2,0
-2026-08-18T10:20:00Z,Herzogstraße,0
-2026-08-18T10:25:00Z,An der Kost,0
-2026-08-18T10:25:00Z,Wasserstraße,0
-2026-08-18T10:25:00Z,Königsallee,0
-2026-08-18T10:25:00Z,Wasserbaulabor 2,0
-2026-08-18T10:25:00Z,Herzogstraße,0
-2026-08-18T10:30:00Z,An der Kost,0
-2026-08-18T10:30:00Z,Wasserstraße,0
-2026-08-18T10:30:00Z,Königsallee,0
-2026-08-18T10:30:00Z,Wasserbaulabor 2,0
-2026-08-18T10:30:00Z,Herzogstraße,0
-2026-08-18T10:35:00Z,An der Kost,0
-2026-08-18T10:35:00Z,Wasserstraße,0
-2026-08-18T10:35:00Z,Königsallee,0
-2026-08-18T10:35:00Z,Wasserbaulabor 2,0
-2026-08-18T10:35:00Z,Herzogstraße,0
-2026-08-18T10:40:00Z,An der Kost,0
-2026-08-18T10:40:00Z,Wasserstraße,0
-2026-08-18T10:40:00Z,Königsallee,0
-2026-08-18T10:40:00Z,Wasserbaulabor 2,0
-2026-08-18T10:40:00Z,Herzogstraße,0
-2026-08-18T10:45:00Z,An der Kost,0
-2026-08-18T10:45:00Z,Wasserstraße,0
-2026-08-18T10:45:00Z,Königsallee,0
-2026-08-18T10:45:00Z,Wasserbaulabor 2,0
-2026-08-18T10:45:00Z,Herzogstraße,0
-2026-08-18T10:50:00Z,An der Kost,0
-2026-08-18T10:50:00Z,Wasserstraße,0
-2026-08-18T10:50:00Z,Königsallee,0
-2026-08-18T10:50:00Z,Wasserbaulabor 2,0
-2026-08-18T10:50:00Z,Herzogstraße,0
-2026-08-18T10:55:00Z,An der Kost,0
-2026-08-18T10:55:00Z,Wasserstraße,0
-2026-08-18T10:55:00Z,Königsallee,0
-2026-08-18T10:55:00Z,Wasserbaulabor 2,0
-2026-08-18T10:55:00Z,Herzogstraße,0
-2026-08-18T11:00:00Z,An der Kost,0
-2026-08-18T11:00:00Z,Wasserstraße,0
-2026-08-18T11:00:00Z,Königsallee,0
-2026-08-18T11:00:00Z,Wasserbaulabor 2,0
-2026-08-18T11:00:00Z,Herzogstraße,0
-2026-08-18T11:05:00Z,An der Kost,0
-2026-08-18T11:05:00Z,Wasserstraße,0
-2026-08-18T11:05:00Z,Königsallee,0
-2026-08-18T11:05:00Z,Wasserbaulabor 2,0
-2026-08-18T11:05:00Z,Herzogstraße,0
-2026-08-18T11:10:00Z,An der Kost,0
-2026-08-18T11:10:00Z,Wasserstraße,0
-2026-08-18T11:10:00Z,Königsallee,0
-2026-08-18T11:10:00Z,Wasserbaulabor 2,0
-2026-08-18T11:10:00Z,Herzogstraße,0
-2026-08-18T11:15:00Z,An der Kost,0
-2026-08-18T11:15:00Z,Wasserstraße,0
-2026-08-18T11:15:00Z,Königsallee,0
-2026-08-18T11:15:00Z,Wasserbaulabor 2,0
-2026-08-18T11:15:00Z,Herzogstraße,0
-2026-08-18T11:20:00Z,An der Kost,0
-2026-08-18T11:20:00Z,Wasserstraße,0
-2026-08-18T11:20:00Z,Königsallee,0
-2026-08-18T11:20:00Z,Wasserbaulabor 2,0
-2026-08-18T11:20:00Z,Herzogstraße,0
-2026-08-18T11:25:00Z,An der Kost,0
-2026-08-18T11:25:00Z,Wasserstraße,0
-2026-08-18T11:25:00Z,Königsallee,0
-2026-08-18T11:25:00Z,Wasserbaulabor 2,0
-2026-08-18T11:25:00Z,Herzogstraße,0
-2026-08-18T11:30:00Z,An der Kost,0
-2026-08-18T11:30:00Z,Wasserstraße,0
-2026-08-18T11:30:00Z,Königsallee,0
-2026-08-18T11:30:00Z,Wasserbaulabor 2,0
-2026-08-18T11:30:00Z,Herzogstraße,0
-2026-08-18T11:35:00Z,An der Kost,0
-2026-08-18T11:35:00Z,Wasserstraße,0
-2026-08-18T11:35:00Z,Königsallee,0
-2026-08-18T11:35:00Z,Wasserbaulabor 2,0
-2026-08-18T11:35:00Z,Herzogstraße,0
-2026-08-18T11:40:00Z,An der Kost,0
-2026-08-18T11:40:00Z,Wasserstraße,0
-2026-08-18T11:40:00Z,Königsallee,0
-2026-08-18T11:40:00Z,Wasserbaulabor 2,0
-2026-08-18T11:40:00Z,Herzogstraße,0
-2026-08-18T11:45:00Z,An der Kost,0
-2026-08-18T11:45:00Z,Wasserstraße,0
-2026-08-18T11:45:00Z,Königsallee,0
-2026-08-18T11:45:00Z,Wasserbaulabor 2,0
-2026-08-18T11:45:00Z,Herzogstraße,0
-2026-08-18T11:50:00Z,An der Kost,0
-2026-08-18T11:50:00Z,Wasserstraße,0
-2026-08-18T11:50:00Z,Königsallee,0
-2026-08-18T11:50:00Z,Wasserbaulabor 2,0
-2026-08-18T11:50:00Z,Herzogstraße,0
-2026-08-18T11:55:00Z,An der Kost,0
-2026-08-18T11:55:00Z,Wasserstraße,0
-2026-08-18T11:55:00Z,Königsallee,0
-2026-08-18T11:55:00Z,Wasserbaulabor 2,0
-2026-08-18T11:55:00Z,Herzogstraße,0
-2026-08-18T12:00:00Z,An der Kost,0
-2026-08-18T12:00:00Z,Wasserstraße,0
-2026-08-18T12:00:00Z,Königsallee,0
-2026-08-18T12:00:00Z,Wasserbaulabor 2,0
-2026-08-18T12:00:00Z,Herzogstraße,0
-2026-08-18T12:05:00Z,An der Kost,0
-2026-08-18T12:05:00Z,Wasserstraße,0
-2026-08-18T12:05:00Z,Königsallee,0
-2026-08-18T12:05:00Z,Wasserbaulabor 2,0
-2026-08-18T12:05:00Z,Herzogstraße,0
-2026-08-18T12:10:00Z,An der Kost,0
-2026-08-18T12:10:00Z,Wasserstraße,0
-2026-08-18T12:10:00Z,Königsallee,0
-2026-08-18T12:10:00Z,Wasserbaulabor 2,0
-2026-08-18T12:10:00Z,Herzogstraße,0
-2026-08-18T12:15:00Z,An der Kost,0
-2026-08-18T12:15:00Z,Wasserstraße,0
-2026-08-18T12:15:00Z,Königsallee,0
-2026-08-18T12:15:00Z,Wasserbaulabor 2,0
-2026-08-18T12:15:00Z,Herzogstraße,0
-2026-08-18T12:20:00Z,An der Kost,0
-2026-08-18T12:20:00Z,Wasserstraße,0
-2026-08-18T12:20:00Z,Königsallee,0
-2026-08-18T12:20:00Z,Wasserbaulabor 2,0
-2026-08-18T12:20:00Z,Herzogstraße,0
-2026-08-18T12:25:00Z,An der Kost,0
-2026-08-18T12:25:00Z,Wasserstraße,0
-2026-08-18T12:25:00Z,Königsallee,0
-2026-08-18T12:25:00Z,Wasserbaulabor 2,0
-2026-08-18T12:25:00Z,Herzogstraße,0
-2026-08-18T12:30:00Z,An der Kost,0
-2026-08-18T12:30:00Z,Wasserstraße,0
-2026-08-18T12:30:00Z,Königsallee,0
-2026-08-18T12:30:00Z,Wasserbaulabor 2,0
-2026-08-18T12:30:00Z,Herzogstraße,0
-2026-08-18T12:35:00Z,An der Kost,0
-2026-08-18T12:35:00Z,Wasserstraße,0
-2026-08-18T12:35:00Z,Königsallee,0
-2026-08-18T12:35:00Z,Wasserbaulabor 2,0
-2026-08-18T12:35:00Z,Herzogstraße,0
-2026-08-18T12:40:00Z,An der Kost,0
-2026-08-18T12:40:00Z,Wasserstraße,0
-2026-08-18T12:40:00Z,Königsallee,0
-2026-08-18T12:40:00Z,Wasserbaulabor 2,0
-2026-08-18T12:40:00Z,Herzogstraße,0
-2026-08-18T12:45:00Z,An der Kost,0
-2026-08-18T12:45:00Z,Wasserstraße,0
-2026-08-18T12:45:00Z,Königsallee,0
-2026-08-18T12:45:00Z,Wasserbaulabor 2,0
-2026-08-18T12:45:00Z,Herzogstraße,0
 2026-08-18T12:50:00Z,An der Kost,0
 2026-08-18T12:50:00Z,Wasserstraße,0
 2026-08-18T12:50:00Z,Königsallee,0
@@ -10039,3 +9689,353 @@ timestamp,station,precipitation_mm
 2026-08-25T06:15:00Z,Königsallee,0
 2026-08-25T06:15:00Z,Wasserbaulabor 2,0
 2026-08-25T06:15:00Z,Herzogstraße,0
+2026-08-25T06:20:00Z,An der Kost,0
+2026-08-25T06:20:00Z,Wasserstraße,0
+2026-08-25T06:20:00Z,Königsallee,0
+2026-08-25T06:20:00Z,Wasserbaulabor 2,0
+2026-08-25T06:20:00Z,Herzogstraße,0
+2026-08-25T06:25:00Z,An der Kost,0
+2026-08-25T06:25:00Z,Wasserstraße,0
+2026-08-25T06:25:00Z,Königsallee,0
+2026-08-25T06:25:00Z,Wasserbaulabor 2,0
+2026-08-25T06:25:00Z,Herzogstraße,0
+2026-08-25T06:30:00Z,An der Kost,0
+2026-08-25T06:30:00Z,Wasserstraße,0
+2026-08-25T06:30:00Z,Königsallee,0
+2026-08-25T06:30:00Z,Wasserbaulabor 2,0
+2026-08-25T06:30:00Z,Herzogstraße,0
+2026-08-25T06:35:00Z,An der Kost,0
+2026-08-25T06:35:00Z,Wasserstraße,0
+2026-08-25T06:35:00Z,Königsallee,0
+2026-08-25T06:35:00Z,Wasserbaulabor 2,0
+2026-08-25T06:35:00Z,Herzogstraße,0
+2026-08-25T06:40:00Z,An der Kost,0
+2026-08-25T06:40:00Z,Wasserstraße,0
+2026-08-25T06:40:00Z,Königsallee,0
+2026-08-25T06:40:00Z,Wasserbaulabor 2,0
+2026-08-25T06:40:00Z,Herzogstraße,0
+2026-08-25T06:45:00Z,An der Kost,0
+2026-08-25T06:45:00Z,Wasserstraße,0
+2026-08-25T06:45:00Z,Königsallee,0
+2026-08-25T06:45:00Z,Wasserbaulabor 2,0
+2026-08-25T06:45:00Z,Herzogstraße,0
+2026-08-25T06:50:00Z,An der Kost,0
+2026-08-25T06:50:00Z,Wasserstraße,0
+2026-08-25T06:50:00Z,Königsallee,0
+2026-08-25T06:50:00Z,Wasserbaulabor 2,0
+2026-08-25T06:50:00Z,Herzogstraße,0
+2026-08-25T06:55:00Z,An der Kost,0
+2026-08-25T06:55:00Z,Wasserstraße,0
+2026-08-25T06:55:00Z,Königsallee,0
+2026-08-25T06:55:00Z,Wasserbaulabor 2,0
+2026-08-25T06:55:00Z,Herzogstraße,0
+2026-08-25T07:00:00Z,An der Kost,0
+2026-08-25T07:00:00Z,Wasserstraße,0
+2026-08-25T07:00:00Z,Königsallee,0
+2026-08-25T07:00:00Z,Wasserbaulabor 2,0
+2026-08-25T07:00:00Z,Herzogstraße,0
+2026-08-25T07:05:00Z,An der Kost,0
+2026-08-25T07:05:00Z,Wasserstraße,0
+2026-08-25T07:05:00Z,Königsallee,0
+2026-08-25T07:05:00Z,Wasserbaulabor 2,0
+2026-08-25T07:05:00Z,Herzogstraße,0
+2026-08-25T07:10:00Z,An der Kost,0
+2026-08-25T07:10:00Z,Wasserstraße,0
+2026-08-25T07:10:00Z,Königsallee,0
+2026-08-25T07:10:00Z,Wasserbaulabor 2,0
+2026-08-25T07:10:00Z,Herzogstraße,0
+2026-08-25T07:15:00Z,An der Kost,0
+2026-08-25T07:15:00Z,Wasserstraße,0
+2026-08-25T07:15:00Z,Königsallee,0
+2026-08-25T07:15:00Z,Wasserbaulabor 2,0
+2026-08-25T07:15:00Z,Herzogstraße,0
+2026-08-25T07:20:00Z,An der Kost,0
+2026-08-25T07:20:00Z,Wasserstraße,0
+2026-08-25T07:20:00Z,Königsallee,0
+2026-08-25T07:20:00Z,Wasserbaulabor 2,0
+2026-08-25T07:20:00Z,Herzogstraße,0
+2026-08-25T07:25:00Z,An der Kost,0
+2026-08-25T07:25:00Z,Wasserstraße,0
+2026-08-25T07:25:00Z,Königsallee,0
+2026-08-25T07:25:00Z,Wasserbaulabor 2,0
+2026-08-25T07:25:00Z,Herzogstraße,0
+2026-08-25T07:30:00Z,An der Kost,0
+2026-08-25T07:30:00Z,Wasserstraße,0
+2026-08-25T07:30:00Z,Königsallee,0
+2026-08-25T07:30:00Z,Wasserbaulabor 2,0
+2026-08-25T07:30:00Z,Herzogstraße,0
+2026-08-25T07:35:00Z,An der Kost,0
+2026-08-25T07:35:00Z,Wasserstraße,0
+2026-08-25T07:35:00Z,Königsallee,0
+2026-08-25T07:35:00Z,Wasserbaulabor 2,0
+2026-08-25T07:35:00Z,Herzogstraße,0
+2026-08-25T07:40:00Z,An der Kost,0
+2026-08-25T07:40:00Z,Wasserstraße,0
+2026-08-25T07:40:00Z,Königsallee,0
+2026-08-25T07:40:00Z,Wasserbaulabor 2,0
+2026-08-25T07:40:00Z,Herzogstraße,0
+2026-08-25T07:45:00Z,An der Kost,0
+2026-08-25T07:45:00Z,Wasserstraße,0
+2026-08-25T07:45:00Z,Königsallee,0
+2026-08-25T07:45:00Z,Wasserbaulabor 2,0
+2026-08-25T07:45:00Z,Herzogstraße,0
+2026-08-25T07:50:00Z,An der Kost,0
+2026-08-25T07:50:00Z,Wasserstraße,0
+2026-08-25T07:50:00Z,Königsallee,0
+2026-08-25T07:50:00Z,Wasserbaulabor 2,0
+2026-08-25T07:50:00Z,Herzogstraße,0
+2026-08-25T07:55:00Z,An der Kost,0
+2026-08-25T07:55:00Z,Wasserstraße,0
+2026-08-25T07:55:00Z,Königsallee,0
+2026-08-25T07:55:00Z,Wasserbaulabor 2,0
+2026-08-25T07:55:00Z,Herzogstraße,0
+2026-08-25T08:00:00Z,An der Kost,0
+2026-08-25T08:00:00Z,Wasserstraße,0
+2026-08-25T08:00:00Z,Königsallee,0
+2026-08-25T08:00:00Z,Wasserbaulabor 2,0
+2026-08-25T08:00:00Z,Herzogstraße,0
+2026-08-25T08:05:00Z,An der Kost,0
+2026-08-25T08:05:00Z,Wasserstraße,0
+2026-08-25T08:05:00Z,Königsallee,0
+2026-08-25T08:05:00Z,Wasserbaulabor 2,0
+2026-08-25T08:05:00Z,Herzogstraße,0
+2026-08-25T08:10:00Z,An der Kost,0
+2026-08-25T08:10:00Z,Wasserstraße,0
+2026-08-25T08:10:00Z,Königsallee,0
+2026-08-25T08:10:00Z,Wasserbaulabor 2,0
+2026-08-25T08:10:00Z,Herzogstraße,0
+2026-08-25T08:15:00Z,An der Kost,0
+2026-08-25T08:15:00Z,Wasserstraße,0
+2026-08-25T08:15:00Z,Königsallee,0
+2026-08-25T08:15:00Z,Wasserbaulabor 2,0
+2026-08-25T08:15:00Z,Herzogstraße,0
+2026-08-25T08:20:00Z,An der Kost,0
+2026-08-25T08:20:00Z,Wasserstraße,0
+2026-08-25T08:20:00Z,Königsallee,0
+2026-08-25T08:20:00Z,Wasserbaulabor 2,0
+2026-08-25T08:20:00Z,Herzogstraße,0
+2026-08-25T08:25:00Z,An der Kost,0
+2026-08-25T08:25:00Z,Wasserstraße,0
+2026-08-25T08:25:00Z,Königsallee,0
+2026-08-25T08:25:00Z,Wasserbaulabor 2,0
+2026-08-25T08:25:00Z,Herzogstraße,0
+2026-08-25T08:30:00Z,An der Kost,0
+2026-08-25T08:30:00Z,Wasserstraße,0
+2026-08-25T08:30:00Z,Königsallee,0
+2026-08-25T08:30:00Z,Wasserbaulabor 2,0
+2026-08-25T08:30:00Z,Herzogstraße,0
+2026-08-25T08:35:00Z,An der Kost,0
+2026-08-25T08:35:00Z,Wasserstraße,0
+2026-08-25T08:35:00Z,Königsallee,0
+2026-08-25T08:35:00Z,Wasserbaulabor 2,0
+2026-08-25T08:35:00Z,Herzogstraße,0
+2026-08-25T08:40:00Z,An der Kost,0
+2026-08-25T08:40:00Z,Wasserstraße,0
+2026-08-25T08:40:00Z,Königsallee,0
+2026-08-25T08:40:00Z,Wasserbaulabor 2,0
+2026-08-25T08:40:00Z,Herzogstraße,0
+2026-08-25T08:45:00Z,An der Kost,0
+2026-08-25T08:45:00Z,Wasserstraße,0
+2026-08-25T08:45:00Z,Königsallee,0
+2026-08-25T08:45:00Z,Wasserbaulabor 2,0
+2026-08-25T08:45:00Z,Herzogstraße,0
+2026-08-25T08:50:00Z,An der Kost,0
+2026-08-25T08:50:00Z,Wasserstraße,0
+2026-08-25T08:50:00Z,Königsallee,0
+2026-08-25T08:50:00Z,Wasserbaulabor 2,0
+2026-08-25T08:50:00Z,Herzogstraße,0
+2026-08-25T08:55:00Z,An der Kost,0
+2026-08-25T08:55:00Z,Wasserstraße,0
+2026-08-25T08:55:00Z,Königsallee,0
+2026-08-25T08:55:00Z,Wasserbaulabor 2,0
+2026-08-25T08:55:00Z,Herzogstraße,0
+2026-08-25T09:00:00Z,An der Kost,0
+2026-08-25T09:00:00Z,Wasserstraße,0
+2026-08-25T09:00:00Z,Königsallee,0
+2026-08-25T09:00:00Z,Wasserbaulabor 2,0
+2026-08-25T09:00:00Z,Herzogstraße,0
+2026-08-25T09:05:00Z,An der Kost,0
+2026-08-25T09:05:00Z,Wasserstraße,0
+2026-08-25T09:05:00Z,Königsallee,0
+2026-08-25T09:05:00Z,Wasserbaulabor 2,0
+2026-08-25T09:05:00Z,Herzogstraße,0
+2026-08-25T09:10:00Z,An der Kost,0
+2026-08-25T09:10:00Z,Wasserstraße,0
+2026-08-25T09:10:00Z,Königsallee,0
+2026-08-25T09:10:00Z,Wasserbaulabor 2,0
+2026-08-25T09:10:00Z,Herzogstraße,0
+2026-08-25T09:15:00Z,An der Kost,0
+2026-08-25T09:15:00Z,Wasserstraße,0
+2026-08-25T09:15:00Z,Königsallee,0
+2026-08-25T09:15:00Z,Wasserbaulabor 2,0
+2026-08-25T09:15:00Z,Herzogstraße,0
+2026-08-25T09:20:00Z,An der Kost,0
+2026-08-25T09:20:00Z,Wasserstraße,0
+2026-08-25T09:20:00Z,Königsallee,0
+2026-08-25T09:20:00Z,Wasserbaulabor 2,0
+2026-08-25T09:20:00Z,Herzogstraße,0
+2026-08-25T09:25:00Z,An der Kost,0
+2026-08-25T09:25:00Z,Wasserstraße,0
+2026-08-25T09:25:00Z,Königsallee,0
+2026-08-25T09:25:00Z,Wasserbaulabor 2,0
+2026-08-25T09:25:00Z,Herzogstraße,0
+2026-08-25T09:30:00Z,An der Kost,0
+2026-08-25T09:30:00Z,Wasserstraße,0
+2026-08-25T09:30:00Z,Königsallee,0
+2026-08-25T09:30:00Z,Wasserbaulabor 2,0
+2026-08-25T09:30:00Z,Herzogstraße,0
+2026-08-25T09:35:00Z,An der Kost,0
+2026-08-25T09:35:00Z,Wasserstraße,0
+2026-08-25T09:35:00Z,Königsallee,0
+2026-08-25T09:35:00Z,Wasserbaulabor 2,0
+2026-08-25T09:35:00Z,Herzogstraße,0
+2026-08-25T09:40:00Z,An der Kost,0
+2026-08-25T09:40:00Z,Wasserstraße,0
+2026-08-25T09:40:00Z,Königsallee,0
+2026-08-25T09:40:00Z,Wasserbaulabor 2,0
+2026-08-25T09:40:00Z,Herzogstraße,0
+2026-08-25T09:45:00Z,An der Kost,0
+2026-08-25T09:45:00Z,Wasserstraße,0
+2026-08-25T09:45:00Z,Königsallee,0
+2026-08-25T09:45:00Z,Wasserbaulabor 2,0
+2026-08-25T09:45:00Z,Herzogstraße,0
+2026-08-25T09:50:00Z,An der Kost,0
+2026-08-25T09:50:00Z,Wasserstraße,0
+2026-08-25T09:50:00Z,Königsallee,0
+2026-08-25T09:50:00Z,Wasserbaulabor 2,0
+2026-08-25T09:50:00Z,Herzogstraße,0
+2026-08-25T09:55:00Z,An der Kost,0
+2026-08-25T09:55:00Z,Wasserstraße,0
+2026-08-25T09:55:00Z,Königsallee,0
+2026-08-25T09:55:00Z,Wasserbaulabor 2,0
+2026-08-25T09:55:00Z,Herzogstraße,0
+2026-08-25T10:00:00Z,An der Kost,0
+2026-08-25T10:00:00Z,Wasserstraße,0
+2026-08-25T10:00:00Z,Königsallee,0
+2026-08-25T10:00:00Z,Wasserbaulabor 2,0
+2026-08-25T10:00:00Z,Herzogstraße,0
+2026-08-25T10:05:00Z,An der Kost,0
+2026-08-25T10:05:00Z,Wasserstraße,0
+2026-08-25T10:05:00Z,Königsallee,0
+2026-08-25T10:05:00Z,Wasserbaulabor 2,0
+2026-08-25T10:05:00Z,Herzogstraße,0
+2026-08-25T10:10:00Z,An der Kost,0
+2026-08-25T10:10:00Z,Wasserstraße,0
+2026-08-25T10:10:00Z,Königsallee,0
+2026-08-25T10:10:00Z,Wasserbaulabor 2,0
+2026-08-25T10:10:00Z,Herzogstraße,0
+2026-08-25T10:15:00Z,An der Kost,0
+2026-08-25T10:15:00Z,Wasserstraße,0
+2026-08-25T10:15:00Z,Königsallee,0
+2026-08-25T10:15:00Z,Wasserbaulabor 2,0
+2026-08-25T10:15:00Z,Herzogstraße,0
+2026-08-25T10:20:00Z,An der Kost,0
+2026-08-25T10:20:00Z,Wasserstraße,0
+2026-08-25T10:20:00Z,Königsallee,0
+2026-08-25T10:20:00Z,Wasserbaulabor 2,0
+2026-08-25T10:20:00Z,Herzogstraße,0
+2026-08-25T10:25:00Z,An der Kost,0
+2026-08-25T10:25:00Z,Wasserstraße,0
+2026-08-25T10:25:00Z,Königsallee,0
+2026-08-25T10:25:00Z,Wasserbaulabor 2,0
+2026-08-25T10:25:00Z,Herzogstraße,0
+2026-08-25T10:30:00Z,An der Kost,0
+2026-08-25T10:30:00Z,Wasserstraße,0
+2026-08-25T10:30:00Z,Königsallee,0
+2026-08-25T10:30:00Z,Wasserbaulabor 2,0
+2026-08-25T10:30:00Z,Herzogstraße,0
+2026-08-25T10:35:00Z,An der Kost,0
+2026-08-25T10:35:00Z,Wasserstraße,0
+2026-08-25T10:35:00Z,Königsallee,0
+2026-08-25T10:35:00Z,Wasserbaulabor 2,0
+2026-08-25T10:35:00Z,Herzogstraße,0
+2026-08-25T10:40:00Z,An der Kost,0
+2026-08-25T10:40:00Z,Wasserstraße,0
+2026-08-25T10:40:00Z,Königsallee,0
+2026-08-25T10:40:00Z,Wasserbaulabor 2,0
+2026-08-25T10:40:00Z,Herzogstraße,0
+2026-08-25T10:45:00Z,An der Kost,0
+2026-08-25T10:45:00Z,Wasserstraße,0
+2026-08-25T10:45:00Z,Königsallee,0
+2026-08-25T10:45:00Z,Wasserbaulabor 2,0
+2026-08-25T10:45:00Z,Herzogstraße,0
+2026-08-25T10:50:00Z,An der Kost,0
+2026-08-25T10:50:00Z,Wasserstraße,0
+2026-08-25T10:50:00Z,Königsallee,0
+2026-08-25T10:50:00Z,Wasserbaulabor 2,0
+2026-08-25T10:50:00Z,Herzogstraße,0
+2026-08-25T10:55:00Z,An der Kost,0
+2026-08-25T10:55:00Z,Wasserstraße,0
+2026-08-25T10:55:00Z,Königsallee,0
+2026-08-25T10:55:00Z,Wasserbaulabor 2,0
+2026-08-25T10:55:00Z,Herzogstraße,0
+2026-08-25T11:00:00Z,An der Kost,0
+2026-08-25T11:00:00Z,Wasserstraße,0
+2026-08-25T11:00:00Z,Königsallee,0
+2026-08-25T11:00:00Z,Wasserbaulabor 2,0
+2026-08-25T11:00:00Z,Herzogstraße,0
+2026-08-25T11:05:00Z,An der Kost,0
+2026-08-25T11:05:00Z,Wasserstraße,0
+2026-08-25T11:05:00Z,Königsallee,0
+2026-08-25T11:05:00Z,Wasserbaulabor 2,0
+2026-08-25T11:05:00Z,Herzogstraße,0
+2026-08-25T11:10:00Z,An der Kost,0
+2026-08-25T11:10:00Z,Wasserstraße,0
+2026-08-25T11:10:00Z,Königsallee,0
+2026-08-25T11:10:00Z,Wasserbaulabor 2,0
+2026-08-25T11:10:00Z,Herzogstraße,0
+2026-08-25T11:15:00Z,An der Kost,0
+2026-08-25T11:15:00Z,Wasserstraße,0
+2026-08-25T11:15:00Z,Königsallee,0
+2026-08-25T11:15:00Z,Wasserbaulabor 2,0
+2026-08-25T11:15:00Z,Herzogstraße,0
+2026-08-25T11:20:00Z,An der Kost,0
+2026-08-25T11:20:00Z,Wasserstraße,0
+2026-08-25T11:20:00Z,Königsallee,0
+2026-08-25T11:20:00Z,Wasserbaulabor 2,0
+2026-08-25T11:20:00Z,Herzogstraße,0
+2026-08-25T11:25:00Z,An der Kost,0
+2026-08-25T11:25:00Z,Wasserstraße,0
+2026-08-25T11:25:00Z,Königsallee,0
+2026-08-25T11:25:00Z,Wasserbaulabor 2,0
+2026-08-25T11:25:00Z,Herzogstraße,0
+2026-08-25T11:30:00Z,An der Kost,0
+2026-08-25T11:30:00Z,Wasserstraße,0
+2026-08-25T11:30:00Z,Königsallee,0
+2026-08-25T11:30:00Z,Wasserbaulabor 2,0
+2026-08-25T11:30:00Z,Herzogstraße,0
+2026-08-25T11:35:00Z,An der Kost,0
+2026-08-25T11:35:00Z,Wasserstraße,0
+2026-08-25T11:35:00Z,Königsallee,0
+2026-08-25T11:35:00Z,Wasserbaulabor 2,0
+2026-08-25T11:35:00Z,Herzogstraße,0
+2026-08-25T11:40:00Z,An der Kost,0
+2026-08-25T11:40:00Z,Wasserstraße,0
+2026-08-25T11:40:00Z,Königsallee,0
+2026-08-25T11:40:00Z,Wasserbaulabor 2,0
+2026-08-25T11:40:00Z,Herzogstraße,0
+2026-08-25T11:45:00Z,An der Kost,0
+2026-08-25T11:45:00Z,Wasserstraße,0
+2026-08-25T11:45:00Z,Königsallee,0
+2026-08-25T11:45:00Z,Wasserbaulabor 2,0
+2026-08-25T11:45:00Z,Herzogstraße,0
+2026-08-25T11:50:00Z,An der Kost,0
+2026-08-25T11:50:00Z,Wasserstraße,0
+2026-08-25T11:50:00Z,Königsallee,0
+2026-08-25T11:50:00Z,Wasserbaulabor 2,0
+2026-08-25T11:50:00Z,Herzogstraße,0
+2026-08-25T11:55:00Z,An der Kost,0
+2026-08-25T11:55:00Z,Wasserstraße,0
+2026-08-25T11:55:00Z,Königsallee,0
+2026-08-25T11:55:00Z,Wasserbaulabor 2,0
+2026-08-25T11:55:00Z,Herzogstraße,0
+2026-08-25T12:00:00Z,An der Kost,0.05
+2026-08-25T12:00:00Z,Wasserstraße,0
+2026-08-25T12:00:00Z,Königsallee,0
+2026-08-25T12:00:00Z,Wasserbaulabor 2,0
+2026-08-25T12:00:00Z,Herzogstraße,0
+2026-08-25T12:05:00Z,An der Kost,0.07
+2026-08-25T12:05:00Z,Wasserstraße,0
+2026-08-25T12:05:00Z,Königsallee,0
+2026-08-25T12:05:00Z,Wasserbaulabor 2,0
+2026-08-25T12:05:00Z,Herzogstraße,0
