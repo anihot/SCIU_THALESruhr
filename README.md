@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### 🟡 Wetterausblick (48h)
+****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 26.08. 09:00 bis 28.08. 08:00)*
+*(Zeitraum: 26.08. 15:00 bis 28.08. 14:00)*
 
-- Temperatur: **18.3°C** (Min: 17.6°C | Max: 30.9°C)
-- Summe: **5.1 mm** | Max: **4.2 mm/h**
-- Max. 6h: **5.1 mm**
+- Temperatur: **24.2°C** (Min: 17.2°C | Max: 30.7°C)
+- Summe: **18.4 mm** | Max: **11.1 mm/h**
+- Max. 6h: **22.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-08-26 08:45:37 CEST*
+*Stand: 2026-08-26 14:49:27 CEST*
 
 ---
 
