@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### ☀️ Wetterausblick (48h)
-**Kein nennenswerter Regen vorhergesagt.**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 25.08. 21:00 bis 27.08. 20:00)*
+*(Zeitraum: 26.08. 04:00 bis 28.08. 03:00)*
 
-- Temperatur: **20.7°C** (Min: 17.3°C | Max: 30.8°C)
-- Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **0 mm**
+- Temperatur: **18.1°C** (Min: 16.5°C | Max: 30.8°C)
+- Summe: **5.3 mm** | Max: **5.3 mm/h**
+- Max. 6h: **6.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,19 +25,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-08-25 20:38:29 CEST*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station                |start_time          | peak_level_cm| duration_min|event_type                              |
-|:----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
-|Königsallee_Springorum |2026-08-25 17:29:00 |          0.44|        149.5|Leichter Regen / Unterhalb DWD-Schwelle |
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Königsallee_Springorum
-![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-08-26 03:08:30 CEST*
 
 ---
 
