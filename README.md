@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 28.08. 11:00 bis 30.08. 10:00)*
+*(Zeitraum: 29.08. 00:00 bis 30.08. 23:00)*
 
-- Temperatur: **19.8°C** (Min: 16°C | Max: 23.9°C)
-- Summe: **10 mm** | Max: **3.2 mm/h**
-- Max. 6h: **6.1 mm**
+- Temperatur: **17°C** (Min: 15.9°C | Max: 23.3°C)
+- Summe: **3.3 mm** | Max: **1.6 mm/h**
+- Max. 6h: **2.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,23 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-08-28 10:57:23 CEST*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-08-28 23:49:02 CEST*
+
+Es wurden **2** neue potenzielle Ereignisse erkannt.
+
+|station                 |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|An_der_Kost             |2026-08-28 14:58:00 |          0.58|         16.5|Leichter Regen / Unterhalb DWD-Schwelle |
+|Wasserstraße_Springorum |2026-08-28 11:19:00 |          7.26|         53.5|Regenereignis / Natürlich               |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+
 
 ---
 
