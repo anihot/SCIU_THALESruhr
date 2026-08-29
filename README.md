@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### 🟡 Wetterausblick (48h)
+****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 29.08. 15:00 bis 31.08. 14:00)*
+*(Zeitraum: 29.08. 23:00 bis 31.08. 22:00)*
 
-- Temperatur: **22.2°C** (Min: 17.2°C | Max: 23°C)
-- Summe: **5.2 mm** | Max: **1.8 mm/h**
-- Max. 6h: **4.7 mm**
+- Temperatur: **19.4°C** (Min: 16.3°C | Max: 21°C)
+- Summe: **25.1 mm** | Max: **7.6 mm/h**
+- Max. 6h: **23.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,21 +26,17 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-08-29 14:18:23 CEST*
+*Stand: 2026-08-29 22:25:10 CEST*
 
-Es wurden **2** neue potenzielle Ereignisse erkannt.
+Es wurden **1** neue potenzielle Ereignisse erkannt.
 
-|station                 |start_time          | peak_level_cm| duration_min|event_type                              |
-|:-----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
-|An_der_Kost             |2026-08-28 14:58:00 |          0.58|         16.5|Leichter Regen / Unterhalb DWD-Schwelle |
-|Wasserstraße_Springorum |2026-08-28 11:19:00 |          7.26|         53.5|Regenereignis / Natürlich               |
+|station                |start_time          | peak_level_cm| duration_min|event_type                              |
+|:----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|Königsallee_Springorum |2026-08-29 16:19:00 |          1.15|        355.5|Leichter Regen / Unterhalb DWD-Schwelle |
 
 ### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: An_der_Kost
-![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
-#### Station: Wasserstraße_Springorum
-![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+#### Station: Königsallee_Springorum
+![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
 
 
 ---
