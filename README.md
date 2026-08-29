@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 29.08. 00:00 bis 30.08. 23:00)*
+*(Zeitraum: 29.08. 08:00 bis 31.08. 07:00)*
 
-- Temperatur: **17°C** (Min: 15.9°C | Max: 23.3°C)
-- Summe: **3.3 mm** | Max: **1.6 mm/h**
-- Max. 6h: **2.7 mm**
+- Temperatur: **17°C** (Min: 17°C | Max: 23.9°C)
+- Summe: **4.7 mm** | Max: **1.4 mm/h**
+- Max. 6h: **2.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-08-28 23:49:02 CEST*
+*Stand: 2026-08-29 07:32:25 CEST*
 
 Es wurden **2** neue potenzielle Ereignisse erkannt.
 
