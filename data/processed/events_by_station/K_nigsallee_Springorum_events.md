@@ -1,5 +1,5 @@
 # Ereignisse: Königsallee_Springorum
 
-|station                |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|radolan_verified |level_reliable | points_count|
-|:----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|---------------:|------------------:|:----------------|:--------------|------------:|
-|Königsallee_Springorum |2026-08-29 14:19:00 |2026-08-29 20:14:30 |          1.15|2026-08-29 19:43:30 |        355.5|               0.004|Leichter Regen / Unterhalb DWD-Schwelle |             1.1|               4.68|TRUE             |TRUE           |          712|
+|station                |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                | total_precip_mm| max_intensity_mm_h|radolan_verified |level_reliable | points_count|
+|:----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:-------------------------|---------------:|------------------:|:----------------|:--------------|------------:|
+|Königsallee_Springorum |2026-08-29 14:19:00 |2026-08-30 02:00:00 |          2.32|2026-08-30 00:09:30 |          701|               0.004|Regenereignis / Natürlich |             1.1|               4.68|TRUE             |TRUE           |         1403|
