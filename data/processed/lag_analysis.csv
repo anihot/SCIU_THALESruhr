@@ -1,4 +1,4 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","level_reliable","points_count","onset_lag_min","peak_lag_min","precip_onset_time","precip_peak_time","precip_total_mm","precip_max_mm_h"
-"Königsallee_Springorum","2026/08/29 14:19:00","2026/08/30 02:00:00",2.32,"2026/08/30 00:09:30",701,0.004,"Regenereignis / Natürlich",1.1,4.68,TRUE,TRUE,1403,NA,NA,NA,NA,0,0
+"Königsallee_Springorum","2026/08/29 14:19:00","2026/08/30 10:00:00",2.32,"2026/08/30 00:09:30",1181,0.004,"Regenereignis / Natürlich",1.1,4.68,TRUE,TRUE,2363,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/08/28 12:58:00","2026/08/28 13:14:30",0.58,"2026/08/28 13:01:00",16.5,0.186,"Leichter Regen / Unterhalb DWD-Schwelle",0.17,1.2,TRUE,TRUE,34,NA,NA,NA,NA,0,0
 "Wasserstraße_Springorum","2026/08/28 09:19:00","2026/08/28 10:12:30",7.26,"2026/08/28 09:55:30",53.5,0.198,"Regenereignis / Natürlich",1.01,2.88,TRUE,TRUE,108,NA,NA,NA,NA,0,0
