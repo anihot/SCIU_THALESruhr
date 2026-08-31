@@ -53,11 +53,22 @@ from_str <- format(from_date, "%Y-%m-%dT%H:%M:%SZ")
 
 message(paste("Fetching data from", from_str, "to", to_str))
 
-# Helper: GET with automatic retry on 5xx and transient 401 errors
+# Helper: GET with automatic retry on 5xx, transient 401 errors, and timeouts
 get_with_retry <- function(url, ..., max_retries = 3, wait_sec = 15) {
     for (attempt in seq_len(max_retries)) {
-        resp <- GET(url, ...)
-        sc   <- status_code(resp)
+        resp <- tryCatch(
+            GET(url, ..., timeout(300)),
+            error = function(e) {
+                message(sprintf("  Connection error on attempt %d/%d: %s",
+                                attempt, max_retries, conditionMessage(e)))
+                NULL
+            }
+        )
+        if (is.null(resp)) {
+            if (attempt < max_retries) Sys.sleep(wait_sec)
+            next
+        }
+        sc <- status_code(resp)
         if (sc < 500 && sc != 401) return(resp)
         message(sprintf("  HTTP %d on attempt %d/%d – retrying in %ds...",
                         sc, attempt, max_retries, wait_sec))
@@ -99,7 +110,7 @@ for (station in stations) {
     # Get full station info (including channels)
     message(paste("Processing station:", station_name, "(", station_id, ")..."))
     s_resp <- get_with_retry(paste0(base_url, "/api/v2/stations/", station_id), custom_headers)
-    if (status_code(s_resp) != 200) next
+    if (is.null(s_resp) || status_code(s_resp) != 200) next
 
     s_data <- content(s_resp, "parsed")
     channels <- s_data$Channels
@@ -127,7 +138,7 @@ for (station in stations) {
             custom_headers
         )
 
-        if (status_code(d_resp) == 200) {
+        if (!is.null(d_resp) && status_code(d_resp) == 200) {
             d_vals <- content(d_resp, "parsed")
             if (length(d_vals) > 0) {
                 # Convert to data frame
