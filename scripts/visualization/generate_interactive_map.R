@@ -279,7 +279,7 @@ for (i in seq_len(nrow(sensors))) {
 # Build Leaflet map
 # ---------------------------------------------------------------------------
 m <- leaflet(sensors) %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
+  addProviderTiles(providers$OpenStreetMap.Mapnik) %>%
   addMarkers(
     lng     = ~lon,
     lat     = ~lat,
