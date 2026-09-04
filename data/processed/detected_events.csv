@@ -1,2 +1,1 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","level_reliable","points_count"
-"An_der_Kost","2026/08/28 12:58:00","2026/08/28 13:14:30",0.58,"2026/08/28 13:01:00",16.5,0.186,"Leichter Regen / Unterhalb DWD-Schwelle",0.17,1.2,TRUE,TRUE,34
