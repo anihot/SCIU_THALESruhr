@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 11.09. 18:00 bis 13.09. 17:00)*
+*(Zeitraum: 11.09. 23:00 bis 13.09. 22:00)*
 
-- Temperatur: **17.8°C** (Min: 15.3°C | Max: 21.7°C)
-- Summe: **23.8 mm** | Max: **4.7 mm/h**
-- Max. 6h: **14.8 mm**
+- Temperatur: **16.2°C** (Min: 14.8°C | Max: 21.4°C)
+- Summe: **16.9 mm** | Max: **3.4 mm/h**
+- Max. 6h: **9.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-09-11 17:54:21 CEST*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-09-11 22:28:50 CEST*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                |start_time          | peak_level_cm| duration_min|event_type                              |
+|:----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|Königsallee_Springorum |2026-09-11 16:52:00 |          0.79|          307|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Königsallee_Springorum
+![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
+
 
 ---
 
