@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 14.09. 20:00 bis 16.09. 19:00)*
+*(Zeitraum: 15.09. 00:00 bis 16.09. 23:00)*
 
-- Temperatur: **21.7°C** (Min: 15.3°C | Max: 26.9°C)
-- Summe: **7.8 mm** | Max: **4.7 mm/h**
-- Max. 6h: **6 mm**
+- Temperatur: **19.5°C** (Min: 14.1°C | Max: 27.2°C)
+- Summe: **7.6 mm** | Max: **2 mm/h**
+- Max. 6h: **4.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,19 +25,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-09-14 19:40:32 CEST*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station     |start_time          | peak_level_cm| duration_min|event_type                              |
-|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
-|An_der_Kost |2026-09-13 15:01:00 |          0.29|           49|Leichter Regen / Unterhalb DWD-Schwelle |
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: An_der_Kost
-![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-09-14 23:28:55 CEST*
 
 ---
 
