@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🟡 Wetterausblick (48h)
-****Warnung vor markantem Starkregen** (DWD Stufe 2)**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 13.09. 23:00 bis 15.09. 22:00)*
+*(Zeitraum: 14.09. 06:00 bis 16.09. 05:00)*
 
-- Temperatur: **17.2°C** (Min: 15.6°C | Max: 26.1°C)
-- Summe: **26.2 mm** | Max: **22 mm/h**
-- Max. 6h: **26.2 mm**
+- Temperatur: **16.3°C** (Min: 16.2°C | Max: 26.8°C)
+- Summe: **1.5 mm** | Max: **1.1 mm/h**
+- Max. 6h: **1.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-09-13 22:20:19 CEST*
+*Stand: 2026-09-14 05:15:39 CEST*
 
 Es wurden **1** neue potenzielle Ereignisse erkannt.
 
