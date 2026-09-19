@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 19.09. 06:00 bis 21.09. 05:00)*
+*(Zeitraum: 19.09. 13:00 bis 21.09. 12:00)*
 
-- Temperatur: **15°C** (Min: 11.5°C | Max: 20.7°C)
-- Summe: **5.6 mm** | Max: **1.2 mm/h**
-- Max. 6h: **3.4 mm**
+- Temperatur: **18.6°C** (Min: 11.1°C | Max: 21.5°C)
+- Summe: **2.1 mm** | Max: **0.5 mm/h**
+- Max. 6h: **1.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-09-19 05:01:36 CEST*
+*Stand: 2026-09-19 12:20:24 CEST*
 
 ---
 
