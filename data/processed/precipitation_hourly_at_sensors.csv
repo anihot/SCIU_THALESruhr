@@ -40548,7 +40548,7 @@ timestamp,station,precipitation_mm
 2026-09-20T11:00:00Z,Wasserbaulabor 2,0.43
 2026-09-20T11:00:00Z,Wasserstraße,0.37
 2026-09-20T12:00:00Z,An der Kost,0.62
-2026-09-20T12:00:00Z,Herzogstraße,0.48000000000000004
+2026-09-20T12:00:00Z,Herzogstraße,0.48
 2026-09-20T12:00:00Z,Königsallee,0.83
 2026-09-20T12:00:00Z,Wasserbaulabor 2,0.71
 2026-09-20T12:00:00Z,Wasserstraße,0.83
@@ -40562,3 +40562,28 @@ timestamp,station,precipitation_mm
 2026-09-20T14:00:00Z,Königsallee,0
 2026-09-20T14:00:00Z,Wasserbaulabor 2,0
 2026-09-20T14:00:00Z,Wasserstraße,0
+2026-09-20T15:00:00Z,An der Kost,0
+2026-09-20T15:00:00Z,Herzogstraße,0
+2026-09-20T15:00:00Z,Königsallee,0
+2026-09-20T15:00:00Z,Wasserbaulabor 2,0
+2026-09-20T15:00:00Z,Wasserstraße,0
+2026-09-20T16:00:00Z,An der Kost,0
+2026-09-20T16:00:00Z,Herzogstraße,0
+2026-09-20T16:00:00Z,Königsallee,0
+2026-09-20T16:00:00Z,Wasserbaulabor 2,0
+2026-09-20T16:00:00Z,Wasserstraße,0
+2026-09-20T17:00:00Z,An der Kost,0
+2026-09-20T17:00:00Z,Herzogstraße,0
+2026-09-20T17:00:00Z,Königsallee,0
+2026-09-20T17:00:00Z,Wasserbaulabor 2,0
+2026-09-20T17:00:00Z,Wasserstraße,0
+2026-09-20T18:00:00Z,An der Kost,0
+2026-09-20T18:00:00Z,Herzogstraße,0
+2026-09-20T18:00:00Z,Königsallee,0
+2026-09-20T18:00:00Z,Wasserbaulabor 2,0
+2026-09-20T18:00:00Z,Wasserstraße,0
+2026-09-20T19:00:00Z,An der Kost,0
+2026-09-20T19:00:00Z,Herzogstraße,0
+2026-09-20T19:00:00Z,Königsallee,0
+2026-09-20T19:00:00Z,Wasserbaulabor 2,0
+2026-09-20T19:00:00Z,Wasserstraße,0
