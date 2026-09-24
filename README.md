@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 24.09. 00:00 bis 25.09. 23:00)*
+*(Zeitraum: 24.09. 06:00 bis 26.09. 05:00)*
 
-- Temperatur: **17.5°C** (Min: 10.1°C | Max: 21.6°C)
-- Summe: **0.4 mm** | Max: **0.3 mm/h**
-- Max. 6h: **0.4 mm**
+- Temperatur: **14.2°C** (Min: 10.3°C | Max: 21.7°C)
+- Summe: **0 mm** | Max: **0 mm/h**
+- Max. 6h: **0 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-09-23 23:08:37 CEST*
+*Stand: 2026-09-24 05:02:27 CEST*
 
 ---
 
