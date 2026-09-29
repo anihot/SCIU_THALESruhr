@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 28.09. 19:00 bis 30.09. 18:00)*
+*(Zeitraum: 29.09. 05:00 bis 01.10. 04:00)*
 
-- Temperatur: **23°C** (Min: 18.1°C | Max: 28°C)
-- Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **0.1 mm**
+- Temperatur: **19.1°C** (Min: 18.7°C | Max: 28.4°C)
+- Summe: **0.3 mm** | Max: **0.2 mm/h**
+- Max. 6h: **0.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-09-28 18:25:27 CEST*
+*Stand: 2026-09-29 04:21:07 CEST*
 
 ---
 
