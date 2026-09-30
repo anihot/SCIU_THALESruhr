@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### 🔴 Wetterausblick (48h)
+****UNWETTERWARNUNG vor Starkregen** (DWD Stufe 3)**
 
-*(Zeitraum: 30.09. 04:00 bis 02.10. 03:00)*
+*(Zeitraum: 30.09. 10:00 bis 02.10. 09:00)*
 
-- Temperatur: **22°C** (Min: 13.5°C | Max: 28°C)
-- Summe: **9.8 mm** | Max: **1.8 mm/h**
-- Max. 6h: **4.3 mm**
+- Temperatur: **23.3°C** (Min: 12.5°C | Max: 27.9°C)
+- Summe: **51.6 mm** | Max: **16.2 mm/h**
+- Max. 6h: **38.4 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-09-30 03:30:39 CEST*
+*Stand: 2026-09-30 09:06:13 CEST*
 
 ---
 
