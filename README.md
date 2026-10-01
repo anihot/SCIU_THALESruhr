@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔴 Wetterausblick (48h)
-****UNWETTERWARNUNG vor Starkregen** (DWD Stufe 3)**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 01.10. 06:00 bis 03.10. 05:00)*
+*(Zeitraum: 01.10. 15:00 bis 03.10. 14:00)*
 
-- Temperatur: **20.2°C** (Min: 12.6°C | Max: 21.7°C)
-- Summe: **55.6 mm** | Max: **19.4 mm/h**
-- Max. 6h: **43.5 mm**
+- Temperatur: **19.1°C** (Min: 12.2°C | Max: 20.9°C)
+- Summe: **5.1 mm** | Max: **2.6 mm/h**
+- Max. 6h: **5.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,20 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-01 05:59:34 CEST*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-10-01 14:26:19 CEST*
+
+Es wurden **2** neue potenzielle Ereignisse erkannt.
+
+|station     |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
+|An_der_Kost |2026-10-01 08:56:00 |          0.58|        320.0|Leichter Regen / Unterhalb DWD-Schwelle |
+|An_der_Kost |2026-10-01 06:51:00 |          0.22|         33.5|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
 
 ---
 
