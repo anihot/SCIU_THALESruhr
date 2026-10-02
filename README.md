@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 02.10. 14:00 bis 04.10. 13:00)*
+*(Zeitraum: 02.10. 20:00 bis 04.10. 19:00)*
 
-- Temperatur: **19°C** (Min: 13.2°C | Max: 21.1°C)
+- Temperatur: **17.7°C** (Min: 12.1°C | Max: 21.1°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -25,19 +25,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-10-02 13:55:42 CEST*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station     |start_time          | peak_level_cm| duration_min|event_type                              |
-|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
-|An_der_Kost |2026-10-01 08:56:00 |          0.58|          320|Leichter Regen / Unterhalb DWD-Schwelle |
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: An_der_Kost
-![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-10-02 19:28:09 CEST*
 
 ---
 
