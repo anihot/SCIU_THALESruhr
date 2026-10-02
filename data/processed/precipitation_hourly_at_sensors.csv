@@ -41912,7 +41912,7 @@ timestamp,station,precipitation_mm
 2026-10-01T20:00:00Z,Königsallee,0.19
 2026-10-01T20:00:00Z,Wasserbaulabor 2,0.39
 2026-10-01T20:00:00Z,Wasserstraße,0.19
-2026-10-01T21:00:00Z,An der Kost,0.43000000000000005
+2026-10-01T21:00:00Z,An der Kost,0.4300000000000001
 2026-10-01T21:00:00Z,Herzogstraße,0.63
 2026-10-01T21:00:00Z,Königsallee,0.63
 2026-10-01T21:00:00Z,Wasserbaulabor 2,1.51
@@ -41947,3 +41947,43 @@ timestamp,station,precipitation_mm
 2026-10-02T03:00:00Z,Königsallee,0
 2026-10-02T03:00:00Z,Wasserbaulabor 2,0
 2026-10-02T03:00:00Z,Wasserstraße,0
+2026-10-02T04:00:00Z,An der Kost,0
+2026-10-02T04:00:00Z,Herzogstraße,0
+2026-10-02T04:00:00Z,Königsallee,0
+2026-10-02T04:00:00Z,Wasserbaulabor 2,0
+2026-10-02T04:00:00Z,Wasserstraße,0
+2026-10-02T05:00:00Z,An der Kost,0
+2026-10-02T05:00:00Z,Herzogstraße,0
+2026-10-02T05:00:00Z,Königsallee,0
+2026-10-02T05:00:00Z,Wasserbaulabor 2,0
+2026-10-02T05:00:00Z,Wasserstraße,0
+2026-10-02T06:00:00Z,An der Kost,0
+2026-10-02T06:00:00Z,Herzogstraße,0
+2026-10-02T06:00:00Z,Königsallee,0
+2026-10-02T06:00:00Z,Wasserbaulabor 2,0
+2026-10-02T06:00:00Z,Wasserstraße,0
+2026-10-02T07:00:00Z,An der Kost,0
+2026-10-02T07:00:00Z,Herzogstraße,0
+2026-10-02T07:00:00Z,Königsallee,0
+2026-10-02T07:00:00Z,Wasserbaulabor 2,0
+2026-10-02T07:00:00Z,Wasserstraße,0
+2026-10-02T08:00:00Z,An der Kost,0
+2026-10-02T08:00:00Z,Herzogstraße,0
+2026-10-02T08:00:00Z,Königsallee,0
+2026-10-02T08:00:00Z,Wasserbaulabor 2,0
+2026-10-02T08:00:00Z,Wasserstraße,0
+2026-10-02T09:00:00Z,An der Kost,0
+2026-10-02T09:00:00Z,Herzogstraße,0
+2026-10-02T09:00:00Z,Königsallee,0
+2026-10-02T09:00:00Z,Wasserbaulabor 2,0
+2026-10-02T09:00:00Z,Wasserstraße,0
+2026-10-02T10:00:00Z,An der Kost,0
+2026-10-02T10:00:00Z,Herzogstraße,0
+2026-10-02T10:00:00Z,Königsallee,0
+2026-10-02T10:00:00Z,Wasserbaulabor 2,0
+2026-10-02T10:00:00Z,Wasserstraße,0
+2026-10-02T11:00:00Z,An der Kost,0
+2026-10-02T11:00:00Z,Herzogstraße,0
+2026-10-02T11:00:00Z,Königsallee,0
+2026-10-02T11:00:00Z,Wasserbaulabor 2,0
+2026-10-02T11:00:00Z,Wasserstraße,0
