@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 03.10. 00:00 bis 04.10. 23:00)*
+*(Zeitraum: 03.10. 06:00 bis 05.10. 05:00)*
 
-- Temperatur: **14.7°C** (Min: 12.6°C | Max: 21.3°C)
+- Temperatur: **12°C** (Min: 12°C | Max: 21.9°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-02 23:52:45 CEST*
+*Stand: 2026-10-03 05:41:01 CEST*
 
 ---
 
