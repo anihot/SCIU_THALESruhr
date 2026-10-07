@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 07.10. 15:00 bis 09.10. 14:00)*
+*(Zeitraum: 08.10. 01:00 bis 10.10. 00:00)*
 
-- Temperatur: **23°C** (Min: 9°C | Max: 23°C)
-- Summe: **33.8 mm** | Max: **7.1 mm/h**
-- Max. 6h: **17.8 mm**
+- Temperatur: **16.3°C** (Min: 8.5°C | Max: 16.3°C)
+- Summe: **24.1 mm** | Max: **2.3 mm/h**
+- Max. 6h: **9.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-07 14:39:38 CEST*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-10-08 00:43:08 CEST*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station     |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
+|An_der_Kost |2026-10-07 22:00:30 |          0.83|        119.5|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
 
 ---
 
