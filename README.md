@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 11.10. 15:00 bis 13.10. 14:00)*
+*(Zeitraum: 12.10. 00:00 bis 13.10. 23:00)*
 
-- Temperatur: **12.9°C** (Min: 6.8°C | Max: 15.4°C)
-- Summe: **1.9 mm** | Max: **0.6 mm/h**
-- Max. 6h: **1.1 mm**
+- Temperatur: **9.5°C** (Min: 7.4°C | Max: 15.5°C)
+- Summe: **2.5 mm** | Max: **0.7 mm/h**
+- Max. 6h: **1.8 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-11 14:07:32 CEST*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-10-11 23:33:15 CEST*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                 |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|Wasserstraße_Springorum |2026-10-11 13:38:00 |          0.93|          587|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+
 
 ---
 

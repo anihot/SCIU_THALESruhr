@@ -1,5 +1,5 @@
 # Ereignisse: Wasserstraße_Springorum
 
-|station                 |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                | total_precip_mm| max_intensity_mm_h|radolan_verified |level_reliable | points_count|
-|:-----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:-------------------------|---------------:|------------------:|:----------------|:--------------|------------:|
-|Wasserstraße_Springorum |2026-08-28 09:19:00 |2026-08-28 10:12:30 |          7.26|2026-08-28 09:55:30 |         53.5|               0.198|Regenereignis / Natürlich |            1.01|               2.88|TRUE             |TRUE           |          108|
+|station                 |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|radolan_verified |level_reliable | points_count|
+|:-----------------------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|---------------:|------------------:|:----------------|:--------------|------------:|
+|Wasserstraße_Springorum |2026-10-11 11:38:00 |2026-10-11 21:25:00 |          0.93|2026-10-11 20:09:30 |          587|               0.002|Leichter Regen / Unterhalb DWD-Schwelle |            0.63|               3.48|TRUE             |TRUE           |         1175|
