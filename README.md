@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 12.10. 07:00 bis 14.10. 06:00)*
+*(Zeitraum: 12.10. 17:00 bis 14.10. 16:00)*
 
-- Temperatur: **6.3°C** (Min: 6.1°C | Max: 15.8°C)
-- Summe: **5.3 mm** | Max: **1.3 mm/h**
-- Max. 6h: **3.4 mm**
+- Temperatur: **15.9°C** (Min: 10.6°C | Max: 16.4°C)
+- Summe: **5.2 mm** | Max: **2.2 mm/h**
+- Max. 6h: **3.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,17 +26,17 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-10-12 06:12:56 CEST*
+*Stand: 2026-10-12 16:24:37 CEST*
 
 Es wurden **1** neue potenzielle Ereignisse erkannt.
 
-|station                 |start_time          | peak_level_cm| duration_min|event_type                              |
-|:-----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
-|Wasserstraße_Springorum |2026-10-11 13:38:00 |          1.01|        987.5|Leichter Regen / Unterhalb DWD-Schwelle |
+|station                |start_time          | peak_level_cm| duration_min|event_type                              |
+|:----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|Königsallee_Springorum |2026-10-11 13:35:30 |           0.9|         1386|Leichter Regen / Unterhalb DWD-Schwelle |
 
 ### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Wasserstraße_Springorum
-![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+#### Station: Königsallee_Springorum
+![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
 
 
 ---
