@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 14.10. 14:00 bis 16.10. 13:00)*
+*(Zeitraum: 14.10. 19:00 bis 16.10. 18:00)*
 
-- Temperatur: **16.3°C** (Min: 10.9°C | Max: 20.8°C)
+- Temperatur: **14.9°C** (Min: 10.4°C | Max: 21.1°C)
 - Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **0 mm**
+- Max. 6h: **3.4 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-14 13:12:18 CEST*
+*Stand: 2026-10-14 18:31:51 CEST*
 
 ---
 
