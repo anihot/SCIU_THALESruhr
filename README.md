@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 17.10. 05:00 bis 19.10. 04:00)*
+*(Zeitraum: 17.10. 13:00 bis 19.10. 12:00)*
 
-- Temperatur: **12.1°C** (Min: 8.1°C | Max: 13.2°C)
-- Summe: **20.2 mm** | Max: **4.6 mm/h**
-- Max. 6h: **14.2 mm**
+- Temperatur: **11.6°C** (Min: 9.3°C | Max: 13.8°C)
+- Summe: **3.2 mm** | Max: **1 mm/h**
+- Max. 6h: **1.8 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,17 +26,17 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-10-17 04:54:55 CEST*
+*Stand: 2026-10-17 12:11:28 CEST*
 
 Es wurden **1** neue potenzielle Ereignisse erkannt.
 
-|station                |start_time          | peak_level_cm| duration_min|event_type                              |
-|:----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
-|Königsallee_Springorum |2026-10-16 16:53:00 |          1.31|          667|Leichter Regen / Unterhalb DWD-Schwelle |
+|station     |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
+|An_der_Kost |2026-10-17 06:40:30 |          0.44|           61|Leichter Regen / Unterhalb DWD-Schwelle |
 
 ### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: Königsallee_Springorum
-![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
 
 
 ---
