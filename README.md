@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 17.10. 23:00 bis 19.10. 22:00)*
+*(Zeitraum: 18.10. 05:00 bis 20.10. 04:00)*
 
-- Temperatur: **9.7°C** (Min: 7.8°C | Max: 15.8°C)
-- Summe: **0.9 mm** | Max: **0.3 mm/h**
-- Max. 6h: **0.8 mm**
+- Temperatur: **8.5°C** (Min: 5.9°C | Max: 15.7°C)
+- Summe: **1 mm** | Max: **0.3 mm/h**
+- Max. 6h: **0.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-10-17 22:06:59 CEST*
+*Stand: 2026-10-18 04:57:36 CEST*
 
 Es wurden **1** neue potenzielle Ereignisse erkannt.
 
