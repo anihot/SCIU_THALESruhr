@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 21.10. 06:00 bis 23.10. 05:00)*
+*(Zeitraum: 21.10. 14:00 bis 23.10. 13:00)*
 
-- Temperatur: **10.4°C** (Min: 7.4°C | Max: 13.8°C)
-- Summe: **1 mm** | Max: **0.3 mm/h**
-- Max. 6h: **1.2 mm**
+- Temperatur: **13.2°C** (Min: 7.6°C | Max: 13.2°C)
+- Summe: **4.2 mm** | Max: **0.4 mm/h**
+- Max. 6h: **1.9 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-21 05:11:01 CEST*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-10-21 13:09:36 CEST*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                |start_time          | peak_level_cm| duration_min|event_type                              |
+|:----------------------|:-------------------|-------------:|------------:|:---------------------------------------|
+|Königsallee_Springorum |2026-10-20 15:53:00 |          0.79|         1207|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Königsallee_Springorum
+![Plot Königsallee_Springorum](data/output/plots/Königsallee_Springorum_merged_export_cleaned.png)
+
 
 ---
 
