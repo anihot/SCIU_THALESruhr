@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 21.10. 19:00 bis 23.10. 18:00)*
+*(Zeitraum: 22.10. 00:00 bis 23.10. 23:00)*
 
-- Temperatur: **10.5°C** (Min: 7.2°C | Max: 11.9°C)
-- Summe: **5.4 mm** | Max: **0.7 mm/h**
-- Max. 6h: **5.2 mm**
+- Temperatur: **9.8°C** (Min: 7.6°C | Max: 12.7°C)
+- Summe: **5.7 mm** | Max: **2 mm/h**
+- Max. 6h: **6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-21 18:36:33 CEST*
+*Stand: 2026-10-21 23:15:51 CEST*
 
 ---
 
