@@ -1,3 +1,2 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","level_reliable","points_count"
-"Königsallee_Springorum","2026/10/20 13:53:00","2026/10/21 10:00:00",0.79,"2026/10/20 17:57:00",1207,0.003,"Leichter Regen / Unterhalb DWD-Schwelle",0.87,1.92,TRUE,TRUE,2415
 "An_der_Kost","2026/10/17 04:40:30","2026/10/17 05:41:30",0.44,"2026/10/17 05:21:00",61,0.011,"Leichter Regen / Unterhalb DWD-Schwelle",2.42,5.52,TRUE,TRUE,123
