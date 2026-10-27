@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 27.10. 19:00 bis 29.10. 18:00)*
+*(Zeitraum: 27.10. 23:00 bis 29.10. 22:00)*
 
-- Temperatur: **15.8°C** (Min: 8.3°C | Max: 15.8°C)
-- Summe: **2.3 mm** | Max: **0.6 mm/h**
-- Max. 6h: **2.1 mm**
+- Temperatur: **12.4°C** (Min: 8.5°C | Max: 13.7°C)
+- Summe: **0.4 mm** | Max: **0.3 mm/h**
+- Max. 6h: **0.3 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-27 18:30:36 CET*
+*Stand: 2026-10-27 22:50:02 CET*
 
 ---
 
