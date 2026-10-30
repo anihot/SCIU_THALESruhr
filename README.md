@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 30.10. 06:00 bis 01.11. 05:00)*
+*(Zeitraum: 30.10. 14:00 bis 01.11. 13:00)*
 
-- Temperatur: **10.1°C** (Min: 5.6°C | Max: 13.9°C)
-- Summe: **0.3 mm** | Max: **0.2 mm/h**
-- Max. 6h: **0.4 mm**
+- Temperatur: **14°C** (Min: 6.1°C | Max: 14°C)
+- Summe: **0.5 mm** | Max: **0.1 mm/h**
+- Max. 6h: **0.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-10-30 05:15:17 CET*
+*Stand: 2026-10-30 13:08:35 CET*
 
 ---
 
