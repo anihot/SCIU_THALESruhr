@@ -1,5 +1,3 @@
 # Detected Events Log
 
-|station     |start_time          |end_time            | peak_level_cm|peak_time           | duration_min| avg_gradient_cm_min|event_type                              | total_precip_mm| max_intensity_mm_h|radolan_verified |level_reliable | points_count|
-|:-----------|:-------------------|:-------------------|-------------:|:-------------------|------------:|-------------------:|:---------------------------------------|---------------:|------------------:|:----------------|:--------------|------------:|
-|An_der_Kost |2026-10-24 21:50:30 |2026-10-25 06:08:30 |          1.91|2026/10/25 01:52:30 |          498|               0.008|Leichter Regen / Unterhalb DWD-Schwelle |            5.61|               4.44|TRUE             |TRUE           |          997|
+No rain-verified events found.
