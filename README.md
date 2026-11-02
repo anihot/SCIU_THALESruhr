@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 01.11. 23:00 bis 03.11. 22:00)*
+*(Zeitraum: 02.11. 06:00 bis 04.11. 05:00)*
 
-- Temperatur: **9.6°C** (Min: 3.9°C | Max: 10.2°C)
-- Summe: **6.8 mm** | Max: **1.4 mm/h**
-- Max. 6h: **2.2 mm**
+- Temperatur: **8°C** (Min: 3°C | Max: 9.3°C)
+- Summe: **5.4 mm** | Max: **0.8 mm/h**
+- Max. 6h: **3.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-01 22:42:35 CET*
+*Stand: 2026-11-02 05:13:19 CET*
 
 ---
 
