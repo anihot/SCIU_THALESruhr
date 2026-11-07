@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 07.11. 06:00 bis 09.11. 05:00)*
+*(Zeitraum: 07.11. 14:00 bis 09.11. 13:00)*
 
-- Temperatur: **2.6°C** (Min: 2.6°C | Max: 10.4°C)
-- Summe: **0.4 mm** | Max: **0.3 mm/h**
-- Max. 6h: **0.4 mm**
+- Temperatur: **9°C** (Min: 3.3°C | Max: 10.3°C)
+- Summe: **0.2 mm** | Max: **0.1 mm/h**
+- Max. 6h: **0.2 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-07 05:33:32 CET*
+*Stand: 2026-11-07 13:27:49 CET*
 
 ---
 
