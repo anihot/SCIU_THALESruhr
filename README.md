@@ -10,11 +10,11 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 13.11. 07:00 bis 15.11. 06:00)*
+*(Zeitraum: 13.11. 16:00 bis 15.11. 15:00)*
 
-- Temperatur: **2.9°C** (Min: 2.7°C | Max: 9.4°C)
+- Temperatur: **8.3°C** (Min: 2.7°C | Max: 10.6°C)
 - Summe: **0 mm** | Max: **0 mm/h**
-- Max. 6h: **0 mm**
+- Max. 6h: **0.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-13 06:01:47 CET*
+*Stand: 2026-11-13 15:00:08 CET*
 
 ---
 
