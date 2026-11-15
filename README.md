@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### 🟡 Wetterausblick (48h)
+****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 15.11. 15:00 bis 17.11. 14:00)*
+*(Zeitraum: 16.11. 00:00 bis 17.11. 23:00)*
 
-- Temperatur: **8.3°C** (Min: 3.3°C | Max: 9.8°C)
-- Summe: **27.6 mm** | Max: **2.5 mm/h**
-- Max. 6h: **8.3 mm**
+- Temperatur: **9.8°C** (Min: 2.8°C | Max: 12.2°C)
+- Summe: **40.9 mm** | Max: **5.5 mm/h**
+- Max. 6h: **22.6 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-15 14:27:53 CET*
+*Stand: 2026-11-15 23:31:07 CET*
 
 ---
 
