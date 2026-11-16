@@ -10,11 +10,11 @@
 ### 🟡 Wetterausblick (48h)
 ****Warnung vor markantem Starkregen** (DWD Stufe 2)**
 
-*(Zeitraum: 16.11. 00:00 bis 17.11. 23:00)*
+*(Zeitraum: 16.11. 06:00 bis 18.11. 05:00)*
 
-- Temperatur: **9.8°C** (Min: 2.8°C | Max: 12.2°C)
-- Summe: **40.9 mm** | Max: **5.5 mm/h**
-- Max. 6h: **22.6 mm**
+- Temperatur: **8.9°C** (Min: 3.3°C | Max: 12.8°C)
+- Summe: **35.8 mm** | Max: **5.2 mm/h**
+- Max. 6h: **22.4 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-15 23:31:07 CET*
+*Stand: 2026-11-16 05:39:27 CET*
 
 ---
 
