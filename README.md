@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🟡 Wetterausblick (48h)
-****Warnung vor markantem Starkregen** (DWD Stufe 2)**
+### 🔹 Wetterausblick (48h)
+**Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 16.11. 06:00 bis 18.11. 05:00)*
+*(Zeitraum: 17.11. 10:00 bis 19.11. 09:00)*
 
-- Temperatur: **8.9°C** (Min: 3.3°C | Max: 12.8°C)
-- Summe: **35.8 mm** | Max: **5.2 mm/h**
-- Max. 6h: **22.4 mm**
+- Temperatur: **5.6°C** (Min: 5.6°C | Max: 12.9°C)
+- Summe: **33.1 mm** | Max: **5.3 mm/h**
+- Max. 6h: **13.5 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-16 05:39:27 CET*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-11-17 09:29:25 CET*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station     |start_time          | peak_level_cm| duration_min|event_type                              |
+|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
+|An_der_Kost |2026-11-16 05:57:00 |          0.46|        252.5|Leichter Regen / Unterhalb DWD-Schwelle |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: An_der_Kost
+![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
+
 
 ---
 
