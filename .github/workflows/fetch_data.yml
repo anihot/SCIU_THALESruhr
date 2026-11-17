@@ -28,7 +28,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev libsqlite3-dev libnetcdf-dev
+          sudo apt-get install -y libgdal-dev libproj-dev libgeos-dev libudunits2-dev libsqlite3-dev libnetcdf-dev libfontconfig1-dev libfreetype6-dev libharfbuzz-dev libfribidi-dev
 
       - name: Install dependencies
         env:
