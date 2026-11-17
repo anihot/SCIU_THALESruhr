@@ -10,11 +10,11 @@
 ### 🔹 Wetterausblick (48h)
 **Leichter bis mäßiger Regen vorhergesagt.**
 
-*(Zeitraum: 17.11. 10:00 bis 19.11. 09:00)*
+*(Zeitraum: 17.11. 17:00 bis 19.11. 16:00)*
 
-- Temperatur: **5.6°C** (Min: 5.6°C | Max: 12.9°C)
-- Summe: **33.1 mm** | Max: **5.3 mm/h**
-- Max. 6h: **13.5 mm**
+- Temperatur: **12.2°C** (Min: 9°C | Max: 12.2°C)
+- Summe: **43.7 mm** | Max: **3.6 mm/h**
+- Max. 6h: **13.7 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,19 +25,8 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-11-17 09:29:25 CET*
-
-Es wurden **1** neue potenzielle Ereignisse erkannt.
-
-|station     |start_time          | peak_level_cm| duration_min|event_type                              |
-|:-----------|:-------------------|-------------:|------------:|:---------------------------------------|
-|An_der_Kost |2026-11-16 05:57:00 |          0.46|        252.5|Leichter Regen / Unterhalb DWD-Schwelle |
-
-### 📈 Aktuelle Plots der betroffenen Stationen
-#### Station: An_der_Kost
-![Plot An_der_Kost](data/output/plots/An_der_Kost_merged_export_cleaned.png)
-
+## ✅ Keine neuen Ereignisse in den letzten 24h
+*Stand: 2026-11-17 16:31:18 CET*
 
 ---
 
