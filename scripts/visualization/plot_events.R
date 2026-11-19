@@ -142,7 +142,7 @@ for (i in seq_len(nrow(events))) {
     event_date <- format(ev$start_time, "%d.%m.%Y %H:%M")
     title_text <- paste0(
         "<b>", ev$station, "</b> — ", event_date,
-        "<br>Peak: ", ev$peak_level_cm, " cm | ",
+        "<br>Peak: ", if (is.na(ev$peak_level_cm)) "nicht messbar" else paste(ev$peak_level_cm, "cm"), " | ",
         ev$duration_min, " min | ", ev$event_type
     )
 

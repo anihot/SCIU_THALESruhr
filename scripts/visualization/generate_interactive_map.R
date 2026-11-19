@@ -5,6 +5,7 @@ library(readr)
 library(fs)
 library(plotly)
 library(lubridate)
+source("scripts/utils/nahecho.R")
 
 # Config
 metadata_file <- "data/metadata/sensor_metadata.csv"
@@ -88,9 +89,10 @@ for (i in seq_len(nrow(sensors))) {
       }
 
       # Data extraction
-      latest_row <- tail(df, 1)
+      latest_row <- tail(df %>% filter(!is.na(Zeit_Datum)), 1)
+      latest_nahecho <- "nahecho" %in% names(latest_row) && isTRUE(latest_row$nahecho)
       meas_level <- ifelse(
-          is.na(latest_row$level), "N/A",
+          is.na(latest_row$level), if (latest_nahecho) "nicht messbar (Sensor nass)" else "N/A",
           paste0(round(latest_row$level * 100, 1),
                  if (is_bimodal) " cm (0–10 cm = trocken–voll)" else " cm")
       )
@@ -99,6 +101,11 @@ for (i in seq_len(nrow(sensors))) {
       now_time   <- now(tzone = "Europe/Berlin")
       start_time <- now_time - days(7)
       df_48h <- df %>% filter(Zeit_Datum >= start_time)
+      has_nahecho <- "nahecho" %in% names(df_48h) && any(df_48h$nahecho, na.rm = TRUE)
+      if (has_nahecho && "level_raw" %in% names(df_48h)) {
+          # Rohpegel im Nahecho ist ein Messartefakt (~6 m) und würde die Achse sprengen
+          df_48h <- df_48h %>% mutate(level_raw = ifelse(nahecho, NA_real_, level_raw))
+      }
 
       # Prepare precipitation: RADOLAN (gemessen) + Open-Meteo (Vorhersage) kombiniert
       # Wichtig: Der gesamte 48h-Zeitraum wird abgedeckt, fehlende Werte = 0 mm
@@ -193,13 +200,17 @@ for (i in seq_len(nrow(sensors))) {
                       hovertemplate = "Rohpegel: %{y:.1f} cm<extra></extra>")
         }
 
+        # Fläche separat (NA -> 0), damit "tozeroy" nicht über Nahecho-Lücken füllt
         p <- p %>%
+          add_trace(data = df_48h %>% mutate(level_fill = ifelse(is.na(level), 0, level)),
+                    x = ~Zeit_Datum, y = ~(level_fill * 100),
+                    type = "scatter", mode = "none", fill = "tozeroy",
+                    fillcolor = "rgba(0, 114, 178, 0.2)", showlegend = FALSE, hoverinfo = "skip") %>%
           add_trace(data = df_48h, x = ~Zeit_Datum, y = ~(level * 100),
                     type = "scatter", mode = "lines",
                     name = if (is_bimodal) "Füllstand (0–10 cm = trocken–voll)"
                            else if (has_raw_level) "Pegel (korrigiert)" else "Pegel",
-                    line = list(color = "#0072B2", width = 2),
-                    fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
+                    line = list(color = "#0072B2", width = 2), connectgaps = FALSE,
                     hovertemplate = if (is_bimodal) "Füllstand: %{y:.1f} cm<extra></extra>"
                                     else "Pegel: %{y:.1f} cm<extra></extra>")
                     
@@ -230,6 +241,44 @@ for (i in seq_len(nrow(sensors))) {
                                  hovertemplate = "Regen: %{y:.2f} mm/h (Vorhersage)<extra></extra>")
         }
 
+        # Nahecho-Phasen (Sensor nass, Pegel nicht messbar) hinterlegen und
+        # RADOLAN-Regenereignisse in diesen Phasen als indirekte Ereignisse markieren
+        nahecho_shapes <- list()
+        if (has_nahecho) {
+            eps <- nahecho_episodes(df_48h$Zeit_Datum, df_48h$nahecho)
+            nahecho_shapes <- lapply(seq_len(nrow(eps)), function(k) list(
+                type = "rect", xref = "x", yref = "paper",
+                x0 = as.character(eps$start[k]), x1 = as.character(eps$end[k]),
+                y0 = 0, y1 = 1, layer = "below", line = list(width = 0),
+                fillcolor = "rgba(110, 110, 160, 0.18)"))
+            if (nrow(eps) > 0) {
+                p <- p %>% add_trace(
+                    # Legenden-Dummy außerhalb des sichtbaren y-Bereichs
+                    x = eps$start[1], y = -1000, type = "scatter", mode = "markers",
+                    name = "Sensor nass (Pegel nicht messbar)",
+                    marker = list(symbol = "square", size = 11, color = "rgba(110, 110, 160, 0.45)"),
+                    hoverinfo = "skip")
+            }
+            ev_nh <- if (has_radolan) nahecho_events(eps, radolan_precip) else NULL
+            if (!is.null(ev_nh) && nrow(ev_nh) > 0) {
+                y_top <- max(max(df_48h$level * 100, na.rm = TRUE) * 1.15, 20, na.rm = TRUE) * 0.93
+                ev_nh <- ev_nh %>% mutate(
+                    y = y_top,
+                    txt = paste0("<b>Ereignis (indirekt)</b><br>",
+                                 format(with_tz(rain_start, "Europe/Berlin"), "%d.%m. %H:%M"), "–",
+                                 format(with_tz(rain_end, "Europe/Berlin"), "%H:%M"),
+                                 "<br>Regen: ", format(total_precip_mm, decimal.mark = ","), " mm",
+                                 " (max. ", format(max_intensity_mm_h, decimal.mark = ","), " mm/h)",
+                                 "<br>Sensor nass, Pegel nicht messbar"))
+                p <- p %>% add_trace(
+                    data = ev_nh, x = ~rain_start, y = ~y, type = "scatter", mode = "markers",
+                    name = "Ereignis (indirekt, Nahecho)",
+                    marker = list(symbol = "triangle-down", size = 11, color = "#B2182B",
+                                  line = list(color = "white", width = 1)),
+                    text = ~txt, hovertemplate = "%{text}<extra></extra>")
+            }
+        }
+
         # "Jetzt"-Linie um Vergangenheit (RADOLAN) und Zukunft (Vorhersage) zu trennen
         now_shapes <- list(
             list(type = "line",
@@ -252,7 +301,7 @@ for (i in seq_len(nrow(sensors))) {
             yaxis2     = list(title = "Regen (mm/h)", overlaying = "y", side = "right",
                               showgrid = FALSE, zeroline = TRUE,
                               range = c(0, max_precip * 1.2)),
-            shapes     = now_shapes,
+            shapes     = c(nahecho_shapes, now_shapes),
             margin     = list(l = 40, r = margin_r, t = 40, b = 30),
             showlegend = TRUE,
             legend     = list(orientation = "h", x = 0, y = -0.15, font = list(size = 9)),

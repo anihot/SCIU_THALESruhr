@@ -3,12 +3,14 @@ library(dplyr)
 library(lubridate)
 library(fs)
 library(tidyr)
+source("scripts/utils/nahecho.R")
 
 # Config
 cleaned_dir    <- "data/processed/cleaned_analysis"
 events_file    <- "data/processed/detected_events.csv"
 events_md_file <- "data/processed/detected_events.md"
 precip_file    <- "data/processed/precipitation_at_sensors.csv"
+precip_hourly_file <- "data/processed/precipitation_hourly_at_sensors.csv"
 
 THRESHOLD          <- 0.004 # 0.4 cm - Peak-Schwelle (Seed-Punkte)
 LOW_THRESHOLD      <- 0.002 # 0.2 cm - Schwelle für "erhöht" (active_fraction)
@@ -64,6 +66,48 @@ if (file.exists(precip_file)) {
     } else {
         cat("Warning: Precipitation file is empty. Events classified without rain context.\n")
     }
+}
+
+# Stündlicher RADOLAN (lange Historie) für indirekte Nahecho-Ereignisse
+precip_hourly <- NULL
+if (file.exists(precip_hourly_file)) {
+    precip_hourly <- read_csv(precip_hourly_file, show_col_types = FALSE) %>%
+        mutate(timestamp = as.POSIXct(timestamp, tz = "UTC"))
+}
+
+# Indirekte Ereignisse für Stationen mit Nahecho (z. B. Wasserstraße):
+# RADOLAN-Regenereignisse, während derer der Sensor im Nahecho-Zustand war.
+# Der Sensor bestätigt Nässe am Standort, liefert aber keinen Pegel.
+# Zeitfenster wie bei der regulären Erkennung: nur ab Beginn der
+# 5-min-RADOLAN-Daten (precipitation_at_sensors.csv), damit die Ereignisliste
+# denselben Zeitraum abdeckt.
+detect_nahecho_events <- function(df, station_name, precip_hourly, since = NULL) {
+    if (is.null(precip_hourly) || !"nahecho" %in% names(df) || !any(df$nahecho, na.rm = TRUE)) return(NULL)
+    station_norm <- gsub("_", " ", gsub("_merged_export$", "", station_name))
+    ps <- unique(precip_hourly$station)
+    ps <- ps[sapply(ps, function(s) grepl(s, station_norm, fixed = TRUE))]
+    if (length(ps) == 0) return(NULL)
+    ph <- precip_hourly %>% filter(station == ps[1]) %>% select(timestamp, precipitation_mm)
+
+    episodes <- nahecho_episodes(df$Zeit_Datum, df$nahecho)
+    ev <- nahecho_events(episodes, ph)
+    if (!is.null(ev) && !is.null(since)) ev <- ev %>% filter(rain_end >= since)
+    if (is.null(ev) || nrow(ev) == 0) return(NULL)
+    tibble(
+        station             = gsub("_merged_export", "", station_name),
+        start_time          = ev$rain_start,
+        end_time            = ev$rain_end,
+        peak_level_cm       = NA_real_,
+        peak_time           = as.POSIXct(NA, tz = "UTC"),
+        duration_min        = as.numeric(difftime(ev$rain_end, ev$rain_start, units = "mins")),
+        avg_gradient_cm_min = NA_real_,
+        event_type          = EVENT_TYPE_NAHECHO,
+        total_precip_mm     = ev$total_precip_mm,
+        max_intensity_mm_h  = ev$max_intensity_mm_h,
+        radolan_verified    = TRUE,
+        level_reliable      = FALSE,
+        points_count        = NA_integer_
+    )
 }
 
 detect_events <- function(df, station_name, precip) {
@@ -321,7 +365,19 @@ for (file_path in cleaned_files) {
         {
             df <- read_csv(file_path, show_col_types = FALSE)
             ev <- detect_events(df, station, precip)
-            if (!is.null(ev)) {
+            ev_nh <- detect_nahecho_events(df, station, precip_hourly,
+                                           since = if (precip_available) min(precip$timestamp) else NULL)
+            if (!is.null(ev_nh)) {
+                # Überschneidung mit regulären Events: reguläres Event hat Vorrang
+                if (!is.null(ev) && nrow(ev) > 0) {
+                    overlap <- sapply(seq_len(nrow(ev_nh)), function(j)
+                        any(ev$start_time <= ev_nh$end_time[j] & ev$end_time >= ev_nh$start_time[j]))
+                    ev_nh <- ev_nh[!overlap, ]
+                }
+                cat("  Nahecho: ", nrow(ev_nh), " indirekte Ereignisse (RADOLAN-Regen bei nassem Sensor).\n", sep = "")
+                ev <- bind_rows(ev, ev_nh)
+            }
+            if (!is.null(ev) && nrow(ev) > 0) {
                 all_events[[station]] <- ev
                 cat("  Found", nrow(ev), "events.\n")
             }

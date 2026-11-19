@@ -2,6 +2,7 @@ library(dplyr)
 library(readr)
 library(fs)
 library(lubridate)
+source("scripts/utils/nahecho.R")
 
 # Input and Output Directories
 input_dir <- "data/raw/sensor_exports"
@@ -65,7 +66,19 @@ process_sensor_file <- function(file_path, max_level = 0.4) {
                        !is.na(diff_next) & diff_next > threshold
         ) %>%
         filter(!is_spike) %>%
-        select(Zeit_Datum = Timestamp, level = level_final, distance, level_raw)
+        select(Zeit_Datum = Timestamp, level = level_final, any_of("distance"), level_raw)
+
+    # Nahecho (z. B. Wasserstraße): bei Nässe misst der Sensor ~0,82 m statt
+    # der freien Strecke. Diese Messungen tragen keinen Wasserstand, daher
+    # level = NA (Lücke statt falscher Null) und Flag-Spalte für Plots/Events.
+    nh_thresh <- nahecho_threshold(station_name)
+    df_cleaned <- df_cleaned %>%
+        mutate(nahecho = if ("distance" %in% names(.)) flag_nahecho(distance, nh_thresh) else FALSE,
+               level   = ifelse(nahecho, NA_real_, level))
+    if (any(df_cleaned$nahecho)) {
+        cat("  Nahecho:", sum(df_cleaned$nahecho), "Messungen (distance <", nh_thresh,
+            "m) als nicht messbar markiert\n")
+    }
 
     output_file <- path(output_dir, paste0(station_name, "_cleaned.csv"))
     write_csv(df_cleaned, output_file)

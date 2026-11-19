@@ -5,11 +5,13 @@ library(dplyr)
 library(readr)
 library(lubridate)
 library(fs)
+source("scripts/utils/nahecho.R")
 
 cleaned_dir <- "data/processed/cleaned_analysis"
 output_dir  <- "data/output/graphs"
 docs_dir    <- "docs/graphs"
 precip_file <- "data/processed/precipitation_at_sensors.csv"
+precip_hourly_file <- "data/processed/precipitation_hourly_at_sensors.csv"
 
 if (!dir_exists(output_dir)) dir_create(output_dir)
 if (!dir_exists(docs_dir))   dir_create(docs_dir)
@@ -22,11 +24,16 @@ stations <- list(
   list(name = "Herzogstraße",     file = "Herzogstraße_merged_export_cleaned.csv",              safe = "Herzogstra_e")
 )
 
-# Load RADOLAN precipitation once
+# Load RADOLAN precipitation once.
+# Bevorzugt die stündliche Datei (gesamte Historie), sonst die 5-min-Datei
+# (nur die letzten Tage). Beide werden unten auf Stundensummen aggregiert.
 precip_all <- NULL
-if (file_exists(precip_file)) {
-  precip_all <- read_csv(precip_file, show_col_types = FALSE) %>%
-    mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
+for (pf in c(precip_hourly_file, precip_file)) {
+  if (is.null(precip_all) && file_exists(pf)) {
+    precip_all <- read_csv(pf, show_col_types = FALSE) %>%
+      mutate(timestamp = with_tz(as.POSIXct(timestamp, tz = "UTC"), "Europe/Berlin"))
+    if (nrow(precip_all) == 0) precip_all <- NULL else cat("Precipitation source:", pf, "\n")
+  }
 }
 
 cat("Generating full timeseries plots...\n")
@@ -48,18 +55,25 @@ for (st in stations) {
     mutate(Zeit_Datum = with_tz(as.POSIXct(Zeit_Datum, tz = "UTC"), "Europe/Berlin")) %>%
     filter(!is.na(Zeit_Datum))
 
-  has_raw <- "level_raw" %in% names(df)
+  has_raw     <- "level_raw" %in% names(df)
+  has_nahecho <- "nahecho" %in% names(df) && any(df$nahecho, na.rm = TRUE)
+  if (!"nahecho" %in% names(df)) df$nahecho <- FALSE
+  # Rohpegel im Nahecho ist ein Messartefakt (~6 m) -> nicht darstellen
+  if (has_raw && has_nahecho) df <- df %>% mutate(level_raw = ifelse(nahecho, NA_real_, level_raw))
 
+  na_mean <- function(v) if (all(is.na(v))) NA_real_ else mean(v, na.rm = TRUE)
   df_hourly <- df %>%
     mutate(bin = floor_date(Zeit_Datum, "10 minutes")) %>%
     group_by(bin) %>%
     summarise(
-      level     = mean(level, na.rm = TRUE),
-      level_raw = if (has_raw) mean(level_raw, na.rm = TRUE) else NA_real_,
+      level     = na_mean(level),
+      level_raw = if (has_raw) na_mean(level_raw) else NA_real_,
+      nahecho   = any(nahecho, na.rm = TRUE),
       .groups   = "drop"
     ) %>%
     rename(Zeit_Datum = bin) %>%
-    filter(!is.na(level))
+    # Nahecho-Bins bleiben als NA erhalten, damit die Linie dort unterbrochen wird
+    filter(!is.na(level) | nahecho)
 
   if (nrow(df_hourly) == 0) next
 
@@ -84,6 +98,27 @@ for (st in stations) {
     }
   }
 
+  # Nahecho-Phasen und indirekte Ereignisse (RADOLAN-Regen bei nassem Sensor)
+  nahecho_shapes <- list()
+  ev_nh <- NULL
+  if (has_nahecho) {
+    eps <- nahecho_episodes(df$Zeit_Datum, df$nahecho)
+    nahecho_shapes <- lapply(seq_len(nrow(eps)), function(k) list(
+      type = "rect", xref = "x", yref = "paper",
+      x0 = as.character(eps$start[k]), x1 = as.character(eps$end[k]),
+      y0 = 0, y1 = 1, layer = "below", line = list(width = 0),
+      fillcolor = "rgba(110, 110, 160, 0.18)"))
+    if (!is.null(precip_all)) {
+      ph <- precip_all %>% filter(station == st$name) %>%
+        mutate(timestamp = floor_date(timestamp, "hour")) %>%
+        group_by(timestamp) %>%
+        summarise(precipitation_mm = sum(precipitation_mm, na.rm = TRUE), .groups = "drop")
+      ev_nh <- nahecho_events(eps, ph)
+    }
+    cat("  ", st$name, ": ", nrow(eps), " Nahecho-Phasen, ",
+        if (is.null(ev_nh)) 0 else nrow(ev_nh), " indirekte Ereignisse\n", sep = "")
+  }
+
   p <- plot_ly()
 
   if (has_raw && any(!is.na(df_hourly$level_raw))) {
@@ -96,12 +131,18 @@ for (st in stations) {
     )
   }
 
+  # Fläche und Linie getrennt: Plotly füllt "tozeroy" sonst über Lücken (NA)
+  # hinweg. Die Fläche nutzt 0 statt NA, die Linie bleibt in Lücken unterbrochen.
   p <- p %>% add_trace(
+    data = df_hourly %>% mutate(level_fill = ifelse(is.na(level), 0, level)),
+    x = ~Zeit_Datum, y = ~(level_fill * y_scale),
+    type = "scatter", mode = "none", fill = "tozeroy",
+    fillcolor = "rgba(0, 114, 178, 0.2)", showlegend = FALSE, hoverinfo = "skip"
+  ) %>% add_trace(
     data = df_hourly, x = ~Zeit_Datum, y = ~(level * y_scale),
-    type = "scatter", mode = "lines",
+    type = "scatter", mode = "lines", connectgaps = FALSE,
     name = if (has_raw) "Pegel (bereinigt)" else "Pegel",
     line = list(color = "#0072B2", width = 1.5),
-    fill = "tozeroy", fillcolor = "rgba(0, 114, 178, 0.2)",
     hovertemplate = paste0("Pegel: %{y:.2f} ", y_unit, "<extra></extra>")
   )
 
@@ -114,6 +155,33 @@ for (st in stations) {
       marker = list(color = "rgba(255, 78, 0, 0.93)"),
       hovertemplate = "Regen: %{y:.2f} mm/h<extra></extra>"
     )
+  }
+
+  y_max <- suppressWarnings(max(df_hourly$level, na.rm = TRUE)) * y_scale * 1.1
+  if (!is.finite(y_max) || y_max <= 0) y_max <- 1
+
+  if (has_nahecho) {
+    p <- p %>% add_trace(
+      # Legenden-Dummy außerhalb des sichtbaren y-Bereichs
+      x = min(df_hourly$Zeit_Datum), y = -1000, type = "scatter", mode = "markers",
+      name = "Sensor nass (Pegel nicht messbar)",
+      marker = list(symbol = "square", size = 11, color = "rgba(110, 110, 160, 0.45)"),
+      hoverinfo = "skip")
+  }
+  if (!is.null(ev_nh) && nrow(ev_nh) > 0) {
+    ev_nh <- ev_nh %>% mutate(
+      y = y_max * 0.93,
+      txt = paste0("<b>Ereignis (indirekt)</b><br>",
+                   format(rain_start, "%d.%m.%Y %H:%M"), "–", format(rain_end, "%H:%M"),
+                   "<br>Regen: ", format(total_precip_mm, decimal.mark = ","), " mm",
+                   " (max. ", format(max_intensity_mm_h, decimal.mark = ","), " mm/h)",
+                   "<br>Sensor nass, Pegel nicht messbar"))
+    p <- p %>% add_trace(
+      data = ev_nh, x = ~rain_start, y = ~y, type = "scatter", mode = "markers",
+      name = "Ereignis (indirekt, Nahecho)",
+      marker = list(symbol = "triangle-down", size = 10, color = "#B2182B",
+                    line = list(color = "white", width = 1)),
+      text = ~txt, hovertemplate = "%{text}<extra></extra>")
   }
 
   date_range <- paste0(
@@ -147,10 +215,11 @@ for (st in stations) {
       rangeslider = list(visible = TRUE, thickness = 0.06)
     ),
     yaxis  = list(title = y_label, gridcolor = "#eeeeee",
-                  range = c(0, max(df_hourly$level, na.rm = TRUE) * y_scale * 1.1)),
+                  range = c(0, y_max)),
     yaxis2 = list(title = "Niederschlag (mm/h)", overlaying = "y", side = "right",
                   showgrid = FALSE, zeroline = TRUE,
                   range = c(0, max_precip_range)),
+    shapes = nahecho_shapes,
     margin = list(l = 50, r = margin_r, t = 90, b = 40),
     showlegend = TRUE,
     legend = list(orientation = "h", x = 0, y = -0.25, font = list(size = 10)),
