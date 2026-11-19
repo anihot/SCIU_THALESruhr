@@ -1,841 +1,169 @@
 station,timestamp,precipitation_mm,probability_percent,temp_c
-An der Kost,2026-11-18T23:00:00Z,0,65,9.2
-An der Kost,2026-11-19T00:00:00Z,0,47,9.7
-An der Kost,2026-11-19T01:00:00Z,0,30,9.1
-An der Kost,2026-11-19T02:00:00Z,0,16,9.5
-An der Kost,2026-11-19T03:00:00Z,0,14,9.7
-An der Kost,2026-11-19T04:00:00Z,0,36,9.6
-An der Kost,2026-11-19T05:00:00Z,1.2,70,9.1
-An der Kost,2026-11-19T06:00:00Z,1.1,96,9.5
-An der Kost,2026-11-19T07:00:00Z,1.1,100,9.8
-An der Kost,2026-11-19T08:00:00Z,0.6,100,10.4
-An der Kost,2026-11-19T09:00:00Z,0,96,10.4
-An der Kost,2026-11-19T10:00:00Z,0,91,10.7
-An der Kost,2026-11-19T11:00:00Z,0,83,10.4
-An der Kost,2026-11-19T12:00:00Z,0.1,78,10.1
-An der Kost,2026-11-19T13:00:00Z,0,78,10
-An der Kost,2026-11-19T14:00:00Z,0.2,80,9.5
-An der Kost,2026-11-19T15:00:00Z,0.1,82,9.5
-An der Kost,2026-11-19T16:00:00Z,0.1,81,9.3
-An der Kost,2026-11-19T17:00:00Z,0.6,80,9.1
-An der Kost,2026-11-19T18:00:00Z,0.8,78,9.1
-An der Kost,2026-11-19T19:00:00Z,1.1,76,9.2
-An der Kost,2026-11-19T20:00:00Z,0.8,73,9.1
-An der Kost,2026-11-19T21:00:00Z,0.5,71,9
-An der Kost,2026-11-19T22:00:00Z,0.5,69,9.1
-An der Kost,2026-11-19T23:00:00Z,0.3,68,9.1
-An der Kost,2026-11-20T00:00:00Z,0.5,67,8.7
-An der Kost,2026-11-20T01:00:00Z,0.2,67,7.6
-An der Kost,2026-11-20T02:00:00Z,0,67,6.5
-An der Kost,2026-11-20T03:00:00Z,0,67,6.3
-An der Kost,2026-11-20T04:00:00Z,0,65,5.7
-An der Kost,2026-11-20T05:00:00Z,0.2,62,5.3
-An der Kost,2026-11-20T06:00:00Z,0.1,59,5.3
-An der Kost,2026-11-20T07:00:00Z,0,56,5.3
-An der Kost,2026-11-20T08:00:00Z,0,53,5.4
-An der Kost,2026-11-20T09:00:00Z,0,49,5.5
-An der Kost,2026-11-20T10:00:00Z,0,45,5.9
-An der Kost,2026-11-20T11:00:00Z,0,40,6.1
-An der Kost,2026-11-20T12:00:00Z,0,35,6.9
-An der Kost,2026-11-20T13:00:00Z,0,28,7.3
-An der Kost,2026-11-20T14:00:00Z,0,21,7.3
-An der Kost,2026-11-20T15:00:00Z,0,14,6.9
-An der Kost,2026-11-20T16:00:00Z,0,8,6
-An der Kost,2026-11-20T17:00:00Z,0,3,5
-An der Kost,2026-11-20T18:00:00Z,0,0,3.9
-An der Kost,2026-11-20T19:00:00Z,0,0,3.3
-An der Kost,2026-11-20T20:00:00Z,0,0,2.6
-An der Kost,2026-11-20T21:00:00Z,0,0,2
-An der Kost,2026-11-20T22:00:00Z,0,1,1.9
-An der Kost,2026-11-20T23:00:00Z,0,1,2.1
-An der Kost,2026-11-21T00:00:00Z,0,2,2.3
-An der Kost,2026-11-21T01:00:00Z,0,2,3.2
-An der Kost,2026-11-21T02:00:00Z,0,2,3.7
-An der Kost,2026-11-21T03:00:00Z,0,2,3.7
-An der Kost,2026-11-21T04:00:00Z,0,2,3.7
-An der Kost,2026-11-21T05:00:00Z,0,2,3.5
-An der Kost,2026-11-21T06:00:00Z,0,2,3.8
-An der Kost,2026-11-21T07:00:00Z,0,2,4
-An der Kost,2026-11-21T08:00:00Z,0,2,4.1
-An der Kost,2026-11-21T09:00:00Z,0,2,5.2
-An der Kost,2026-11-21T10:00:00Z,0,3,6.1
-An der Kost,2026-11-21T11:00:00Z,0,5,7.1
-An der Kost,2026-11-21T12:00:00Z,0,6,7.6
-An der Kost,2026-11-21T13:00:00Z,0.08,6,7.2
-An der Kost,2026-11-21T14:00:00Z,0,6,7
-An der Kost,2026-11-21T15:00:00Z,0,6,6.2
-An der Kost,2026-11-21T16:00:00Z,0,5,4.7
-An der Kost,2026-11-21T17:00:00Z,0,4,4.2
-An der Kost,2026-11-21T18:00:00Z,0,4,3.9
-An der Kost,2026-11-21T19:00:00Z,0,5,3.5
-An der Kost,2026-11-21T20:00:00Z,0,6,3.1
-An der Kost,2026-11-21T21:00:00Z,0,6,2.7
-An der Kost,2026-11-21T22:00:00Z,0,4,2.3
-An der Kost,2026-11-21T23:00:00Z,0,2,1.8
-An der Kost,2026-11-22T00:00:00Z,0,0,1.2
-An der Kost,2026-11-22T01:00:00Z,0,0,0.7
-An der Kost,2026-11-22T02:00:00Z,0,0,0
-An der Kost,2026-11-22T03:00:00Z,0,0,-0.7
-An der Kost,2026-11-22T04:00:00Z,0,0,-1.5
-An der Kost,2026-11-22T05:00:00Z,0,0,-1.7
-An der Kost,2026-11-22T06:00:00Z,0,0,-1.2
-An der Kost,2026-11-22T07:00:00Z,0,0,-0.7
-An der Kost,2026-11-22T08:00:00Z,0,0,0.4
-An der Kost,2026-11-22T09:00:00Z,0,0,2
-An der Kost,2026-11-22T10:00:00Z,0,0,3.5
-An der Kost,2026-11-22T11:00:00Z,0,0,4.4
-An der Kost,2026-11-22T12:00:00Z,0,0,5.1
-An der Kost,2026-11-22T13:00:00Z,0,0,5
-An der Kost,2026-11-22T14:00:00Z,0,0,4.5
-An der Kost,2026-11-22T15:00:00Z,0,0,4
-An der Kost,2026-11-22T16:00:00Z,0,0,3.7
-An der Kost,2026-11-22T17:00:00Z,0,0,3.4
-An der Kost,2026-11-22T18:00:00Z,0,0,3.2
-An der Kost,2026-11-22T19:00:00Z,0,0,3
-An der Kost,2026-11-22T20:00:00Z,0,0,2.9
-An der Kost,2026-11-22T21:00:00Z,0,0,2.7
-An der Kost,2026-11-22T22:00:00Z,0,0,2.1
-An der Kost,2026-11-22T23:00:00Z,0,0,1.3
-An der Kost,2026-11-23T00:00:00Z,0,0,0.8
-An der Kost,2026-11-23T01:00:00Z,0,0,0.8
-An der Kost,2026-11-23T02:00:00Z,0,0,1
-An der Kost,2026-11-23T03:00:00Z,0,0,1.1
-An der Kost,2026-11-23T04:00:00Z,0,1,0.7
-An der Kost,2026-11-23T05:00:00Z,0,2,0.1
-An der Kost,2026-11-23T06:00:00Z,0,2,-0.4
-An der Kost,2026-11-23T07:00:00Z,0,1,-0.6
-An der Kost,2026-11-23T08:00:00Z,0,0,-0.6
-An der Kost,2026-11-23T09:00:00Z,0,0,-0.3
-An der Kost,2026-11-23T10:00:00Z,0,1,0.5
-An der Kost,2026-11-23T11:00:00Z,0,3,1.6
-An der Kost,2026-11-23T12:00:00Z,0,4,2.3
-An der Kost,2026-11-23T13:00:00Z,0,4,2.4
-An der Kost,2026-11-23T14:00:00Z,0,3,2
-An der Kost,2026-11-23T15:00:00Z,0,2,1.5
-An der Kost,2026-11-23T16:00:00Z,0,1,0.9
-An der Kost,2026-11-23T17:00:00Z,0,0,0.2
-An der Kost,2026-11-23T18:00:00Z,0,0,-0.5
-An der Kost,2026-11-23T19:00:00Z,0,1,-0.9
-An der Kost,2026-11-23T20:00:00Z,0,3,-1.2
-An der Kost,2026-11-23T21:00:00Z,0,4,-1.4
-An der Kost,2026-11-23T22:00:00Z,0,3,-1.5
-An der Kost,2026-11-23T23:00:00Z,0,1,-1.4
-An der Kost,2026-11-24T00:00:00Z,0,0,-1.5
-An der Kost,2026-11-24T01:00:00Z,0,0,-1.6
-An der Kost,2026-11-24T02:00:00Z,0,0,-1.7
-An der Kost,2026-11-24T03:00:00Z,0,0,-1.9
-An der Kost,2026-11-24T04:00:00Z,0,0,-2.2
-An der Kost,2026-11-24T05:00:00Z,0,0,-2.5
-An der Kost,2026-11-24T06:00:00Z,0,0,-2.5
-An der Kost,2026-11-24T07:00:00Z,0,0,-1.9
-An der Kost,2026-11-24T08:00:00Z,0,0,-1
-An der Kost,2026-11-24T09:00:00Z,0,0,-0.1
-An der Kost,2026-11-24T10:00:00Z,0,0,1
-An der Kost,2026-11-24T11:00:00Z,0,0,2
-An der Kost,2026-11-24T12:00:00Z,0,0,2.5
-An der Kost,2026-11-24T13:00:00Z,0,0,2.2
-An der Kost,2026-11-24T14:00:00Z,0,0,1.5
-An der Kost,2026-11-24T15:00:00Z,0,0,0.8
-An der Kost,2026-11-24T16:00:00Z,0,0,-0.1
-An der Kost,2026-11-24T17:00:00Z,0,0,-1
-An der Kost,2026-11-24T18:00:00Z,0,0,-1.7
-An der Kost,2026-11-24T19:00:00Z,0,0,-0.2
-An der Kost,2026-11-24T20:00:00Z,0,0,-0.3
-An der Kost,2026-11-24T21:00:00Z,0,0,-0.3
-An der Kost,2026-11-24T22:00:00Z,0,0,-0.2
-An der Kost,2026-11-24T23:00:00Z,0,0,-0.1
-An der Kost,2026-11-25T00:00:00Z,0,0,-0.1
-An der Kost,2026-11-25T01:00:00Z,0,0,-0.1
-An der Kost,2026-11-25T02:00:00Z,0,1,-0.2
-An der Kost,2026-11-25T03:00:00Z,0,2,-0.4
-An der Kost,2026-11-25T04:00:00Z,0,3,-0.4
-An der Kost,2026-11-25T05:00:00Z,0,4,-0.4
-An der Kost,2026-11-25T06:00:00Z,0,6,-0.1
-An der Kost,2026-11-25T07:00:00Z,0,8,0.4
-An der Kost,2026-11-25T08:00:00Z,0,11,1.2
-An der Kost,2026-11-25T09:00:00Z,0,13,2.1
-An der Kost,2026-11-25T10:00:00Z,0,15,3
-An der Kost,2026-11-25T11:00:00Z,0,18,3.7
-An der Kost,2026-11-25T12:00:00Z,0,20,4.1
-An der Kost,2026-11-25T13:00:00Z,0,22,4.1
-An der Kost,2026-11-25T14:00:00Z,0,23,3.8
-An der Kost,2026-11-25T15:00:00Z,0,24,3.3
-An der Kost,2026-11-25T16:00:00Z,0,25,2.8
-An der Kost,2026-11-25T17:00:00Z,0,26,2.4
-An der Kost,2026-11-25T18:00:00Z,0,27,2
-An der Kost,2026-11-25T19:00:00Z,0.2,28,1.8
-An der Kost,2026-11-25T20:00:00Z,0.2,30,1.7
-An der Kost,2026-11-25T21:00:00Z,0.2,31,1.6
-An der Kost,2026-11-25T22:00:00Z,0.2,32,1.5
-Wasserstraße,2026-11-18T23:00:00Z,0,65,8.9
-Wasserstraße,2026-11-19T00:00:00Z,0,47,9.5
-Wasserstraße,2026-11-19T01:00:00Z,0,30,8.9
-Wasserstraße,2026-11-19T02:00:00Z,0,16,9.2
-Wasserstraße,2026-11-19T03:00:00Z,0,14,9.4
-Wasserstraße,2026-11-19T04:00:00Z,0,36,9.3
-Wasserstraße,2026-11-19T05:00:00Z,1,70,8.8
-Wasserstraße,2026-11-19T06:00:00Z,1.2,96,9.1
-Wasserstraße,2026-11-19T07:00:00Z,1.4,100,9.4
-Wasserstraße,2026-11-19T08:00:00Z,1,100,10
-Wasserstraße,2026-11-19T09:00:00Z,0,96,10.2
-Wasserstraße,2026-11-19T10:00:00Z,0,91,10.4
-Wasserstraße,2026-11-19T11:00:00Z,0,83,10.1
-Wasserstraße,2026-11-19T12:00:00Z,0.1,78,9.8
-Wasserstraße,2026-11-19T13:00:00Z,0,78,9.8
-Wasserstraße,2026-11-19T14:00:00Z,0.2,80,9.2
-Wasserstraße,2026-11-19T15:00:00Z,0.1,82,9.1
-Wasserstraße,2026-11-19T16:00:00Z,0,81,9.1
-Wasserstraße,2026-11-19T17:00:00Z,0.3,80,8.9
-Wasserstraße,2026-11-19T18:00:00Z,1.2,78,8.8
-Wasserstraße,2026-11-19T19:00:00Z,2.6,76,8.9
-Wasserstraße,2026-11-19T20:00:00Z,0.2,73,8.9
-Wasserstraße,2026-11-19T21:00:00Z,0.1,71,8.8
-Wasserstraße,2026-11-19T22:00:00Z,0.2,69,8.8
-Wasserstraße,2026-11-19T23:00:00Z,0,68,8.7
-Wasserstraße,2026-11-20T00:00:00Z,0.4,67,8.1
-Wasserstraße,2026-11-20T01:00:00Z,0.1,67,6.2
-Wasserstraße,2026-11-20T02:00:00Z,0,67,5.9
-Wasserstraße,2026-11-20T03:00:00Z,0.1,67,5.6
-Wasserstraße,2026-11-20T04:00:00Z,0,65,5.1
-Wasserstraße,2026-11-20T05:00:00Z,0.4,62,4.8
-Wasserstraße,2026-11-20T06:00:00Z,0.1,59,4.8
-Wasserstraße,2026-11-20T07:00:00Z,0,56,4.8
-Wasserstraße,2026-11-20T08:00:00Z,0,53,4.9
-Wasserstraße,2026-11-20T09:00:00Z,0,49,4.9
-Wasserstraße,2026-11-20T10:00:00Z,0,45,5.2
-Wasserstraße,2026-11-20T11:00:00Z,0,40,5.5
-Wasserstraße,2026-11-20T12:00:00Z,0,35,6.4
-Wasserstraße,2026-11-20T13:00:00Z,0,28,6.7
-Wasserstraße,2026-11-20T14:00:00Z,0,21,6.8
-Wasserstraße,2026-11-20T15:00:00Z,0,14,6.6
-Wasserstraße,2026-11-20T16:00:00Z,0,8,5.8
-Wasserstraße,2026-11-20T17:00:00Z,0,3,4.8
-Wasserstraße,2026-11-20T18:00:00Z,0,0,3.9
-Wasserstraße,2026-11-20T19:00:00Z,0,0,3.6
-Wasserstraße,2026-11-20T20:00:00Z,0,0,3.4
-Wasserstraße,2026-11-20T21:00:00Z,0,0,3
-Wasserstraße,2026-11-20T22:00:00Z,0,1,2.8
-Wasserstraße,2026-11-20T23:00:00Z,0,1,2.5
-Wasserstraße,2026-11-21T00:00:00Z,0,2,3
-Wasserstraße,2026-11-21T01:00:00Z,0,2,3.7
-Wasserstraße,2026-11-21T02:00:00Z,0,2,3.6
-Wasserstraße,2026-11-21T03:00:00Z,0,2,3.7
-Wasserstraße,2026-11-21T04:00:00Z,0,2,3.4
-Wasserstraße,2026-11-21T05:00:00Z,0,2,3.6
-Wasserstraße,2026-11-21T06:00:00Z,0,2,3.8
-Wasserstraße,2026-11-21T07:00:00Z,0,2,4
-Wasserstraße,2026-11-21T08:00:00Z,0.4,2,4.1
-Wasserstraße,2026-11-21T09:00:00Z,0,2,4.9
-Wasserstraße,2026-11-21T10:00:00Z,0,3,5.9
-Wasserstraße,2026-11-21T11:00:00Z,0,5,6.8
-Wasserstraße,2026-11-21T12:00:00Z,0,6,7.3
-Wasserstraße,2026-11-21T13:00:00Z,0.08,6,7
-Wasserstraße,2026-11-21T14:00:00Z,0,6,7
-Wasserstraße,2026-11-21T15:00:00Z,0.05,6,6.4
-Wasserstraße,2026-11-21T16:00:00Z,0,5,5.3
-Wasserstraße,2026-11-21T17:00:00Z,0,4,4.8
-Wasserstraße,2026-11-21T18:00:00Z,0,4,4.3
-Wasserstraße,2026-11-21T19:00:00Z,0,5,3.9
-Wasserstraße,2026-11-21T20:00:00Z,0,6,3.5
-Wasserstraße,2026-11-21T21:00:00Z,0,6,3
-Wasserstraße,2026-11-21T22:00:00Z,0,4,2.6
-Wasserstraße,2026-11-21T23:00:00Z,0,2,2.1
-Wasserstraße,2026-11-22T00:00:00Z,0,0,1.5
-Wasserstraße,2026-11-22T01:00:00Z,0,0,0.9
-Wasserstraße,2026-11-22T02:00:00Z,0,0,0.3
-Wasserstraße,2026-11-22T03:00:00Z,0,0,-0.4
-Wasserstraße,2026-11-22T04:00:00Z,0,0,-1.2
-Wasserstraße,2026-11-22T05:00:00Z,0,0,-1.7
-Wasserstraße,2026-11-22T06:00:00Z,0,0,-1.4
-Wasserstraße,2026-11-22T07:00:00Z,0,0,-1.2
-Wasserstraße,2026-11-22T08:00:00Z,0,0,-0.3
-Wasserstraße,2026-11-22T09:00:00Z,0,0,1.1
-Wasserstraße,2026-11-22T10:00:00Z,0,0,2.7
-Wasserstraße,2026-11-22T11:00:00Z,0,0,3.7
-Wasserstraße,2026-11-22T12:00:00Z,0,0,4.5
-Wasserstraße,2026-11-22T13:00:00Z,0,0,4.5
-Wasserstraße,2026-11-22T14:00:00Z,0,0,4.2
-Wasserstraße,2026-11-22T15:00:00Z,0,0,3.8
-Wasserstraße,2026-11-22T16:00:00Z,0,0,3.7
-Wasserstraße,2026-11-22T17:00:00Z,0,0,3.5
-Wasserstraße,2026-11-22T18:00:00Z,0,0,3.4
-Wasserstraße,2026-11-22T19:00:00Z,0,0,3.2
-Wasserstraße,2026-11-22T20:00:00Z,0,0,3
-Wasserstraße,2026-11-22T21:00:00Z,0,0,2.7
-Wasserstraße,2026-11-22T22:00:00Z,0,0,2.2
-Wasserstraße,2026-11-22T23:00:00Z,0,0,1.5
-Wasserstraße,2026-11-23T00:00:00Z,0,0,1.1
-Wasserstraße,2026-11-23T01:00:00Z,0,0,1.2
-Wasserstraße,2026-11-23T02:00:00Z,0,0,1.5
-Wasserstraße,2026-11-23T03:00:00Z,0,0,1.5
-Wasserstraße,2026-11-23T04:00:00Z,0,1,0.8
-Wasserstraße,2026-11-23T05:00:00Z,0,2,-0.1
-Wasserstraße,2026-11-23T06:00:00Z,0,2,-0.7
-Wasserstraße,2026-11-23T07:00:00Z,0,1,-0.8
-Wasserstraße,2026-11-23T08:00:00Z,0,0,-0.6
-Wasserstraße,2026-11-23T09:00:00Z,0,0,-0.2
-Wasserstraße,2026-11-23T10:00:00Z,0,1,0.7
-Wasserstraße,2026-11-23T11:00:00Z,0,3,1.8
-Wasserstraße,2026-11-23T12:00:00Z,0,4,2.5
-Wasserstraße,2026-11-23T13:00:00Z,0,4,2.6
-Wasserstraße,2026-11-23T14:00:00Z,0,3,2.4
-Wasserstraße,2026-11-23T15:00:00Z,0,2,2
-Wasserstraße,2026-11-23T16:00:00Z,0,1,1.3
-Wasserstraße,2026-11-23T17:00:00Z,0,0,0.5
-Wasserstraße,2026-11-23T18:00:00Z,0,0,-0.3
-Wasserstraße,2026-11-23T19:00:00Z,0,1,-0.7
-Wasserstraße,2026-11-23T20:00:00Z,0,3,-1.1
-Wasserstraße,2026-11-23T21:00:00Z,0,4,-1.4
-Wasserstraße,2026-11-23T22:00:00Z,0,3,-1.6
-Wasserstraße,2026-11-23T23:00:00Z,0,1,-1.8
-Wasserstraße,2026-11-24T00:00:00Z,0,0,-2
-Wasserstraße,2026-11-24T01:00:00Z,0,0,-2.1
-Wasserstraße,2026-11-24T02:00:00Z,0,0,-2.1
-Wasserstraße,2026-11-24T03:00:00Z,0,0,-2.2
-Wasserstraße,2026-11-24T04:00:00Z,0,0,-2.5
-Wasserstraße,2026-11-24T05:00:00Z,0,0,-2.8
-Wasserstraße,2026-11-24T06:00:00Z,0,0,-2.9
-Wasserstraße,2026-11-24T07:00:00Z,0,0,-2.5
-Wasserstraße,2026-11-24T08:00:00Z,0,0,-1.9
-Wasserstraße,2026-11-24T09:00:00Z,0,0,-1.1
-Wasserstraße,2026-11-24T10:00:00Z,0,0,0.1
-Wasserstraße,2026-11-24T11:00:00Z,0,0,1.3
-Wasserstraße,2026-11-24T12:00:00Z,0,0,2.1
-Wasserstraße,2026-11-24T13:00:00Z,0,0,2
-Wasserstraße,2026-11-24T14:00:00Z,0,0,1.5
-Wasserstraße,2026-11-24T15:00:00Z,0,0,0.9
-Wasserstraße,2026-11-24T16:00:00Z,0,0,0.2
-Wasserstraße,2026-11-24T17:00:00Z,0,0,-0.7
-Wasserstraße,2026-11-24T18:00:00Z,0,0,-1.3
-Wasserstraße,2026-11-24T19:00:00Z,0,0,-0.4
-Wasserstraße,2026-11-24T20:00:00Z,0,0,-0.6
-Wasserstraße,2026-11-24T21:00:00Z,0,0,-0.7
-Wasserstraße,2026-11-24T22:00:00Z,0,0,-0.7
-Wasserstraße,2026-11-24T23:00:00Z,0,0,-0.7
-Wasserstraße,2026-11-25T00:00:00Z,0,0,-0.7
-Wasserstraße,2026-11-25T01:00:00Z,0,0,-0.8
-Wasserstraße,2026-11-25T02:00:00Z,0,1,-0.9
-Wasserstraße,2026-11-25T03:00:00Z,0,2,-1
-Wasserstraße,2026-11-25T04:00:00Z,0,3,-1
-Wasserstraße,2026-11-25T05:00:00Z,0,4,-0.9
-Wasserstraße,2026-11-25T06:00:00Z,0,6,-0.6
-Wasserstraße,2026-11-25T07:00:00Z,0,8,0.1
-Wasserstraße,2026-11-25T08:00:00Z,0,11,1
-Wasserstraße,2026-11-25T09:00:00Z,0,13,2
-Wasserstraße,2026-11-25T10:00:00Z,0,15,3
-Wasserstraße,2026-11-25T11:00:00Z,0,18,3.8
-Wasserstraße,2026-11-25T12:00:00Z,0,20,4.2
-Wasserstraße,2026-11-25T13:00:00Z,0,22,4.1
-Wasserstraße,2026-11-25T14:00:00Z,0,23,3.8
-Wasserstraße,2026-11-25T15:00:00Z,0,24,3.2
-Wasserstraße,2026-11-25T16:00:00Z,0,25,2.6
-Wasserstraße,2026-11-25T17:00:00Z,0,26,2
-Wasserstraße,2026-11-25T18:00:00Z,0,27,1.6
-Wasserstraße,2026-11-25T19:00:00Z,0.1,28,1.3
-Wasserstraße,2026-11-25T20:00:00Z,0.1,30,1.1
-Wasserstraße,2026-11-25T21:00:00Z,0.1,31,1
-Wasserstraße,2026-11-25T22:00:00Z,0.1,32,0.9
-Königsallee,2026-11-18T23:00:00Z,0,65,9
-Königsallee,2026-11-19T00:00:00Z,0,47,9.5
-Königsallee,2026-11-19T01:00:00Z,0,30,9
-Königsallee,2026-11-19T02:00:00Z,0,16,9.3
-Königsallee,2026-11-19T03:00:00Z,0,14,9.4
-Königsallee,2026-11-19T04:00:00Z,0,36,9.3
-Königsallee,2026-11-19T05:00:00Z,1,70,8.8
-Königsallee,2026-11-19T06:00:00Z,1.2,96,9.1
-Königsallee,2026-11-19T07:00:00Z,1.4,100,9.4
-Königsallee,2026-11-19T08:00:00Z,1,100,10
-Königsallee,2026-11-19T09:00:00Z,0,96,10.2
-Königsallee,2026-11-19T10:00:00Z,0,91,10.4
-Königsallee,2026-11-19T11:00:00Z,0,83,10.1
-Königsallee,2026-11-19T12:00:00Z,0.1,78,9.9
-Königsallee,2026-11-19T13:00:00Z,0,78,9.8
-Königsallee,2026-11-19T14:00:00Z,0.2,80,9.3
-Königsallee,2026-11-19T15:00:00Z,0.1,82,9.2
-Königsallee,2026-11-19T16:00:00Z,0,81,9.2
-Königsallee,2026-11-19T17:00:00Z,0.3,80,8.9
-Königsallee,2026-11-19T18:00:00Z,1.2,78,8.9
-Königsallee,2026-11-19T19:00:00Z,2.6,76,9
-Königsallee,2026-11-19T20:00:00Z,0.2,73,8.9
-Königsallee,2026-11-19T21:00:00Z,0.1,71,8.8
-Königsallee,2026-11-19T22:00:00Z,0.2,69,8.8
-Königsallee,2026-11-19T23:00:00Z,0,68,8.8
-Königsallee,2026-11-20T00:00:00Z,0.4,67,8.1
-Königsallee,2026-11-20T01:00:00Z,0.1,67,6.3
-Königsallee,2026-11-20T02:00:00Z,0,67,6
-Königsallee,2026-11-20T03:00:00Z,0.1,67,5.6
-Königsallee,2026-11-20T04:00:00Z,0,65,5.2
-Königsallee,2026-11-20T05:00:00Z,0.4,62,4.8
-Königsallee,2026-11-20T06:00:00Z,0.1,59,4.9
-Königsallee,2026-11-20T07:00:00Z,0,56,4.9
-Königsallee,2026-11-20T08:00:00Z,0,53,5
-Königsallee,2026-11-20T09:00:00Z,0,49,4.9
-Königsallee,2026-11-20T10:00:00Z,0,45,5.3
-Königsallee,2026-11-20T11:00:00Z,0,40,5.6
-Königsallee,2026-11-20T12:00:00Z,0,35,6.4
-Königsallee,2026-11-20T13:00:00Z,0,28,6.8
-Königsallee,2026-11-20T14:00:00Z,0,21,6.8
-Königsallee,2026-11-20T15:00:00Z,0,14,6.7
-Königsallee,2026-11-20T16:00:00Z,0,8,5.8
-Königsallee,2026-11-20T17:00:00Z,0,3,4.8
-Königsallee,2026-11-20T18:00:00Z,0,0,4
-Königsallee,2026-11-20T19:00:00Z,0,0,3.6
-Königsallee,2026-11-20T20:00:00Z,0,0,3.4
-Königsallee,2026-11-20T21:00:00Z,0,0,3.1
-Königsallee,2026-11-20T22:00:00Z,0,1,2.8
-Königsallee,2026-11-20T23:00:00Z,0,1,2.6
-Königsallee,2026-11-21T00:00:00Z,0,2,3
-Königsallee,2026-11-21T01:00:00Z,0,2,3.7
-Königsallee,2026-11-21T02:00:00Z,0,2,3.7
-Königsallee,2026-11-21T03:00:00Z,0,2,3.7
-Königsallee,2026-11-21T04:00:00Z,0,2,3.4
-Königsallee,2026-11-21T05:00:00Z,0,2,3.7
-Königsallee,2026-11-21T06:00:00Z,0,2,3.9
-Königsallee,2026-11-21T07:00:00Z,0,2,4
-Königsallee,2026-11-21T08:00:00Z,0.4,2,4.1
-Königsallee,2026-11-21T09:00:00Z,0,2,5
-Königsallee,2026-11-21T10:00:00Z,0,3,5.9
-Königsallee,2026-11-21T11:00:00Z,0,5,6.8
-Königsallee,2026-11-21T12:00:00Z,0,6,7.3
-Königsallee,2026-11-21T13:00:00Z,0.08,6,7
-Königsallee,2026-11-21T14:00:00Z,0,6,7
-Königsallee,2026-11-21T15:00:00Z,0.05,6,6.4
-Königsallee,2026-11-21T16:00:00Z,0,5,5.3
-Königsallee,2026-11-21T17:00:00Z,0,4,4.8
-Königsallee,2026-11-21T18:00:00Z,0,4,4.3
-Königsallee,2026-11-21T19:00:00Z,0,5,3.9
-Königsallee,2026-11-21T20:00:00Z,0,6,3.5
-Königsallee,2026-11-21T21:00:00Z,0,6,3
-Königsallee,2026-11-21T22:00:00Z,0,4,2.6
-Königsallee,2026-11-21T23:00:00Z,0,2,2.1
-Königsallee,2026-11-22T00:00:00Z,0,0,1.5
-Königsallee,2026-11-22T01:00:00Z,0,0,0.9
-Königsallee,2026-11-22T02:00:00Z,0,0,0.3
-Königsallee,2026-11-22T03:00:00Z,0,0,-0.4
-Königsallee,2026-11-22T04:00:00Z,0,0,-1.2
-Königsallee,2026-11-22T05:00:00Z,0,0,-1.7
-Königsallee,2026-11-22T06:00:00Z,0,0,-1.4
-Königsallee,2026-11-22T07:00:00Z,0,0,-1.2
-Königsallee,2026-11-22T08:00:00Z,0,0,-0.3
-Königsallee,2026-11-22T09:00:00Z,0,0,1.1
-Königsallee,2026-11-22T10:00:00Z,0,0,2.7
-Königsallee,2026-11-22T11:00:00Z,0,0,3.7
-Königsallee,2026-11-22T12:00:00Z,0,0,4.5
-Königsallee,2026-11-22T13:00:00Z,0,0,4.5
-Königsallee,2026-11-22T14:00:00Z,0,0,4.2
-Königsallee,2026-11-22T15:00:00Z,0,0,3.8
-Königsallee,2026-11-22T16:00:00Z,0,0,3.7
-Königsallee,2026-11-22T17:00:00Z,0,0,3.5
-Königsallee,2026-11-22T18:00:00Z,0,0,3.4
-Königsallee,2026-11-22T19:00:00Z,0,0,3.2
-Königsallee,2026-11-22T20:00:00Z,0,0,3
-Königsallee,2026-11-22T21:00:00Z,0,0,2.7
-Königsallee,2026-11-22T22:00:00Z,0,0,2.2
-Königsallee,2026-11-22T23:00:00Z,0,0,1.5
-Königsallee,2026-11-23T00:00:00Z,0,0,1.1
-Königsallee,2026-11-23T01:00:00Z,0,0,1.2
-Königsallee,2026-11-23T02:00:00Z,0,0,1.5
-Königsallee,2026-11-23T03:00:00Z,0,0,1.5
-Königsallee,2026-11-23T04:00:00Z,0,1,0.8
-Königsallee,2026-11-23T05:00:00Z,0,2,-0.1
-Königsallee,2026-11-23T06:00:00Z,0,2,-0.7
-Königsallee,2026-11-23T07:00:00Z,0,1,-0.8
-Königsallee,2026-11-23T08:00:00Z,0,0,-0.6
-Königsallee,2026-11-23T09:00:00Z,0,0,-0.2
-Königsallee,2026-11-23T10:00:00Z,0,1,0.7
-Königsallee,2026-11-23T11:00:00Z,0,3,1.8
-Königsallee,2026-11-23T12:00:00Z,0,4,2.5
-Königsallee,2026-11-23T13:00:00Z,0,4,2.6
-Königsallee,2026-11-23T14:00:00Z,0,3,2.4
-Königsallee,2026-11-23T15:00:00Z,0,2,2
-Königsallee,2026-11-23T16:00:00Z,0,1,1.3
-Königsallee,2026-11-23T17:00:00Z,0,0,0.5
-Königsallee,2026-11-23T18:00:00Z,0,0,-0.3
-Königsallee,2026-11-23T19:00:00Z,0,1,-0.7
-Königsallee,2026-11-23T20:00:00Z,0,3,-1.1
-Königsallee,2026-11-23T21:00:00Z,0,4,-1.4
-Königsallee,2026-11-23T22:00:00Z,0,3,-1.6
-Königsallee,2026-11-23T23:00:00Z,0,1,-1.8
-Königsallee,2026-11-24T00:00:00Z,0,0,-2
-Königsallee,2026-11-24T01:00:00Z,0,0,-2.1
-Königsallee,2026-11-24T02:00:00Z,0,0,-2.1
-Königsallee,2026-11-24T03:00:00Z,0,0,-2.2
-Königsallee,2026-11-24T04:00:00Z,0,0,-2.5
-Königsallee,2026-11-24T05:00:00Z,0,0,-2.8
-Königsallee,2026-11-24T06:00:00Z,0,0,-2.9
-Königsallee,2026-11-24T07:00:00Z,0,0,-2.5
-Königsallee,2026-11-24T08:00:00Z,0,0,-1.9
-Königsallee,2026-11-24T09:00:00Z,0,0,-1.1
-Königsallee,2026-11-24T10:00:00Z,0,0,0.1
-Königsallee,2026-11-24T11:00:00Z,0,0,1.3
-Königsallee,2026-11-24T12:00:00Z,0,0,2.1
-Königsallee,2026-11-24T13:00:00Z,0,0,2
-Königsallee,2026-11-24T14:00:00Z,0,0,1.5
-Königsallee,2026-11-24T15:00:00Z,0,0,0.9
-Königsallee,2026-11-24T16:00:00Z,0,0,0.2
-Königsallee,2026-11-24T17:00:00Z,0,0,-0.7
-Königsallee,2026-11-24T18:00:00Z,0,0,-1.3
-Königsallee,2026-11-24T19:00:00Z,0,0,-0.4
-Königsallee,2026-11-24T20:00:00Z,0,0,-0.6
-Königsallee,2026-11-24T21:00:00Z,0,0,-0.7
-Königsallee,2026-11-24T22:00:00Z,0,0,-0.7
-Königsallee,2026-11-24T23:00:00Z,0,0,-0.7
-Königsallee,2026-11-25T00:00:00Z,0,0,-0.7
-Königsallee,2026-11-25T01:00:00Z,0,0,-0.8
-Königsallee,2026-11-25T02:00:00Z,0,1,-0.9
-Königsallee,2026-11-25T03:00:00Z,0,2,-1
-Königsallee,2026-11-25T04:00:00Z,0,3,-1
-Königsallee,2026-11-25T05:00:00Z,0,4,-0.9
-Königsallee,2026-11-25T06:00:00Z,0,6,-0.6
-Königsallee,2026-11-25T07:00:00Z,0,8,0.1
-Königsallee,2026-11-25T08:00:00Z,0,11,1
-Königsallee,2026-11-25T09:00:00Z,0,13,2
-Königsallee,2026-11-25T10:00:00Z,0,15,3
-Königsallee,2026-11-25T11:00:00Z,0,18,3.8
-Königsallee,2026-11-25T12:00:00Z,0,20,4.2
-Königsallee,2026-11-25T13:00:00Z,0,22,4.1
-Königsallee,2026-11-25T14:00:00Z,0,23,3.8
-Königsallee,2026-11-25T15:00:00Z,0,24,3.2
-Königsallee,2026-11-25T16:00:00Z,0,25,2.6
-Königsallee,2026-11-25T17:00:00Z,0,26,2
-Königsallee,2026-11-25T18:00:00Z,0,27,1.6
-Königsallee,2026-11-25T19:00:00Z,0.1,28,1.3
-Königsallee,2026-11-25T20:00:00Z,0.1,30,1.1
-Königsallee,2026-11-25T21:00:00Z,0.1,31,1
-Königsallee,2026-11-25T22:00:00Z,0.1,32,0.9
-Wasserbaulabor 2,2026-11-18T23:00:00Z,0,65,9
-Wasserbaulabor 2,2026-11-19T00:00:00Z,0,47,9.4
-Wasserbaulabor 2,2026-11-19T01:00:00Z,0,30,8.9
-Wasserbaulabor 2,2026-11-19T02:00:00Z,0,16,9.1
-Wasserbaulabor 2,2026-11-19T03:00:00Z,0,14,9.1
-Wasserbaulabor 2,2026-11-19T04:00:00Z,0,36,9.1
-Wasserbaulabor 2,2026-11-19T05:00:00Z,0.8,70,8.6
-Wasserbaulabor 2,2026-11-19T06:00:00Z,1,96,8.9
-Wasserbaulabor 2,2026-11-19T07:00:00Z,1,100,9.2
-Wasserbaulabor 2,2026-11-19T08:00:00Z,0.6,100,10
-Wasserbaulabor 2,2026-11-19T09:00:00Z,0,96,10.1
-Wasserbaulabor 2,2026-11-19T10:00:00Z,0,91,10.3
-Wasserbaulabor 2,2026-11-19T11:00:00Z,0,83,10
-Wasserbaulabor 2,2026-11-19T12:00:00Z,0.1,78,9.7
-Wasserbaulabor 2,2026-11-19T13:00:00Z,0,78,9.6
-Wasserbaulabor 2,2026-11-19T14:00:00Z,0.2,80,9.1
-Wasserbaulabor 2,2026-11-19T15:00:00Z,0.1,82,9
-Wasserbaulabor 2,2026-11-19T16:00:00Z,0.1,81,8.9
-Wasserbaulabor 2,2026-11-19T17:00:00Z,0.4,80,8.6
-Wasserbaulabor 2,2026-11-19T18:00:00Z,1,78,8.6
-Wasserbaulabor 2,2026-11-19T19:00:00Z,1.6,76,8.8
-Wasserbaulabor 2,2026-11-19T20:00:00Z,0.4,73,8.7
-Wasserbaulabor 2,2026-11-19T21:00:00Z,0.2,71,8.6
-Wasserbaulabor 2,2026-11-19T22:00:00Z,0.4,69,8.6
-Wasserbaulabor 2,2026-11-19T23:00:00Z,0.4,68,8.7
-Wasserbaulabor 2,2026-11-20T00:00:00Z,0.4,67,8.1
-Wasserbaulabor 2,2026-11-20T01:00:00Z,0.2,67,6.2
-Wasserbaulabor 2,2026-11-20T02:00:00Z,0,67,5.9
-Wasserbaulabor 2,2026-11-20T03:00:00Z,0,67,5.6
-Wasserbaulabor 2,2026-11-20T04:00:00Z,0,65,5
-Wasserbaulabor 2,2026-11-20T05:00:00Z,0.3,62,4.7
-Wasserbaulabor 2,2026-11-20T06:00:00Z,0.1,59,4.7
-Wasserbaulabor 2,2026-11-20T07:00:00Z,0,56,4.7
-Wasserbaulabor 2,2026-11-20T08:00:00Z,0,53,4.7
-Wasserbaulabor 2,2026-11-20T09:00:00Z,0,49,4.6
-Wasserbaulabor 2,2026-11-20T10:00:00Z,0,45,5.1
-Wasserbaulabor 2,2026-11-20T11:00:00Z,0,40,5.3
-Wasserbaulabor 2,2026-11-20T12:00:00Z,0,35,6
-Wasserbaulabor 2,2026-11-20T13:00:00Z,0,28,6.5
-Wasserbaulabor 2,2026-11-20T14:00:00Z,0,21,6.5
-Wasserbaulabor 2,2026-11-20T15:00:00Z,0,14,6.2
-Wasserbaulabor 2,2026-11-20T16:00:00Z,0,8,5.1
-Wasserbaulabor 2,2026-11-20T17:00:00Z,0,3,4
-Wasserbaulabor 2,2026-11-20T18:00:00Z,0,0,3
-Wasserbaulabor 2,2026-11-20T19:00:00Z,0,0,2.5
-Wasserbaulabor 2,2026-11-20T20:00:00Z,0,0,2
-Wasserbaulabor 2,2026-11-20T21:00:00Z,0,0,1.4
-Wasserbaulabor 2,2026-11-20T22:00:00Z,0,1,1.4
-Wasserbaulabor 2,2026-11-20T23:00:00Z,0,1,1.4
-Wasserbaulabor 2,2026-11-21T00:00:00Z,0,2,2
-Wasserbaulabor 2,2026-11-21T01:00:00Z,0,2,2.9
-Wasserbaulabor 2,2026-11-21T02:00:00Z,0,2,3
-Wasserbaulabor 2,2026-11-21T03:00:00Z,0,2,3.4
-Wasserbaulabor 2,2026-11-21T04:00:00Z,0,2,3.1
-Wasserbaulabor 2,2026-11-21T05:00:00Z,0,2,3.3
-Wasserbaulabor 2,2026-11-21T06:00:00Z,0,2,3.5
-Wasserbaulabor 2,2026-11-21T07:00:00Z,0,2,3.6
-Wasserbaulabor 2,2026-11-21T08:00:00Z,0.3,2,3.7
-Wasserbaulabor 2,2026-11-21T09:00:00Z,0,2,4.6
-Wasserbaulabor 2,2026-11-21T10:00:00Z,0,3,5.7
-Wasserbaulabor 2,2026-11-21T11:00:00Z,0,5,6.7
-Wasserbaulabor 2,2026-11-21T12:00:00Z,0,6,7.2
-Wasserbaulabor 2,2026-11-21T13:00:00Z,0.08,6,7
-Wasserbaulabor 2,2026-11-21T14:00:00Z,0,6,6.8
-Wasserbaulabor 2,2026-11-21T15:00:00Z,0.05,6,6
-Wasserbaulabor 2,2026-11-21T16:00:00Z,0,5,4.7
-Wasserbaulabor 2,2026-11-21T17:00:00Z,0,4,4.1
-Wasserbaulabor 2,2026-11-21T18:00:00Z,0,4,3.8
-Wasserbaulabor 2,2026-11-21T19:00:00Z,0,5,3.5
-Wasserbaulabor 2,2026-11-21T20:00:00Z,0,6,3.2
-Wasserbaulabor 2,2026-11-21T21:00:00Z,0,6,2.8
-Wasserbaulabor 2,2026-11-21T22:00:00Z,0,4,2.3
-Wasserbaulabor 2,2026-11-21T23:00:00Z,0,2,1.8
-Wasserbaulabor 2,2026-11-22T00:00:00Z,0,0,1.2
-Wasserbaulabor 2,2026-11-22T01:00:00Z,0,0,0.6
-Wasserbaulabor 2,2026-11-22T02:00:00Z,0,0,-0.1
-Wasserbaulabor 2,2026-11-22T03:00:00Z,0,0,-0.7
-Wasserbaulabor 2,2026-11-22T04:00:00Z,0,0,-1.4
-Wasserbaulabor 2,2026-11-22T05:00:00Z,0,0,-1.5
-Wasserbaulabor 2,2026-11-22T06:00:00Z,0,0,-1.1
-Wasserbaulabor 2,2026-11-22T07:00:00Z,0,0,-1
-Wasserbaulabor 2,2026-11-22T08:00:00Z,0,0,0.1
-Wasserbaulabor 2,2026-11-22T09:00:00Z,0,0,1.7
-Wasserbaulabor 2,2026-11-22T10:00:00Z,0,0,3.4
-Wasserbaulabor 2,2026-11-22T11:00:00Z,0,0,4.6
-Wasserbaulabor 2,2026-11-22T12:00:00Z,0,0,5.3
-Wasserbaulabor 2,2026-11-22T13:00:00Z,0,0,5.2
-Wasserbaulabor 2,2026-11-22T14:00:00Z,0,0,4.6
-Wasserbaulabor 2,2026-11-22T15:00:00Z,0,0,4
-Wasserbaulabor 2,2026-11-22T16:00:00Z,0,0,3.7
-Wasserbaulabor 2,2026-11-22T17:00:00Z,0,0,3.4
-Wasserbaulabor 2,2026-11-22T18:00:00Z,0,0,3.1
-Wasserbaulabor 2,2026-11-22T19:00:00Z,0,0,2.9
-Wasserbaulabor 2,2026-11-22T20:00:00Z,0,0,2.8
-Wasserbaulabor 2,2026-11-22T21:00:00Z,0,0,2.5
-Wasserbaulabor 2,2026-11-22T22:00:00Z,0,0,1.9
-Wasserbaulabor 2,2026-11-22T23:00:00Z,0,0,1.2
-Wasserbaulabor 2,2026-11-23T00:00:00Z,0,0,0.7
-Wasserbaulabor 2,2026-11-23T01:00:00Z,0,0,0.8
-Wasserbaulabor 2,2026-11-23T02:00:00Z,0,0,1
-Wasserbaulabor 2,2026-11-23T03:00:00Z,0,0,1.1
-Wasserbaulabor 2,2026-11-23T04:00:00Z,0,1,0.6
-Wasserbaulabor 2,2026-11-23T05:00:00Z,0,2,-0.3
-Wasserbaulabor 2,2026-11-23T06:00:00Z,0,2,-0.8
-Wasserbaulabor 2,2026-11-23T07:00:00Z,0,1,-0.9
-Wasserbaulabor 2,2026-11-23T08:00:00Z,0,0,-0.8
-Wasserbaulabor 2,2026-11-23T09:00:00Z,0,0,-0.5
-Wasserbaulabor 2,2026-11-23T10:00:00Z,0,1,0.4
-Wasserbaulabor 2,2026-11-23T11:00:00Z,0,3,1.5
-Wasserbaulabor 2,2026-11-23T12:00:00Z,0,4,2.2
-Wasserbaulabor 2,2026-11-23T13:00:00Z,0,4,2.2
-Wasserbaulabor 2,2026-11-23T14:00:00Z,0,3,1.9
-Wasserbaulabor 2,2026-11-23T15:00:00Z,0,2,1.4
-Wasserbaulabor 2,2026-11-23T16:00:00Z,0,1,0.7
-Wasserbaulabor 2,2026-11-23T17:00:00Z,0,0,-0.1
-Wasserbaulabor 2,2026-11-23T18:00:00Z,0,0,-0.7
-Wasserbaulabor 2,2026-11-23T19:00:00Z,0,1,-1
-Wasserbaulabor 2,2026-11-23T20:00:00Z,0,3,-1.3
-Wasserbaulabor 2,2026-11-23T21:00:00Z,0,4,-1.4
-Wasserbaulabor 2,2026-11-23T22:00:00Z,0,3,-1.4
-Wasserbaulabor 2,2026-11-23T23:00:00Z,0,1,-1.4
-Wasserbaulabor 2,2026-11-24T00:00:00Z,0,0,-1.4
-Wasserbaulabor 2,2026-11-24T01:00:00Z,0,0,-1.5
-Wasserbaulabor 2,2026-11-24T02:00:00Z,0,0,-1.8
-Wasserbaulabor 2,2026-11-24T03:00:00Z,0,0,-2
-Wasserbaulabor 2,2026-11-24T04:00:00Z,0,0,-2.3
-Wasserbaulabor 2,2026-11-24T05:00:00Z,0,0,-2.6
-Wasserbaulabor 2,2026-11-24T06:00:00Z,0,0,-2.5
-Wasserbaulabor 2,2026-11-24T07:00:00Z,0,0,-1.9
-Wasserbaulabor 2,2026-11-24T08:00:00Z,0,0,-1
-Wasserbaulabor 2,2026-11-24T09:00:00Z,0,0,0
-Wasserbaulabor 2,2026-11-24T10:00:00Z,0,0,1
-Wasserbaulabor 2,2026-11-24T11:00:00Z,0,0,2
-Wasserbaulabor 2,2026-11-24T12:00:00Z,0,0,2.5
-Wasserbaulabor 2,2026-11-24T13:00:00Z,0,0,2.2
-Wasserbaulabor 2,2026-11-24T14:00:00Z,0,0,1.4
-Wasserbaulabor 2,2026-11-24T15:00:00Z,0,0,0.6
-Wasserbaulabor 2,2026-11-24T16:00:00Z,0,0,-0.4
-Wasserbaulabor 2,2026-11-24T17:00:00Z,0,0,-1.3
-Wasserbaulabor 2,2026-11-24T18:00:00Z,0,0,-2
-Wasserbaulabor 2,2026-11-24T19:00:00Z,0,0,-0.5
-Wasserbaulabor 2,2026-11-24T20:00:00Z,0,0,-0.5
-Wasserbaulabor 2,2026-11-24T21:00:00Z,0,0,-0.4
-Wasserbaulabor 2,2026-11-24T22:00:00Z,0,0,-0.2
-Wasserbaulabor 2,2026-11-24T23:00:00Z,0,0,0
-Wasserbaulabor 2,2026-11-25T00:00:00Z,0,0,0.1
-Wasserbaulabor 2,2026-11-25T01:00:00Z,0,0,0
-Wasserbaulabor 2,2026-11-25T02:00:00Z,0,1,-0.2
-Wasserbaulabor 2,2026-11-25T03:00:00Z,0,2,-0.4
-Wasserbaulabor 2,2026-11-25T04:00:00Z,0,3,-0.5
-Wasserbaulabor 2,2026-11-25T05:00:00Z,0,4,-0.5
-Wasserbaulabor 2,2026-11-25T06:00:00Z,0,6,-0.3
-Wasserbaulabor 2,2026-11-25T07:00:00Z,0,8,0.3
-Wasserbaulabor 2,2026-11-25T08:00:00Z,0,11,1.1
-Wasserbaulabor 2,2026-11-25T09:00:00Z,0,13,2.1
-Wasserbaulabor 2,2026-11-25T10:00:00Z,0,15,3
-Wasserbaulabor 2,2026-11-25T11:00:00Z,0,18,3.7
-Wasserbaulabor 2,2026-11-25T12:00:00Z,0,20,4.1
-Wasserbaulabor 2,2026-11-25T13:00:00Z,0,22,4.1
-Wasserbaulabor 2,2026-11-25T14:00:00Z,0,23,3.8
-Wasserbaulabor 2,2026-11-25T15:00:00Z,0,24,3.3
-Wasserbaulabor 2,2026-11-25T16:00:00Z,0,25,2.8
-Wasserbaulabor 2,2026-11-25T17:00:00Z,0,26,2.3
-Wasserbaulabor 2,2026-11-25T18:00:00Z,0,27,1.9
-Wasserbaulabor 2,2026-11-25T19:00:00Z,0.1,28,1.8
-Wasserbaulabor 2,2026-11-25T20:00:00Z,0.1,30,1.6
-Wasserbaulabor 2,2026-11-25T21:00:00Z,0.1,31,1.6
-Wasserbaulabor 2,2026-11-25T22:00:00Z,0.1,32,1.6
 Herzogstraße,2026-11-18T23:00:00Z,0,65,9.3
 Herzogstraße,2026-11-19T00:00:00Z,0,47,10
 Herzogstraße,2026-11-19T01:00:00Z,0,30,9.3
 Herzogstraße,2026-11-19T02:00:00Z,0,16,9.7
 Herzogstraße,2026-11-19T03:00:00Z,0,14,10
-Herzogstraße,2026-11-19T04:00:00Z,0,36,10
-Herzogstraße,2026-11-19T05:00:00Z,0.7,70,9.4
-Herzogstraße,2026-11-19T06:00:00Z,1.8,96,9.6
-Herzogstraße,2026-11-19T07:00:00Z,3.4,100,9.9
-Herzogstraße,2026-11-19T08:00:00Z,3.2,100,10
-Herzogstraße,2026-11-19T09:00:00Z,0,96,10.5
-Herzogstraße,2026-11-19T10:00:00Z,0,91,10.7
-Herzogstraße,2026-11-19T11:00:00Z,0,83,11
-Herzogstraße,2026-11-19T12:00:00Z,0.1,78,10.3
-Herzogstraße,2026-11-19T13:00:00Z,0,78,10.4
-Herzogstraße,2026-11-19T14:00:00Z,0.1,80,9.8
-Herzogstraße,2026-11-19T15:00:00Z,0.1,82,9.8
-Herzogstraße,2026-11-19T16:00:00Z,0,81,9.7
-Herzogstraße,2026-11-19T17:00:00Z,0.1,80,9.6
-Herzogstraße,2026-11-19T18:00:00Z,1,78,9.3
-Herzogstraße,2026-11-19T19:00:00Z,0.9,76,9.3
-Herzogstraße,2026-11-19T20:00:00Z,0.1,73,9.4
-Herzogstraße,2026-11-19T21:00:00Z,0.1,71,9.2
-Herzogstraße,2026-11-19T22:00:00Z,0.2,69,9
-Herzogstraße,2026-11-19T23:00:00Z,0,68,9
-Herzogstraße,2026-11-20T00:00:00Z,0.2,67,7.7
-Herzogstraße,2026-11-20T01:00:00Z,0,67,6.4
-Herzogstraße,2026-11-20T02:00:00Z,0.1,67,6
-Herzogstraße,2026-11-20T03:00:00Z,1.2,67,5.6
-Herzogstraße,2026-11-20T04:00:00Z,0.1,65,5.3
-Herzogstraße,2026-11-20T05:00:00Z,0.5,62,5.1
-Herzogstraße,2026-11-20T06:00:00Z,0.2,59,5.1
-Herzogstraße,2026-11-20T07:00:00Z,0,56,5.2
-Herzogstraße,2026-11-20T08:00:00Z,0,53,5.1
-Herzogstraße,2026-11-20T09:00:00Z,0,49,5.3
-Herzogstraße,2026-11-20T10:00:00Z,0,45,5.3
-Herzogstraße,2026-11-20T11:00:00Z,0,40,6
-Herzogstraße,2026-11-20T12:00:00Z,0,35,6.9
-Herzogstraße,2026-11-20T13:00:00Z,0,28,7.2
-Herzogstraße,2026-11-20T14:00:00Z,0,21,7.3
-Herzogstraße,2026-11-20T15:00:00Z,0,14,7.2
-Herzogstraße,2026-11-20T16:00:00Z,0,8,6.4
-Herzogstraße,2026-11-20T17:00:00Z,0,3,5.7
-Herzogstraße,2026-11-20T18:00:00Z,0,0,5
-Herzogstraße,2026-11-20T19:00:00Z,0,0,4.5
-Herzogstraße,2026-11-20T20:00:00Z,0,0,4
-Herzogstraße,2026-11-20T21:00:00Z,0,0,3.7
-Herzogstraße,2026-11-20T22:00:00Z,0,1,3.5
-Herzogstraße,2026-11-20T23:00:00Z,0,1,3.2
-Herzogstraße,2026-11-21T00:00:00Z,0,2,3.8
-Herzogstraße,2026-11-21T01:00:00Z,0,2,4.4
-Herzogstraße,2026-11-21T02:00:00Z,0,2,4.5
-Herzogstraße,2026-11-21T03:00:00Z,0,2,4.4
-Herzogstraße,2026-11-21T04:00:00Z,0,2,4.2
-Herzogstraße,2026-11-21T05:00:00Z,0.1,2,4.2
-Herzogstraße,2026-11-21T06:00:00Z,0,2,4.2
-Herzogstraße,2026-11-21T07:00:00Z,0.3,2,4.3
-Herzogstraße,2026-11-21T08:00:00Z,0.1,2,4.5
-Herzogstraße,2026-11-21T09:00:00Z,0.2,2,4.8
-Herzogstraße,2026-11-21T10:00:00Z,0.4,3,6.2
-Herzogstraße,2026-11-21T11:00:00Z,0,5,7.1
-Herzogstraße,2026-11-21T12:00:00Z,0,6,7.9
-Herzogstraße,2026-11-21T13:00:00Z,0.08,6,7.4
-Herzogstraße,2026-11-21T14:00:00Z,0,6,7.4
-Herzogstraße,2026-11-21T15:00:00Z,0,6,6.6
-Herzogstraße,2026-11-21T16:00:00Z,0,5,5.3
-Herzogstraße,2026-11-21T17:00:00Z,0,4,4.8
-Herzogstraße,2026-11-21T18:00:00Z,0,4,4.3
-Herzogstraße,2026-11-21T19:00:00Z,0,5,3.9
-Herzogstraße,2026-11-21T20:00:00Z,0,6,3.5
+Herzogstraße,2026-11-19T04:00:00Z,0,36,9.6
+Herzogstraße,2026-11-19T05:00:00Z,0.2,70,9.4
+Herzogstraße,2026-11-19T06:00:00Z,0.2,96,9.6
+Herzogstraße,2026-11-19T07:00:00Z,4.3,100,9.7
+Herzogstraße,2026-11-19T08:00:00Z,1.1,100,10
+Herzogstraße,2026-11-19T09:00:00Z,0,96,10.4
+Herzogstraße,2026-11-19T10:00:00Z,0.1,91,10.2
+Herzogstraße,2026-11-19T11:00:00Z,0,83,10.9
+Herzogstraße,2026-11-19T12:00:00Z,0,78,11.1
+Herzogstraße,2026-11-19T13:00:00Z,0.1,78,10.8
+Herzogstraße,2026-11-19T14:00:00Z,0.3,80,10.1
+Herzogstraße,2026-11-19T15:00:00Z,0.4,82,9.8
+Herzogstraße,2026-11-19T16:00:00Z,0.1,81,9.9
+Herzogstraße,2026-11-19T17:00:00Z,0.2,80,10
+Herzogstraße,2026-11-19T18:00:00Z,1,78,9.5
+Herzogstraße,2026-11-19T19:00:00Z,2.3,76,9.4
+Herzogstraße,2026-11-19T20:00:00Z,1.3,73,9
+Herzogstraße,2026-11-19T21:00:00Z,0.1,71,9
+Herzogstraße,2026-11-19T22:00:00Z,0,69,9.2
+Herzogstraße,2026-11-19T23:00:00Z,0.6,68,7.1
+Herzogstraße,2026-11-20T00:00:00Z,0.5,67,6.6
+Herzogstraße,2026-11-20T01:00:00Z,0,67,6.2
+Herzogstraße,2026-11-20T02:00:00Z,0.4,67,5.7
+Herzogstraße,2026-11-20T03:00:00Z,0.5,67,5.5
+Herzogstraße,2026-11-20T04:00:00Z,0,65,5.2
+Herzogstraße,2026-11-20T05:00:00Z,0,62,5.1
+Herzogstraße,2026-11-20T06:00:00Z,0,59,5.2
+Herzogstraße,2026-11-20T07:00:00Z,0,56,5.1
+Herzogstraße,2026-11-20T08:00:00Z,0.1,53,5
+Herzogstraße,2026-11-20T09:00:00Z,0.9,49,5
+Herzogstraße,2026-11-20T10:00:00Z,0,45,5.2
+Herzogstraße,2026-11-20T11:00:00Z,0.1,40,5.4
+Herzogstraße,2026-11-20T12:00:00Z,0.3,35,5.3
+Herzogstraße,2026-11-20T13:00:00Z,0.4,28,5
+Herzogstraße,2026-11-20T14:00:00Z,0.5,21,4.8
+Herzogstraße,2026-11-20T15:00:00Z,0.2,14,4.8
+Herzogstraße,2026-11-20T16:00:00Z,0,8,4.5
+Herzogstraße,2026-11-20T17:00:00Z,0,3,4.1
+Herzogstraße,2026-11-20T18:00:00Z,0,0,3.4
+Herzogstraße,2026-11-20T19:00:00Z,0,0,2.9
+Herzogstraße,2026-11-20T20:00:00Z,0,0,2.5
+Herzogstraße,2026-11-20T21:00:00Z,0,0,2.2
+Herzogstraße,2026-11-20T22:00:00Z,0,1,2.1
+Herzogstraße,2026-11-20T23:00:00Z,0,1,2.1
+Herzogstraße,2026-11-21T00:00:00Z,0,2,2.4
+Herzogstraße,2026-11-21T01:00:00Z,0,2,2.7
+Herzogstraße,2026-11-21T02:00:00Z,0,2,3.3
+Herzogstraße,2026-11-21T03:00:00Z,0,2,3.2
+Herzogstraße,2026-11-21T04:00:00Z,0,2,2.5
+Herzogstraße,2026-11-21T05:00:00Z,0,2,2.3
+Herzogstraße,2026-11-21T06:00:00Z,0,2,3.2
+Herzogstraße,2026-11-21T07:00:00Z,0,2,2.8
+Herzogstraße,2026-11-21T08:00:00Z,0,2,3.5
+Herzogstraße,2026-11-21T09:00:00Z,0.6,2,3.8
+Herzogstraße,2026-11-21T10:00:00Z,0,3,4.8
+Herzogstraße,2026-11-21T11:00:00Z,0,5,5.9
+Herzogstraße,2026-11-21T12:00:00Z,0,6,6.3
+Herzogstraße,2026-11-21T13:00:00Z,0,6,7.1
+Herzogstraße,2026-11-21T14:00:00Z,0,6,7.5
+Herzogstraße,2026-11-21T15:00:00Z,0,6,7.1
+Herzogstraße,2026-11-21T16:00:00Z,0.2,5,6.7
+Herzogstraße,2026-11-21T17:00:00Z,0.08,4,6
+Herzogstraße,2026-11-21T18:00:00Z,0,4,5
+Herzogstraße,2026-11-21T19:00:00Z,0,5,4.2
+Herzogstraße,2026-11-21T20:00:00Z,0,6,3.4
 Herzogstraße,2026-11-21T21:00:00Z,0,6,3
-Herzogstraße,2026-11-21T22:00:00Z,0,4,2.6
-Herzogstraße,2026-11-21T23:00:00Z,0,2,2.1
-Herzogstraße,2026-11-22T00:00:00Z,0,0,1.5
-Herzogstraße,2026-11-22T01:00:00Z,0,0,0.9
+Herzogstraße,2026-11-21T22:00:00Z,0,4,2.5
+Herzogstraße,2026-11-21T23:00:00Z,0,2,1.8
+Herzogstraße,2026-11-22T00:00:00Z,0,0,1.2
+Herzogstraße,2026-11-22T01:00:00Z,0,0,0.6
 Herzogstraße,2026-11-22T02:00:00Z,0,0,0.3
-Herzogstraße,2026-11-22T03:00:00Z,0,0,-0.4
-Herzogstraße,2026-11-22T04:00:00Z,0,0,-1.2
-Herzogstraße,2026-11-22T05:00:00Z,0,0,-1.7
-Herzogstraße,2026-11-22T06:00:00Z,0,0,-1.4
-Herzogstraße,2026-11-22T07:00:00Z,0,0,-1.2
+Herzogstraße,2026-11-22T03:00:00Z,0,0,-0.3
+Herzogstraße,2026-11-22T04:00:00Z,0,0,-0.7
+Herzogstraße,2026-11-22T05:00:00Z,0,0,-1.2
+Herzogstraße,2026-11-22T06:00:00Z,0,0,-1.5
+Herzogstraße,2026-11-22T07:00:00Z,0,0,-1.5
 Herzogstraße,2026-11-22T08:00:00Z,0,0,-0.3
-Herzogstraße,2026-11-22T09:00:00Z,0,0,1.1
-Herzogstraße,2026-11-22T10:00:00Z,0,0,2.7
-Herzogstraße,2026-11-22T11:00:00Z,0,0,3.7
-Herzogstraße,2026-11-22T12:00:00Z,0,0,4.5
-Herzogstraße,2026-11-22T13:00:00Z,0,0,4.5
-Herzogstraße,2026-11-22T14:00:00Z,0,0,4.2
-Herzogstraße,2026-11-22T15:00:00Z,0,0,3.8
-Herzogstraße,2026-11-22T16:00:00Z,0,0,3.7
-Herzogstraße,2026-11-22T17:00:00Z,0,0,3.5
-Herzogstraße,2026-11-22T18:00:00Z,0,0,3.4
-Herzogstraße,2026-11-22T19:00:00Z,0,0,3.2
-Herzogstraße,2026-11-22T20:00:00Z,0,0,3
-Herzogstraße,2026-11-22T21:00:00Z,0,0,2.7
-Herzogstraße,2026-11-22T22:00:00Z,0,0,2.2
-Herzogstraße,2026-11-22T23:00:00Z,0,0,1.5
-Herzogstraße,2026-11-23T00:00:00Z,0,0,1.1
-Herzogstraße,2026-11-23T01:00:00Z,0,0,1.2
-Herzogstraße,2026-11-23T02:00:00Z,0,0,1.5
-Herzogstraße,2026-11-23T03:00:00Z,0,0,1.5
-Herzogstraße,2026-11-23T04:00:00Z,0,1,0.8
-Herzogstraße,2026-11-23T05:00:00Z,0,2,-0.1
-Herzogstraße,2026-11-23T06:00:00Z,0,2,-0.7
-Herzogstraße,2026-11-23T07:00:00Z,0,1,-0.8
-Herzogstraße,2026-11-23T08:00:00Z,0,0,-0.6
-Herzogstraße,2026-11-23T09:00:00Z,0,0,-0.2
-Herzogstraße,2026-11-23T10:00:00Z,0,1,0.7
-Herzogstraße,2026-11-23T11:00:00Z,0,3,1.8
-Herzogstraße,2026-11-23T12:00:00Z,0,4,2.5
-Herzogstraße,2026-11-23T13:00:00Z,0,4,2.6
-Herzogstraße,2026-11-23T14:00:00Z,0,3,2.4
-Herzogstraße,2026-11-23T15:00:00Z,0,2,2
-Herzogstraße,2026-11-23T16:00:00Z,0,1,1.3
-Herzogstraße,2026-11-23T17:00:00Z,0,0,0.5
-Herzogstraße,2026-11-23T18:00:00Z,0,0,-0.3
-Herzogstraße,2026-11-23T19:00:00Z,0,1,-0.7
-Herzogstraße,2026-11-23T20:00:00Z,0,3,-1.1
-Herzogstraße,2026-11-23T21:00:00Z,0,4,-1.4
-Herzogstraße,2026-11-23T22:00:00Z,0,3,-1.6
-Herzogstraße,2026-11-23T23:00:00Z,0,1,-1.8
+Herzogstraße,2026-11-22T09:00:00Z,0,0,1.4
+Herzogstraße,2026-11-22T10:00:00Z,0,0,3.2
+Herzogstraße,2026-11-22T11:00:00Z,0,0,4.7
+Herzogstraße,2026-11-22T12:00:00Z,0,0,5.3
+Herzogstraße,2026-11-22T13:00:00Z,0,0,5.5
+Herzogstraße,2026-11-22T14:00:00Z,0,0,5.2
+Herzogstraße,2026-11-22T15:00:00Z,0,0,4.1
+Herzogstraße,2026-11-22T16:00:00Z,0,0,2.7
+Herzogstraße,2026-11-22T17:00:00Z,0,0,2.5
+Herzogstraße,2026-11-22T18:00:00Z,0,0,2.6
+Herzogstraße,2026-11-22T19:00:00Z,0,0,2.5
+Herzogstraße,2026-11-22T20:00:00Z,0,0,2.4
+Herzogstraße,2026-11-22T21:00:00Z,0,0,2.3
+Herzogstraße,2026-11-22T22:00:00Z,0,0,2
+Herzogstraße,2026-11-22T23:00:00Z,0,0,1.7
+Herzogstraße,2026-11-23T00:00:00Z,0,0,1.4
+Herzogstraße,2026-11-23T01:00:00Z,0,0,1.3
+Herzogstraße,2026-11-23T02:00:00Z,0,0,1.4
+Herzogstraße,2026-11-23T03:00:00Z,0,0,1.3
+Herzogstraße,2026-11-23T04:00:00Z,0,1,1.2
+Herzogstraße,2026-11-23T05:00:00Z,0,2,1.1
+Herzogstraße,2026-11-23T06:00:00Z,0,2,0.9
+Herzogstraße,2026-11-23T07:00:00Z,0,1,0.6
+Herzogstraße,2026-11-23T08:00:00Z,0,0,0.2
+Herzogstraße,2026-11-23T09:00:00Z,0,0,0.3
+Herzogstraße,2026-11-23T10:00:00Z,0,1,1.1
+Herzogstraße,2026-11-23T11:00:00Z,0,3,2.3
+Herzogstraße,2026-11-23T12:00:00Z,0,4,3.2
+Herzogstraße,2026-11-23T13:00:00Z,0,4,3.4
+Herzogstraße,2026-11-23T14:00:00Z,0,3,3.3
+Herzogstraße,2026-11-23T15:00:00Z,0,2,3
+Herzogstraße,2026-11-23T16:00:00Z,0,1,2.3
+Herzogstraße,2026-11-23T17:00:00Z,0,0,1.3
+Herzogstraße,2026-11-23T18:00:00Z,0,0,0.5
+Herzogstraße,2026-11-23T19:00:00Z,0,1,-0.2
+Herzogstraße,2026-11-23T20:00:00Z,0,3,-0.7
+Herzogstraße,2026-11-23T21:00:00Z,0,4,-1.1
+Herzogstraße,2026-11-23T22:00:00Z,0,3,-1.5
+Herzogstraße,2026-11-23T23:00:00Z,0,1,-1.7
 Herzogstraße,2026-11-24T00:00:00Z,0,0,-2
-Herzogstraße,2026-11-24T01:00:00Z,0,0,-2.1
-Herzogstraße,2026-11-24T02:00:00Z,0,0,-2.1
-Herzogstraße,2026-11-24T03:00:00Z,0,0,-2.2
-Herzogstraße,2026-11-24T04:00:00Z,0,0,-2.5
-Herzogstraße,2026-11-24T05:00:00Z,0,0,-2.8
-Herzogstraße,2026-11-24T06:00:00Z,0,0,-2.9
-Herzogstraße,2026-11-24T07:00:00Z,0,0,-2.5
-Herzogstraße,2026-11-24T08:00:00Z,0,0,-1.9
-Herzogstraße,2026-11-24T09:00:00Z,0,0,-1.1
-Herzogstraße,2026-11-24T10:00:00Z,0,0,0.1
-Herzogstraße,2026-11-24T11:00:00Z,0,0,1.3
-Herzogstraße,2026-11-24T12:00:00Z,0,0,2.1
-Herzogstraße,2026-11-24T13:00:00Z,0,0,2
-Herzogstraße,2026-11-24T14:00:00Z,0,0,1.5
-Herzogstraße,2026-11-24T15:00:00Z,0,0,0.9
-Herzogstraße,2026-11-24T16:00:00Z,0,0,0.2
+Herzogstraße,2026-11-24T01:00:00Z,0,0,-2.5
+Herzogstraße,2026-11-24T02:00:00Z,0,0,-2.9
+Herzogstraße,2026-11-24T03:00:00Z,0,0,-3.3
+Herzogstraße,2026-11-24T04:00:00Z,0,0,-3.7
+Herzogstraße,2026-11-24T05:00:00Z,0,0,-4
+Herzogstraße,2026-11-24T06:00:00Z,0,0,-4
+Herzogstraße,2026-11-24T07:00:00Z,0,0,-3.8
+Herzogstraße,2026-11-24T08:00:00Z,0,0,-3.2
+Herzogstraße,2026-11-24T09:00:00Z,0,0,-2.5
+Herzogstraße,2026-11-24T10:00:00Z,0,0,-1.2
+Herzogstraße,2026-11-24T11:00:00Z,0,0,0.3
+Herzogstraße,2026-11-24T12:00:00Z,0,0,1.2
+Herzogstraße,2026-11-24T13:00:00Z,0,0,1.2
+Herzogstraße,2026-11-24T14:00:00Z,0,0,0.8
+Herzogstraße,2026-11-24T15:00:00Z,0,0,0.2
+Herzogstraße,2026-11-24T16:00:00Z,0,0,-0.2
 Herzogstraße,2026-11-24T17:00:00Z,0,0,-0.7
-Herzogstraße,2026-11-24T18:00:00Z,0,0,-1.3
-Herzogstraße,2026-11-24T19:00:00Z,0,0,-0.4
-Herzogstraße,2026-11-24T20:00:00Z,0,0,-0.6
-Herzogstraße,2026-11-24T21:00:00Z,0,0,-0.7
-Herzogstraße,2026-11-24T22:00:00Z,0,0,-0.7
-Herzogstraße,2026-11-24T23:00:00Z,0,0,-0.7
-Herzogstraße,2026-11-25T00:00:00Z,0,0,-0.7
-Herzogstraße,2026-11-25T01:00:00Z,0,0,-0.8
-Herzogstraße,2026-11-25T02:00:00Z,0,1,-0.9
-Herzogstraße,2026-11-25T03:00:00Z,0,2,-1
-Herzogstraße,2026-11-25T04:00:00Z,0,3,-1
-Herzogstraße,2026-11-25T05:00:00Z,0,4,-0.9
-Herzogstraße,2026-11-25T06:00:00Z,0,6,-0.6
-Herzogstraße,2026-11-25T07:00:00Z,0,8,0.1
-Herzogstraße,2026-11-25T08:00:00Z,0,11,1
-Herzogstraße,2026-11-25T09:00:00Z,0,13,2
-Herzogstraße,2026-11-25T10:00:00Z,0,15,3
-Herzogstraße,2026-11-25T11:00:00Z,0,18,3.8
-Herzogstraße,2026-11-25T12:00:00Z,0,20,4.2
-Herzogstraße,2026-11-25T13:00:00Z,0,22,4.1
-Herzogstraße,2026-11-25T14:00:00Z,0,23,3.8
-Herzogstraße,2026-11-25T15:00:00Z,0,24,3.2
-Herzogstraße,2026-11-25T16:00:00Z,0,25,2.6
-Herzogstraße,2026-11-25T17:00:00Z,0,26,2
-Herzogstraße,2026-11-25T18:00:00Z,0,27,1.6
-Herzogstraße,2026-11-25T19:00:00Z,0.1,28,1.3
-Herzogstraße,2026-11-25T20:00:00Z,0.1,30,1.1
-Herzogstraße,2026-11-25T21:00:00Z,0.1,31,1
-Herzogstraße,2026-11-25T22:00:00Z,0.1,32,0.9
+Herzogstraße,2026-11-24T18:00:00Z,0,0,-1.2
+Herzogstraße,2026-11-24T19:00:00Z,0,0,-1.6
+Herzogstraße,2026-11-24T20:00:00Z,0,0,-2.1
+Herzogstraße,2026-11-24T21:00:00Z,0,0,-2.5
+Herzogstraße,2026-11-24T22:00:00Z,0,0,-2.8
+Herzogstraße,2026-11-24T23:00:00Z,0,0,-3.1
+Herzogstraße,2026-11-25T00:00:00Z,0,0,-3.3
+Herzogstraße,2026-11-25T01:00:00Z,0,0,-3.5
+Herzogstraße,2026-11-25T02:00:00Z,0,1,-3.7
+Herzogstraße,2026-11-25T03:00:00Z,0,2,-3.8
+Herzogstraße,2026-11-25T04:00:00Z,0,3,-3.8
+Herzogstraße,2026-11-25T05:00:00Z,0,4,-3.6
+Herzogstraße,2026-11-25T06:00:00Z,0,6,-3.2
+Herzogstraße,2026-11-25T07:00:00Z,0,8,-2.4
+Herzogstraße,2026-11-25T08:00:00Z,0,11,-1.2
+Herzogstraße,2026-11-25T09:00:00Z,0,13,0.3
+Herzogstraße,2026-11-25T10:00:00Z,0,15,1.6
+Herzogstraße,2026-11-25T11:00:00Z,0,18,2.6
+Herzogstraße,2026-11-25T12:00:00Z,0,20,3.1
+Herzogstraße,2026-11-25T13:00:00Z,0,22,3
+Herzogstraße,2026-11-25T14:00:00Z,0,23,2.4
+Herzogstraße,2026-11-25T15:00:00Z,0,24,1.5
+Herzogstraße,2026-11-25T16:00:00Z,0,25,0.5
+Herzogstraße,2026-11-25T17:00:00Z,0,26,-0.5
+Herzogstraße,2026-11-25T18:00:00Z,0,27,-1.1
+Herzogstraße,2026-11-25T19:00:00Z,0,28,-1.4
+Herzogstraße,2026-11-25T20:00:00Z,0,30,-1.6
+Herzogstraße,2026-11-25T21:00:00Z,0,31,-1.7
+Herzogstraße,2026-11-25T22:00:00Z,0,32,-1.7
