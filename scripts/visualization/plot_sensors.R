@@ -3,6 +3,7 @@ library(ggplot2)
 library(dplyr)
 library(fs)
 library(lubridate)
+source("scripts/utils/nahecho.R")
 
 # Define directories
 cleaned_dir <- "data/processed/cleaned_analysis"
@@ -113,9 +114,29 @@ for (file_path in cleaned_files) {
     }
 
 
+    # Nahecho-Phasen (Sensor nass, Pegel nicht messbar)
+    eps <- if ("nahecho" %in% names(df_24h)) nahecho_episodes(df_24h$Zeit_Datum, df_24h$nahecho) else NULL
+    has_eps   <- !is.null(eps) && nrow(eps) > 0
+    all_na    <- all(is.na(df_24h$level))
+    lbl_nass  <- "Sensor nass (Pegel nicht messbar)"
+
     # Create plot
-    p <- ggplot() +
-        geom_line(data = df_24h, aes(x = Zeit_Datum, y = level * 100, color = "Wasserstand"), linewidth = 0.8)
+    p <- ggplot()
+    if (has_eps) {
+        p <- p + geom_rect(
+            data = eps, aes(xmin = start, xmax = end, ymin = -Inf, ymax = Inf, fill = lbl_nass),
+            alpha = 0.3, inherit.aes = FALSE)
+    }
+    p <- p +
+        geom_line(data = df_24h, aes(x = Zeit_Datum, y = level * 100, color = "Wasserstand"),
+                  linewidth = 0.8, na.rm = TRUE)
+    if (all_na) {
+        # Kein messbarer Pegel im Fenster: Achse trotzdem zeichnen und Hinweis einblenden
+        p <- p + expand_limits(y = c(0, 10)) +
+            annotate("label", x = min(df_24h$Zeit_Datum) + (max(df_24h$Zeit_Datum) - min(df_24h$Zeit_Datum)) / 2,
+                     y = 5, size = 4.5, label.size = 0, fill = "white",
+                     label = if (has_eps) "Kein Pegel messbar: Sensor nass (Nahecho)" else "Keine gültigen Pegelwerte im Zeitraum")
+    }
 
     if (!is.null(p_precip) && nrow(p_precip) > 0) {
         p <- p +
@@ -127,9 +148,10 @@ for (file_path in cleaned_files) {
                 name = "Wasserstand (cm)",
                 sec.axis = sec_axis(~ . / scale_factor, name = "Niederschlag (mm/5min)")  # RADOLAN RY
             ) +
-            scale_fill_manual(values = c("Niederschlag" = "#56B4E9"), name = "")
+            scale_fill_manual(values = c("Niederschlag" = "#56B4E9", "Sensor nass (Pegel nicht messbar)" = "#8C8CB4"), name = "")
     } else {
-        p <- p + scale_y_continuous(name = "Wasserstand (cm)")
+        p <- p + scale_y_continuous(name = "Wasserstand (cm)") +
+            scale_fill_manual(values = c("Sensor nass (Pegel nicht messbar)" = "#8C8CB4"), name = "")
     }
 
     p <- p +
