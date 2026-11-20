@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 20.11. 02:00 bis 22.11. 01:00)*
+*(Zeitraum: 20.11. 17:00 bis 22.11. 16:00)*
 
-- Temperatur: **6.6°C** (Min: 2.1°C | Max: 6.6°C)
-- Summe: **11.5 mm** | Max: **2.2 mm/h**
-- Max. 6h: **7.1 mm**
+- Temperatur: **5.3°C** (Min: 1.9°C | Max: 6.8°C)
+- Summe: **0 mm** | Max: **0 mm/h**
+- Max. 6h: **0 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -25,8 +25,19 @@
 ✅ Alle Sensoren senden planmäßig Daten (letzte 24h).
 
 
-## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-20 01:36:50 CET*
+## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
+*Stand: 2026-11-20 16:01:15 CET*
+
+Es wurden **1** neue potenzielle Ereignisse erkannt.
+
+|station                 |start_time          | peak_level_cm| duration_min|event_type                                      |
+|:-----------------------|:-------------------|-------------:|------------:|:-----------------------------------------------|
+|Wasserstraße_Springorum |2026-11-19 17:00:00 |            NA|          420|Ereignis erkannt (Nahecho, Pegel nicht messbar) |
+
+### 📈 Aktuelle Plots der betroffenen Stationen
+#### Station: Wasserstraße_Springorum
+![Plot Wasserstraße_Springorum](data/output/plots/Wasserstraße_Springorum_merged_export_cleaned.png)
+
 
 ---
 
