@@ -1,5 +1,8 @@
 ﻿"station","start_time","end_time","peak_level_cm","peak_time","duration_min","avg_gradient_cm_min","event_type","total_precip_mm","max_intensity_mm_h","radolan_verified","level_reliable","points_count","onset_lag_min","peak_lag_min","precip_onset_time","precip_peak_time","precip_total_mm","precip_max_mm_h"
-"Wasserstraße_Springorum","2026/11/19 16:00:00","2026/11/19 23:00:00",NA,NA,420,NA,"Ereignis erkannt (Nahecho, Pegel nicht messbar)",1.22,0.67,TRUE,FALSE,NA,NA,NA,NA,NA,0,0
+"An_der_Kost","2026/11/20 10:16:00","2026/11/20 11:39:30",0.38,"2026/11/20 11:25:00",83.5,0.005,"Leichter Regen / Unterhalb DWD-Schwelle",0.3,1.2,TRUE,TRUE,168,NA,NA,NA,NA,0,0
+"Wasserstraße_Springorum","2026/11/20 10:00:00","2026/11/20 18:00:00",NA,NA,480,NA,"Ereignis erkannt (Nahecho, Pegel nicht messbar)",10.14,3.7,TRUE,FALSE,NA,NA,NA,NA,NA,0,0
+"An_der_Kost","2026/11/20 05:37:00","2026/11/20 07:01:30",0.34,"2026/11/20 06:37:30",84.5,0.006,"Leichter Regen / Unterhalb DWD-Schwelle",0.25,0.72,TRUE,TRUE,170,NA,NA,NA,NA,0,0
+"Wasserstraße_Springorum","2026/11/19 16:00:00","2026/11/20 04:00:00",NA,NA,720,NA,"Ereignis erkannt (Nahecho, Pegel nicht messbar)",2.13,0.67,TRUE,FALSE,NA,NA,NA,NA,NA,0,0
 "Wasserstraße_Springorum","2026/11/19 07:00:00","2026/11/19 09:00:00",NA,NA,120,NA,"Ereignis erkannt (Nahecho, Pegel nicht messbar)",2.54,1.67,TRUE,FALSE,NA,NA,NA,NA,NA,0,0
 "An_der_Kost","2026/11/19 04:53:30","2026/11/19 10:26:00",0.46,"2026/11/19 06:57:00",332.5,0.004,"Leichter Regen / Unterhalb DWD-Schwelle",2.82,5.64,TRUE,TRUE,666,NA,NA,NA,NA,0,0
 "Wasserstraße_Springorum","2026/11/17 22:00:00","2026/11/18 00:00:00",NA,NA,120,NA,"Ereignis erkannt (Nahecho, Pegel nicht messbar)",3.16,2.78,TRUE,FALSE,NA,NA,NA,NA,NA,0,0
