@@ -47805,7 +47805,7 @@ timestamp,station,precipitation_mm
 2026-11-19T23:00:00Z,An der Kost,0.08
 2026-11-19T23:00:00Z,Herzogstraße,0.01
 2026-11-19T23:00:00Z,Königsallee,0.07
-2026-11-19T23:00:00Z,Wasserbaulabor 2,0.13999999999999999
+2026-11-19T23:00:00Z,Wasserbaulabor 2,0.14
 2026-11-19T23:00:00Z,Wasserstraße,0.07
 2026-11-20T00:00:00Z,An der Kost,0.08
 2026-11-20T00:00:00Z,Herzogstraße,0.08
@@ -47862,7 +47862,7 @@ timestamp,station,precipitation_mm
 2026-11-20T10:00:00Z,Königsallee,0.25
 2026-11-20T10:00:00Z,Wasserbaulabor 2,0.36
 2026-11-20T10:00:00Z,Wasserstraße,0.25
-2026-11-20T11:00:00Z,An der Kost,0.49000000000000005
+2026-11-20T11:00:00Z,An der Kost,0.4900000000000001
 2026-11-20T11:00:00Z,Herzogstraße,0.16
 2026-11-20T11:00:00Z,Königsallee,0.39
 2026-11-20T11:00:00Z,Wasserbaulabor 2,0.31
@@ -47882,7 +47882,7 @@ timestamp,station,precipitation_mm
 2026-11-20T14:00:00Z,Königsallee,1.46
 2026-11-20T14:00:00Z,Wasserbaulabor 2,2.0500000000000003
 2026-11-20T14:00:00Z,Wasserstraße,1.46
-2026-11-20T15:00:00Z,An der Kost,1.6199999999999999
+2026-11-20T15:00:00Z,An der Kost,1.62
 2026-11-20T15:00:00Z,Herzogstraße,2.31
 2026-11-20T15:00:00Z,Königsallee,1.03
 2026-11-20T15:00:00Z,Wasserbaulabor 2,1.14

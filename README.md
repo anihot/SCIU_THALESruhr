@@ -7,14 +7,14 @@
 <td width="60%" valign="top">
 
 <!-- LATEST_EVENTS_START -->
-### 🔹 Wetterausblick (48h)
-**Leichter bis mäßiger Regen vorhergesagt.**
+### ☀️ Wetterausblick (48h)
+**Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 21.11. 07:00 bis 23.11. 06:00)*
+*(Zeitraum: 21.11. 16:00 bis 23.11. 15:00)*
 
-- Temperatur: **1.9°C** (Min: 0.3°C | Max: 6.7°C)
-- Summe: **2.8 mm** | Max: **1.4 mm/h**
-- Max. 6h: **2.4 mm**
+- Temperatur: **6.6°C** (Min: -0.4°C | Max: 7°C)
+- Summe: **0.2 mm** | Max: **0.1 mm/h**
+- Max. 6h: **0.1 mm**
 
 *Quelle: Open-Meteo (DWD)*
 
@@ -26,15 +26,14 @@
 
 
 ## 🔔 Aktuelle Ereignisse (Letzte 24-30h)
-*Stand: 2026-11-21 06:39:06 CET*
+*Stand: 2026-11-21 15:13:48 CET*
 
-Es wurden **3** neue potenzielle Ereignisse erkannt.
+Es wurden **2** neue potenzielle Ereignisse erkannt.
 
 |station                 |start_time          | peak_level_cm| duration_min|event_type                                      |
 |:-----------------------|:-------------------|-------------:|------------:|:-----------------------------------------------|
 |An_der_Kost             |2026-11-20 11:16:00 |          0.38|         83.5|Leichter Regen / Unterhalb DWD-Schwelle         |
 |Wasserstraße_Springorum |2026-11-20 11:00:00 |            NA|        480.0|Ereignis erkannt (Nahecho, Pegel nicht messbar) |
-|An_der_Kost             |2026-11-20 06:37:00 |          0.34|         84.5|Leichter Regen / Unterhalb DWD-Schwelle         |
 
 ### 📈 Aktuelle Plots der betroffenen Stationen
 #### Station: An_der_Kost
