@@ -10,9 +10,9 @@
 ### ☀️ Wetterausblick (48h)
 **Kein nennenswerter Regen vorhergesagt.**
 
-*(Zeitraum: 23.11. 07:00 bis 25.11. 06:00)*
+*(Zeitraum: 23.11. 19:00 bis 25.11. 18:00)*
 
-- Temperatur: **-0.3°C** (Min: -1.9°C | Max: 5.7°C)
+- Temperatur: **0.1°C** (Min: -1.4°C | Max: 5.3°C)
 - Summe: **0 mm** | Max: **0 mm/h**
 - Max. 6h: **0 mm**
 
@@ -26,7 +26,7 @@
 
 
 ## ✅ Keine neuen Ereignisse in den letzten 24h
-*Stand: 2026-11-23 06:39:37 CET*
+*Stand: 2026-11-23 18:28:36 CET*
 
 ---
 
